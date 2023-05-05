@@ -26,6 +26,18 @@ return new class extends Migration
             $table->json('gallery')->nullable();
             $table->integer('status')->default(1);
             $table->json('amenity')->nullable();
+            $table->integer('jan')->nullable()->default(0);
+            $table->integer('feb')->nullable()->default(0);
+            $table->integer('march')->nullable()->default(0);
+            $table->integer('april')->nullable()->default(0);
+            $table->integer('may')->nullable()->default(0);
+            $table->integer('jun')->nullable()->default(0);
+            $table->integer('july')->nullable()->default(0);
+            $table->integer('aug')->nullable()->default(0);
+            $table->integer('sep')->nullable()->default(0);
+            $table->integer('oct')->nullable()->default(0);
+            $table->integer('nov')->nullable()->default(0);
+            $table->integer('dec')->nullable()->default(0);
             $table->timestamps();
         });
     }

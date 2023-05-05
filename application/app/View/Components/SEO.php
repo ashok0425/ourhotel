@@ -9,12 +9,16 @@ use Illuminate\View\Component;
 class SEO extends Component
 {
     public $seo;
+    public $route;
+
     /**
      * Create a new component instance.
      */
-    public function __construct($seo)
+    public function __construct($seo=null,$route=null)
     {
         $this->seo=$seo;
+        $this->route=$route;
+
     }
 
     /**

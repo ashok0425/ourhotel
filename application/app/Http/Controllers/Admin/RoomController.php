@@ -18,7 +18,7 @@ class RoomController extends Controller
     public function index(Request $request)
     { 
         $property_id=$request->property_id;
-        $rooms=Room::query()->orderBy('id','desc')->get();
+        $rooms=Room::query()->where('property_id',$property_id)->orderBy('id','desc')->get();
         return view('admin.room.index',compact('rooms','property_id'));
     }
 
@@ -60,6 +60,18 @@ class RoomController extends Controller
        $path=$this->uploadImage($request->thumbnail);
        $room->thumbnail=$path;
        $room->gallery=json_encode($request->gallery);
+       $room->jan=$request->jan;
+       $room->feb=$request->feb;
+       $room->march=$request->march;
+       $room->april=$request->april;
+       $room->may=$request->may;
+       $room->jun=$request->jun;
+       $room->july=$request->july;
+       $room->aug=$request->aug;
+       $room->sep=$request->sep;
+       $room->oct=$request->oct;
+       $room->nov=$request->nov;
+       $room->dec=$request->dec;
        $room->save();
        $notification=array(
         'type'=>'success',
@@ -83,7 +95,7 @@ class RoomController extends Controller
     {
         $property_id=$request->property_id;
         $amenities=Amenity::where('status',1)->get();
-        return view('admin.property.edit',compact('property_id','room','amenities'));
+        return view('admin.room.edit',compact('property_id','room','amenities'));
         
     }
 
@@ -112,13 +124,26 @@ class RoomController extends Controller
         $gallery=json_decode($room->gallery);
         $gallery=array_merge($gallery,$request->gallery);
         $room->gallery=json_encode($gallery);
+        $room->jan=$request->jan;
+        $room->feb=$request->feb;
+        $room->march=$request->march;
+        $room->april=$request->april;
+        $room->may=$request->may;
+        $room->jun=$request->jun;
+        $room->july=$request->july;
+        $room->aug=$request->aug;
+        $room->sep=$request->sep;
+        $room->oct=$request->oct;
+        $room->nov=$request->nov;
+        $room->dec=$request->dec;
        }
        $room->save();
        $notification=array(
         'type'=>'success',
          'message'=>'Room updated Sucessfully'
        );
-       return redirect()->route('admin.properties.index')->with($notification);
+
+       return redirect()->route('admin.rooms.index',['property_id'=>$request->property_id])->with($notification);
 
     }
 

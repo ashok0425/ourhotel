@@ -132,7 +132,7 @@
                         <label class="custom-file-label" for="gallery">Choose file</label>
                       </div>
 
-                      <small class="text-danger d-none max_file">
+                      <small class="text-danger max_file">
                       </small>
                   </div>
 

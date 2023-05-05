@@ -18,7 +18,7 @@ $('#thumb').change(function () {
 
 $('#gallery').change(function (e) {
     if($('.remove_gallery').length>=3){
-        $('.max_file').removeClass('Only 3 File can be uploaded');
+        $('.max_file').html('Only 3 File can be uploaded');
         return false;
     }
     e.stopPropagation()

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Property;
+use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use File;
@@ -50,7 +51,7 @@ class ImageController extends Controller
             if($request->model=='property'){
                 $property=Property::find($request->id);
             }else{
-                // $property=Room::find($request->id);
+                $property=Room::find($request->id);
             }
             $gallery=json_decode($property->gallery);
          

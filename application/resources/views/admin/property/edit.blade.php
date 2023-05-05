@@ -5,7 +5,7 @@
 @section('content')
     <div class="card mb-3">
         <div class="card-body">
-            <h4><strong>Create Edit Property</strong></h4>
+            <h4><strong> Edit Property</strong></h4>
         </div>
     </div>
 
@@ -149,7 +149,7 @@
                                     <input type="file" class="custom-file-input" id="gallery">
                                     <label class="custom-file-label" for="gallery">Choose file</label>
                                 </div>
-                                <small class="text-danger d-none max_file">
+                                <small class="text-danger max_file">
                                 </small>
                             </div>
 

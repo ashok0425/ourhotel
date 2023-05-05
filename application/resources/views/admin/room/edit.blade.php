@@ -5,12 +5,12 @@
 @section('content')
     <div class="card mb-3">
         <div class="card-body">
-            <h4><strong>Create Edit Property</strong></h4>
+            <h4><strong> Edit Room</strong></h4>
         </div>
     </div>
 
 
-    <form class="forms-sample" method="POST" action="{{ route('admin.properties.update', $property) }}"
+    <form class="forms-sample" method="POST" action="{{ route('admin.rooms.update', [$room,'property_id'=>$room->property_id]) }}"
         enctype="multipart/form-data">
         @csrf
         @method('PATCH')
@@ -21,87 +21,76 @@
 
                         <div class="card-title d-flex justify-content-between">
                             <div>
-                                Enter Property Detail
+                                Enter Room Detail
                             </div>
                             <div>
                                 <button type="submit" class="btn btn-primary mr-2 btn-rounded">Submit</button>
                                 <a class="btn btn-secondary  btn-rounded"
-                                    href="{{ route('admin.properties.index') }}">Cancel</a>
+                                    href="{{ route('admin.rooms.index',['property_id'=>$property_id]) }}">Cancel</a>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Select City</label>
-                                    <select name="city" id="" class="form-select form-control" required>
-                                        <option value="">--select city--</option>
-                                        @foreach ($cities as $city)
-                                            <option value="{{ $city->id }}"
-                                                @if (old('city', $property->city_id) == $city->id) selected @endif>{{ $city->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                         
+                  <div class="col-md-6">                  
+                    <div class="form-group"> 
+                        <label for="exampleInputUsername1">Room</label>
+                        <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Name" required
+                            name="name" value="{{old('name',$room->name)}}">
+                    </div>
+                      </div>
+    
+    
+                      <div class="col-md-6">                  
+                        <div class="form-group"> 
+                            <label for="exampleInputUsername1">No of Such Room</label>
+                            <input type="number" class="form-control" id="exampleInputUsername1" placeholder="No of Room" required
+                                name="no_of_room" value="{{old('no_of_room',$room->no_of_room)}}">
+                        </div>
+                          </div>
+    
+                      <div class="col-md-6">                  
+                        <div class="form-group"> 
+                            <label for="exampleInputUsername1">One Person Price</label>
+                            <input type="number" class="form-control" id="exampleInputUsername1" placeholder="One Person Price" required
+                                name="onepersonprice" value="{{old('onepersonprice',$room->onepersonprice)}}">
+                        </div>
+                          </div>
+    
+                          <div class="col-md-6">                  
+                            <div class="form-group"> 
+                                <label for="exampleInputUsername1">Two Person Price</label>
+                                <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Two Person Price" 
+                                    name="twopersonprice" value="{{old('twopersonprice',$room->twopersonprice)}}">
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Select Property Type</label>
-                                    <select name="propertyType" id="" class="form-select form-control" required>
-                                        <option value="">--select propertyType--</option>
-                                        @foreach ($propertyTypes as $propertyType)
-                                            <option value="{{ $propertyType->id }}"
-                                                @if (old('propertyType', $property->property_type_id) == $propertyType->id) selected @endif>{{ $propertyType->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                              </div>
+    
+    
+    
+                              <div class="col-md-6">                  
+                                <div class="form-group"> 
+                                    <label for="exampleInputUsername1">Three Person Price</label>
+                                    <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Three Person Price"  name="threepersonprice" value="{{old('threepersonprice',$room->threepersonprice)}}">
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Property Name</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Name"
-                                        required name="name" value="{{ old('name', $property->name) }}">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Price Range</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1"
-                                        placeholder="1000-5000" required name="price_range"
-                                        value="{{ old('price_range', $property->price_range) }}">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Address </label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1"
-                                        placeholder="Property Address" required name="address"
-                                        value="{{ old('address', $property->address) }}">
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Latitude</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1"
-                                        placeholder="Latitude" required name="latitude"
-                                        value="{{ old('latitude', $property->latitude) }}">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Longitude</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1"
-                                        placeholder="Longitude" required name="longitude"
-                                        value="{{ old('longitude', $property->longitude) }}">
-                                </div>
-                            </div>
+                                  </div>
+    
+                                  <div class="col-md-6">                  
+                                    <div class="form-group"> 
+                                        <label for="exampleInputUsername1">Hourly Price</label>
+                                        <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Hourly price" required
+                                            name="hourlyprice" value="{{old('hourlyprice',$room->hourly_price)}}">
+                                            <small class="text-primary">Hourly Price means 3 hrs price</small>
+                                    </div>
+                                      </div>
+    
+                                      <div class="col-md-6">                  
+                                        <div class="form-group"> 
+                                            <label for="exampleInputUsername1">Discount percent (optional)</label>
+                                            <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Hourly price" 
+                                                name="discount_percent" value="{{old('discount_percent',$room->discount_percent)}}">
+                                                <small class="text-primary">It must be in percent and will be applied for all price </small>
+                                        </div>
+                                          </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -110,7 +99,7 @@
                                         multiple>
                                         @foreach ($amenities as $amenity)
                                             <option value="{{ $amenity->id }}"
-                                                @if (in_array($amenity->id, old('amenity', json_decode($property->amenity)))) selected @endif>{{ $amenity->name }}
+                                                @if (in_array($amenity->id, old('amenity', json_decode($room->amenity)))) selected @endif>{{ $amenity->name }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -121,7 +110,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Thumbnail</label>
                                     <br>
-                                    <img id="preview_thumb" src="{{ getImage($property->thumbnail) }}" width="100"
+                                    <img id="preview_thumb" src="{{ getImage($room->thumbnail) }}" width="100"
                                         height="100">
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="thumb" name="thumbnail">
@@ -132,13 +121,13 @@
                             <div class="col-md-6">
                                 <label>Gallery (Max 3 File) </label>
                                 <div id="gallery_preview" class="d-flex">
-                                    @if (json_decode($property->gallery)!=null && count(json_decode($property->gallery))>0)
-                                        @foreach (json_decode($property->gallery) as $gallery)
+                                    @if (json_decode($room->gallery)!=null && count(json_decode($room->gallery))>0)
+                                        @foreach (json_decode($room->gallery) as $gallery)
                                             <div style="position:relative;width:100px">
                                                 <img src="{{getImage($gallery) }}" alt="" width='100'
                                                     height='100'>
                                                 <a style="position:absolute;top:10px;right:10px;color:red;cursor:pointer"
-                                                    class="remove_gallery" id="{{ $gallery }}" data-id="{{$property->id}}" data-model='property'><i
+                                                    class="remove_gallery" id="{{ $gallery }}" data-id="{{$room->id}}" data-model='room'><i
                                                         class='fas fa-trash'></i></a>
                                             </div>
                                         @endforeach
@@ -152,34 +141,11 @@
                                 <small class="text-danger max_file"></small>
                             </div>
 
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="">Description</label>
-                                    <textarea name="description" id="" class="form-control" rows="2">
-                        {{ old('description', $property->description) }}
-                      </textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group pt-4">
-                                    <label> <input type="checkbox" name="top_rated" value='1'
-                                            @if (old('top_rated', $property->top_rated) == 1) checked @endif> Top Rated</label>
-
-                                    <label> <input type="checkbox" name="pet_friendly" value='1'
-                                            @if (old('pet_friendly', $property->pet_friendly) == 1) checked @endif> Pet Friendly</label>
-
-                                    <label> <input type="checkbox" name="couple_friendly" value='1'
-                                            @if (old('couple_friendly', $property->couple_friendly) == 1) checked @endif> Couple Friendly </label>
-
-                                </div>
-                            </div>
-
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Status</label>
                                     <select name="status" id="" class="form-select form-control">
-                                        <option value="1" @if (old('status', $property->status) == 1) selected @endif>Active
+                                        <option value="1" @if (old('status', $room->status) == 1) selected @endif>Active
                                         </option>
                                         <option value="0" @if (old('status') == 0) selected @endif>Inactive
                                         </option>
@@ -190,8 +156,119 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title d-flex justify-content-between">
+                            <div>
+                                <label class="d-flex align-items-center"> <input type="checkbox" value="1"
+                                        name="has_monthy_price" id="has_monthy_price"
+                                        style="height:20px!important;width:20px"> &nbsp; Month wise price variation</label>
+                            </div>
+                        </div>
+                        <div
+                            class="row has_monthy_price_show  @if (old('has_monthy_price') == 1) d-block @else d-none @endif">
 
-            <x-s-e-o :seo=$property />
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputUsername1">Price for month January</label>
+                                <input type='number' class="form-control" id="exampleInputUsername1"
+                                    placeholder="Enter  price jan" name="jan"
+                                    value="{{ old('jan', isset($room) ? $room->jan : '') }}">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputUsername1">Price for month February</label>
+                                <input type='number' class="form-control" id="exampleInputUsername1"
+                                    placeholder="Enter  price Feb" name="feb"
+                                    value="{{ old('feb', isset($room) ? $room->feb : '') }}">
+                            </div>
+
+
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputUsername1">Price for month March</label>
+                                <input type='number' class="form-control" id="exampleInputUsername1"
+                                    placeholder="Enter  price March" name="march"
+                                    value="{{ old('march', isset($room) ? $room->march : '') }}">
+                            </div>
+
+
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputUsername1">Price for month April</label>
+                                <input type='number' class="form-control" id="exampleInputUsername1"
+                                    placeholder="Enter  price April" name="april"
+                                    value="{{ old('april', isset($room) ? $room->april : '') }}">
+                            </div>
+
+
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputUsername1">Price for month June</label>
+                                <input type='number' class="form-control" id="exampleInputUsername1"
+                                    placeholder="Enter  price Jun" name="jun"
+                                    value="{{ old('jun', isset($room) ? $room->jun : '') }}">
+                            </div>
+
+
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputUsername1">Price for month july</label>
+                                <input type='number' class="form-control" id="exampleInputUsername1"
+                                    placeholder="Enter  price July" name="july"
+                                    value="{{ old('july', isset($room) ? $room->july : '') }}">
+                            </div>
+
+
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputUsername1">Price for month January</label>
+                                <input type='number' class="form-control" id="exampleInputUsername1"
+                                    placeholder="Enter  price jan" name="jan"
+                                    value="{{ old('jan', isset($room) ? $room->jan : '') }}">
+                            </div>
+
+
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputUsername1">Price for month Augest</label>
+                                <input type='number' class="form-control" id="exampleInputUsername1"
+                                    placeholder="Enter  price Augest" name="aug"
+                                    value="{{ old('aug', isset($room) ? $room->aug : '') }}">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputUsername1">Price for month September</label>
+                                <input type='number' class="form-control" id="exampleInputUsername1"
+                                    placeholder="Enter  price Sept" name="sep"
+                                    value="{{ old('sep', isset($room) ? $room->sep : '') }}">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputUsername1">Price for month October</label>
+                                <input type='number' class="form-control" id="exampleInputUsername1"
+                                    placeholder="Enter  price Oct" name="oct"
+                                    value="{{ old('oct', isset($room) ? $room->oct : '') }}">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputUsername1">Price for month November</label>
+                                <input type='number' class="form-control" id="exampleInputUsername1"
+                                    placeholder="Enter  price Nov" name="nov"
+                                    value="{{ old('nov', isset($room) ? $room->nov : '') }}">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputUsername1">Price for month December</label>
+                                <input type='number' class="form-control" id="exampleInputUsername1"
+                                    placeholder="Enter  price Dec" name="dec"
+                                    value="{{ old('dec', isset($room) ? $room->dec : '') }}">
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex justify-content-end ">
+                            <button type="submit" class="btn btn-primary mr-2 btn-rounded">Submit</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
 
     </form>
@@ -205,5 +282,9 @@
             placeholder: "Select Amenities",
             allowClear: true
         });
+
+        $('#has_monthy_price').click(function(){
+  $('.has_monthy_price_show').toggleClass('d-none')
+})
     </script>
 @endpush

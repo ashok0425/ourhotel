@@ -30,6 +30,20 @@
                         </div>
 
                         <div class="row">
+                            @if (!isset($property_id))
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputUsername1">Select Property</label>
+                              <select name="property_id" id="" class="form-control form-select">
+                                <option value="" >--select poperty--</option>
+                                @foreach ($properties as $property)
+                                <option value="{{$property->id}}" >{{$property->name}}</option>
+                                    
+                                @endforeach
+                              </select>
+                                </div>
+                            </div>    
+                            @endif
 
                             <div class="col-md-6">
                                 <div class="form-group">

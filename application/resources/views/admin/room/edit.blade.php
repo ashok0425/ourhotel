@@ -26,7 +26,7 @@
                             <div>
                                 <button type="submit" class="btn btn-primary mr-2 btn-rounded">Submit</button>
                                 <a class="btn btn-secondary  btn-rounded"
-                                    href="{{ route('admin.rooms.index',['property_id'=>$property_id]) }}">Cancel</a>
+                                    href="{{ route('admin.rooms.index',['property_id'=>$room->property_id]) }}">Cancel</a>
                             </div>
                         </div>
 

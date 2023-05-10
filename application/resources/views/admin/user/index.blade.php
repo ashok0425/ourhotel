@@ -1,15 +1,13 @@
 @extends('admin.layout.master')
 @section('content')
     <div class="card">
+      
         <div class="card-body table-responsive pt-3">
             <div class="card-title d-flex justify-content-between">
                 <div>
-                    Room List
+                    User List
                 </div>
-                <div>
-                    <a href="{{ route('admin.rooms.create',['property_id'=>$property_id]) }}" class="btn btn-primary btn-rounded btn-fw btn-sm"><i
-                            class="icon-plus menu-icon"></i> Add New</a>
-                </div>
+                
             </div>
             <table class="table table-bordered">
                 <thead>
@@ -18,15 +16,17 @@
                             #
                         </th>
                         <th>
-                            Room
+                           Name
                         </th>
                         <th>
-                            Thumbnail
+                            Email
                         </th>
                         <th>
-                            Price
+                            Phone
                         </th>
-
+                        <th>
+                            Register No
+                        </th>
                         <th>
                             Status
                         </th>
@@ -37,34 +37,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($rooms as $room)
+                    @foreach ($users as $user)
                         <tr>
                             <td>
                                 {{ $loop->iteration }}
                             </td>
                             <td>
-                                {{ $room->name }}
+                                {{ $user->name }}
+                            </td>
+                            <td>
+                                {{ $user->email }}
                             </td>
                            
                             <td>
-                               <img src="{{ getImage($room->thumbnail) }}" alt=" {{ $room->name }}" width="70" height="70">
-                            </td>
-                            <td>
-                           {{$room->onepersonprice}}
+                           {{$user->phone}}
                              </td>
+                             <td>
+                                {{Carbon\Carbon::parse($user->created_at)->format('d/m/Y')}} 
+                                
+                                  </td>
                             <td>
-                                @if ($room->status == 1)
+                                @if ($user->status == 1)
                                     <span class="badge bg-success text-white">Active</span>
                                 @else
-                                    <span class="badge bg-danger text-white">Inactive</span>
+                                    <span class="badge bg-danger text-white">Blocked</span>
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('admin.rooms.edit',[ $room,'property_id'=>$room->property_id]) }}" class="btn btn-primary btn-sm">Edit</a>
-                                <a href="{{ route('admin.rooms.destroy', [ $room,'property_id'=>$room->property_id]) }}"
-                                    class="btn btn-danger btn-sm delete_row" data-toggle="modal"
-                                    data-target="#deleteModal">Delete</a>
-
+                                <a href="{{ route('admin.users.show', $user) }}" class="btn btn-primary btn-sm">view</a>                                  
                             </td>
 
                         </tr>
@@ -74,4 +74,9 @@
             </table>
         </div>
     </div>
+
 @endsection
+
+@push('script')
+ 
+@endpush

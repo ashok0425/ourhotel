@@ -15,10 +15,23 @@ class RoomController extends Controller
     /**
      * Display a listing of the resource.
      */
+public function __construct(Request $request)
+{
+    if($request->property_id){
+        return Property::where(['user_id'=>1,'id'=>$request->property_id])->firstOrFail();
+    }
+}
+
     public function index(Request $request)
     { 
         $property_id=$request->property_id;
-        $rooms=Room::query()->where('property_id',$property_id)->orderBy('id','desc')->get();
+        if(isset($property_id)){
+            $rooms=Room::query()->where('property_id',$property_id)->orderBy('id','desc')->get();
+        }else{
+            $property=Property::where('user_id',1)->pluck('id')->toArray();
+            $rooms=Room::query()->whereIn('property_id',$property)->orderBy('id','desc')->get();
+        }
+       
         return view('admin.room.index',compact('rooms','property_id'));
     }
 
@@ -30,7 +43,8 @@ class RoomController extends Controller
 
         $property_id=$request->property_id;
         $amenities=Amenity::where('status',1)->get();
-        return view('admin.room.create',compact('property_id','amenities'));
+        $properties=Property::where('user_id',1)->get();
+        return view('admin.room.create',compact('property_id','amenities','properties'));
     }
 
     /**
@@ -45,6 +59,7 @@ class RoomController extends Controller
             'hourlyprice'=>'nullable|integer',
             'discount_percent'=>'nullable|integer',
             'no_of_room'=>'required',
+            'property_id'=>'required'
         ]);
        $room=new Room;
        $room->name=$request->name;
@@ -93,9 +108,8 @@ class RoomController extends Controller
      */
     public function edit(Request $request,Room $room)
     {
-        $property_id=$request->property_id;
         $amenities=Amenity::where('status',1)->get();
-        return view('admin.room.edit',compact('property_id','room','amenities'));
+        return view('admin.room.edit',compact('room','amenities'));
         
     }
 
@@ -124,19 +138,19 @@ class RoomController extends Controller
         $gallery=json_decode($room->gallery);
         $gallery=array_merge($gallery,$request->gallery);
         $room->gallery=json_encode($gallery);
-        $room->jan=$request->jan;
-        $room->feb=$request->feb;
-        $room->march=$request->march;
-        $room->april=$request->april;
-        $room->may=$request->may;
-        $room->jun=$request->jun;
-        $room->july=$request->july;
-        $room->aug=$request->aug;
-        $room->sep=$request->sep;
-        $room->oct=$request->oct;
-        $room->nov=$request->nov;
-        $room->dec=$request->dec;
        }
+       $room->jan=$request->jan;
+       $room->feb=$request->feb;
+       $room->march=$request->march;
+       $room->april=$request->april;
+       $room->may=$request->may;
+       $room->jun=$request->jun;
+       $room->july=$request->july;
+       $room->aug=$request->aug;
+       $room->sep=$request->sep;
+       $room->oct=$request->oct;
+       $room->nov=$request->nov;
+       $room->dec=$request->dec;
        $room->save();
        $notification=array(
         'type'=>'success',
@@ -152,6 +166,7 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
+        Property::where(['user_id'=>1,'id'=>$room->property_id])->firstOrFail();
        $room->delete();
        $notification=array(
         'type'=>'success',

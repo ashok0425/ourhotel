@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AmenityController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\PropertyController;
 use App\Http\Controllers\Admin\PropertyTypeController;
@@ -24,6 +25,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::resource('bookings', BookingController::class)->only(['index','show','update']);
 
     Route::resource('users', UserController::class);
+    Route::resource('coupons', CouponController::class);
+
 
 
 });

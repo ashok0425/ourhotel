@@ -12,9 +12,14 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users=User::all();
+        if(isset($request->partner)){
+            $users=User::where('partner',1)->orderBy('id','desc')->get();
+
+        }else{
+            $users=User::all();
+        }
         return view('admin.user.index',compact('users'));
     }
 

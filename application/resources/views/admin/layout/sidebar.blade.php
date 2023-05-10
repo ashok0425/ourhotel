@@ -190,21 +190,6 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" data-toggle="collapse" href="#user-elements" aria-expanded="false" aria-controls="user-elements">
-          <i class="icon-columns menu-icon"></i>
-          <span class="menu-title">User Managements</span>
-          <i class="menu-arrow"></i>
-        </a>
-        <div class="collapse" id="user-elements">
-          <ul class="nav flex-column sub-menu">
-            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index')}}">Users</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index')}}">Partners</a></li>
-          </ul>
-        </div>
-      </li>
-
-
-      <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#booking-elements" aria-expanded="false" aria-controls="booking-elements">
           <i class="icon-columns menu-icon"></i>
           <span class="menu-title">Booking</span>
@@ -219,11 +204,40 @@
         </div>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" href="#user-elements" aria-expanded="false" aria-controls="user-elements">
+          <i class="icon-columns menu-icon"></i>
+          <span class="menu-title">User Managements</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="user-elements">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index')}}">Users</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index',['partner'=>1])}}">Partners</a></li>
+          </ul>
+        </div>
+      </li>
+
 
       <li class="nav-item">
-        <a class="nav-link" href="{{route('admin.blogs.index')}}">
+        <a class="nav-link" data-toggle="collapse" href="#user-elements" aria-expanded="false" aria-controls="user-elements">
+          <i class="icon-columns menu-icon"></i>
+          <span class="menu-title">User Managements</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="user-elements">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index')}}">Users</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index',['partner'=>1])}}">Partners</a></li>
+          </ul>
+        </div>
+      </li>
+
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('admin.coupons.index')}}">
           <i class="fas fa-envelope menu-icon"></i>
-          <span class="menu-title">Blog</span>
+          <span class="menu-title">Coupons</span>
         </a>
       </li>
     </ul>

@@ -228,7 +228,7 @@
         <div class="collapse" id="general-elements">
           <ul class="nav flex-column sub-menu">
             <li class="nav-item"><a class="nav-link" href="{{route('admin.blogs.index')}}">Blog</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index')}}">Banner</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.banners.index')}}">Banner</a></li>
             <li class="nav-item"><a class="nav-link" href="{{route('admin.websites.edit',1)}}">cms</a></li>
           </ul>
         </div>

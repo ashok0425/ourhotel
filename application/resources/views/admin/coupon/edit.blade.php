@@ -64,7 +64,7 @@
                 <div class="form-group col-md-6">
                   <label for="exampleInputUsername1">Thumbnail</label>
                   <br> 
-                  <img id="preview_thumb" src="{{getImage($website->thumbnail)}}" width="100" height="100" >
+                  <img id="preview_thumb" src="{{getImage($coupon->thumbnail)}}" width="100" height="100" >
                   <div class="custom-file">
                     <input type="file" class="custom-file-input" id="thumb" name="thumbnail" >
                     <label class="custom-file-label" for="thumb">Choose file</label>
@@ -74,7 +74,7 @@
               <div class="form-group col-md-6">
                 <label for="exampleInputUsername1">Mobile Thumbnail</label>
                 <br> 
-                <img id="mobile_thumbnail_preview" src="{{getImage($website->mobile_thumbnail)}}" width="100" height="100" >
+                <img id="mobile_thumbnail_preview" src="{{getImage($coupon->mobile_thumbnail)}}" width="100" height="100" >
                 <div class="custom-file">
                   <input type="file" class="custom-file-input" id="mobile_thumbnail" name="mobile_thumbnail" >
                   <label class="custom-file-label" for="mobile_thumbnail">Choose file</label>

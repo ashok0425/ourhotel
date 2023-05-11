@@ -2,12 +2,12 @@
 @section('content')
     <div class="card mb-3">
         <div class="card-body">
-                    <h4><strong>Edit Coupon</strong></h4>
+                    <h4><strong>Create New Coupon</strong></h4>
             </div>
         </div>
 
 
-    <form class="forms-sample" method="POST" action="{{ route('admin.coupons.store') }}" enctype="multipart/form-data">
+    <form class="forms-sample" method="POST" action="{{ route('admin.banners.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-md-12">
@@ -16,11 +16,11 @@
  
                 <div class="card-title d-flex justify-content-between">
                     <div>
-                        Enter Coupon Detail
+                        Enter Banner Detail
                     </div>
                     <div>
                       <button type="submit" class="btn btn-primary mr-2 btn-rounded">Submit</button>
-                      <a class="btn btn-secondary  btn-rounded" href="{{ route('admin.coupons.index') }}">Cancel</a>
+                      <a class="btn btn-secondary  btn-rounded" href="{{ route('admin.banners.index') }}">Cancel</a>
                     </div>
                 </div>
 
@@ -29,36 +29,11 @@
 
 
                 <div class="form-group col-md-6"> 
-                    <label for="exampleInputUsername1">Coupon code</label>
-                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter coupon code" required
-                        name="coupon_code">
-                </div>
-
-                <div class="form-group col-md-6"> 
                   <label for="exampleInputUsername1">Title</label>
                   <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter coupon Title" required
                       name="title">
               </div>
 
-
-              <div class="form-group col-md-6"> 
-                <label for="exampleInputUsername1">Description</label>
-                <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter coupon description" required
-                    name="description">
-            </div>
-
-            
-            <div class="form-group col-md-6"> 
-              <label for="exampleInputUsername1">Coupon Value in percent</label>
-              <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Enter coupon value" required
-                  name="coupon_value">
-          </div>
-
-          <div class="form-group col-md-6"> 
-            <label for="exampleInputUsername1">Coupon Expire At</label>
-            <input type="date" class="form-control" id="exampleInputUsername1" placeholder="Enter coupon value" required
-                name="expired_at">
-        </div>
                 <div class="form-group col-md-6">
                   <label for="exampleInputUsername1">Thumbnail</label>
                   <br> 

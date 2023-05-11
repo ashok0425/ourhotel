@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->string('thumbnail')->nullable();
+            $table->string('mobile_thumbnail')->nullable();
             $table->integer('type')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();

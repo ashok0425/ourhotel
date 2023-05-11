@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AmenityController;
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\CityController;
@@ -29,6 +30,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::resource('coupons', CouponController::class);
 
     Route::resource('websites', WebsiteController::class)->only('edit','update');
+    Route::resource('banners', BannerController::class);
 
 
 });

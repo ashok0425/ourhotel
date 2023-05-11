@@ -4,10 +4,10 @@
         <div class="card-body table-responsive pt-3">
             <div class="card-title d-flex justify-content-between">
                 <div>
-                    Coupon List
+                    Banner List
                 </div>
                 <div>
-                    <a href="{{ route('admin.coupons.create') }}" class="btn btn-primary btn-rounded btn-fw btn-sm"><i
+                    <a href="{{ route('admin.banners.create') }}" class="btn btn-primary btn-rounded btn-fw btn-sm"><i
                             class="icon-plus menu-icon"></i> Add New</a>
                 </div>
             </div>
@@ -18,11 +18,9 @@
                             #
                         </th>
                         <th>
-                            Coupon
+                            Title
                         </th>
-                        <th>
-                            Discount
-                        </th>
+                        
                         <th>
                             Thumbnail
                         </th>
@@ -36,30 +34,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($coupons as $coupon)
+                    @foreach ($banners as $banner)
                         <tr>
                             <td>
                                 {{ $loop->iteration }}
                             </td>
                             <td>
-                                {{ $coupon->coupon_code }}
+                                {{ $banner->title }}
+                            </td>
+                         
+                            <td>
+                               <img src="{{ getImage($banner->thumbnail) }}" alt=" {{ $banner->title }}" width="70" height="70">
                             </td>
                             <td>
-                                {{ $coupon->coupon_value }} %
-                            </td>
-                            <td>
-                               <img src="{{ getImage($coupon->thumbnail) }}" alt=" {{ $coupon->coupon_code }}" width="70" height="70">
-                            </td>
-                            <td>
-                                @if ($coupon->status == 1)
+                                @if ($banner->status == 1)
                                     <span class="badge bg-success text-white">Active</span>
                                 @else
                                     <span class="badge bg-danger text-white">Inactive</span>
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('admin.coupons.edit', $coupon) }}" class="btn btn-primary btn-sm">Edit</a>
-                                <a href="{{ route('admin.coupons.destroy', $coupon) }}"
+                                <a href="{{ route('admin.banners.edit', $banner) }}" class="btn btn-primary btn-sm">Edit</a>
+                                <a href="{{ route('admin.banners.destroy', $banner) }}"
                                     class="btn btn-danger btn-sm delete_row" data-toggle="modal"
                                     data-target="#deleteModal">Delete</a>
 

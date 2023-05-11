@@ -33,31 +33,29 @@ class CouponController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required|max:225',
-            'state'=>'required',
-            'thumbnail'=>'required|max:2048',
+            'title'=>'required|max:225',
+            'coupon_value'=>'required',
+            'description'=>'required|max:2048',
         ]);
-        $slug=Str::slug($request->name);
-        $path=$this->uploadImage($request->thumbnail);
-       $City=new City;
-       $City->state_id=$request->state;
-       $City->name=$request->name;
-       $City->thumbnail=$path;
-       $City->slug=$slug;
-       $City->status=$request->status;
-       $City->meta_keyword=$request->meta_keyword;
-       $City->meta_title=$request->meta_title;
-       $City->meta_description=$request->meta_description;
-       $City->mobile_meta_keyword=$request->mobile_meta_keyword;
-       $City->mobile_meta_title=$request->mobile_meta_title;
-       $City->mobile_meta_description=$request->mobile_meta_description;
-       $City->save();
+        $thumbnail=$this->uploadImage($request->thumbnail);
+        $mobile_thumbnail=$this->uploadImage($request->mobile_thumbnail);
+
+       $coupon=new Coupon;
+       $coupon->title=$request->title;
+       $coupon->description=$request->description;
+       $coupon->coupon_value=$request->coupon_value;
+       $coupon->coupon_code=$request->coupon_code;
+       $coupon->status=$request->status;
+       $coupon->thumbnail=$thumbnail;
+       $coupon->expired_at=$request->expired_at;
+       $coupon->mobile_thumbnail=$mobile_thumbnail;
+       $coupon->save();
 
        $notification=array(
         'type'=>'success',
          'message'=>'City Create Sucessfully'
        );
-       return redirect()->route('admin.cities.index')->with($notification);
+       return redirect()->route('admin.coupons.index')->with($notification);
 
     }
 
@@ -71,54 +69,52 @@ class CouponController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(City $city)
+    public function edit(Coupon $coupon)
     {
-        $states=State::orderBy('id','desc')->get();
-        return view('admin.city.edit',compact('city','states'));
+        return view('admin.coupon.edit',compact('coupon'));
         
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, City $city)
+    public function update(Request $request, Coupon $coupon)
     {
         $request->validate([
-            'name'=>'required|max:225',
-            'thumbnail'=>'nullable|max:2048',
+            'title'=>'required|max:225',
+            'coupon_value'=>'required',
+            'description'=>'required|max:2048',
         ]);
-        $slug=Str::slug($request->name);
-        $path=$this->uploadImage($request->thumbnail);
-       $city->name=$request->name;
-       $city->slug=$slug;
-       $city->thumbnail=$path?$path:$city->thumbnail;
-       $city->state_id=$request->state;
-       $city->status=$request->status;
-       $city->meta_keyword=$request->meta_keyword;
-       $city->meta_title=$request->meta_title;
-       $city->meta_description=$request->meta_description;
-       $city->mobile_meta_keyword=$request->mobile_meta_keyword;
-       $city->mobile_meta_title=$request->mobile_meta_title;
-       $city->mobile_meta_description=$request->mobile_meta_description;
-       $city->save();
+        $thumbnail=$this->uploadImage($request->thumbnail);
+        $mobile_thumbnail=$this->uploadImage($request->mobile_thumbnail);
+
+       $coupon->title=$request->title;
+       $coupon->description=$request->description;
+       $coupon->coupon_value=$request->coupon_value;
+       $coupon->coupon_code=$request->coupon_code;
+       $coupon->status=$request->status;
+       $coupon->expired_at=$request->expired_at?$request->expired_at:$coupon->expired_at;
+       $coupon->thumbnail=$thumbnail!=null?$thumbnail:$coupon->thumbnail;
+       $coupon->mobile_thumbnail=$mobile_thumbnail!=null?$mobile_thumbnail:$coupon->mobile_thumbnail;
+       $coupon->save();
 
        $notification=array(
         'type'=>'success',
-         'message'=>'City Updated Sucessfully'
+         'message'=>'Coupon Updated Sucessfully'
        );
-       return redirect()->route('admin.cities.index')->with($notification);
+       return redirect()->route('admin.coupons.index')->with($notification);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(City $city)
+    public function destroy(Coupon $coupon)
     {
-       $city->delete();
+       $coupon->delete();
        $notification=array(
         'type'=>'success',
-         'message'=>'City Deleted Sucessfully'
+         'message'=>'Coupon Deleted Sucessfully'
        );
-       return redirect()->route('admin.cities.index')->with($notification);
+       return redirect()->route('admin.coupons.index')->with($notification);
     }
 }

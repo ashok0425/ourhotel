@@ -220,15 +220,16 @@
 
 
       <li class="nav-item">
-        <a class="nav-link" data-toggle="collapse" href="#user-elements" aria-expanded="false" aria-controls="user-elements">
+        <a class="nav-link" data-toggle="collapse" href="#general-elements" aria-expanded="false" aria-controls="user-elements">
           <i class="icon-columns menu-icon"></i>
-          <span class="menu-title">User Managements</span>
+          <span class="menu-title">General Setting</span>
           <i class="menu-arrow"></i>
         </a>
-        <div class="collapse" id="user-elements">
+        <div class="collapse" id="general-elements">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index')}}">Users</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index',['partner'=>1])}}">Partners</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.blogs.index')}}">Blog</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index')}}">Banner</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.websites.edit',1)}}">cms</a></li>
           </ul>
         </div>
       </li>

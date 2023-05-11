@@ -15,6 +15,11 @@ $('#thumb').change(function () {
 });
 
 
+$('#mobile_thumbnail').change(function () {
+    previewUploadImage(this, 'mobile_thumbnail_preview')
+});
+
+
 
 $('#gallery').change(function (e) {
     if($('.remove_gallery').length>=3){

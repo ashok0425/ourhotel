@@ -3,12 +3,11 @@
 use App\Http\Controllers\Admin\AmenityController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BlogController;
-use App\Http\Controllers\Admin\BookingController;
+use App\Http\Controllers\Common\BookingController;
 use App\Http\Controllers\Admin\CityController;
-use App\Http\Controllers\Admin\CmsController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\LocationController;
-use App\Http\Controllers\Admin\PropertyController;
+use App\Http\Controllers\Common\PropertyController;
 use App\Http\Controllers\Admin\PropertyTypeController;
 use App\Http\Controllers\Admin\RoomController;
 use Illuminate\Support\Facades\Route;

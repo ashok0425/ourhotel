@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Common;
 
 use App\Models\Property;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class PropertyController extends Controller
     public function index()
     {
         $properties=Property::query()->orderBy('id','desc')->get();
-        return view('admin.property.index',compact('properties'));
+        return view('common.property.index',compact('properties'));
     }
 
     /**
@@ -29,7 +29,7 @@ class PropertyController extends Controller
         $propertyTypes=PropertyType::where('status',1)->get();
         $amenities=Amenity::where('status',1)->get();
 
-        return view('admin.property.create',compact('cities','propertyTypes','amenities'));
+        return view('common.property.create',compact('cities','propertyTypes','amenities'));
     }
 
     /**
@@ -98,7 +98,7 @@ class PropertyController extends Controller
         $cities=City::where('status',1)->get();
         $propertyTypes=PropertyType::where('status',1)->get();
         $amenities=Amenity::where('status',1)->get();
-        return view('admin.property.edit',compact('property','cities','propertyTypes','amenities'));
+        return view('common.property.edit',compact('property','cities','propertyTypes','amenities'));
         
     }
 

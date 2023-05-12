@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('admin.dashboard');
+    return view('frontend.home.index');
 });
 
 Route::post('/upload-image',[ImageController::class,'upload']);

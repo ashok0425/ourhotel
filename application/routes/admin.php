@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Common\BookingController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Common\PropertyController;
 use App\Http\Controllers\Admin\PropertyTypeController;
@@ -24,12 +25,14 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::resource('properties', PropertyController::class);
     Route::resource('rooms', RoomController::class);
     Route::resource('blogs', BlogController::class);
-    Route::resource('bookings', BookingController::class)->only(['index','show','update']);
+    Route::resource('bookings', BookingController::class)->only(['index','show','update','edit']);
     Route::resource('users', UserController::class);
     Route::resource('coupons', CouponController::class);
 
     Route::resource('websites', WebsiteController::class)->only('edit','update');
     Route::resource('banners', BannerController::class);
+    Route::resource('faqs', FaqController::class);
+
 
 
 });

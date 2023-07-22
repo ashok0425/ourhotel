@@ -63,7 +63,7 @@ class AmenityController extends Controller
     public function edit(Amenity $amenity)
     {
         return view('admin.amenity.edit',compact('amenity'));
-        
+
     }
 
     /**

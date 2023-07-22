@@ -39,17 +39,17 @@
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
-}</style>  
+}</style>
 @endpush
 @section('content')
     <div class="card">
-      
+
         <div class="card-body table-responsive pt-3">
             <div class="card-title d-flex justify-content-between">
                 <div>
                     Booking List
                 </div>
-                
+
             </div>
             <table class="table table-bordered">
                 <thead>
@@ -93,12 +93,12 @@
                                 <br>
                                 {{ $booking->phone }}
                             </td>
-                           
+
                             <td>
                            {{$booking->property->name}}
                              </td>
                              <td>
-                                {{Carbon\Carbon::parse($booking->check_in)->format('d/m/Y')}} ({{Carbon\Carbon::parse($booking->booked_hour_from)->format('G:i:A')}}) 
+                                {{Carbon\Carbon::parse($booking->check_in)->format('d/m/Y')}} ({{Carbon\Carbon::parse($booking->booked_hour_from)->format('G:i:A')}})
                                 <br>
                                 {{Carbon\Carbon::parse($booking->check_out)->format('d/m/Y')}}
                                 ({{Carbon\Carbon::parse($booking->booked_hour_to)->format('G:i:A')}})
@@ -122,6 +122,7 @@
                             <td>
                                 <a url="{{ route('admin.bookings.show', $booking) }}" class="btn btn-primary btn-sm" onclick="openNav(this)" >view</a>
                                 <a url="{{ route('admin.bookings.update', $booking) }}" class="btn btn-primary btn-sm updateSatusBtn" data-toggle="modal" data-target="#updatestatus" ><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin.bookings.edit', $booking) }}" class="btn btn-danger btn-sm" ><i class="fas fa-download"></i></a>
                             </td>
 
                         </tr>
@@ -134,12 +135,12 @@
 {{-- side nav for booking detail  --}}
 <div class="sideNavBar" onclick="">
     <div id="mySidenav" class="sidenav">
-       
+
      <div class="content"></div>
       </div>
     </div>
 
-  
+
   <!-- Modal -->
   <div class="modal fade" id="updatestatus" tabindex="-1" role="dialog" aria-labelledby="updatestatusLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -151,7 +152,7 @@
           </button>
         </div>
         <div class="modal-body  pb-2">
-        
+
             <form action="" method="POST" id="updateSatusForm">
                 @method('PATCH')
                 @csrf
@@ -161,7 +162,7 @@
                     <option value="3">Checkout</option>
                     <option value="4">Cancel</option>
                 </select>
-     
+
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary  btn-rounded" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary btn-rounded">Save changes</button>
@@ -175,7 +176,7 @@
 @endsection
 
 @push('script')
-    
+
 <script>
     function openNav(ele) {
         url=ele.getAttribute('url')
@@ -190,7 +191,7 @@
         }
       })
     }
-    
+
     function closeNav() {
       document.getElementById("mySidenav").style.width = "0";
       document.querySelector('.sideNavBar').style.width = "0";

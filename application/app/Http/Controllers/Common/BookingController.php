@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Common;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class BookingController extends Controller
 {
     /**
@@ -50,7 +52,10 @@ class BookingController extends Controller
      */
     public function edit(Booking $booking)
     {
-        //
+        $booking_id=$booking->booking_id;
+        $pdf = Pdf::loadView('common.booking.print', ['booking_id'=>$booking_id]);
+      return $pdf->download('invoice.pdf');
+        // return view('common.booking.print',compact('booking_id'));
     }
 
     /**

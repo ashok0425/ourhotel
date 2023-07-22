@@ -16,9 +16,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('frontend.home.index');
-});
+    return view('admin.dashboard');
+})->name('/');
 
 Route::post('/upload-image',[ImageController::class,'upload']);
 Route::get('/delete-image',[ImageController::class,'delete']);
+
+Route::get('/print', function () {
+    return view('common.booking.print');
+});
 

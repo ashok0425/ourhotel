@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Amenity;
 use App\Models\City;
 use App\Models\PropertyType;
+use App\Models\State;
+use App\Models\User;
 use Str;
 class PropertyController extends Controller
 {
@@ -28,8 +30,10 @@ class PropertyController extends Controller
         $cities=City::where('status',1)->get();
         $propertyTypes=PropertyType::where('status',1)->get();
         $amenities=Amenity::where('status',1)->get();
+        $partners=User::where('partner',1)->get();
+        $states=State::where('status',1)->get();
 
-        return view('common.property.create',compact('cities','propertyTypes','amenities'));
+        return view('common.property.create',compact('cities','states','propertyTypes','amenities','partners'));
     }
 
     /**
@@ -37,7 +41,7 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
-      
+
         $request->validate([
             'name'=>'required|max:225',
             'thumbnail'=>'required|max:2048',
@@ -95,11 +99,12 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
+        $partners=User::where('partner',1)->get();
         $cities=City::where('status',1)->get();
         $propertyTypes=PropertyType::where('status',1)->get();
         $amenities=Amenity::where('status',1)->get();
-        return view('common.property.edit',compact('property','cities','propertyTypes','amenities'));
-        
+        return view('common.property.edit',compact('property','partners','cities','propertyTypes','amenities'));
+
     }
 
     /**

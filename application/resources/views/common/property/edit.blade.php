@@ -33,6 +33,28 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="exampleInputUsername1">Property Name</label>
+                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Name"
+                                        required name="name" value="{{ old('name', $property->name) }}">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1">Select Partner</label>
+                                  <select name="partner" id="" class="form-select form-control" required>
+                                       <option value="">--select select partner--</option>
+                                       @foreach ($partners as $partner)
+                                      <option value="{{$partner->id}}" @if (old('partner',$property->owner_id)==$partner->id)
+                                          selected
+                                      @endif>{{$partner->name}}</option>
+                                       @endforeach
+                                  </select>
+                              </div>
+                                  </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">Select City</label>
                                     <select name="city" id="" class="form-select form-control" required>
                                         <option value="">--select city--</option>
@@ -55,13 +77,6 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputUsername1">Property Name</label>
-                                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Name"
-                                        required name="name" value="{{ old('name', $property->name) }}">
                                 </div>
                             </div>
 

@@ -19,6 +19,7 @@
           <ul class="nav flex-column sub-menu">
             <li class="nav-item"> <a class="nav-link" href="{{route('admin.states.index')}}">State</a></li>
             <li class="nav-item"> <a class="nav-link" href="{{route('admin.cities.index')}}">City</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{route('admin.categories.index')}}">Category</a></li>
             <li class="nav-item"> <a class="nav-link" href="{{route('admin.locations.index')}}">Location</a></li>
             <li class="nav-item"> <a class="nav-link" href="{{route('admin.propertyTypes.index')}}">Property Type</a></li>
             <li class="nav-item"> <a class="nav-link" href="{{route('admin.amenities.index')}}">Amenity</a></li>

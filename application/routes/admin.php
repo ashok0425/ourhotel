@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AmenityController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Common\BookingController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CouponController;
@@ -32,6 +33,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::resource('websites', WebsiteController::class)->only('edit','update');
     Route::resource('banners', BannerController::class);
     Route::resource('faqs', FaqController::class);
+    Route::resource('categories', CategoryController::class);
+
 
 
 

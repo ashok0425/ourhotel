@@ -23,13 +23,13 @@
     <div class="container-fluid page-body-wrapper">
       @include('admin.layout.sidebar')
       <div class="content-wrapper">
-     
+
           <x-errormsg/>
       <!-- partial -->
       @yield('content')
-      
+
       </div>
-    </div>  
+    </div>
   </div>
 
 
@@ -65,14 +65,17 @@
   @stack('script')
 
   <script>
-    $(document).ready(function(){
-     //delete row
-     $(document).on('click','.delete_row',function(){
-      let url=$(this).attr('href');
-      $('#delete_form').attr('action',url)
-     })
+    let delete_rows=document.querySelectorAll('.delete_row');
+    let from=document.querySelector('#delete_form');
 
-    })
+    delete_rows.forEach(function (ele) {
+       ele.addEventListener('click',function(){
+        let url=ele.href;
+        from.setAttribute('action',url)
+       })
+
+    });
+
   </script>
 </body>
 

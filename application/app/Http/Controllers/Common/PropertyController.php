@@ -6,11 +6,12 @@ use App\Models\Property;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Amenity;
+use App\Models\Category;
 use App\Models\City;
 use App\Models\PropertyType;
 use App\Models\State;
 use App\Models\User;
-use Str;
+use Illuminate\Support\Str;
 class PropertyController extends Controller
 {
     /**
@@ -32,8 +33,9 @@ class PropertyController extends Controller
         $amenities=Amenity::where('status',1)->get();
         $partners=User::where('partner',1)->get();
         $states=State::where('status',1)->get();
+        $categories=Category::where('status',1)->get();
 
-        return view('common.property.create',compact('cities','states','propertyTypes','amenities','partners'));
+        return view('common.property.create',compact('cities','states','propertyTypes','amenities','partners','categories'));
     }
 
     /**
@@ -51,16 +53,20 @@ class PropertyController extends Controller
             'price_range'=>'required',
             'description'=>'required',
         ]);
+
+       $path=$this->uploadImage($request->thumbnail);
+
         $slug=Str::slug($request->name);
        $property=new Property;
        $property->name=$request->name;
        $property->city_id=$request->city;
        $property->user_id=1;
        $property->property_type_id=$request->propertyType;
+       $property->category_id=$request->category;
        $property->slug=$slug;
        $property->status=$request->status;
        $property->description=$request->description;
-       $property->amenity=json_encode($request->amenity);
+       $property->amenity=$request->amenity;
        $property->longitude=$request->longitude;
        $property->latitude=$request->latitude;
        $property->address=$request->address;
@@ -75,9 +81,8 @@ class PropertyController extends Controller
        $property->mobile_meta_keyword=$request->mobile_meta_keyword;
        $property->mobile_meta_title=$request->mobile_meta_title;
        $property->mobile_meta_description=$request->mobile_meta_description;
-       $path=$this->uploadImage($request->thumbnail);
        $property->thumbnail=$path;
-       $property->gallery=json_encode($request->gallery);
+       $property->gallery=$request->gallery;
        $property->save();
        $notification=array(
         'type'=>'success',
@@ -103,7 +108,9 @@ class PropertyController extends Controller
         $cities=City::where('status',1)->get();
         $propertyTypes=PropertyType::where('status',1)->get();
         $amenities=Amenity::where('status',1)->get();
-        return view('common.property.edit',compact('property','partners','cities','propertyTypes','amenities'));
+        $categories=Category::where('status',1)->get();
+
+        return view('common.property.edit',compact('property','partners','cities','propertyTypes','amenities','categories'));
 
     }
 
@@ -170,5 +177,12 @@ class PropertyController extends Controller
          'message'=>'Property Deleted Sucessfully'
        );
        return redirect()->route('admin.Propertys.index')->with($notification);
+    }
+
+
+    public function getCity($stateId)
+    {
+       $cities=City::where('state_id',$stateId)->select('name','id')->get();
+       return response()->json($cities);
     }
 }

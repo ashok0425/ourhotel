@@ -51,7 +51,7 @@
 
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Select Property Type</label>
+                      <label for="exampleInputEmail1">Select  Type</label>
                       <select name="propertyType" id="" class="form-select form-control" required>
                            <option value="">--select propertyType--</option>
                            @foreach ($propertyTypes as $propertyType)
@@ -63,6 +63,21 @@
                       </select>
                   </div>
                       </div>
+
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Select Category</label>
+                          <select name="partner" id="" class="form-select form-control" required>
+                               <option value="">--select category--</option>
+                               @foreach ($categories as $category)
+                              <option value="{{$category->id}}" @if (old('category')==$category->id)
+                                  selected
+                              @endif>{{$category->name}}</option>
+                               @endforeach
+                          </select>
+                      </div>
+                          </div>
 
 
                   <div class="col-md-6">
@@ -135,7 +150,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="exampleInputEmail1">Select State</label>
-                      <select name="state" id="" class="form-select form-control" required>
+                      <select name="state" id="state" class="form-select form-control" required>
                            <option value="">--select State--</option>
                            @foreach ($states as $state)
                           <option value="{{$state->id}}" @if (old('state')==$state->id)
@@ -238,5 +253,17 @@ $("#amenities").select2({
   placeholder: "Select Amenities",
     allowClear: true
 });
+
+//ajax call to get cities
+$('#state').change(function(){
+    let stateId=$(this).val();
+    let url =`/getCity/${stateId}`
+    $.ajax({
+    url:url,
+    success:function(res){
+        console.log(res);
+    }
+})
+})
     </script>
 @endpush

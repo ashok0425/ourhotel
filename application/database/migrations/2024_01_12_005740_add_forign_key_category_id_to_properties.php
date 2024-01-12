@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('faqs', function (Blueprint $table) {
-            $table->id();
-            $table->text('question');
-            $table->foreignId('city_id')->nullable()->constrained()->nullOnDelete();
-            $table->text('answer');
-            $table->text('status')->default(1);
-            $table->timestamps();
+        Schema::table('properties', function (Blueprint $table) {
+            $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
         });
     }
 
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('faqs');
+        Schema::table('properties', function (Blueprint $table) {
+            //
+        });
     }
 };

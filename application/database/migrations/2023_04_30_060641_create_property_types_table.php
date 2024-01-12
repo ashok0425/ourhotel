@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('property_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('category_id');
             $table->string('slug');
             $table->string('meta_keyword')->nullable();
             $table->text('meta_description')->nullable();

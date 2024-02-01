@@ -9,7 +9,10 @@ class Property extends Model
 {
     use HasFactory;
 
-    protected $casts=['gallery','amenity'];
+    protected $casts=[
+    'gallery'=>"array",
+    'amenities'=>'array'
+];
 
    public function user(){
         return $this->belongsTo(User::class);

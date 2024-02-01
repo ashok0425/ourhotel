@@ -14,7 +14,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs=Blog::query()->orderBy('id','desc')->get();
+        $blogs=Blog::query()->orderBy('id','desc')->paginate(12);
         return view('admin.blog.index',compact('blogs'));
     }
 
@@ -73,7 +73,7 @@ class BlogController extends Controller
     public function edit(Blog $blog)
     {
         return view('admin.blog.edit',compact('blog'));
-        
+
     }
 
     /**

@@ -65,5 +65,6 @@
                 </tbody>
             </table>
         </div>
+        {{$blogs->withQueryString()->links()}}
     </div>
 @endsection

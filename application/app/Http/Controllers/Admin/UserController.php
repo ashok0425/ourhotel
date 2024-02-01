@@ -14,12 +14,14 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $users=User::where('is_agent',0)->where('is_admin',0);
         if(isset($request->partner)){
-            $users=User::where('partner',1)->orderBy('id','desc')->get();
-
+            $users=$users->where('is_partner',1);
         }else{
-            $users=User::all();
+            $users=$users->where('is_partner',0);
         }
+
+        $users=$users->paginate(25);
         return view('admin.user.index',compact('users'));
     }
 

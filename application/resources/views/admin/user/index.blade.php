@@ -1,15 +1,15 @@
 @extends('admin.layout.master')
 @section('content')
     <div class="card">
-      
+
         <div class="card-body table-responsive pt-3">
             <div class="card-title d-flex justify-content-between">
                 <div>
                     User List
                 </div>
-                
+
             </div>
-            <table class="table table-bordered">
+            <table class="table table-bordered w-100">
                 <thead>
                     <tr>
                         <th>
@@ -48,13 +48,13 @@
                             <td>
                                 {{ $user->email }}
                             </td>
-                           
+
                             <td>
                            {{$user->phone}}
                              </td>
                              <td>
-                                {{Carbon\Carbon::parse($user->created_at)->format('d/m/Y')}} 
-                                
+                                {{Carbon\Carbon::parse($user->created_at)->format('d/m/Y')}}
+
                                   </td>
                             <td>
                                 @if ($user->status == 1)
@@ -64,7 +64,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('admin.users.show', $user) }}" class="btn btn-primary btn-sm">view</a>                                  
+                                <a href="{{ route('admin.users.show', $user) }}" class="btn btn-primary btn-sm">view</a>
                             </td>
 
                         </tr>
@@ -73,10 +73,11 @@
                 </tbody>
             </table>
         </div>
+        {{$users->withQueryString()->links()}}
     </div>
 
 @endsection
 
 @push('script')
- 
+
 @endpush

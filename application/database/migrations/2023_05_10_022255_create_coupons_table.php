@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
-            $table->string('description')->nullable();
-            $table->string('coupon_code')->nullable();
-            $table->integer('minimum_value')->nullable();
+            $table->string('coupon_name')->nullable();
+            $table->integer('coupon_min')->nullable();
+            $table->integer('coupon_percent')->nullable();
             $table->dateTime('expired_at')->nullable();
-            $table->integer('coupon_value')->nullable();
             $table->string('thumbnail')->nullable();
             $table->string('mobile_thumbnail')->nullable();
+            $table->string('descr')->nullable();
+            $table->string('link')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

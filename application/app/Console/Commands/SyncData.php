@@ -39,6 +39,8 @@ class SyncData extends Command
         DB::connection('mysql')->table('blogs')->delete();
         DB::connection('mysql')->table('properties')->delete();
         DB::connection('mysql')->table('bookings')->delete();
+        DB::connection('mysql')->table('rooms')->delete();
+        DB::connection('mysql')->table('testimonials')->delete();
 
 
         //states
@@ -85,6 +87,7 @@ class SyncData extends Command
         foreach ($amenities as $key => $amenity) {
             $name=DB::connection("mysql_2")->table('amenities_translations')->where('amenities_id',$amenity->id)->first();
            DB::connection('mysql')->table('amenities')->insert([
+            'id'=>$amenity->id,
             'name'=>$name->name,
             'status'=>1,
             'thumbnail'=>$amenity->icon,
@@ -97,6 +100,7 @@ class SyncData extends Command
         $city_locations=DB::connection("mysql_2")->table('city_location')->get();
         foreach ($city_locations as $key => $city_location) {
            DB::connection('mysql')->table('locations')->insert([
+            'id'=>$city_location->id,
             'name'=>$city_location->location_name,
             'status'=>1,
             'city_id'=>$city_location->city_id,
@@ -117,6 +121,7 @@ class SyncData extends Command
           foreach ($categories as $key => $category) {
               $name=DB::connection("mysql_2")->table('category_translations')->where('category_id',$category->id)->first();
              DB::connection('mysql')->table('categories')->insert([
+            'id'=>$category->id,
               'name'=>$name->name,
               'status'=>1,
               'meta_keyword'=>$category->seo_title,
@@ -135,12 +140,134 @@ class SyncData extends Command
         foreach ($types as $key => $type) {
             $name=DB::connection("mysql_2")->table('place_type_translations')->where('place_type_id',$type->id)->first();
            DB::connection('mysql')->table('property_types')->insert([
+            'id'=>$type->id,
             'name'=>$name->name,
             'category_id'=>$type->category_id,
             'status'=>1,
             'slug'=>Str::slug($name->name)
            ]);
         }
+
+
+        //customer feeback for website
+        $testimonials=DB::connection("mysql_2")->table('testimonials')->get();
+        foreach ($testimonials as $key => $testimonial) {
+            $name=DB::connection("mysql_2")->table('testimonial_translations')->where('testimonial_id',$testimonial->id)->first();
+           DB::connection('mysql')->table('testimonials')->insert([
+            'name'=>$name?->name,
+            'position'=>$name->job_title,
+            'status'=>$testimonial->status,
+            'feedback'=>$name->content
+           ]);
+        }
+
+
+        //customer feeback for hotels
+        $testimonials=DB::connection("mysql_2")->table('reviews')->get();
+        foreach ($testimonials as $key => $testimonial) {
+            $user=DB::connection("mysql_2")->table('users')->where('id',$testimonial->id)->first();
+           DB::connection('mysql')->table('testimonials')->insert([
+            'name'=>$user?->name,
+            'position'=>'',
+            'status'=>$testimonial->status,
+            'feedback'=>$testimonial->comment,
+            'rating'=>$testimonial->score,
+            'user_id'=>$testimonial->user_id,
+            'property_id'=>$testimonial->place_id,
+            'created_at'=>$testimonial->created_at,
+            'updated_at'=>$testimonial->updated_at,
+
+           ]);
+        }
+
+
+          //customer feeback for hotels
+          $testimonials=DB::connection("mysql_2")->table('hotel_reviews')->get();
+          foreach ($testimonials as $key => $testimonial) {
+              $user=DB::connection("mysql_2")->table('users')->where('id',$testimonial->id)->first();
+             DB::connection('mysql')->table('testimonials')->insert([
+              'name'=>$user?->name,
+              'position'=>'',
+              'status'=>1,
+              'feedback'=>$testimonial->feedback,
+              'rating'=>$testimonial->rating,
+              'user_id'=>$testimonial->user_id,
+              'property_id'=>$testimonial->product_id,
+              'created_at'=>$testimonial->created_at,
+              'updated_at'=>$testimonial->updated_at,
+
+             ]);
+          }
+
+
+        //   Tax data sync
+
+
+        $taxes=DB::connection("mysql_2")->table('tax')->get();
+        foreach ($taxes as $key => $tax) {
+           DB::connection('mysql')->table('taxes')->insert([
+            'price_min'=>$tax->price_min,
+            'price_max'=>$tax->price_max,
+            'percentage'=>$tax->percentage,
+            'created_at'=>$tax->created_at,
+            'updated_at'=>$tax->updated_at,
+
+           ]);
+        }
+
+
+    // tour booking
+        $tours=DB::connection("mysql_2")->table('tour_bookings')->get();
+        foreach ($tours as $key => $tour) {
+           DB::connection('mysql')->table('tour_bookings')->insert([
+            'booking_id'=>$tour->booking_id,
+            'tour_name'=>$tour->tour_name,
+            'start_date'=>$tour->start_date,
+            'end_date'=>$tour->end_date,
+            'end_date'=>$tour->end_date,
+            'end_date'=>$tour->end_date,
+            'remark'=>$tour->remark,
+            'status'=>$tour->status,
+            'amount'=>$tour->amount,
+            'paid_amount'=>$tour->paid_amount,
+            'no_of_adult'=>$tour->adult,
+            'no_of_child'=>$tour->children,
+            'created_at'=>$tour->created_at,
+            'updated_at'=>$tour->updated_at
+
+           ]);
+        }
+
+
+        //notification message
+        $notifications = DB::connection("mysql_2")->table('fcm_notify')->get();
+        foreach ($notifications as $key => $notification) {
+           DB::connection('mysql')->table('fcm_notifications')->insert([
+               'title'=>$notification->title,
+               'body'=>$notification->body,
+               'userIds'=>$notification->user_ids,
+               'user_count'=>100,
+               'success_count'=>100,
+               'created_at'=>now(),
+               'updated_at'=>now()
+           ]);
+        }
+
+
+         //corporates
+         $corporates = DB::connection("mysql_2")->table('corporate')->get();
+         foreach ($corporates as $key => $corporate) {
+            DB::connection('mysql')->table('corporates')->insert([
+                'user_id'=>$corporate->user_id,
+                'name'=>$corporate->name,
+                'company_name'=>$corporate->company_name,
+                'gst_no'=>$corporate->gst_no,
+                'address'=>$corporate->address,
+                'year_book_day'=>$corporate->year_book_day,
+                'month_book_day'=>$corporate->month_book_day,
+                'location'=>$corporate->location,
+            ]);
+         }
 
 
         // Faqs
@@ -153,6 +280,21 @@ class SyncData extends Command
             'status'=>1,
            ]);
         }
+
+
+         // coupons
+         $coupons=DB::connection("mysql_2")->table('coupon')->get();
+         foreach ($coupons as $key => $coupon) {
+            DB::connection('mysql')->table('coupons')->insert([
+             'coupon_name'=>$coupon->coupon_name,
+             'coupon_min'=>$coupon->coupon_min,
+             'coupon_percent'=>$coupon->coupon_percent,
+             'thumbnail'=>$coupon->thumb,
+             'mobile_thumbnail'=>$coupon->mobile_image,
+             'expired_at'=>$coupon->expired_at,
+             'link'=>$coupon->link
+            ]);
+         }
 
           // Blogs
           $blogs=DB::connection("mysql_2")->table('posts')->get();
@@ -178,6 +320,7 @@ class SyncData extends Command
         $users=DB::connection("mysql_2")->table('users')->get();
         foreach ($users as $key => $user) {
            DB::connection('mysql')->table('users')->insert([
+            'id'=>$user->id,
             'name'=>$user->name??'Guest',
             'email'=>$user->email,
             'password'=>$user->password,
@@ -205,6 +348,7 @@ class SyncData extends Command
             $amenities = is_array($place->amenities) ? json_encode($place->amenities) : $place->amenities;
         $amenities = Str::isJson($amenities) ? $amenities : null;
            DB::connection('mysql')->table('properties')->insert([
+            'id'=>$place->id,
             'property_id'=>$place->hotel_id??null,
             'city_id'=>$place->city_id,
             'state_id'=>$place->country_id,
@@ -235,38 +379,70 @@ class SyncData extends Command
         }
 
 
+      //   Rooms
+      $rooms=DB::connection("mysql_2")->table('rooms')->where('hotel_id','!=',null)->get();
+      foreach ($rooms as $key => $room) {
+          $name=DB::connection('mysql_2')->table('room_translations')->where('room_id',$room->id)->value('name');
+         DB::connection('mysql')->table('rooms')->insert([
+          'id'=>$room->id,
+          'property_id'=>$room->hotel_id??null,
+          'name'=>$name,
+          'slug'=>Str::slug($name),
+          'hourlyprice'=>$room->hourlyprice,
+          'onepersonprice'=>$room->onepersonprice,
+          'twopersonprice'=>$room->twopersonprice,
+          'threepersonprice'=>$room->threepersonprice,
+          'discount_percent'=>$room->discount_percent,
+          'created_at'=>$room->created_at,
+          'updated_at'=>$room->updated_at,
+          'beds'=>$room->beds,
+          'size'=>$room->size,
+          'adults'=>$room->adults,
+          'children'=>$room->children,
+          'amenity'=>Str::isJson($room->amenities)?$room->amenities :null,
+          'gallery'=>Str::isJson($room->gallery)?$room->gallery :null,
+          'no_of_room'=>$room->number,
+          'no_of_booked_room'=>0
+         ]);
+      }
+
+
 
      // Bookings
-    //  $bookings=DB::connection("mysql_2")->table('bookings')->get();
-    //  foreach ($bookings as $key => $booking) {
-    //     DB::connection('mysql')->table('bookings')->insert([
-    //      'booking_id'=>$booking->booking_id??rand(1,90999099),
-    //      'user_id'=>$booking->user_id,
-    //      'property_id'=>$booking->place_id,
-    //      'no_of_adult'=>$booking->numbber_of_adult	??0,
-    //      'no_of_child'=>$booking->numbber_of_children??1,
-    //      'no_of_room'=>$booking->nummber_of_room??0,
-    //      'no_of_night'=>$booking->no_of_night??1,
-    //      'created_at'=>$booking->created_at,
-    //      'updated_at'=>$booking->updated_at,
-    //      'final_amount'=>$booking->amount,
-    //      'total_price'=>$booking->amount,
-    //      'discount'=>$booking->discountPrice,
-    //      'coupon_code'=>$booking->coupon_code,
-    //      'tax'=>$booking->tax,
-    //      'name'=>$booking->name,
-    //      'email'=>$booking->email,
-    //      'phone_number'=>$booking->phone_number,
-    //      'early_reason'=>$booking->early_reason,
-    //      'cancel_reason'=>$booking->cancel_reason,
-    //      'is_paid'=>$booking->is_paid,
-    //      'booked_by'=>$booking->booked_by,
-    //      'booking_from'=>$booking->booking_from,
-    //      'refer_amount_spent'=>$booking->refer_amount_spent,
-    //      'refer_id'=>$booking->refer_id,
-    //      'payment_type'=>$booking->payment_type,
-    //     ]);
-    //  }
+     $bookings=DB::connection("mysql_2")->table('bookings')->get();
+     foreach ($bookings as $key => $booking) {
+
+        DB::connection('mysql')->table('bookings')->insert([
+         'booking_id'=>$booking->booking_id??rand(1,90999099),
+         'user_id'=>$booking->user_id,
+         'user_id'=>$booking->user_id,
+         'property_id'=>$booking->place_id,
+         'no_of_adult'=>$booking->numbber_of_adult	??0,
+         'no_of_child'=>$booking->numbber_of_children??1,
+         'no_of_room'=>$booking->nummber_of_room??0,
+         'no_of_night'=>$booking->no_of_night??1,
+         'created_at'=>$booking->created_at,
+         'updated_at'=>$booking->updated_at,
+         'final_amount'=>$booking->amount,
+         'total_price'=>$booking->amount,
+         'discount'=>$booking->discountPrice,
+         'coupon_code'=>$booking->coupon_code,
+         'tax'=>$booking->tax,
+         'name'=>$booking->name,
+         'email'=>$booking->email,
+         'phone_number'=>$booking->phone_number,
+         'early_reason'=>$booking->early_reason,
+         'cancel_reason'=>$booking->cancel_reason,
+         'is_paid'=>$booking->is_paid!=''?$booking->is_paid:0,
+         'booked_by'=>$booking->booked_by,
+         'channel'=>$booking->booking_from,
+         'booking_type'=>$booking->booking_type,
+         'room_type'=>$booking->room_type,
+         'refer_amount_spent'=>$booking->refer_amount_spent,
+         'refer_id'=>$booking->refer_id,
+         'payment_type'=>$booking->payment_type,
+        ]);
+     }
 
 
     }

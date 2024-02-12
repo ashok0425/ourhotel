@@ -15,7 +15,7 @@
         @csrf
         @method('PATCH')
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
 
@@ -31,62 +31,62 @@
                         </div>
 
                         <div class="row">
-                         
-                  <div class="col-md-6">                  
-                    <div class="form-group"> 
+
+                  <div class="col-md-6">
+                    <div class="form-group">
                         <label for="exampleInputUsername1">Room</label>
                         <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Name" required
                             name="name" value="{{old('name',$room->name)}}">
                     </div>
                       </div>
-    
-    
-                      <div class="col-md-6">                  
-                        <div class="form-group"> 
+
+
+                      <div class="col-md-6">
+                        <div class="form-group">
                             <label for="exampleInputUsername1">No of Such Room</label>
                             <input type="number" class="form-control" id="exampleInputUsername1" placeholder="No of Room" required
                                 name="no_of_room" value="{{old('no_of_room',$room->no_of_room)}}">
                         </div>
                           </div>
-    
-                      <div class="col-md-6">                  
-                        <div class="form-group"> 
+
+                      <div class="col-md-6">
+                        <div class="form-group">
                             <label for="exampleInputUsername1">One Person Price</label>
                             <input type="number" class="form-control" id="exampleInputUsername1" placeholder="One Person Price" required
                                 name="onepersonprice" value="{{old('onepersonprice',$room->onepersonprice)}}">
                         </div>
                           </div>
-    
-                          <div class="col-md-6">                  
-                            <div class="form-group"> 
+
+                          <div class="col-md-6">
+                            <div class="form-group">
                                 <label for="exampleInputUsername1">Two Person Price</label>
-                                <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Two Person Price" 
+                                <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Two Person Price"
                                     name="twopersonprice" value="{{old('twopersonprice',$room->twopersonprice)}}">
                             </div>
                               </div>
-    
-    
-    
-                              <div class="col-md-6">                  
-                                <div class="form-group"> 
+
+
+
+                              <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="exampleInputUsername1">Three Person Price</label>
                                     <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Three Person Price"  name="threepersonprice" value="{{old('threepersonprice',$room->threepersonprice)}}">
                                 </div>
                                   </div>
-    
-                                  <div class="col-md-6">                  
-                                    <div class="form-group"> 
+
+                                  <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="exampleInputUsername1">Hourly Price</label>
                                         <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Hourly price" required
-                                            name="hourlyprice" value="{{old('hourlyprice',$room->hourly_price)}}">
+                                            name="hourlyprice" value="{{old('hourlyprice',$room->hourlyprice)}}">
                                             <small class="text-primary">Hourly Price means 3 hrs price</small>
                                     </div>
                                       </div>
-    
-                                      <div class="col-md-6">                  
-                                        <div class="form-group"> 
+
+                                      <div class="col-md-6">
+                                        <div class="form-group">
                                             <label for="exampleInputUsername1">Discount percent (optional)</label>
-                                            <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Hourly price" 
+                                            <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Discount percent"
                                                 name="discount_percent" value="{{old('discount_percent',$room->discount_percent)}}">
                                                 <small class="text-primary">It must be in percent and will be applied for all price </small>
                                         </div>
@@ -99,7 +99,7 @@
                                         multiple>
                                         @foreach ($amenities as $amenity)
                                             <option value="{{ $amenity->id }}"
-                                                @if (in_array($amenity->id, old('amenity', json_decode($room->amenity)))) selected @endif>{{ $amenity->name }}
+                                                @if ($room->amenity&&in_array($amenity->id, old('amenity', $room->amenity))) selected @endif>{{ $amenity->name }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -110,7 +110,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Thumbnail</label>
                                     <br>
-                                    <img id="preview_thumb" src="{{ getImage($room->thumbnail) }}" width="100"
+                                    <img id="preview_thumb" src="{{ getImageUrl($room->thumbnail) }}" width="100"
                                         height="100">
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="thumb" name="thumbnail">
@@ -121,10 +121,10 @@
                             <div class="col-md-6">
                                 <label>Gallery (Max 3 File) </label>
                                 <div id="gallery_preview" class="d-flex">
-                                    @if (json_decode($room->gallery)!=null && count(json_decode($room->gallery))>0)
-                                        @foreach (json_decode($room->gallery) as $gallery)
+                                    @if (count($room->gallery)>0)
+                                        @foreach ($room->gallery as $gallery)
                                             <div style="position:relative;width:100px">
-                                                <img src="{{getImage($gallery) }}" alt="" width='100'
+                                                <img src="{{getImageUrl($gallery) }}" alt="" width='100'
                                                     height='100'>
                                                 <a style="position:absolute;top:10px;right:10px;color:red;cursor:pointer"
                                                     class="remove_gallery" id="{{ $gallery }}" data-id="{{$room->id}}" data-model='room'><i
@@ -147,7 +147,7 @@
                                     <select name="status" id="" class="form-select form-control">
                                         <option value="1" @if (old('status', $room->status) == 1) selected @endif>Active
                                         </option>
-                                        <option value="0" @if (old('status') == 0) selected @endif>Inactive
+                                        <option value="0" @if (old('status',$room->status) == 0) selected @endif>Inactive
                                         </option>
                                     </select>
                                 </div>
@@ -156,7 +156,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            {{-- <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title d-flex justify-content-between">
@@ -268,7 +268,7 @@
                 </div>
 
 
-            </div>
+            </div> --}}
         </div>
 
     </form>

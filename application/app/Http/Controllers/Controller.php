@@ -15,7 +15,7 @@ class Controller extends BaseController
         if($file){
             $extension = $file->getClientOriginalExtension();
             $filename = uniqid(). time() . '.' . $extension;
-             $file->storeAs('uploads/',$filename,'public');
+            $file->storeAs('uploads/',$filename,'s3');
               return $filename;
         }
      return '';

@@ -19,7 +19,7 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        $properties=Property::query()->orderBy('id','desc')->get();
+        $properties=Property::query()->orderBy('id','desc')->paginate(15);
         return view('common.property.index',compact('properties'));
     }
 
@@ -31,7 +31,7 @@ class PropertyController extends Controller
         $cities=City::where('status',1)->get();
         $propertyTypes=PropertyType::where('status',1)->get();
         $amenities=Amenity::where('status',1)->get();
-        $partners=User::where('partner',1)->get();
+        $partners=User::where('is_partner',1)->get();
         $states=State::where('status',1)->get();
         $categories=Category::where('status',1)->get();
 
@@ -55,23 +55,25 @@ class PropertyController extends Controller
         ]);
 
        $path=$this->uploadImage($request->thumbnail);
-
+       $hotelId=Property::latest()->first()->id;
         $slug=Str::slug($request->name);
        $property=new Property;
        $property->name=$request->name;
+       $property->hotel_id='NSN'.rand(1,1000000000).$hotelId;
        $property->city_id=$request->city;
-       $property->user_id=1;
+       $property->owner_id=$request->partner;
        $property->property_type_id=$request->propertyType;
        $property->category_id=$request->category;
        $property->slug=$slug;
        $property->status=$request->status;
+       $property->state_id=$request->state;
        $property->description=$request->description;
-       $property->amenity=$request->amenity;
+       $property->amenities=$request->amenity;
        $property->longitude=$request->longitude;
        $property->latitude=$request->latitude;
        $property->address=$request->address;
        $property->price_range=$request->price_range;
-       $property->rating=rand(1,5);
+       $property->rating=rand(4,5);
        $property->pet_friendly=$request->pet_friendly?$request->pet_friendly:0;
        $property->couple_friendly=$request->couple_friendly?$request->couple_friendly:0;
        $property->top_rated=$request->top_rated?$request->top_rated:0;
@@ -82,7 +84,7 @@ class PropertyController extends Controller
        $property->mobile_meta_title=$request->mobile_meta_title;
        $property->mobile_meta_description=$request->mobile_meta_description;
        $property->thumbnail=$path;
-       $property->gallery=$request->gallery;
+    //    $property->gallery=$request->gallery;
        $property->save();
        $notification=array(
         'type'=>'success',
@@ -104,13 +106,14 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
-        $partners=User::where('partner',1)->get();
+        $partners=User::where('is_partner',1)->get();
         $cities=City::where('status',1)->get();
         $propertyTypes=PropertyType::where('status',1)->get();
         $amenities=Amenity::where('status',1)->get();
         $categories=Category::where('status',1)->get();
+        $states=State::where('status',1)->get();
 
-        return view('common.property.edit',compact('property','partners','cities','propertyTypes','amenities','categories'));
+        return view('common.property.edit',compact('property','partners','cities','propertyTypes','amenities','categories','states'));
 
     }
 
@@ -127,20 +130,22 @@ class PropertyController extends Controller
             'price_range'=>'required',
             'description'=>'required',
         ]);
+
         $slug=Str::slug($request->name);
+       $path=$this->uploadImage($request->thumbnail);
        $property->name=$request->name;
        $property->city_id=$request->city;
-       $property->user_id=1;
+       $property->owner_id=$request->partner;
        $property->property_type_id=$request->propertyType;
        $property->slug=$slug;
        $property->status=$request->status;
        $property->description=$request->description;
-       $property->amenity=json_encode($request->amenity);
+       $property->amenities=$request->amenity;
        $property->longitude=$request->longitude;
        $property->latitude=$request->latitude;
        $property->address=$request->address;
+       $property->category_id=$request->category;
        $property->price_range=$request->price_range;
-       $property->rating=rand(1,5);
        $property->pet_friendly=$request->pet_friendly?$request->pet_friendly:0;
        $property->couple_friendly=$request->couple_friendly?$request->couple_friendly:0;
        $property->top_rated=$request->top_rated?$request->top_rated:0;
@@ -150,12 +155,21 @@ class PropertyController extends Controller
        $property->mobile_meta_keyword=$request->mobile_meta_keyword;
        $property->mobile_meta_title=$request->mobile_meta_title;
        $property->mobile_meta_description=$request->mobile_meta_description;
-       $path=$this->uploadImage($request->thumbnail);
+       $property->state_id=$request->state;
+
+       $property->full_booked_from=$request->booked_from;
+
+       $property->full_booked_to=$request->booked_to;
+
+       $property->is_full_booked=$request->booked_to&&$request->booked_from?1:0;
+
+
        $property->thumbnail=$path?$path:$property->thumbnail;
+
        if (isset($request->gallery)) {
-        $gallery=json_decode($property->gallery);
-        $gallery=array_merge($gallery,$request->gallery);
-        $property->gallery=json_encode($gallery);
+        $gallery=$property->gallery;
+        $gallery=$gallery?array_merge($gallery,$request->gallery):$request->gallery;
+        $property->gallery=$gallery;
        }
        $property->save();
        $notification=array(

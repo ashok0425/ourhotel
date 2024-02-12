@@ -16,8 +16,6 @@ class ImageController extends Controller
     {
         if ($request->hasFile('image')) {
 
-            
-
            $validate= Validator::make($request->all(), [
                 'image' => 'mimes:png,jpg,gif,jpeg,webp|max:2048'
             ]);
@@ -34,7 +32,8 @@ class ImageController extends Controller
             return [
                 "code" => 200,
                 "status" => "success",
-                "file_name" => $file_name
+                "file_name" => $file_name,
+                "file_path"=>config('services.s3.url').$file_name
             ];
         }
 
@@ -53,26 +52,26 @@ class ImageController extends Controller
             }else{
                 $property=Room::find($request->id);
             }
-            $gallery=json_decode($property->gallery);
-         
+            $gallery=$property->gallery;
+
 
            $this->image=$request->image;
            $new_gallery= array_filter($gallery, function($item){
                  return $item!=$this->image;
-                 
+
               });
-           $property->gallery=json_encode($new_gallery);
+           $property->gallery=$new_gallery;
            $property->save();
         }
-        if ($request->image) {
-           if(file_exists('storage/uploads/'.$request->image)){
-            File::delete('storage/uploads/'.$request->image);
-           }
-            return [
-                "code" => 200,
-                "status" => "success",
-            ];
-        }
+        // if ($request->image) {
+        //    if(file_exists('storage/uploads/'.$request->image)){
+        //     File::delete('storage/uploads/'.$request->image);
+        //    }
+        //     return [
+        //         "code" => 200,
+        //         "status" => "success",
+        //     ];
+        // }
 
         return [
             "code" => 404,

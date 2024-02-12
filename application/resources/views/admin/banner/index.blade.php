@@ -20,7 +20,7 @@
                         <th>
                             Title
                         </th>
-                        
+
                         <th>
                             Thumbnail
                         </th>
@@ -42,9 +42,9 @@
                             <td>
                                 {{ $banner->title }}
                             </td>
-                         
+
                             <td>
-                               <img src="{{ getImage($banner->thumbnail) }}" alt=" {{ $banner->title }}" width="70" height="70">
+                               <img src="{{ getImageUrl($banner->thumbnail) }}" alt=" {{ $banner->title }}" width="70" height="70">
                             </td>
                             <td>
                                 @if ($banner->status == 1)

@@ -35,7 +35,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td style="padding-bottom: 10px;">
-                                                        <a href="{{route('/')}}"><img src="{{getImage($website->logo)}}" alt="{{$website->meta_title}}" width="100"/></a>
+                                                        <a href="{{route('/')}}"><img src="{{getImageUrl($website->logo)}}" alt="{{$website->meta_title}}" width="100"/></a>
                                                     </td>
                                                 </tr>
 

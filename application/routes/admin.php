@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Common\PropertyController;
 use App\Http\Controllers\Admin\PropertyTypeController;
-use App\Http\Controllers\Admin\RoomController;
+use App\Http\Controllers\Common\RoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\UserController;

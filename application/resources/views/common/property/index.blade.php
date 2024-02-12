@@ -1,4 +1,12 @@
 @extends('admin.layout.master')
+@push('style')
+<style>
+    .dropdown-toggle::after{
+        content: none;
+    }
+</style>
+
+@endpush
 @section('content')
     <div class="card">
         <div class="card-body table-responsive pt-3">
@@ -27,8 +35,9 @@
                             Thumbnail
                         </th>
                         <th>
-                            Address
+                            City
                         </th>
+
 
                         <th>
                             Status
@@ -46,17 +55,26 @@
                                 {{ $loop->iteration }}
                             </td>
                             <td>
-                                {{ $property->user->name }}
+                                {{ $property->owner?->name }}
+                                <br>
+                                {{ $property->owner?->email }}
+                                <br>
+                                {{ $property->owner?->phone_number }}
+
                             </td>
                             <td>
                                 {{ $property->name }}
                             </td>
                             <td>
-                               <img src="{{ getImage($property->thumbnail) }}" alt=" {{ $property->name }}" width="70" height="70">
+                                <a href="{{ getImageUrl($property->thumbnail) }}" target="_blank">
+                               <img src="{{ getImageUrl($property->thumbnail) }}" alt="{{ $property->name }}" width="100" height="100">
+
+                                </a>
                             </td>
                             <td>
-                           {{$property->address}}
-                             </td>
+                                {{ $property->city->name }}
+                            </td>
+
                             <td>
                                 @if ($property->status == 1)
                                     <span class="badge bg-success text-white">Active</span>
@@ -65,15 +83,24 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('admin.properties.edit', $property) }}" class="btn btn-primary btn-sm">Edit</a>
-                                <a href="{{ route('admin.properties.destroy', $property) }}"
-                                    class="btn btn-danger btn-sm delete_row" data-toggle="modal"
-                                    data-target="#deleteModal">Delete</a>
-                                    <br>
-                                    <br>
 
-                                    <a href="{{ route('admin.rooms.index', ['property_id'=>$property->id]) }}"
-                                    class="btn btn-info btn-sm" >Manage Room</a>
+                                <ul class="nav ">
+
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#"
+                                            role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h fa-2x"></i></a>
+                                        <div class="dropdown-menu">
+                                            <a href="{{ route('admin.properties.edit', $property) }}"
+                                            class="text-dark dropdown-item">Edit</a>
+                                            <a href="#"
+                                                    class="text-dark dropdown-item change_status" data-bs-toggle="modal"
+                                                    data-userId="{{$property->id}}"
+                                                    data-bs-target="#changeStatusModal">Delete</a>
+                                            <a href="{{ route('admin.rooms.index', ['property_id'=>$property->id]) }}"
+                                                class="text-dark dropdown-item">Manage Room</a>
+                                        </div>
+                                    </li>
+                                    </ul>
                             </td>
 
                         </tr>
@@ -82,5 +109,6 @@
                 </tbody>
             </table>
         </div>
+        {{$properties->links()}}
     </div>
 @endsection

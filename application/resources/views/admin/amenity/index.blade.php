@@ -42,7 +42,7 @@
                                 {{ $amenity->name }}
                             </td>
                             <td>
-                                <img src="{{ getImage($amenity->thumbnail) }}" alt=" {{ $amenity->name }}" width="70" height="70">
+                                <img src="{{ getImageUrl($amenity->thumbnail) }}" alt=" {{ $amenity->name }}" width="70" height="70">
                              </td>
                             <td>
                                 @if ($amenity->status == 1)

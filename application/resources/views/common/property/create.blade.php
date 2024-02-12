@@ -68,7 +68,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="exampleInputEmail1">Select Category</label>
-                          <select name="partner" id="" class="form-select form-control" required>
+                          <select name="category" id="" class="form-select form-control" required>
                                <option value="">--select category--</option>
                                @foreach ($categories as $category)
                               <option value="{{$category->id}}" @if (old('category')==$category->id)
@@ -115,37 +115,18 @@
               </div>
                   </div>
                   <div class="col-md-6">
-                    <label>Gallery (Max 3 File)</label>
+                    <label>Gallery (Max 6 File)</label>
                     <div id="gallery_preview" class="d-flex">
 
                     </div>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="gallery" >
+                        <input type="file" class="custom-file-input" id="gallery">
                         <label class="custom-file-label" for="gallery">Choose file</label>
                       </div>
 
                       <small class="text-danger max_file">
                       </small>
                   </div>
-
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Status</label>
-                        <select name="status" id="" class="form-select form-control">
-                            <option value="1"
-                            @if (old('status')==1)
-                                selected
-                            @endif>Active</option>
-                            <option value="0"
-                             @if (old('status')==0)
-                                selected
-                            @endif>Inactive</option>
-                        </select>
-                    </div>
-                      </div>
-
-
-
 
                   <div class="col-md-6">
                     <div class="form-group">
@@ -164,7 +145,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="exampleInputEmail1">Select City</label>
-                      <select name="city" id="" class="form-select form-control" required>
+                      <select name="city" id="city" class="form-select form-control" required>
                            <option value="">--select city--</option>
                            @foreach ($cities as $city)
                           <option value="{{$city->id}}" @if (old('city')==$city->id)
@@ -176,7 +157,7 @@
                       </div>
 
 
-                      <div class="col-md-12">
+                      <div class="col-md-6">
                         <div class="form-group">
                             <label for="exampleInputUsername1">Address </label>
                             <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter Address" required
@@ -207,24 +188,33 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="">Description</label>
-                          <textarea name="description" id="" class="form-control" rows="2">
+                          <textarea name="description"  class="form-control" rows="2" id="editor">
                             {{old('description')}}
                           </textarea>
                         </div>
                       </div>
 
-                  <div class="col-md-12">
-                    <div class="form-group pt-4 d-flex justify-content-between">
+                  <div class="col-md-4">
+                    <div class="form-group pt-4">
                         <label> <input type="checkbox" name="top_rated" value='1'
                          @if (old('top_rated')==1)
                              checked
                          @endif > Top Rated</label>
 
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group pt-4">
                         <label> <input type="checkbox" name="pet_friendly" value='1'
                           @if (old('pet_friendly')==1)
                           checked
                       @endif> Pet Friendly</label>
 
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group pt-4">
                         <label> <input type="checkbox" name="couple_friendly" value='1'
                           @if (old('couple_friendly')==1)
                           checked
@@ -233,6 +223,42 @@
                     </div>
                       </div>
 
+                      <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Status</label>
+                            <select name="status" id="" class="form-select form-control">
+                                <option value="1"
+                                @if (old('status')==1)
+                                    selected
+                                @endif>Active</option>
+                                <option value="0"
+                                 @if (old('status')==0)
+                                    selected
+                                @endif>Inactive</option>
+                            </select>
+                        </div>
+                          </div>
+
+                          <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Out of stock</label>
+                                <div class="row align-items-center">
+                                    <div class="col-md-5 px-0 mx-0">
+                                        <input type="datetime-local" name="booked_from" id=""
+                                            class="form-control">
+
+                                    </div>
+                                    <div class="col-1 px-0 mx-0 text-center">
+                                        <span>To</span>
+                                    </div>
+                                    <div class="col-md-5 px-0 mx-0">
+                                        <input type="datetime-local" name="booked_to" id="" class="form-control">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
 
             </div>
           </div>
@@ -246,6 +272,7 @@
 @endsection
 @push('script')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{{ asset('admin/vendors/ckeditor.js') }}"></script>
 
     <script>
       // Basic
@@ -265,5 +292,11 @@ $('#state').change(function(){
     }
 })
 })
+
+ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
     </script>
 @endpush

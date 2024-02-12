@@ -344,7 +344,7 @@ class SyncData extends Command
         //properties
         $places=DB::connection("mysql_2")->table('places')->where('user_id','!=',null)->get();
         foreach ($places as $key => $place) {
-            $name=DB::connection('mysql_2')->table('place_translations')->where('place_id',$place->id)->value('name');
+            $name=DB::connection('mysql_2')->table('place_translations')->where('place_id',$place->id)->first();
             $amenities = is_array($place->amenities) ? json_encode($place->amenities) : $place->amenities;
         $amenities = Str::isJson($amenities) ? $amenities : null;
            DB::connection('mysql')->table('properties')->insert([
@@ -355,7 +355,7 @@ class SyncData extends Command
             'owner_id'=>$place->user_id,
             'category_id'=>is_int((int)json_decode($place->category)[0])?json_decode($place->category)[0]:0,
             'property_type_id'=>json_decode($place->place_type)[0],
-            'name'=>$name,
+            'name'=>$name->name,
             'slug'=>$place->slug,
             'address'=>$place->address,
             'latitude'=>$place->lat,
@@ -365,7 +365,11 @@ class SyncData extends Command
             'amenities'=>$amenities,
             'price_range'=>$place->price_range,
             'opening_hour'=>$place->opening_hour,
-            'description'=>$place->description,
+            'description'=>$name->description,
+            'top_rated'=>$place->top_rated??0,
+            'couple_friendly'=>$place->couple_friendly??0,
+            'pet_friendly'=>$place->pet_friendly??0,
+            'corporate'=>$place->corporate??0,
             'thumbnail'=>$place->thumb,
             'gallery'=>Str::isJson($place->gallery)?$place->gallery :null,
             'rating'=>$place->rating,

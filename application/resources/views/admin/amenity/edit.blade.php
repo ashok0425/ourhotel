@@ -14,7 +14,7 @@
             <div class="col-md-8">
               <div class="card">
                 <div class="card-body">
- 
+
                 <div class="card-title d-flex justify-content-between">
                     <div>
                         Enter Amenity Detail
@@ -32,8 +32,8 @@
 
                 <div class="form-group">
                   <label for="exampleInputUsername1">Thumbnail</label>
-                  <br> 
-                  <img id="preview_thumb" src="{{getImage($amenity->thumbnail)}}" width="100" height="100" >
+                  <br>
+                  <img id="preview_thumb" src="{{getImageUrl($amenity->thumbnail)}}" width="100" height="100" >
                   <div class="custom-file">
                     <input type="file" class="custom-file-input" id="thumb" name="thumbnail">
                     <label class="custom-file-label" for="thumb">Choose file</label>
@@ -54,7 +54,7 @@
             </div>
           </div>
         </div>
-           
+
       </div>
 
     </form>

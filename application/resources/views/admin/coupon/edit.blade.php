@@ -14,7 +14,7 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-body">
- 
+
                 <div class="card-title d-flex justify-content-between">
                     <div>
                         Enter Coupon Detail
@@ -25,46 +25,46 @@
                     </div>
                 </div>
 
-              
+
                 <div class="row">
 
 
-                <div class="form-group col-md-6"> 
+                <div class="form-group col-md-6">
                     <label for="exampleInputUsername1">Coupon code</label>
                     <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter coupon code" required
                         name="coupon_code" value="{{old('coupon_code',$coupon->coupon_code)}}">
                 </div>
 
-                <div class="form-group col-md-6"> 
+                <div class="form-group col-md-6">
                   <label for="exampleInputUsername1">Title</label>
                   <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter coupon Title" required
                       name="title" value="{{old('title',$coupon->title)}}">
               </div>
 
 
-              <div class="form-group col-md-6"> 
+              <div class="form-group col-md-6">
                 <label for="exampleInputUsername1">Description</label>
                 <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter coupon description" required
                     name="description" value="{{old('description',$coupon->description)}}">
             </div>
 
-            
-            <div class="form-group col-md-6"> 
+
+            <div class="form-group col-md-6">
               <label for="exampleInputUsername1">Coupon Value in percent</label>
               <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Enter coupon value" required
                   name="coupon_value" value="{{old('coupon_value',$coupon->coupon_value)}}">
           </div>
 
-          <div class="form-group col-md-6"> 
+          <div class="form-group col-md-6">
             <label for="exampleInputUsername1">Coupon Expire At</label>
-            <input type="date" class="form-control" id="exampleInputUsername1" placeholder="Enter coupon value" 
+            <input type="date" class="form-control" id="exampleInputUsername1" placeholder="Enter coupon value"
                 name="expired_at" value="{{Carbon\Carbon::parse(old('expired_at',$coupon->expired_at))->format('m-d-Y')}}">
                 {{Carbon\Carbon::parse(old('expired_at',$coupon->expired_at))->format('m/d/Y')}}
         </div>
                 <div class="form-group col-md-6">
                   <label for="exampleInputUsername1">Thumbnail</label>
-                  <br> 
-                  <img id="preview_thumb" src="{{getImage($coupon->thumbnail)}}" width="100" height="100" >
+                  <br>
+                  <img id="preview_thumb" src="{{getImageUrl($coupon->thumbnail)}}" width="100" height="100" >
                   <div class="custom-file">
                     <input type="file" class="custom-file-input" id="thumb" name="thumbnail" >
                     <label class="custom-file-label" for="thumb">Choose file</label>
@@ -73,8 +73,8 @@
 
               <div class="form-group col-md-6">
                 <label for="exampleInputUsername1">Mobile Thumbnail</label>
-                <br> 
-                <img id="mobile_thumbnail_preview" src="{{getImage($coupon->mobile_thumbnail)}}" width="100" height="100" >
+                <br>
+                <img id="mobile_thumbnail_preview" src="{{getImageUrl($coupon->mobile_thumbnail)}}" width="100" height="100" >
                 <div class="custom-file">
                   <input type="file" class="custom-file-input" id="mobile_thumbnail" name="mobile_thumbnail" >
                   <label class="custom-file-label" for="mobile_thumbnail">Choose file</label>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Common;
 
 use App\Models\Property;
 use Illuminate\Http\Request;
@@ -12,26 +12,17 @@ use App\Models\Room;
 use Str;
 class RoomController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-public function __construct(Request $request)
-{
-    if($request->property_id){
-        return Property::where(['user_id'=>1,'id'=>$request->property_id])->firstOrFail();
-    }
-}
+
 
     public function index(Request $request)
-    { 
+    {
         $property_id=$request->property_id;
         if(isset($property_id)){
-            $rooms=Room::query()->where('property_id',$property_id)->orderBy('id','desc')->get();
+            $rooms=Room::query()->where('property_id',$property_id)->orderBy('id','desc')->paginate(15);
         }else{
-            $property=Property::where('user_id',1)->pluck('id')->toArray();
-            $rooms=Room::query()->whereIn('property_id',$property)->orderBy('id','desc')->get();
+            $rooms=Room::query()->orderBy('id','desc')->paginate(15);
         }
-       
+
         return view('admin.room.index',compact('rooms','property_id'));
     }
 
@@ -43,7 +34,7 @@ public function __construct(Request $request)
 
         $property_id=$request->property_id;
         $amenities=Amenity::where('status',1)->get();
-        $properties=Property::where('user_id',1)->get();
+        $properties=Property::all();
         return view('admin.room.create',compact('property_id','amenities','properties'));
     }
 
@@ -65,28 +56,16 @@ public function __construct(Request $request)
        $room->name=$request->name;
        $room->property_id=$request->property_id;
        $room->status=$request->status;
-       $room->amenity=json_encode($request->amenity);
+       $room->amenity=$request->amenity;
        $room->onepersonprice=$request->onepersonprice;
        $room->twopersonprice=$request->twopersonprice;
        $room->threepersonprice=$request->threepersonprice;
        $room->discount_percent=$request->discount_percent;
        $room->no_of_room=$request->no_of_room;
-       $room->hourly_price=$request->hourlyprice;
+       $room->hourlyprice=$request->hourlyprice;
        $path=$this->uploadImage($request->thumbnail);
        $room->thumbnail=$path;
-       $room->gallery=json_encode($request->gallery);
-       $room->jan=$request->jan;
-       $room->feb=$request->feb;
-       $room->march=$request->march;
-       $room->april=$request->april;
-       $room->may=$request->may;
-       $room->jun=$request->jun;
-       $room->july=$request->july;
-       $room->aug=$request->aug;
-       $room->sep=$request->sep;
-       $room->oct=$request->oct;
-       $room->nov=$request->nov;
-       $room->dec=$request->dec;
+       $room->gallery=$request->gallery;
        $room->save();
        $notification=array(
         'type'=>'success',
@@ -110,7 +89,7 @@ public function __construct(Request $request)
     {
         $amenities=Amenity::where('status',1)->get();
         return view('admin.room.edit',compact('room','amenities'));
-        
+
     }
 
     /**
@@ -125,32 +104,21 @@ public function __construct(Request $request)
         ]);
        $room->name=$request->name;
        $room->status=$request->status;
-       $room->amenity=json_encode($request->amenity);
+       $room->amenity=$request->amenity;
        $room->onepersonprice=$request->onepersonprice;
        $room->twopersonprice=$request->twopersonprice;
        $room->threepersonprice=$request->threepersonprice;
        $room->discount_percent=$request->discount_percent;
        $room->no_of_room=$request->no_of_room;
-       $room->hourly_price=$request->hourlyprice;
+       $room->hourlyprice=$request->hourlyprice;
        $path=$this->uploadImage($request->thumbnail);
        $room->thumbnail=$path?$path:$room->thumbnail;
        if (isset($request->gallery)) {
-        $gallery=json_decode($room->gallery);
+        $gallery=$room->gallery;
         $gallery=array_merge($gallery,$request->gallery);
-        $room->gallery=json_encode($gallery);
+        $room->gallery=$gallery;
        }
-       $room->jan=$request->jan;
-       $room->feb=$request->feb;
-       $room->march=$request->march;
-       $room->april=$request->april;
-       $room->may=$request->may;
-       $room->jun=$request->jun;
-       $room->july=$request->july;
-       $room->aug=$request->aug;
-       $room->sep=$request->sep;
-       $room->oct=$request->oct;
-       $room->nov=$request->nov;
-       $room->dec=$request->dec;
+
        $room->save();
        $notification=array(
         'type'=>'success',

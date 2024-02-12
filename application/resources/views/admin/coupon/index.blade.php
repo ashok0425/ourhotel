@@ -48,7 +48,7 @@
                                 {{ $coupon->coupon_value }} %
                             </td>
                             <td>
-                               <img src="{{ getImage($coupon->thumbnail) }}" alt=" {{ $coupon->coupon_code }}" width="70" height="70">
+                               <img src="{{ getImageUrl($coupon->thumbnail) }}" alt=" {{ $coupon->coupon_code }}" width="70" height="70">
                             </td>
                             <td>
                                 @if ($coupon->status == 1)

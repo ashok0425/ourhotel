@@ -40,32 +40,35 @@
                             </div>
 
 
+
                             <div class="col-md-6">
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1">Select Partner</label>
-                                  <select name="partner" id="" class="form-select form-control" required>
-                                       <option value="">--select select partner--</option>
-                                       @foreach ($partners as $partner)
-                                      <option value="{{$partner->id}}" @if (old('partner',$property->owner_id)==$partner->id)
-                                          selected
-                                      @endif>{{$partner->name}}</option>
-                                       @endforeach
-                                  </select>
-                              </div>
-                                  </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Select City</label>
-                                    <select name="city" id="" class="form-select form-control" required>
-                                        <option value="">--select city--</option>
-                                        @foreach ($cities as $city)
-                                            <option value="{{ $city->id }}"
-                                                @if (old('city', $property->city_id) == $city->id) selected @endif>{{ $city->name }}
+                                    <label for="exampleInputEmail1">Select Partner</label>
+                                    <select name="partner" id="" class="form-select form-control" required>
+                                        <option value="">--select select partner--</option>
+                                        @foreach ($partners as $partner)
+                                            <option value="{{ $partner->id }}"
+                                                @if (old('partner', $property->owner_id) == $partner->id) selected @endif>{{ $partner->name }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1">Select Category</label>
+                                  <select name="category" id="" class="form-select form-control" required>
+                                       <option value="">--select category--</option>
+                                       @foreach ($categories as $category)
+                                      <option value="{{$category->id}}" @if (old('category',$property->category_id)==$category->id)
+                                          selected
+                                      @endif>{{$category->name}}</option>
+                                       @endforeach
+                                  </select>
+                              </div>
+                                  </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Select Property Type</label>
@@ -74,6 +77,33 @@
                                         @foreach ($propertyTypes as $propertyType)
                                             <option value="{{ $propertyType->id }}"
                                                 @if (old('propertyType', $property->property_type_id) == $propertyType->id) selected @endif>{{ $propertyType->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1">Select State</label>
+                                  <select name="state" id="state" class="form-select form-control" required>
+                                       <option value="">--select State--</option>
+                                       @foreach ($states as $state)
+                                      <option value="{{$state->id}}" @if (old('state',$property->state_id)==$state->id)
+                                          selected
+                                      @endif>{{$state->name}}</option>
+                                       @endforeach
+                                  </select>
+                              </div>
+                                  </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Select City</label>
+                                    <select name="city" id="city" class="form-select form-control" required>
+                                        <option value="">--select city--</option>
+                                        @foreach ($cities as $city)
+                                            <option value="{{ $city->id }}"
+                                                @if (old('city', $property->city_id) == $city->id) selected @endif>{{ $city->name }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -125,7 +155,7 @@
                                         multiple>
                                         @foreach ($amenities as $amenity)
                                             <option value="{{ $amenity->id }}"
-                                                @if (in_array($amenity->id, old('amenity', json_decode($property->amenity)))) selected @endif>{{ $amenity->name }}
+                                                @if (old('amenity', $property->amenities) && in_array($amenity->id, old('amenity', $property->amenities))) selected @endif>{{ $amenity->name }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -136,7 +166,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Thumbnail</label>
                                     <br>
-                                    <img id="preview_thumb" src="{{ getImage($property->thumbnail) }}" width="100"
+                                    <img id="preview_thumb" src="{{ getImageUrl($property->thumbnail) }}" width="100"
                                         height="100">
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="thumb" name="thumbnail">
@@ -145,15 +175,16 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label>Gallery (Max 3 File)</label>
+                                <label>Gallery (Max 6 File)</label>
                                 <div id="gallery_preview" class="d-flex">
-                                    @if (json_decode($property->gallery)!=null && count(json_decode($property->gallery))>0)
-                                        @foreach (json_decode($property->gallery) as $gallery)
+                                    @if ($property->gallery != null && count($property->gallery) > 0)
+                                        @foreach ($property->gallery as $gallery)
                                             <div style="position:relative;width:100px">
-                                                <img src="{{getImage($gallery) }}" alt="" width='100'
+                                                <img src="{{ getImageUrl($gallery) }}" alt="" width='100'
                                                     height='100'>
                                                 <a style="position:absolute;top:10px;right:10px;color:red;cursor:pointer"
-                                                    class="remove_gallery" id="{{ $gallery }}" data-id="{{$property->id}}" data-model='property'><i
+                                                    class="remove_gallery" id="{{ $gallery }}"
+                                                    data-id="{{ $property->id }}" data-model='property'><i
                                                         class='fas fa-trash'></i></a>
                                             </div>
                                         @endforeach
@@ -161,7 +192,7 @@
 
                                 </div>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="gallery">
+                                    <input type="file" class="custom-file-input" id="gallery" data-id="{{ $property->id }}" data-model='property'>
                                     <label class="custom-file-label" for="gallery">Choose file</label>
                                 </div>
                                 <small class="text-danger max_file">
@@ -171,20 +202,27 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="">Description</label>
-                                    <textarea name="description" id="" class="form-control" rows="2">
+                                    <textarea name="description" id="editor" class="form-control" rows="2">
                         {{ old('description', $property->description) }}
                       </textarea>
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group pt-4">
                                     <label> <input type="checkbox" name="top_rated" value='1'
                                             @if (old('top_rated', $property->top_rated) == 1) checked @endif> Top Rated</label>
+                                </div>
+                            </div>
 
+                            <div class="col-md-4">
+                                <div class="form-group pt-4">
                                     <label> <input type="checkbox" name="pet_friendly" value='1'
                                             @if (old('pet_friendly', $property->pet_friendly) == 1) checked @endif> Pet Friendly</label>
-
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group pt-4">
                                     <label> <input type="checkbox" name="couple_friendly" value='1'
                                             @if (old('couple_friendly', $property->couple_friendly) == 1) checked @endif> Couple Friendly </label>
 
@@ -202,11 +240,33 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Out of stock</label>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-5 px-0 mx-0">
+                                            <input type="datetime-local" name="booked_from" id=""
+                                                class="form-control">
+                                        {{Carbon\Carbon::parse($property->full_booked_from)->format('Y-m-d')}}
+
+                                        </div>
+                                        <div class="col-1 px-0 mx-0 text-center">
+                                            <span>To</span>
+                                        </div>
+                                        <div class="col-md-5 px-0 mx-0">
+                                            <input type="datetime-local" name="booked_to" id="" class="form-control">
+                                            {{Carbon\Carbon::parse($property->full_booked_to)->format('Y-m-d')}}
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
             <x-s-e-o :seo=$property />
         </div>
 
@@ -214,12 +274,31 @@
 @endsection
 @push('script')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+    <script src="{{ asset('admin/vendors/ckeditor.js') }}"></script>
     <script>
         // Basic
         $("#amenities").select2({
             placeholder: "Select Amenities",
             allowClear: true
         });
+
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+
+
+//ajax call to get cities
+$('#state').change(function(){
+    let stateId=$(this).val();
+    let url =`/getCity/${stateId}`
+    $.ajax({
+    url:url,
+    success:function(res){
+        console.log(res);
+    }
+})
+})
     </script>
 @endpush

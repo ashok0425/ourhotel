@@ -14,7 +14,7 @@
             <div class="col-md-8">
               <div class="card">
                 <div class="card-body">
- 
+
                 <div class="card-title d-flex justify-content-between">
                     <div>
                         Enter Blog Detail
@@ -26,31 +26,31 @@
                 </div>
 
 
-                <div class="form-group "> 
+                <div class="form-group ">
                     <label for="exampleInputUsername1">Title</label>
                     <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Blog Title" required
                         name="title" value="{{$blog->title}}">
                 </div>
 
-                <div class="form-group "> 
+                <div class="form-group ">
                   <label for="exampleInputUsername1">Short Description</label>
                   <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Short Description" required
                       name="short_description" value="{{$blog->short_description}}">
               </div>
 
 
-              <div class="form-group "> 
+              <div class="form-group ">
                 <label for="exampleInputUsername1">Long Description</label>
                 <textarea type="text" class="form-control" id="exampleInputUsername1" placeholder="Long Description" required
                     name="long_description">{{$blog->long_description}}</textarea>
             </div>
 
-             
+
 
                 <div class="form-group ">
                   <label for="exampleInputUsername1">Thumbnail</label>
-                  <br> 
-                  <img id="preview_thumb" src="{{getImage($blog->thumbnail)}}" width="100" height="100" class="d-none">
+                  <br>
+                  <img id="preview_thumb" src="{{getImageUrl($blog->thumbnail)}}" width="100" height="100" class="d-none">
                   <div class="custom-file">
                     <input type="file" class="custom-file-input" id="thumb" name="thumbnail" >
                     <label class="custom-file-label" for="thumb">Choose file</label>

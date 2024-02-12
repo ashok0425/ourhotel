@@ -45,9 +45,9 @@
                             <td>
                                 {{ $room->name }}
                             </td>
-                           
+
                             <td>
-                               <img src="{{ getImage($room->thumbnail) }}" alt=" {{ $room->name }}" width="70" height="70">
+                               <img src="{{ getImageUrl($room->thumbnail) }}" alt=" {{ $room->name }}" width="70" height="70">
                             </td>
                             <td>
                            {{$room->onepersonprice}}
@@ -73,5 +73,6 @@
                 </tbody>
             </table>
         </div>
+        {{$rooms->links()}}
     </div>
 @endsection

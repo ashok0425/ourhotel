@@ -14,7 +14,11 @@ class Property extends Model
     'amenities'=>'array'
 ];
 
-   public function user(){
-        return $this->belongsTo(User::class);
+   public function owner(){
+        return $this->belongsTo(User::class,'owner_id','id');
+    }
+
+    public function city(){
+        return $this->belongsTo(City::class);
     }
 }

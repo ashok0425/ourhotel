@@ -42,7 +42,7 @@
                                 {{ $blog->title }}
                             </td>
                             <td>
-                               <img src="{{ getImage($blog->thumbnail) }}" alt=" {{ $blog->name }}" width="70" height="70">
+                               <img src="{{ getImageUrl($blog->thumbnail) }}" alt=" {{ $blog->name }}" width="70" height="70">
                             </td>
                             <td>
                                 @if ($blog->status == 1)

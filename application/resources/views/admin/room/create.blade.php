@@ -14,7 +14,7 @@
         enctype="multipart/form-data">
         @csrf
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
 
@@ -38,11 +38,11 @@
                                 <option value="" >--select poperty--</option>
                                 @foreach ($properties as $property)
                                 <option value="{{$property->id}}" >{{$property->name}}</option>
-                                    
+
                                 @endforeach
                               </select>
                                 </div>
-                            </div>    
+                            </div>
                             @endif
 
                             <div class="col-md-6">
@@ -105,7 +105,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Discount percent (optional)</label>
                                     <input type="number" class="form-control" id="exampleInputUsername1"
-                                        placeholder="Hourly price" name="discount_percent"
+                                        placeholder="Discount percentage" name="discount_percent"
                                         value="{{ old('discount_percent') }}">
                                     <small class="text-primary">It must be in percent and will be applied for all price
                                     </small>
@@ -169,7 +169,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            {{-- <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title d-flex justify-content-between">
@@ -283,7 +283,7 @@
                 </div>
 
 
-            </div>
+            </div> --}}
         </div>
 
     </form>

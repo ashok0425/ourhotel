@@ -42,7 +42,7 @@
                                 {{ $city->name }}
                             </td>
                             <td>
-                               <img src="{{ getImage($city->thumbnail) }}" alt=" {{ $city->name }}" width="70" height="70">
+                               <img src="{{ getImageUrl($city->thumbnail) }}" alt=" {{ $city->name }}" width="70" height="70">
                             </td>
                             <td>
                                 @if ($city->status == 1)

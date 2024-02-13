@@ -12,9 +12,12 @@ class CityController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $cities=City::query()->orderBy('id','desc')->get();
+        $cities=City::query()->orderBy('id','desc')->when($request->keyword,function($query) use ($request){
+            $query->where('name','LIKE',"%$request->keyword%");
+          })
+          ->paginate(10);;
         return view('admin.city.index',compact('cities'));
     }
 
@@ -75,7 +78,7 @@ class CityController extends Controller
     {
         $states=State::orderBy('id','desc')->get();
         return view('admin.city.edit',compact('city','states'));
-        
+
     }
 
     /**

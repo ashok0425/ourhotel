@@ -1,5 +1,11 @@
 @extends('admin.layout.master')
 @section('content')
+<div class="mb-3 align-items-center d-flex justify-content-end">
+    <form action="" method="get" class="d-flex align-items-center">
+        <input type="search" name="keyword" id="" class="form-control" value="{{request()->query('keyword')}}">
+        <button class="btn btn-info rounded-0">Search</button>
+    </form>
+</div>
     <div class="card">
         <div class="card-body table-responsive pt-3">
             <div class="card-title d-flex justify-content-between">
@@ -42,7 +48,9 @@
                                 {{ $city->name }}
                             </td>
                             <td>
-                               <img src="{{ getImageUrl($city->thumbnail) }}" alt=" {{ $city->name }}" width="70" height="70">
+                                <a href="{{ getImageUrl($city->thumbnail) }}" target="_blank">
+                               <img src="{{ getImageUrl($city->thumbnail) }}" alt="{{ $city->name }}" width="100" height="100">
+                            </a>
                             </td>
                             <td>
                                 @if ($city->status == 1)
@@ -52,10 +60,20 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('admin.cities.edit', $city) }}" class="btn btn-primary btn-sm">Edit</a>
-                                <a href="{{ route('admin.cities.destroy', $city) }}"
-                                    class="btn btn-danger btn-sm delete_row" data-toggle="modal"
-                                    data-target="#deleteModal">Delete</a>
+                                <ul class="nav ">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#"
+                                            role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h fa-2x"></i></a>
+                                        <div class="dropdown-menu">
+                                            <a href="{{ route('admin.cities.edit', $city) }}"
+                                            class="text-dark dropdown-item">Edit</a>
+                                            <a href="{{ route('admin.cities.edit', $city) }}"
+                                                    class="text-dark dropdown-item delete_row" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteModal">Delete</a>
+
+                                        </div>
+                                    </li>
+                                    </ul>
 
                             </td>
 
@@ -65,5 +83,6 @@
                 </tbody>
             </table>
         </div>
+        {{$cities->links()}}
     </div>
 @endsection

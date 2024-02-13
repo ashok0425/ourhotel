@@ -55,7 +55,6 @@
                             </td>
                             <td>
                                 <ul class="nav ">
-
                                     <li class="nav-item">
                                         <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#"
                                             role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h fa-2x"></i></a>
@@ -69,9 +68,7 @@
                                         </div>
                                     </li>
                                     </ul>
-
                             </td>
-
                         </tr>
                     @endforeach
 

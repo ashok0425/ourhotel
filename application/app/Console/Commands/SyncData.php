@@ -71,6 +71,7 @@ class SyncData extends Command
             'name'=>$name->name,
             'state_id'=>$city->country_id,
             'slug'=>$city->slug,
+            'thumbnail'=>$city->thumb,
             'status'=>$city->status,
             'meta_keyword'=>$city->seo_keywords,
             'meta_title'=>$city->seo_title,

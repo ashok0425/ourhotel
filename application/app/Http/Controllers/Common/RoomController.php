@@ -20,7 +20,7 @@ class RoomController extends Controller
         if(isset($property_id)){
             $rooms=Room::query()->where('property_id',$property_id)->orderBy('id','desc')->paginate(15);
         }else{
-            $rooms=Room::query()->orderBy('id','desc')->paginate(15);
+            $rooms=Room::query()->latest()->paginate(15);
         }
 
         return view('admin.room.index',compact('rooms','property_id'));

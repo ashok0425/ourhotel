@@ -121,7 +121,7 @@
                             <div class="col-md-6">
                                 <label>Gallery (Max 3 File) </label>
                                 <div id="gallery_preview" class="d-flex">
-                                    @if (count($room->gallery)>0)
+                                    @if ($room->gallery&&count($room->gallery)>0)
                                         @foreach ($room->gallery as $gallery)
                                             <div style="position:relative;width:100px">
                                                 <img src="{{getImageUrl($gallery) }}" alt="" width='100'

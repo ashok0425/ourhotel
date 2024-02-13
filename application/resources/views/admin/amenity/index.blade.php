@@ -52,11 +52,20 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('admin.amenities.edit', $amenity) }}" class="btn btn-primary btn-sm">Edit</a>
-                                <a href="{{ route('admin.amenities.destroy', $amenity) }}"
-                                    class="btn btn-danger btn-sm delete_row" data-toggle="modal"
-                                    data-target="#deleteModal">Delete</a>
+                                <ul class="nav ">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#"
+                                            role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h fa-2x"></i></a>
+                                        <div class="dropdown-menu">
+                                            <a href="{{ route('admin.amenities.edit', $amenity) }}"
+                                            class="text-dark dropdown-item">Edit</a>
+                                            <a href="{{ route('admin.amenities.destroy', $amenity) }}"
+                                                    class="text-dark dropdown-item delete_row" data-toggle="modal"
+                                                    data-target="#deleteModal">Delete</a>
 
+                                        </div>
+                                    </li>
+                                    </ul>
                             </td>
 
                         </tr>

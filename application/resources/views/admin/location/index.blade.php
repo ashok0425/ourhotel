@@ -1,5 +1,11 @@
 @extends('admin.layout.master')
 @section('content')
+<div class="mb-3 align-items-center d-flex justify-content-end">
+    <form action="" method="get" class="d-flex align-items-center">
+        <input type="search" name="keyword" id="" class="form-control" value="{{request()->query('keyword')}}">
+        <button class="btn btn-info rounded-0">Search</button>
+    </form>
+</div>
     <div class="card">
         <div class="card-body table-responsive pt-3">
             <div class="card-title d-flex justify-content-between">
@@ -43,7 +49,7 @@
                                 {{ $loop->iteration }}
                             </td>
                             <td>
-                                {{ $location->name }}
+                                {{ Str::limit( $location->name, 40) }}
                             </td>
                             <td>
                                 {{ $location->latitude }}
@@ -60,10 +66,21 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('admin.locations.edit', $location) }}" class="btn btn-primary btn-sm">Edit</a>
-                                <a href="{{ route('admin.locations.destroy', $location) }}"
-                                    class="btn btn-danger btn-sm delete_row" data-toggle="modal"
-                                    data-target="#deleteModal">Delete</a>
+                                <ul class="nav ">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#"
+                                            role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h fa-2x"></i></a>
+                                        <div class="dropdown-menu">
+                                            <a href="{{ route('admin.locations.edit', $location) }}"
+                                            class="text-dark dropdown-item">Edit</a>
+                                            <a href="{{ route('admin.locations.destroy', $location) }}"
+                                                    class="text-dark dropdown-item delete_row" data-toggle="modal"
+                                                    data-target="#deleteModal">Delete</a>
+
+                                        </div>
+                                    </li>
+                                    </ul>
+
 
                             </td>
 
@@ -73,5 +90,6 @@
                 </tbody>
             </table>
         </div>
+        {{$cities->links()}}
     </div>
 @endsection

@@ -392,6 +392,7 @@ class SyncData extends Command
           'id'=>$room->id,
           'property_id'=>$room->hotel_id??null,
           'name'=>$name,
+          'thumbnail'=>$room->thumb,
           'slug'=>Str::slug($name),
           'hourlyprice'=>$room->hourlyprice,
           'onepersonprice'=>$room->onepersonprice,

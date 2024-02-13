@@ -12,9 +12,11 @@ class LocationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $cities=Location::query()->orderBy('id','desc')->get();
+        $cities=Location::when($request->keyword,function($query) use ($request){
+            $query->where('name','LIKE',"%$request->keyword%");
+          })->latest()->paginate(15);
         return view('admin.location.index',compact('cities'));
     }
 
@@ -37,7 +39,7 @@ class LocationController extends Controller
             'city'=>'required',
         ]);
         $slug=Str::slug($request->name);
-        
+
        $location=new Location;
        $location->city_id=$request->city;
        $location->latitude=$request->latitude;
@@ -75,7 +77,7 @@ class LocationController extends Controller
     {
         $cities=City::orderBy('id','desc')->get();
         return view('admin.location.edit',compact('location','cities'));
-        
+
     }
 
     /**
@@ -87,7 +89,7 @@ class LocationController extends Controller
             'name'=>'required|max:225',
         ]);
         $slug=Str::slug($request->name);
-        
+
        $location->name=$request->name;
        $location->city_id=$request->city;
        $location->latitude=$request->latitude;

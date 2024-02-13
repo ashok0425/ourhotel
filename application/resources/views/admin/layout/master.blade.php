@@ -14,6 +14,11 @@
   <link rel="shortcut icon" href="images/favicon.png" />
   @stack('style')
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    .dropdown-toggle::after{
+        content: none;
+    }
+</style>
 </head>
 <body>
   <div class="container-scroller">

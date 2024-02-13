@@ -1,12 +1,5 @@
 @extends('admin.layout.master')
-@push('style')
-<style>
-    .dropdown-toggle::after{
-        content: none;
-    }
-</style>
 
-@endpush
 @section('content')
     <div class="card">
         <div class="card-body table-responsive pt-3">

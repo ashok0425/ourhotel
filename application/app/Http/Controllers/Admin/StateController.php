@@ -11,9 +11,13 @@ class StateController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $states=State::query()->orderBy('id','desc')->get();
+        $states=State::query()->orderBy('id','desc')
+        ->when($request->keyword,function($query) use ($request){
+          $query->where('name','LIKE',"%$request->keyword%");
+        })
+        ->paginate(10);
         return view('admin.state.index',compact('states'));
     }
 
@@ -34,7 +38,7 @@ class StateController extends Controller
             'name'=>'required|max:225',
         ]);
         $slug=Str::slug($request->name);
-        
+
        $state=new State;
        $state->name=$request->name;
        $state->slug=$slug;
@@ -69,7 +73,7 @@ class StateController extends Controller
     public function edit(State $state)
     {
         return view('admin.state.edit',compact('state'));
-        
+
     }
 
     /**
@@ -81,7 +85,7 @@ class StateController extends Controller
             'name'=>'required|max:225',
         ]);
         $slug=Str::slug($request->name);
-        
+
        $state->name=$request->name;
        $state->slug=$slug;
        $state->status=$request->status;

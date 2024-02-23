@@ -32,8 +32,8 @@ return new class extends Migration
             $table->integer('no_of_room')->nullable()->default(0);
             $table->timestamp('booked_hour_from')->nullable();
             $table->timestamp('booked_hour_to')->nullable();
-            $table->timestamp('booking_start')->nullable();
-            $table->timestamp('booking_end')->nullable();
+            $table->string('booking_start')->nullable();
+            $table->string('booking_end')->nullable();
             $table->text('early_reason')->nullable();
             $table->text('cancel_reason')->nullable();
             $table->text('remark')->nullable();
@@ -46,6 +46,7 @@ return new class extends Migration
             $table->integer('refer_id')->nullable();
             $table->string('razorpay_order_id')->nullable();
             $table->enum('payment_type',['online','offline'])->default('online');
+            $table->json('hotel_data')->nullable();
             $table->timestamps();
         });
     }

@@ -35,4 +35,13 @@ return [
     's3' => [
         'url' => env('S3_URL'),
     ],
+
+
+    'interakt' => [
+        'api_key' => env('WHATSAPP_API'),
+    ],
+
+    'msg99' => [
+        'api_key' => env('MSG99_API_KEY'),
+    ],
 ];

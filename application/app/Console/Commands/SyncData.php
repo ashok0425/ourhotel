@@ -436,6 +436,8 @@ class SyncData extends Command
          'tax'=>$booking->tax,
          'name'=>$booking->name,
          'email'=>$booking->email,
+         'booking_start'=>$booking->booking_start!='0000-00-00'?$booking->booking_start:null,
+         'booking_end'=>$booking->booking_end!='0000-00-00'?$booking->booking_end:null,
          'phone_number'=>$booking->phone_number,
          'early_reason'=>$booking->early_reason,
          'cancel_reason'=>$booking->cancel_reason,

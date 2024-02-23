@@ -39,9 +39,50 @@
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
-}</style>
+}
+
+</style>
 @endpush
 @section('content')
+
+<div class="mb-3 align-items-center d-flex justify-content-end">
+    <form action="" method="get" class="d-flex align-items-between">
+
+        <div>
+            <label for="">Status</label>
+            <select name="status" id="" class="form-select form-control">
+                <option value="">Status</option>
+                <option value="0" {{request()->query('status')==0? 'selected':''}}>Pending</option>
+                <option value="1" {{request()->query('status')==1? 'selected':''}}>Approved</option>
+                <option value="2" {{request()->query('status')==2? 'selected':''}}>Checkin</option>
+                <option value="3" {{request()->query('status')==3? 'selected':''}}>Checkout</option>
+                <option value="4" {{request()->query('status')==4? 'selected':''}}>Cancelled</option>
+
+            </select>
+        </div>
+
+        <div>
+            <label for="">From</label>
+            <input type="date" name="from" id="" class="form-control">
+        </div>
+        <div>
+            <label for="">To</label>
+            <input type="date" name="to" id="" class="form-control">
+        </div>
+        <div>
+            <label for="">Search Keyword</label>
+            <input type="search" name="keyword" id="" class="form-control" value="{{request()->query('keyword')}}" placeholder="Enter search keyword">
+        </div>
+
+        <div>
+        <button class="btn btn-info rounded-0 mt-4">Search</button>
+        </div>
+        <div>
+            <a href="{{route('admin.booking.create')}}" class="btn btn-primary rounded-0 mt-4">Book Unlisted Hotel</a>
+        </div>
+    </form>
+</div>
+
     <div class="card">
 
         <div class="card-body table-responsive pt-3">
@@ -51,25 +92,25 @@
                 </div>
 
             </div>
-            <table class="table table-bordered">
+            <table class="table table-bordered w-100">
                 <thead>
                     <tr>
                         <th>
                             #
                         </th>
                         <th>
-                            Booked By
+                           User Detail
                         </th>
+
                         <th>
-                            Booked For
+                            Hotel
                         </th>
-                        <th>
-                            Property
-                        </th>
+
+                        <th>Detail</th>
+                        <th>Amount</th>
                         <th>
                             Check in/out
                         </th>
-
                         <th>
                             Status
                         </th>
@@ -85,23 +126,45 @@
                             <td>
                                 {{ $loop->iteration }}
                             </td>
-                            <td>
-                                {{ $booking->user->name }}
-                            </td>
-                            <td>
-                                {{ $booking->name }}
+                            <td class="text-wrap" style="max-width: 200px;">
+                          <div class="text-wrap">
+                                 BY: <a href="">{{$booking->user?$booking->user->name:"User Deleted"}}</a>
                                 <br>
-                                {{ $booking->phone }}
+                            {{ $booking->name }}
+                            <br>
+                            {{ $booking->phone_number }}
+                          </div>
                             </td>
 
-                            <td>
-                           {{$booking->property->name}}
+                            <td class="text-wrap" style="max-width: 200px;">
+                           @if ($booking->property_id==0)
+                              {{$booking->hotel_data['name']??''}}
+
+                              @else
+                              {{$booking->property?$booking->property->name:"Hotel Deleted"}}
+                           @endif
                              </td>
                              <td>
-                                {{Carbon\Carbon::parse($booking->check_in)->format('d/m/Y')}} ({{Carbon\Carbon::parse($booking->booked_hour_from)->format('G:i:A')}})
+                                Room Type: {{$booking->booking_type}}
+
                                 <br>
-                                {{Carbon\Carbon::parse($booking->check_out)->format('d/m/Y')}}
-                                ({{Carbon\Carbon::parse($booking->booked_hour_to)->format('G:i:A')}})
+                                Booking Type: {{$booking->room_type}}
+                                <br>
+                               No.of Adult: {{$booking->no_of_adult}}
+                                <br>
+                               No.of Child: {{$booking->no_of_child}}
+                                <br>
+                                No.of Room: {{$booking->no_of_room}}
+                            </td>
+                             <td>{{$booking->final_amount}}</td>
+
+                             <td>
+                                {{-- ({{Carbon\Carbon::parse($booking->booked_hour_from)->format('G:i:A')}}) --}}
+                                {{-- ({{Carbon\Carbon::parse($booking->booked_hour_to)->format('G:i:A')}}) --}}
+                                {{Carbon\Carbon::parse($booking->booking_start)->format('d/m/Y')}}
+                                <br>
+                                {{Carbon\Carbon::parse($booking->booking_end)->format('d/m/Y')}}
+
                                   </td>
                             <td>
                                 @if ($booking->status == 0)
@@ -119,10 +182,19 @@
                                         <span class="badge bg-danger text-white">Cancelled</span>
                                     @endif
                             </td>
-                            <td>
-                                <a url="{{ route('admin.bookings.show', $booking) }}" class="btn btn-primary btn-sm" onclick="openNav(this)" >view</a>
-                                <a url="{{ route('admin.bookings.update', $booking) }}" class="btn btn-primary btn-sm updateSatusBtn" data-toggle="modal" data-target="#updatestatus" ><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.bookings.edit', $booking) }}" class="btn btn-danger btn-sm" ><i class="fas fa-download"></i></a>
+                            <td style="max-width: 50px">
+                                <ul class="nav ">
+
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#"
+                                            role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h fa-2x"></i></a>
+                                        <div class="dropdown-menu">
+                                            <a href=""
+                                            class="text-dark dropdown-item">Edit</a>
+
+                                        </div>
+                                    </li>
+                                    </ul>
                             </td>
 
                         </tr>
@@ -131,6 +203,7 @@
                 </tbody>
             </table>
         </div>
+        {{$bookings->links()}}
     </div>
 {{-- side nav for booking detail  --}}
 <div class="sideNavBar" onclick="">

@@ -14,11 +14,18 @@ class BookingController extends Controller
      */
     public function index(Request $request)
     {
-        if(isset($request->status)){
-            $bookings=Booking::where('status',0)->get();
-        }else{
-            $bookings=Booking::all();
-        }
+        $page=$request->limit??20;
+        $bookings=Booking::query()->when($request->keyword,function($query) use ($request){
+             $query->where('name','LIKE',"%$request->keyword%")->orwhere('phone_number',"%$request->keyword%")->orwhere('email',"%$request->keyword%");
+          })
+          ->when(isset($request->status) && ($request->status||$request->status==0),function($query) use ($request){
+             $query->where('status',$request->status);
+          })
+          ->when($request->from&&$request->to,function($query) use ($request){
+             $query->whereDate('created_at','>=',$request->from)->whereDate('created_at','<=',$request->to);
+         })
+          ->latest()->paginate($page);
+
         return view('common.booking.index',compact('bookings'));
     }
 

@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WebsiteController;
 
 Route::prefix('admin')->name('admin.')->group(function(){
+
     Route::resource('states', StateController::class);
     Route::resource('cities', CityController::class);
     Route::resource('locations', LocationController::class);
@@ -34,6 +35,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::resource('banners', BannerController::class);
     Route::resource('faqs', FaqController::class);
     Route::resource('categories', CategoryController::class);
+
+    Route::get('add-booking/{property_id?}', [PropertyController::class,'addBooking'])->name('booking.create');
+    Route::post('add-booking/{property_id?}', [PropertyController::class,'storeBooking'])->name('booking.store');
+
 
 
 

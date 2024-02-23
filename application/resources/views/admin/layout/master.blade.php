@@ -18,6 +18,9 @@
     .dropdown-toggle::after{
         content: none;
     }
+    ul li{
+        line-height: 1.2!important;
+    }
 </style>
 </head>
 <body>

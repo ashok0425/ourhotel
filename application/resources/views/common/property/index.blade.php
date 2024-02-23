@@ -1,6 +1,27 @@
 @extends('admin.layout.master')
 
 @section('content')
+<div class="mb-3 align-items-center d-flex justify-content-end">
+    <form action="" method="get" class="d-flex align-items-center">
+        <div>
+            <label for="">City</label>
+            <select name="city" id="" class="form-select form-control">
+                <option value="">All Citys</option>
+                @foreach ($cities as $key => $city)
+                <option value="{{$key}}" {{request()->query('city')==$key? 'selected':''}}>{{$city}}</option>
+                 @endforeach
+            </select>
+        </div>
+        <div>
+            <label for="">Search Keyword</label>
+            <input type="search" name="keyword" id="" class="form-control" value="{{request()->query('keyword')}}" placeholder="Enter search keyword">
+        </div>
+
+        <div>
+        <button class="btn btn-info rounded-0 mt-4">Search</button>
+        </div>
+    </form>
+</div>
     <div class="card">
         <div class="card-body table-responsive pt-3">
             <div class="card-title d-flex justify-content-between">
@@ -28,10 +49,8 @@
                             Thumbnail
                         </th>
                         <th>
-                            City
+                            Address
                         </th>
-
-
                         <th>
                             Status
                         </th>
@@ -55,7 +74,7 @@
                                 {{ $property->owner?->phone_number }}
 
                             </td>
-                            <td>
+                            <td style="max-width: 220px;" class="text-wrap">
                                 {{ $property->name }}
                             </td>
                             <td>
@@ -64,9 +83,10 @@
 
                                 </a>
                             </td>
-                            <td>
-                                {{ $property->city->name }}
+                            <td style="max-width: 220px;" class="text-wrap">
+                                {{ $property->address }}
                             </td>
+
 
                             <td>
                                 @if ($property->status == 1)
@@ -89,8 +109,12 @@
                                                     class="text-dark dropdown-item change_status" data-bs-toggle="modal"
                                                     data-userId="{{$property->id}}"
                                                     data-bs-target="#changeStatusModal">Delete</a>
-                                            <a href="{{ route('admin.rooms.index', ['property_id'=>$property->id]) }}"
-                                                class="text-dark dropdown-item">Manage Room</a>
+                                                    <a href="#"
+                                                    class="text-dark dropdown-item">View</a>
+                                                    <a href="{{ route('admin.rooms.index', ['property_id'=>$property->id]) }}"
+                                                        class="text-dark dropdown-item">Manage Room</a>
+                                            <a href="{{ route('admin.booking.create', ['property_id'=>$property->id]) }}"
+                                                class="text-dark dropdown-item">Add Booking</a>
                                         </div>
                                     </li>
                                     </ul>

@@ -42,10 +42,10 @@
                                 {{ $loop->iteration }}
                             </td>
                             <td>
-                                {{ $coupon->coupon_code }}
+                                {{ $coupon->coupon_name }}
                             </td>
                             <td>
-                                {{ $coupon->coupon_value }} %
+                                {{ $coupon->coupon_percent }} %
                             </td>
                             <td>
                                <img src="{{ getImageUrl($coupon->thumbnail) }}" alt=" {{ $coupon->coupon_code }}" width="70" height="70">

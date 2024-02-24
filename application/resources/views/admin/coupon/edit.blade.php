@@ -29,32 +29,25 @@
                 <div class="row">
 
 
-                <div class="form-group col-md-6">
-                    <label for="exampleInputUsername1">Coupon code</label>
-                    <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter coupon code" required
-                        name="coupon_code" value="{{old('coupon_code',$coupon->coupon_code)}}">
-                </div>
 
                 <div class="form-group col-md-6">
-                  <label for="exampleInputUsername1">Title</label>
+                  <label for="exampleInputUsername1">Name</label>
                   <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter coupon Title" required
-                      name="title" value="{{old('title',$coupon->title)}}">
+                      name="name" value="{{old('name',$coupon->coupon_name)}}">
               </div>
-
-
-              <div class="form-group col-md-6">
-                <label for="exampleInputUsername1">Description</label>
-                <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter coupon description" required
-                    name="description" value="{{old('description',$coupon->description)}}">
-            </div>
 
 
             <div class="form-group col-md-6">
               <label for="exampleInputUsername1">Coupon Value in percent</label>
               <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Enter coupon value" required
-                  name="coupon_value" value="{{old('coupon_value',$coupon->coupon_value)}}">
+                  name="coupon_value" value="{{old('coupon_value',$coupon->coupon_percent)}}">
           </div>
 
+          <div class="form-group col-md-6">
+            <label for="exampleInputUsername1">Min Cart Value to apply the coupon</label>
+            <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Enter cart alue" required
+                name="coupon_min" value="{{$coupon->coupon_min}}">
+        </div>
           <div class="form-group col-md-6">
             <label for="exampleInputUsername1">Coupon Expire At</label>
             <input type="date" class="form-control" id="exampleInputUsername1" placeholder="Enter coupon value"

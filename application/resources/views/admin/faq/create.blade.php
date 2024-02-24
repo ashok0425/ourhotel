@@ -30,6 +30,16 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="exampleInputUsername1">City </label>
+                    <select name="city" id="" class="form-control form-select" required>
+                        <option value="">--city--</option>
+                    @foreach ($cities as $city)
+                    <option value="{{$city->id}}">{{$city->name}}</option>
+                    @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label for="exampleInputUsername1">Answer </label>
                     <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Enter answer" required
                         name="answer">

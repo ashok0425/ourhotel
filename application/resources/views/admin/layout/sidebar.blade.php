@@ -92,7 +92,7 @@
       <li class="nav-item">
         <a class="nav-link" href="{{route('admin.coupons.index')}}">
           <i class="fas fa-envelope menu-icon"></i>
-          <span class="menu-title">Coupons</span>
+          <span class="menu-title">Offers</span>
         </a>
       </li>
     </ul>

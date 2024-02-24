@@ -33,18 +33,16 @@ class CouponController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'=>'required|max:225',
+            'name'=>'required|max:225',
             'coupon_value'=>'required',
-            'description'=>'required|max:2048',
         ]);
         $thumbnail=$this->uploadImage($request->thumbnail);
         $mobile_thumbnail=$this->uploadImage($request->mobile_thumbnail);
 
        $coupon=new Coupon;
-       $coupon->title=$request->title;
-       $coupon->description=$request->description;
-       $coupon->coupon_value=$request->coupon_value;
-       $coupon->coupon_code=$request->coupon_code;
+       $coupon->coupon_name=$request->name;
+       $coupon->coupon_percent=$request->coupon_value;
+       $coupon->coupon_min=$request->coupon_min;
        $coupon->status=$request->status;
        $coupon->thumbnail=$thumbnail;
        $coupon->expired_at=$request->expired_at;
@@ -72,7 +70,7 @@ class CouponController extends Controller
     public function edit(Coupon $coupon)
     {
         return view('admin.coupon.edit',compact('coupon'));
-        
+
     }
 
     /**
@@ -87,13 +85,11 @@ class CouponController extends Controller
         ]);
         $thumbnail=$this->uploadImage($request->thumbnail);
         $mobile_thumbnail=$this->uploadImage($request->mobile_thumbnail);
-
-       $coupon->title=$request->title;
-       $coupon->description=$request->description;
-       $coupon->coupon_value=$request->coupon_value;
-       $coupon->coupon_code=$request->coupon_code;
-       $coupon->status=$request->status;
-       $coupon->expired_at=$request->expired_at?$request->expired_at:$coupon->expired_at;
+        $coupon->coupon_name=$request->name;
+        $coupon->coupon_percent=$request->coupon_value;
+        $coupon->coupon_min=$request->coupon_min;
+        $coupon->status=$request->status;
+        $coupon->expired_at=$request->expired_at;
        $coupon->thumbnail=$thumbnail!=null?$thumbnail:$coupon->thumbnail;
        $coupon->mobile_thumbnail=$mobile_thumbnail!=null?$mobile_thumbnail:$coupon->mobile_thumbnail;
        $coupon->save();

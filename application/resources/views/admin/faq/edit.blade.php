@@ -36,6 +36,16 @@
                 </div>
 
 
+                <div class="form-group">
+                    <label for="exampleInputUsername1">City </label>
+                    <select name="city" id="" class="form-control form-select" required>
+                        <option value="">--city--</option>
+                    @foreach ($cities as $city)
+                    <option value="{{$city->id}}" {{$city->id==$faq->city_id?'selected':''}}>{{$city->name}}</option>
+                    @endforeach
+                    </select>
+                </div>
+
 
                 <div class="form-group">
                     <label for="exampleInputEmail1">Status</label>

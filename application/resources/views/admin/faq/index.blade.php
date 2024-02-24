@@ -36,7 +36,7 @@
                             <td>
                                 {{ $loop->iteration }}
                             </td>
-                            <td>
+                            <td class="text-wrap">
                                 {{ $faq->question }}
                             </td>
 

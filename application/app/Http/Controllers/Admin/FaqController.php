@@ -6,6 +6,7 @@ use App\Models\State;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Amenity;
+use App\Models\City;
 use App\Models\Faq;
 use Str;
 class FaqController extends Controller
@@ -24,7 +25,8 @@ class FaqController extends Controller
      */
     public function create()
     {
-        return view('admin.faq.create');
+        $cities=City::orderBy('id','desc')->get();
+        return view('admin.faq.create',compact('cities'));
     }
 
     /**
@@ -35,11 +37,14 @@ class FaqController extends Controller
         $request->validate([
             'question'=>'required',
             'answer'=>'required',
+            'city'=>'required'
         ]);
        $faq=new Faq;
        $faq->question=$request->question;
        $faq->status=$request->status;
        $faq->answer=$request->answer;
+       $faq->city_id=$request->city;
+
        $faq->save();
 
        $notification=array(
@@ -62,7 +67,8 @@ class FaqController extends Controller
      */
     public function edit(Faq $faq)
     {
-        return view('admin.faq.edit',compact('faq'));
+        $cities=City::orderBy('id','desc')->get();
+        return view('admin.faq.edit',compact('faq','cities'));
 
     }
 
@@ -74,10 +80,12 @@ class FaqController extends Controller
         $request->validate([
             'question'=>'required',
             'answer'=>'required',
+            'city'=>'required'
         ]);
        $faq->question=$request->question;
        $faq->status=$request->status;
        $faq->answer=$request->answer;
+       $faq->city_id=$request->city;
        $faq->save();
        $notification=array(
         'type'=>'success',

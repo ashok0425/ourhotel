@@ -1,46 +1,6 @@
 @extends('admin.layout.master')
 
 @push('style')
-  <style>
-    .sideNavBar{
-        height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, .4);
-  transition: 0.5s;
-  overflow: auto;
-    }
-.sidenav {
-  width: 0;
-  z-index: 9999999999;
-  background-color: #fff;
-  transition: 0.5s;
-  padding-top: 60px;
-  box-shadow: 0 0 5px gray;
-  pointer-events: none;
-  margin-left: auto;
-}
-
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-  cursor: pointer;
-  pointer-events:initial;
-}
-
-
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-
 </style>
 @endpush
 @section('content')
@@ -189,8 +149,10 @@
                                         <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#"
                                             role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h fa-2x"></i></a>
                                         <div class="dropdown-menu">
-                                            <a href=""
-                                            class="text-dark dropdown-item">Edit</a>
+                                            <a href="{{route('admin.bookings.show',$booking)}}" class="text-dark dropdown-item">View</a>
+                                            <a href="{{route('admin.bookings.edit',$booking)}}" class="text-dark dropdown-item">Download Invoice</a>
+                                            <a href="" class="text-dark dropdown-item updateSatusBtn"
+                                            data-toggle="modal" data-target="#updatestatus" data-booking_id="{{$booking->id}}">Change Status</a>
 
                                         </div>
                                     </li>
@@ -205,13 +167,7 @@
         </div>
         {{$bookings->links()}}
     </div>
-{{-- side nav for booking detail  --}}
-<div class="sideNavBar" onclick="">
-    <div id="mySidenav" class="sidenav">
 
-     <div class="content"></div>
-      </div>
-    </div>
 
 
   <!-- Modal -->
@@ -226,7 +182,10 @@
         </div>
         <div class="modal-body  pb-2">
 
-            <form action="" method="POST" id="updateSatusForm">
+            <form action="{{route('admin.bookings.status')}}" method="POST" id="updateSatusForm">
+                @method('PATCH')
+                @csrf
+                <input type="hidden" id="booking_id" name="booking_id">
                 @method('PATCH')
                 @csrf
                 <select name="status" id="" class="form-control form-select" required>
@@ -238,7 +197,7 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary  btn-rounded" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary btn-rounded">Save changes</button>
+          <button type="submit" class="btn btn-primary btn-rounded">Save</button>
         </div>
     </form>
 
@@ -251,30 +210,12 @@
 @push('script')
 
 <script>
-    function openNav(ele) {
-        url=ele.getAttribute('url')
-      document.getElementById("mySidenav").style.width = "350px";
-      document.querySelector('.sideNavBar').style.width = "100%";
-      document.querySelector('.sideNavBar').style.backgroundColor = "rgba(0,0,0,0.4)";
-      $.ajax({
-        url:url,
-        success:function(res){
-            console.log(res)
-            $('.content').html(res)
-        }
-      })
-    }
 
-    function closeNav() {
-      document.getElementById("mySidenav").style.width = "0";
-      document.querySelector('.sideNavBar').style.width = "0";
-      document.querySelector('.sideNavBar').style.backgroundColor = "none";
-    }
 
     // update booking status
     $(document).on('click','.updateSatusBtn',function(){
-        let url=$(this).attr('url');
-     $('#updateSatusForm').attr('action',url)
+        let bookingId=$(this).data('booking_id');
+     $('#booking_id').val(bookingId)
     })
 
     </script>

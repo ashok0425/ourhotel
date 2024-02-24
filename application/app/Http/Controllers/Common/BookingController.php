@@ -51,6 +51,7 @@ class BookingController extends Controller
     public function show(Booking $booking)
     {
         $booking=Booking::with(['user','room','property'])->where('booking_id',$booking->booking_id)->first();
+
         return view('common.booking.show',compact('booking'));
     }
 
@@ -60,16 +61,20 @@ class BookingController extends Controller
     public function edit(Booking $booking)
     {
         $booking_id=$booking->booking_id;
+        // return view('common.booking.print', ['booking_id'=>$booking_id]);
+
         $pdf = Pdf::loadView('common.booking.print', ['booking_id'=>$booking_id]);
-      return $pdf->download('invoice.pdf');
+        // return $pdf;
+      return $pdf->download("$booking_id|invoice.pdf");
         // return view('common.booking.print',compact('booking_id'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Booking $booking)
+    public function update(Request $request)
     {
+        $booking= Booking::findorFail($request->booking_id);
         $booking->status=$request->status;
         $booking->save();
         $notification=array(

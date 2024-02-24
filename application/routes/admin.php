@@ -28,6 +28,11 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::resource('rooms', RoomController::class);
     Route::resource('blogs', BlogController::class);
     Route::resource('bookings', BookingController::class)->only(['index','show','update','edit']);
+    Route::post('bookings/status', [BookingController::class,'update'])->name('bookings.status');
+    Route::get('add-booking/{property_id?}', [PropertyController::class,'addBooking'])->name('booking.create');
+    Route::post('add-booking/{property_id?}', [PropertyController::class,'storeBooking'])->name('booking.store');
+
+
     Route::resource('users', UserController::class);
     Route::resource('coupons', CouponController::class);
 
@@ -36,8 +41,6 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::resource('faqs', FaqController::class);
     Route::resource('categories', CategoryController::class);
 
-    Route::get('add-booking/{property_id?}', [PropertyController::class,'addBooking'])->name('booking.create');
-    Route::post('add-booking/{property_id?}', [PropertyController::class,'storeBooking'])->name('booking.store');
 
 
 

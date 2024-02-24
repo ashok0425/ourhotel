@@ -42,11 +42,15 @@
                             <td>
                                 {{ $loop->iteration }}
                             </td>
-                            <td>
+                            <td class="text-wrap" style="max-width: 200px;">
+                                <div class="text-wrap">
                                 {{ $user->name }}
+                                </div>
                             </td>
-                            <td>
+                            <td class="text-wrap" style="max-width: 200px;">
+                                <div class="text-wrap">
                                 {{ $user->email }}
+                                </div>
                             </td>
 
                             <td>

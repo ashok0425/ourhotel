@@ -1,45 +1,7 @@
 @extends('admin.layout.master')
 
 @push('style')
-  <style>
-    .sideNavBar{
-        height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, .4);
-  transition: 0.5s;
-  overflow: auto;
-    }
-.sidenav {
-  width: 0;
-  z-index: 9999999999;
-  background-color: #fff;
-  transition: 0.5s;
-  padding-top: 60px;
-  box-shadow: 0 0 5px gray;
-  pointer-events: none;
-  margin-left: auto;
-}
-
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-  cursor: pointer;
-  pointer-events:initial;
-}
-
-
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}</style>
+  <style></style>
 @endpush
 @section('content')
     <div class="card">
@@ -63,16 +25,26 @@
                     <table class="table w-100">
                         <tr>
                             <td>Name</td>
-                            <td>{{ucfirst($user->name)}}</td>
+                            <td class="text-wrap" style="max-width: 200px;">
+                                <div class="text-wrap">{{ucfirst($user->name)}}
+                                </div>
+                                </td>
                         </tr>
                         <tr>
                             <td>Email</td>
-                            <td>{{$user->email}}</td>
+                            <td class="text-wrap" style="max-width: 200px;">
+                                <div class="text-wrap">{{$user->email}}
+                                </div>
+                                </td>
                         </tr>
 
                         <tr>
                             <td>Phone</td>
-                            <td>{{$user->phone}}</td>
+                            <td class="text-wrap" style="max-width: 200px;">
+                                <div class="text-wrap">
+                                {{$user->phone_number}}
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <td>Staus</td>
@@ -138,25 +110,25 @@
                 </div>
 
             </div>
-            <table class="table table-bordered">
+            <table class="table table-bordered w-100">
                 <thead>
                     <tr>
                         <th>
                             #
                         </th>
                         <th>
-                            Booked By
+                           User Detail
                         </th>
+
                         <th>
-                            Booked For
+                            Hotel
                         </th>
-                        <th>
-                            Property
-                        </th>
+
+                        <th>Detail</th>
+                        <th>Amount</th>
                         <th>
                             Check in/out
                         </th>
-
                         <th>
                             Status
                         </th>
@@ -172,23 +144,45 @@
                             <td>
                                 {{ $loop->iteration }}
                             </td>
-                            <td>
-                                {{ $booking->user->name }}
-                            </td>
-                            <td>
-                                {{ $booking->name }}
+                            <td class="text-wrap" style="max-width: 200px;">
+                          <div class="text-wrap">
+                                 BY: <a href="">{{$booking->user?$booking->user->name:"User Deleted"}}</a>
                                 <br>
-                                {{ $booking->phone }}
+                            {{ $booking->name }}
+                            <br>
+                            {{ $booking->phone_number }}
+                          </div>
                             </td>
 
-                            <td>
-                           {{$booking->property->name}}
+                            <td class="text-wrap" style="max-width: 200px;">
+                           @if ($booking->property_id==0)
+                              {{$booking->hotel_data['name']??''}}
+
+                              @else
+                              {{$booking->property?$booking->property->name:"Hotel Deleted"}}
+                           @endif
                              </td>
                              <td>
-                                {{Carbon\Carbon::parse($booking->check_in)->format('d/m/Y')}} ({{Carbon\Carbon::parse($booking->booked_hour_from)->format('G:i:A')}})
+                                Room Type: {{$booking->booking_type}}
+
                                 <br>
-                                {{Carbon\Carbon::parse($booking->check_out)->format('d/m/Y')}}
-                                ({{Carbon\Carbon::parse($booking->booked_hour_to)->format('G:i:A')}})
+                                Booking Type: {{$booking->room_type}}
+                                <br>
+                               No.of Adult: {{$booking->no_of_adult}}
+                                <br>
+                               No.of Child: {{$booking->no_of_child}}
+                                <br>
+                                No.of Room: {{$booking->no_of_room}}
+                            </td>
+                             <td>{{$booking->final_amount}}</td>
+
+                             <td>
+                                {{-- ({{Carbon\Carbon::parse($booking->booked_hour_from)->format('G:i:A')}}) --}}
+                                {{-- ({{Carbon\Carbon::parse($booking->booked_hour_to)->format('G:i:A')}}) --}}
+                                {{Carbon\Carbon::parse($booking->booking_start)->format('d/m/Y')}}
+                                <br>
+                                {{Carbon\Carbon::parse($booking->booking_end)->format('d/m/Y')}}
+
                                   </td>
                             <td>
                                 @if ($booking->status == 0)
@@ -206,9 +200,19 @@
                                         <span class="badge bg-danger text-white">Cancelled</span>
                                     @endif
                             </td>
-                            <td>
-                                <a url="{{ route('admin.bookings.show', $booking) }}" class="btn btn-primary btn-sm" onclick="openNav(this)" >view</a>
-                                <a url="{{ route('admin.bookings.update', $booking) }}" class="btn btn-primary btn-sm updateSatusBtn" data-toggle="modal" data-target="#updatestatus" ><i class="fas fa-edit"></i></a>
+                            <td style="max-width: 50px">
+                                <ul class="nav ">
+
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#"
+                                            role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h fa-2x"></i></a>
+                                        <div class="dropdown-menu">
+                                            <a href=""
+                                            class="text-dark dropdown-item">Edit</a>
+
+                                        </div>
+                                    </li>
+                                    </ul>
                             </td>
 
                         </tr>
@@ -221,7 +225,6 @@
 
 {{-- property list  --}}
 <div class="card mt-3">
-
     <div class="card-body table-responsive pt-3">
         <div class="card-title d-flex justify-content-between">
             <div>
@@ -247,7 +250,6 @@
                     <th>
                         Address
                     </th>
-
                     <th>
                         Status
                     </th>
@@ -264,17 +266,27 @@
                             {{ $loop->iteration }}
                         </td>
                         <td>
-                            {{ $property->user->name }}
+                            {{ $property->owner?->name }}
+                            <br>
+                            {{ $property->owner?->email }}
+                            <br>
+                            {{ $property->owner?->phone_number }}
+
                         </td>
-                        <td>
+                        <td style="max-width: 220px;" class="text-wrap">
                             {{ $property->name }}
                         </td>
                         <td>
-                           <img src="{{ getImageUrl($property->thumbnail) }}" alt=" {{ $property->name }}" width="70" height="70">
+                            <a href="{{ getImageUrl($property->thumbnail) }}" target="_blank">
+                           <img src="{{ getImageUrl($property->thumbnail) }}" alt="{{ $property->name }}" width="100" height="100">
+
+                            </a>
                         </td>
-                        <td>
-                       {{$property->address}}
-                         </td>
+                        <td style="max-width: 220px;" class="text-wrap">
+                            {{ $property->address }}
+                        </td>
+
+
                         <td>
                             @if ($property->status == 1)
                                 <span class="badge bg-success text-white">Active</span>
@@ -283,15 +295,28 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('admin.properties.edit', $property) }}" class="btn btn-primary btn-sm">Edit</a>
-                            <a href="{{ route('admin.properties.destroy', $property) }}"
-                                class="btn btn-danger btn-sm delete_row" data-toggle="modal"
-                                data-target="#deleteModal">Delete</a>
-                                <br>
-                                <br>
 
-                                <a href="{{ route('admin.rooms.index', ['property_id'=>$property->id]) }}"
-                                class="btn btn-info btn-sm" >Manage Room</a>
+                            <ul class="nav ">
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#"
+                                        role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h fa-2x"></i></a>
+                                    <div class="dropdown-menu">
+                                        <a href="{{ route('admin.properties.edit', $property) }}"
+                                        class="text-dark dropdown-item">Edit</a>
+                                        <a href="#"
+                                                class="text-dark dropdown-item change_status" data-bs-toggle="modal"
+                                                data-userId="{{$property->id}}"
+                                                data-bs-target="#changeStatusModal">Delete</a>
+                                                <a href="#"
+                                                class="text-dark dropdown-item">View</a>
+                                                <a href="{{ route('admin.rooms.index', ['property_id'=>$property->id]) }}"
+                                                    class="text-dark dropdown-item">Manage Room</a>
+                                        <a href="{{ route('admin.booking.create', ['property_id'=>$property->id]) }}"
+                                            class="text-dark dropdown-item">Add Booking</a>
+                                    </div>
+                                </li>
+                                </ul>
                         </td>
 
                     </tr>
@@ -300,51 +325,7 @@
             </tbody>
         </table>
     </div>
-
-
-
-
-{{-- side nav for booking detail  --}}
-<div class="sideNavBar" onclick="">
-    <div id="mySidenav" class="sidenav">
-
-     <div class="content"></div>
-      </div>
-    </div>
-
-
-  <!-- Modal -->
-  <div class="modal fade" id="updatestatus" tabindex="-1" role="dialog" aria-labelledby="updatestatusLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="updatestatusLabel">Update Booking status</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body  pb-2">
-
-            <form action="" method="POST" id="updateSatusForm">
-                @method('PATCH')
-                @csrf
-                <select name="status" id="" class="form-control form-select" required>
-                    <option value="1">Approved</option>
-                    <option value="2">Checkin</option>
-                    <option value="3">Checkout</option>
-                    <option value="4">Cancel</option>
-                </select>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary  btn-rounded" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary btn-rounded">Save changes</button>
-        </div>
-    </form>
-
-    </div>
-      </div>
-    </div>
-  </div>
+</div>
 @endsection
 
 

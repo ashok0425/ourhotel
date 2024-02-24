@@ -18,9 +18,12 @@ class Booking extends Model
     }
 
     public function property(){
-        return $this->belongsTo(Property::class);
+        return $this->belongsTo(Property::class,'property_id','id');
     }
 
+    public function bookedBy(){
+        return $this->belongsTo(User::class,'booked_by','id');
+    }
 
     public function room(){
         return $this->belongsTo(Room::class);

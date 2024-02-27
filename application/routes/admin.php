@@ -14,8 +14,10 @@ use App\Http\Controllers\Admin\PropertyTypeController;
 use App\Http\Controllers\Common\RoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\StateController;
+use App\Http\Controllers\Admin\TourBookingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WebsiteController;
+use App\Models\TourBooking;
 
 Route::prefix('admin')->name('admin.')->group(function(){
 
@@ -40,6 +42,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::resource('banners', BannerController::class);
     Route::resource('faqs', FaqController::class);
     Route::resource('categories', CategoryController::class);
+    Route::resource('tour_bookings', TourBookingController::class);
+    Route::post('tour_bookings/status', [TourBookingController::class,'update'])->name('tour_bookings.status');
 
 
 

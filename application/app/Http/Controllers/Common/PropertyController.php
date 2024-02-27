@@ -266,7 +266,7 @@ class PropertyController extends Controller
             'message' => 'Booking create successfully'
         );
 
-        return redirect()->back()->with($notification);
+
 
         return redirect()->back()->with($notification);
     }

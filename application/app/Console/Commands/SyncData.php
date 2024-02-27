@@ -222,6 +222,7 @@ class SyncData extends Command
         foreach ($tours as $key => $tour) {
            DB::connection('mysql')->table('tour_bookings')->insert([
             'booking_id'=>$tour->booking_id,
+            'user_id'=>$tour->user_id,
             'tour_name'=>$tour->tour_name,
             'start_date'=>$tour->start_date,
             'end_date'=>$tour->end_date,

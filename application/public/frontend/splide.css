@@ -1,0 +1,1147 @@
+
+    :root {
+        --custom-transition: all 300ms ease-in-out;
+        --box-shadow: ;
+        --custom-primary: ;
+        --custom-secondary: ;
+        --custom-black: ;
+        --custom-white: ;
+      }
+      
+      .splide__container{box-sizing:border-box;position:relative}.splide__list{-webkit-backface-visibility:hidden;backface-visibility:hidden;display:-ms-flexbox;display:flex;height:100%;margin:0!important;padding:0!important;transform-style:preserve-3d}.splide.is-initialized:not(.is-active) .splide__list{display:block}.splide__pagination{-ms-flex-align:center;align-items:center;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;-ms-flex-pack:center;justify-content:center;margin:0;pointer-events:none}.splide__pagination li{display:inline-block;line-height:1;list-style-type:none;margin:0;pointer-events:auto}.splide__progress__bar{width:0}.splide{outline:none;position:relative;visibility:hidden}.splide.is-initialized,.splide.is-rendered{visibility:visible}.splide__slide{-webkit-backface-visibility:hidden;backface-visibility:hidden;box-sizing:border-box;-ms-flex-negative:0;flex-shrink:0;list-style-type:none!important;margin:0;outline:none;position:relative}.splide__slide img{vertical-align:bottom}.splide__slider{position:relative}.splide__spinner{animation:splide-loading 1s linear infinite;border:2px solid #999;border-left-color:transparent;border-radius:50%;bottom:0;contain:strict;display:inline-block;height:20px;left:0;margin:auto;position:absolute;right:0;top:0;width:20px}.splide__track{overflow:hidden;position:relative;z-index:0}@keyframes splide-loading{0%{transform:rotate(0)}to{transform:rotate(1turn)}}.splide--draggable>.splide__slider>.splide__track,.splide--draggable>.splide__track{-webkit-user-select:none;-ms-user-select:none;user-select:none}.splide--fade>.splide__slider>.splide__track>.splide__list,.splide--fade>.splide__track>.splide__list{display:block}.splide--fade>.splide__slider>.splide__track>.splide__list>.splide__slide,.splide--fade>.splide__track>.splide__list>.splide__slide{left:0;opacity:0;position:absolute;top:0;z-index:0}.splide--fade>.splide__slider>.splide__track>.splide__list>.splide__slide.is-active,.splide--fade>.splide__track>.splide__list>.splide__slide.is-active{opacity:1;position:relative;z-index:1}.splide--rtl{direction:rtl}.splide--ttb.is-active>.splide__slider>.splide__track>.splide__list,.splide--ttb.is-active>.splide__track>.splide__list{display:block}.splide__arrow{-ms-flex-align:center;align-items:center;background:#ccc;border:0;border-radius:50%;cursor:pointer;display:-ms-flexbox;display:flex;height:2em;-ms-flex-pack:center;justify-content:center;opacity:.7;padding:0;position:absolute;top:50%;transform:translateY(-50%);width:2em;z-index:1}.splide__arrow svg{fill:#000;height:1.2em;width:1.2em}.splide__arrow:hover{opacity:.9}.splide__arrow:focus{outline:none}.splide__arrow--prev{left:1em}.splide__arrow--prev svg{transform:scaleX(-1)}.splide__arrow--next{right:1em}.splide__pagination{bottom:.5em;left:0;padding:0 1em;position:absolute;right:0;z-index:1}.splide__pagination__page{background:#ccc;border:0;border-radius:50%;display:inline-block;height:8px;margin:3px;opacity:.7;padding:0;transition:transform .2s linear;width:8px}.splide__pagination__page.is-active{background:#fff;transform:scale(1.4)}.splide__pagination__page:hover{cursor:pointer;opacity:.9}.splide__pagination__page:focus{outline:none}.splide__progress__bar{background:#ccc;height:3px}.splide--nav>.splide__slider>.splide__track>.splide__list>.splide__slide,.splide--nav>.splide__track>.splide__list>.splide__slide{border:3px solid transparent;cursor:pointer}.splide--nav>.splide__slider>.splide__track>.splide__list>.splide__slide.is-active,.splide--nav>.splide__track>.splide__list>.splide__slide.is-active{border:3px solid #000}.splide--nav>.splide__slider>.splide__track>.splide__list>.splide__slide:focus,.splide--nav>.splide__track>.splide__list>.splide__slide:focus{outline:none}.splide--rtl>.splide__arrows .splide__arrow--prev,.splide--rtl>.splide__slider>.splide__track>.splide__arrows .splide__arrow--prev,.splide--rtl>.splide__track>.splide__arrows .splide__arrow--prev{left:auto;right:1em}.splide--rtl>.splide__arrows .splide__arrow--prev svg,.splide--rtl>.splide__slider>.splide__track>.splide__arrows .splide__arrow--prev svg,.splide--rtl>.splide__track>.splide__arrows .splide__arrow--prev svg{transform:scaleX(1)}.splide--rtl>.splide__arrows .splide__arrow--next,.splide--rtl>.splide__slider>.splide__track>.splide__arrows .splide__arrow--next,.splide--rtl>.splide__track>.splide__arrows .splide__arrow--next{left:1em;right:auto}.splide--rtl>.splide__arrows .splide__arrow--next svg,.splide--rtl>.splide__slider>.splide__track>.splide__arrows .splide__arrow--next svg,.splide--rtl>.splide__track>.splide__arrows .splide__arrow--next svg{transform:scaleX(-1)}.splide--ttb>.splide__arrows .splide__arrow,.splide--ttb>.splide__slider>.splide__track>.splide__arrows .splide__arrow,.splide--ttb>.splide__track>.splide__arrows .splide__arrow{left:50%;transform:translate(-50%)}.splide--ttb>.splide__arrows .splide__arrow--prev,.splide--ttb>.splide__slider>.splide__track>.splide__arrows .splide__arrow--prev,.splide--ttb>.splide__track>.splide__arrows .splide__arrow--prev{top:1em}.splide--ttb>.splide__arrows .splide__arrow--prev svg,.splide--ttb>.splide__slider>.splide__track>.splide__arrows .splide__arrow--prev svg,.splide--ttb>.splide__track>.splide__arrows .splide__arrow--prev svg{transform:rotate(-90deg)}.splide--ttb>.splide__arrows .splide__arrow--next,.splide--ttb>.splide__slider>.splide__track>.splide__arrows .splide__arrow--next,.splide--ttb>.splide__track>.splide__arrows .splide__arrow--next{bottom:1em;top:auto}.splide--ttb>.splide__arrows .splide__arrow--next svg,.splide--ttb>.splide__slider>.splide__track>.splide__arrows .splide__arrow--next svg,.splide--ttb>.splide__track>.splide__arrows .splide__arrow--next svg{transform:rotate(90deg)}.splide--ttb>.splide__pagination,.splide--ttb>.splide__slider>.splide__pagination{bottom:0;display:-ms-flexbox;display:flex;-ms-flex-direction:column;flex-direction:column;left:auto;padding:1em 0;right:.5em;top:0}
+      .custom-transition {
+        transition: var(--custom-transition) !important;
+      }
+      
+      .cursor-pointer {
+        cursor: pointer;
+      }
+      
+      .line-1 {
+        overflow: hidden;
+        white-space: normal;
+        text-overflow: ellipsis;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+      }
+      
+      .line-2 {
+        overflow: hidden;
+        white-space: normal;
+        text-overflow: ellipsis;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+      
+      .line-3 {
+        overflow: hidden;
+        white-space: normal;
+        text-overflow: ellipsis;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+      }
+      
+      /* responsive lg */
+      @media (max-width: 991px) {
+        :root {
+          font-size: 15px;
+        }
+      }
+      /* responsive md */
+      @media (max-width: 768px) {
+        :root {
+          font-size: 14.5px;
+        }
+      }
+      /* responsive sm */
+      @media (max-width: 575px) {
+        :root {
+          font-size: 14px;
+        }
+      }
+      .custom-font-sans {
+        font-family: 1 !important;
+      }
+      
+      .custom-text-primary {
+        color: "" !important;
+      }
+      
+      .custom-bg-primary {
+        background-color: "" !important;
+      }
+      
+      .custom-text-secondary {
+        color: "" !important;
+      }
+      
+      .custom-bg-secondary {
+        background-color: "" !important;
+      }
+      
+      .custom-text-black {
+        color: "" !important;
+      }
+      
+      .custom-bg-black {
+        background-color: "" !important;
+      }
+      
+      .custom-text-white {
+        color: "" !important;
+      }
+      
+      .custom-bg-white {
+        background-color: "" !important;
+      }
+      
+      .custom-fs-6 {
+        font-size: 0.375rem;
+      }
+      
+      .custom-fs-7 {
+        font-size: 0.4375rem;
+      }
+      
+      .custom-fs-8 {
+        font-size: 0.5rem;
+      }
+      
+      .custom-fs-9 {
+        font-size: 0.5625rem;
+      }
+      
+      .custom-fs-10 {
+        font-size: 0.625rem;
+      }
+      
+      .custom-fs-11 {
+        font-size: 0.6875rem;
+      }
+      
+      .custom-fs-12 {
+        font-size: 0.6875rem;
+      }
+      
+      .custom-fs-13 {
+        font-size: 0.8125rem;
+      }
+      
+      .custom-fs-14 {
+        font-size: 0.875rem;
+      }
+      
+      .custom-fs-15 {
+        font-size: 0.9375rem;
+      }
+      
+      .custom-fs-16 {
+        font-size: 1rem;
+      }
+      
+      .custom-fs-17 {
+        font-size: 1.0625rem;
+      }
+      
+      .custom-fs-18 {
+        font-size: 1.125rem;
+      }
+      
+      .custom-fs-19 {
+        font-size: 1.1875rem;
+      }
+      
+      .custom-fs-20 {
+        font-size: 1.25rem;
+      }
+      
+      .custom-fs-21 {
+        font-size: 1.3125rem;
+      }
+      
+      .custom-fs-22 {
+        font-size: 1.375rem;
+      }
+      
+      .custom-fs-23 {
+        font-size: 1.4375rem;
+      }
+      
+      .custom-fs-24 {
+        font-size: 1.5rem;
+      }
+      
+      .custom-fs-25 {
+        font-size: 1.5625rem;
+      }
+      
+      .custom-fs-26 {
+        font-size: 1.625rem;
+      }
+      
+      .custom-fs-27 {
+        font-size: 1.6875rem;
+      }
+      
+      .custom-fs-28 {
+        font-size: 1.75rem;
+      }
+      
+      .custom-fs-29 {
+        font-size: 1.8125rem;
+      }
+      
+      .custom-fs-30 {
+        font-size: 1.875rem;
+      }
+      
+      .custom-fs-31 {
+        font-size: 1.9375rem;
+      }
+      
+      .custom-fs-32 {
+        font-size: 2rem;
+      }
+      
+      .custom-fs-33 {
+        font-size: 2.0625rem;
+      }
+      
+      .custom-fs-34 {
+        font-size: 2.125rem;
+      }
+      
+      .custom-fs-35 {
+        font-size: 2.1875rem;
+      }
+      
+      .custom-fs-36 {
+        font-size: 2.25rem;
+      }
+      
+      .custom-fs-37 {
+        font-size: 2.3125rem;
+      }
+      
+      .custom-fs-38 {
+        font-size: 2.375rem;
+      }
+      
+      .custom-fs-39 {
+        font-size: 2.4375rem;
+      }
+      
+      .custom-fs-40 {
+        font-size: 2.5rem;
+      }
+      
+      .custom-fs-41 {
+        font-size: 2.5625rem;
+      }
+      
+      .custom-fs-42 {
+        font-size: 2.625rem;
+      }
+      
+      .custom-fs-43 {
+        font-size: 2.6875rem;
+      }
+      
+      .custom-fs-44 {
+        font-size: 2.75rem;
+      }
+      
+      .custom-fs-45 {
+        font-size: 2.8125rem;
+      }
+      
+      .custom-fs-46 {
+        font-size: 2.875rem;
+      }
+      
+      .custom-fs-47 {
+        font-size: 2.9375rem;
+      }
+      
+      .custom-fs-48 {
+        font-size: 3rem;
+      }
+      
+      .custom-fs-49 {
+        font-size: 3.0625rem;
+      }
+      
+      .custom-fs-50 {
+        font-size: 3.125rem;
+      }
+      
+      .custom-fs-51 {
+        font-size: 3.1875rem;
+      }
+      
+      .custom-fs-52 {
+        font-size: 3.25rem;
+      }
+      
+      .custom-fs-53 {
+        font-size: 3.3125rem;
+      }
+      
+      .custom-fs-54 {
+        font-size: 3.375rem;
+      }
+      
+      .custom-fs-55 {
+        font-size: 3.4375rem;
+      }
+      
+      .custom-fs-56 {
+        font-size: 3.5rem;
+      }
+      
+      .custom-fs-57 {
+        font-size: 3.5625rem;
+      }
+      
+      .custom-fs-58 {
+        font-size: 3.625rem;
+      }
+      
+      .custom-fs-59 {
+        font-size: 3.6875rem;
+      }
+      
+      .custom-fs-60 {
+        font-size: 3.75rem;
+      }
+      
+      .custom-fs-61 {
+        font-size: 3.8125rem;
+      }
+      
+      .custom-fs-62 {
+        font-size: 3.875rem;
+      }
+      
+      .custom-fs-63 {
+        font-size: 3.9375rem;
+      }
+      
+      .custom-fs-64 {
+        font-size: 4rem;
+      }
+      
+      .custom-fw-100 {
+        font-weight: 100;
+      }
+      
+      .custom-fw-200 {
+        font-weight: 200;
+      }
+      
+      .custom-fw-300 {
+        font-weight: 300;
+      }
+      
+      .custom-fw-400 {
+        font-weight: 400;
+      }
+      
+      .custom-fw-500 {
+        font-weight: 500;
+      }
+      
+      .custom-fw-600 {
+        font-weight: 600;
+      }
+      
+      .custom-fw-700 {
+        font-weight: 700;
+      }
+      
+      .custom-fw-800 {
+        font-weight: 800;
+      }
+      
+      .custom-fw-900 {
+        font-weight: 900;
+      }
+      
+      fieldset,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      ol,
+      p,
+      ul,
+      ul li {
+        margin: 0;
+        padding: 0;
+      }
+      
+      a,
+      .hamburger,
+      button {
+        cursor: pointer;
+      }
+      
+      *,
+      a:focus,
+      a:hover {
+        text-decoration: none;
+      }
+      
+      *,
+      button:focus {
+        outline: 0;
+      }
+      
+      .product__slider .splide__arrow {
+        opacity: 1;
+        background-color: #fff;
+        box-shadow: 0 7px 8px 0 rgba(0, 0, 0, 0.35);
+        width: 3em;
+        height: 3em;
+      }
+      .product__slider .splide__arrow svg {
+        fill: #ff0000;
+      }
+      
+      .product__main .info__container {
+        padding: 25px 0 0;
+      }
+      .product__main h3 {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 18px;
+      }
+      .product__main h6 {
+        line-height: 1.5;
+        color: rgba(0, 0, 0, 0.7);
+        font-size: 14px;
+        margin: 0px;
+        word-spacing: 2px;
+        font-weight: bold;
+      }
+      .product__main p {
+        line-height: 1.5;
+        word-spacing: 2px;
+        color: rgba(0, 0, 0, 0.7);
+        font-size: 14px;
+        word-spacing: 2px;
+        margin-bottom: 5px;
+      }
+      .product__main .product__info h1 {
+        font-size: 30px;
+        font-weight: bold;
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+      .product__main .product__info p {
+        font-size: 16px;
+        line-height: 1.5;
+        letter-spacing: 0.4px;
+        color: #222;
+        opacity: 0.54;
+        margin: 0;
+        font-weight: 400;
+      }
+      .product__main .amenities {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-size: 14px;
+        line-height: 1.71;
+        color: #222;
+      }
+      .product__main .amenities svg {
+        width: 22px;
+      }
+      .product__main .product__rating {
+        width: -webkit-max-content;
+        width: -moz-max-content;
+        width: max-content;
+      }
+      .product__main .product__rating .top {
+        background: #b4da55;
+        color: #fff;
+        font-size: 20px;
+        font-weight: bolder;
+        width: 100%;
+        height: 100%;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        padding: 8px;
+        align-items: center;
+        display: flex;
+        gap: 10px;
+      }
+      .product__main .product__rating .top svg {
+        max-width: 20px;
+      }
+      .product__main .product__rating .top svg path {
+        fill: #fff;
+      }
+      .product__main .product__rating .bot {
+        font-size: 12px;
+        padding: 4px 8px;
+        text-align: center;
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+        word-break: break-word;
+        white-space: nowrap;
+        background: #f4f4f4;
+      }
+      .product__main .choose__room .room__cat * {
+        color: #222;
+      }
+      .product__main .choose__room .room__cat .top {
+        display: flex;
+        flex-direction: row;
+        background: white;
+        padding: 12px 20px 18px 20px;
+        justify-content: space-between;
+        border: 1px solid rgba(116, 116, 116, 0.1568627451);
+        border-radius: 5px 5px 0px 0px;
+      }
+      .product__main .choose__room .room__cat .top .right {
+        cursor: pointer;
+        position: relative;
+        isolation: isolate;
+      }
+      .product__main .choose__room .room__cat .top .right img {
+        width: 100%;
+        max-width: 180px;
+        -o-object-fit: cover;
+           object-fit: cover;
+        aspect-ratio: 1/0.6;
+        border-radius: 10px;
+        z-index: -1;
+      }
+      .product__main .choose__room .room__cat .top .right a {
+        display: none;
+      }
+      .product__main .choose__room .room__cat .top .right a:nth-last-of-type(1) {
+        display: block;
+      }
+      .product__main .choose__room .room__cat .top .right span {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.5803921569);
+        border-radius: 100px;
+        height: 28px;
+        width: 28px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .product__main .choose__room .room__cat .top .left {
+        display: grid;
+        gap: 10px;
+      }
+      .product__main .choose__room .room__cat .top .left .cat {
+        font-weight: bold;
+        font-size: 21px;
+      }
+      .product__main .choose__room .room__cat .top .left .info {
+        font-size: 14px;
+      }
+      .product__main .choose__room .room__cat .bot {
+        display: flex;
+        padding: 16px 18px;
+        border: 1px solid rgba(116, 116, 116, 0.1568627451);
+        border-top: 0;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .product__main .choose__room .room__cat .bot .left .price {
+        font-size: 18px;
+        line-height: 24px;
+        font-weight: bold;
+      }
+      .product__main .choose__room .room__cat .bot .left .price span {
+        text-decoration: line-through;
+        color: #6d787d;
+        font-size: 14px;
+        line-height: 24px;
+      }
+      .product__main .choose__room .room__cat:not(:last-of-type) {
+        margin-bottom: 20px;
+      }
+      .product__main .btn.btn__primary {
+        font-size: 12px;
+        font-weight: bold;
+        width: 180px;
+        padding: 16px 0px;
+        border-radius: 4px;
+        border: solid 1px #d7d7d7;
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+        outline: 0;
+        background: #fff;
+        color: #ee2e24;
+        text-transform: uppercase;
+      }
+      .product__main .hotel__policies {
+        border-bottom: 1px solid rgba(166, 166, 166, 0.2);
+      }
+      .product__main .hotel__policies .check__time {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .product__main .hotel__policies .check__time .time {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+      .product__main .hotel__policies .check__time .time span {
+        font-size: 14px;
+        position: relative;
+        background: #fff;
+        border: solid 1px rgba(166, 166, 166, 0.2);
+        padding: 8px 16px;
+        border-radius: 2px;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.25;
+        color: #222;
+        z-index: 1;
+        margin-top: 12px;
+      }
+      .product__main .hotel__policies .check__time .time span::before {
+        position: absolute;
+        content: "";
+        width: 14px;
+        height: 14px;
+        top: -5px;
+        left: 10%;
+        background-color: #fff;
+        transform: rotate(-45deg);
+        box-shadow: 1px -1px 0px 0px rgba(166, 166, 166, 0.2), 0px 0px 0px 0px rgba(166, 166, 166, 0.2);
+        z-index: 2;
+      }
+      .product__main .hotel__policies .check__time .br {
+        width: 1px;
+        height: 70px;
+        display: block;
+        border-right: 1px solid rgba(166, 166, 166, 0.2);
+        margin: 0px 24px;
+      }
+      .product__main .hotel__policies .policies {
+        list-style-position: inside;
+      }
+      .product__main .hotel__policies .policies li {
+        font-size: 14px;
+        color: #222;
+        margin-bottom: 12px;
+      }
+      .product__main .hotel__policies .policies li::marker {
+        color: #bdbdbd;
+      }
+      
+      .link__red {
+        font-size: 18px;
+        font-weight: bold;
+        color: #ee2e24 !important;
+        outline: 0;
+        pointer-events: auto;
+        text-decoration: none;
+        padding: 12px 0px;
+        display: block !important;
+      }
+      
+      .product__booking__container {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 10px;
+        margin-top: 25px;
+      }
+      .product__booking__container .product__booking__login {
+        opacity: 0.9;
+        border-radius: 4px;
+        background: linear-gradient(265deg, rgb(0, 2, 109) 48%, rgb(73, 179, 211),rgb(40, 231, 231));
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0px;
+        cursor: pointer;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        color: #fff;
+        padding-inline: 24px;
+      }
+      .product__booking__container .product__booking__login .left {
+        display: flex;
+        gap: 10px;
+        text-transform: uppercase;
+        max-width: 250px;
+        font-weight: bold;
+        line-height: normal;
+        font-size: 12px;
+      }
+      .product__booking__container .product__booking__login .login {
+        padding: 2px 10px;
+        position: relative;
+        cursor: pointer;
+        text-align: center;
+        font-size: 13px;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 2px;
+      }
+      
+      .product__booking {
+        display: flex;
+        flex-direction: column;
+        padding: 16px 24px;
+        border: 1px solid;
+        justify-content: center;
+        border-radius: 4px;
+        box-shadow: 0 2px 6px 0 rgba(125, 125, 125, 0.1);
+        border: solid 1px #f0f0f0;
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+        box-sizing: border-box;
+        gap: 15px;
+      }
+      .product__booking * {
+        color: #222;
+      }
+      .product__booking__price {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        font-size: 24px;
+        font-weight: 700;
+        gap: 8px;
+      }
+      .product__booking__price .del {
+        text-decoration: line-through;
+        font-size: 16px;
+        color: #6d787d;
+        font-weight: 400;
+      }
+      .product__booking__price .off {
+        font-size: 14px;
+        font-weight: 600;
+        color: #f5a623;
+      }
+      .product__booking__price .taxes {
+        width: 100%;
+        display: block;
+        font-weight: 400;
+        line-height: 1em;
+        font-size: 12px;
+        color: #6d787d;
+      }
+      .product__booking__date {
+        display: flex;
+        justify-content: space-between;
+        display: flex;
+        margin-top: 16px;
+        width: 100%;
+        box-shadow: 0 2px 6px 0 rgba(125, 125, 125, 0.1);
+        cursor: pointer;
+        border: solid 1px #f0f0f0;
+      }
+      .product__booking__date span {
+        border: 0;
+        margin: 0 12px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding: 14px 0 !important;
+        width: -webkit-max-content;
+        width: -moz-max-content;
+        width: max-content;
+        font-weight: bold;
+        font-size: 14px;
+        color: #0c0a15;
+      }
+      .product__booking__type {
+        padding: 14px 12px;
+        display: flex;
+        width: 100%;
+        box-shadow: 0 2px 6px 0 rgba(125, 125, 125, 0.1);
+        cursor: pointer;
+        border: solid 1px #f0f0f0;
+        align-items: center;
+        gap: 10px;
+      }
+      .product__booking__coupon {
+        display: flex;
+        gap: 8px;
+        margin: 15px 0 0;
+      }
+      .product__booking__coupon .right {
+        color: #ee2e24;
+        cursor: pointer;
+        font-size: 14px;
+        pointer-events: auto;
+        line-height: 1.2;
+      }
+      .product__booking__coupon .right span {
+        display: block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: solid 1px #2ec478;
+        background-color: #effcf5;
+        color: #698e7f;
+        font-weight: bold;
+        font-size: 12px;
+        text-transform: uppercase;
+        margin-top: 8px;
+        cursor: pointer;
+      }
+      .product__booking__total__price {
+        display: flex;
+        justify-content: space-between;
+        font-size: 15px;
+      }
+      .product__booking__total__price .left {
+        display: flex;
+        flex-direction: column;
+      }
+      .product__booking__total__price .left span {
+        font-size: 12px;
+        color: #6d787d;
+      }
+      .product__booking__total__price .right {
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1.14;
+        color: #000000;
+        margin-right: 30px;
+      }
+      .product__booking .link__red {
+        padding: 0;
+      }
+      .product__booking .guest__policie {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.5;
+        color: rgba(0, 0, 0, 0.38);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .product__booking .guest__policie a {
+        font-size: 14px;
+      }
+      
+      .btn.btn__green {
+        border-radius: 4px;
+        background-color: #1ab64f;
+        border: 0px;
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 1.2;
+        padding: 14px;
+        width: 100%;
+      }
+      
+      .oyos.splide .splide__arrow {
+        opacity: 1;
+        background-color: #fff;
+        box-shadow: 0 7px 8px 0 rgba(0, 0, 0, 0.35);
+        width: 2em;
+        height: 2em;
+      }
+      .oyos.splide .splide__arrow svg {
+        fill: #ff0000;
+      }/*# sourceMappingURL=main.css.map */
+      
+      
+      @media screen and (max-width:760px){
+        .product__main .choose__room .room__cat .top{
+          flex-direction: column;
+        }
+        .product__main .choose__room .room__cat .top .right span{
+          display: none;
+        }
+      }
+
+
+
+
+
+
+
+      .nsnshotelstarwithnumber{
+        color:#fff!important;
+    }
+    .nsnshotelstarwithnumber label{
+        color:#fff!important;
+
+    }
+    .font_20{
+        font-size: 18px;
+        font-weight: 700;
+    }
+    .nsnhotelsleftproperty,.nsnbooknowbt{
+        background: rgb(29,71,131)!important;
+        color:#fff;
+        margin-bottom: 0px!important;
+    }
+    .readonlyforminput input {
+        border: 1px solid gray!important;
+
+    }
+ .nsnhotelsleftsearch{
+background: #fff!important;
+color:#000!important;
+}
+.nsnhotelsleftsearch .form-control{
+    border: 1px solid gray!important;
+}
+.nsnhotelsleftsearch .form-control:focus{
+    border: 1px solid gray!important;
+}
+.nsnhotelsleftsearch label{
+    color: #000!important;
+}
+    :root{
+        --color-orange:rgb(255, 136, 0);
+    }
+    .fa-star{
+        color:var(--color-orange)!important;
+    }
+    .custom-bg-orange{
+        background:var(--color-orange)!important;
+
+    }
+  .star-container{display:flex;align-items:start;justify-content:center;flex-direction:row-reverse}.radio{display:none}.label{width:50px;height:50px;display:block;text-align:center;transition:0.3s;cursor:pointer;color:#ddd;border-radius:20px;display:flex;align-items:center;justify-content:center;margin:1px}.star{transition:0.3s;font-size:3rem}.star:hover{color:var(--color-orange)!important;transform:scale(1.3,1.3)}.radio:checked~label .star{color:var(--color-orange)!important;transform:scale(1.3,1.3)}.radio:checked~label:hover .star{transform:scale(1,1)!important}.radio:checked~label:hover .star{color:var(--color-orange)!important}
+    .comment-thread {
+     
+      margin: auto;
+      background-color: #fff;
+      border: 1px solid transparent; /* Removes margin collapse */
+  }
+  .m-0 {
+      margin: 0;
+  }
+  
+  .note-group-image-url,.note-modal-footer{
+    display: none;
+  }
+  /* Comment */
+  
+  .comment {
+      position: relative;
+  }
+  .comment-heading {
+      display: flex;
+      align-items: center;
+      height: 50px;
+      font-size: 14px;
+  }
+  @media screen and (max-width:760px){
+    .nav-tabs li a.active{
+    border-bottom:0px !important;
+}
+.nsnshotelstarwithnumber{
+    bottom: 65px!important;
+
+}
+.nsnhotelspricebase,.nsnhotelspricebase *,.nsnhotelspricebase small,.nsnhotelspricebase span,.nsnhotelspricebase s,.nsnhotelspricebase p{
+    color:#fff!important;
+}
+.nsnshotelstarwithnumber span{
+        color:#fff!important;
+
+    }
+    .nsnhotelspricebase{
+        top: 0px!important;
+    }
+  }
+  
+  .comment-voting {
+      width: 20px;
+      height: 32px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+  }
+  .comment-voting button {
+      display: block;
+      width: 100%;
+      height: 50%;
+      padding: 0;
+      border: 0;
+      font-size: 10px;
+  }
+  .comment-info {
+      color: rgba(0, 0, 0, 0.5);
+      margin-left: 10px;
+  }
+  .comment-author {
+      color: rgba(0, 0, 0, 0.85);
+      font-weight: bold;
+      text-decoration: none;
+  }
+  .comment-author:hover {
+      text-decoration: underline;
+  }
+  .replies {
+      margin-left: 20px;
+  }
+  
+  /* Adjustments for the comment border links */
+  
+  .comment-border-link {
+      display: block;
+      position: absolute;
+      top: 50px;
+      left: 0;
+      width: 12px;
+      height: calc(100% - 50px);
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      background-color: rgba(0, 0, 0, 0.1);
+      background-clip: padding-box;
+  }
+  .comment-border-link:hover {
+      background-color: rgba(0, 0, 0, 0.3);
+  }
+  .comment-body {
+      
+  }
+  .replies {
+      margin-left: 28px;
+  }
+  
+  /* Adjustments for toggleable comments */
+  .comment img{
+    max-width: 120px!important;
+    max-height:130px!important;
+  
+  }
+  details.comment summary {
+      position: relative;
+      list-style: none;
+      cursor: pointer;
+  }
+  details.comment summary::-webkit-details-marker {
+      display: none;
+  }
+  details.comment:not([open]) .comment-heading {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  .comment-heading::after {
+      display: inline-block;
+      position: absolute;
+      right: 5px;
+      align-self: center;
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.55);
+  }
+  
+  
+  /* Adjustment for Internet Explorer */
+  
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+      /* Resets cursor, and removes prompt text on Internet Explorer */
+      .comment-heading {
+          cursor: default;
+      }
+      details.comment[open] .comment-heading::after,
+      details.comment:not([open]) .comment-heading::after {
+          content: " ";
+      }
+  }
+  
+  /* Styling the reply to comment form */
+  
+  .reply-form textarea,.reply-form textarea,  .reply-forms textarea {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      font-size: 16px;
+      width: 100%;
+      max-width: 100%;
+      margin-top: 15px;
+      margin-bottom: 5px;
+  }
+  
+  
+    .nav-tabs li{
+    font-size: 20px;
+    font-weight: 700;
+    margin-right: 2rem;
+}
+.nav-tabs li a.active{
+    color: red!important;
+    border-bottom:2px solid red;
+}
+.product__main .hotel__policies{
+    border: 0;
+}
+.nav-tabs{
+    border-bottom: 0!important;
+}
+    .owl-carousel .owl-item a{
+	position: static!important;
+}
+.nsnhotelstrending{
+    left: 6.8%!important;
+	top: 20px;
+
+}
+.nsnhotelspricebase {
+    position: absolute;
+    top: 20px;
+    right: 6.8%;
+    padding: 4px 10px 4px 10px;
+    background: rgba(60,143,148,.7);
+    border-radius: 4px 0 0 4px;
+    text-align: right;
+    max-width: 50%;
+}
+.nsnhotelspricebase{
+    right: 6.8%!important;
+}
+    .splide__list img{
+        max-height: 400px;
+        min-height: 400px;
+
+    }
+    .nsnrecentlyaddedslider, .nsnsimilarhotelslider{
+        padding-left: 0!important;
+    }
+    .nsnhotelsleftsearch{
+        border-radius: 0px!important;
+    }
+
+    @media screen and (max-width:760px){
+	.nsnhotelspricebase{
+		position: absolute;
+		top: 3%!important;
+		right: -3%!important;
+		padding: .3rem .8rem;
+background: rgb(29,71,131)!important;
+color: #fff;
+font-weight: bold;
+border-radius: 5px!important;
+width: 100%!important;
+display: inline-block;
+text-align: left;
+max-width: 100%!important;
+height: 42px!important;
+	}
+}
+.product__rating{
+    width: 100px!important;
+
+}

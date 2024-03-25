@@ -1,0 +1,123 @@
+.input {
+    position: relative;
+}
+
+   .icons{
+    position: absolute;
+    top:50%;
+    left: 5%;
+    transform: translate(0%,-50%);
+   
+}
+.guests::placeholder{
+    color: var(--color-primary)!important;
+}
+.ex{
+    width: 28px!important;
+    height: 28px!important;
+    border-radius: 50%;
+    color: var(--color-white);
+    border: 2px solid var(--color-white);
+    text-align: center;
+    font-size: 16px;
+    vertical-align: center;
+    min-width: 28px!important;
+    min-height: 28px!important;
+    max-width: 28px!important;
+    max-height: 28px!important;
+}
+
+.bg_blur{
+    background: #d899c2;
+}
+
+.bg_blur .ex{
+    border: 2px solid var(--color-secondary);
+    color: var(--color-secondary);
+
+}
+
+
+.product__rating {
+    width: 100px;
+     margin-left: auto;
+   }
+    .product__rating .top {
+     background: #b4da55;
+     color: #fff;
+     font-size: 20px;
+     font-weight: bolder;
+     width: 100%;
+     height: 100%;
+     border-top-left-radius: 2px;
+     border-top-right-radius: 2px;
+     padding: 8px;
+     align-items: center;
+     display: flex;
+     gap: 10px;
+   }
+    .product__rating .top svg {
+     max-width: 20px;
+   }
+    .product__rating .top svg path {
+     fill: #fff;
+   }
+    .product__rating .bot {
+     font-size: 12px;
+     padding: 4px 8px;
+     text-align: center;
+     border-bottom-left-radius: 2px;
+     border-bottom-right-radius: 2px;
+     word-break: break-word;
+     white-space: nowrap;
+     background: #f4f4f4;
+   }
+   .hotel_feature {
+       padding-left: 1.5rem!important;
+   }
+       .hotel_feature li{
+           font-weight: 600;
+           color: var(--color-primary);
+           font-size: 14px;
+           list-style-type: disc;
+       }
+       .nsnhotelsimageslider{
+           position: relative;
+       }
+   
+       .display_after:after{
+           position: absolute;
+           top: 3%;
+           right: -3%;
+           padding: .3rem .8rem;
+   background: var(--color-primary);
+   color: #fff;
+   font-weight: bold;
+   content:'Couple Friendly';
+   border-radius: 5px;
+       }
+   .my-1{
+       margin:2px; 
+   }
+   
+   .clm {
+       font-size: 18px;
+       color: #d33d8c;
+       text-shadow: 0 0 5px #fff5, 0 0 10px #fff5, 0 0 15px #e6007355, 0 0 20px #da1b7b55, 0 0 25px #e2107955, 0 0 30px #e2067455, 0 0 35px #00000055; 
+   
+   }
+   .header-search input::placeholder,.guestspicker::placeholder{
+   color: rgb(192, 186, 186)!important;
+   text-transform: uppercase;
+   font-weight: 600;
+   }
+   .header-search input,.guestspicker,.header-search select{
+       background: rgb(12, 32, 66);
+       color: rgb(192, 186, 186)!important;
+       border: 0;
+   }
+   .header-search input:focus,.guestspicker:focus,.header-search select:focus{
+       background: rgb(12, 32, 66);
+       border:none;
+       box-shadow: none;
+   }

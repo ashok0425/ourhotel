@@ -14,8 +14,8 @@
 <script defer src="{{ filepath('frontend/jss/daterangepicker.js') }}"></script>
 <script defer src="{{ filepath('frontend/jss/owl.carousel.min.js') }}"></script>
 <script defer src="{{ filepath('frontend/jss/custom.js') }}"></script>
-<script defer type="text/javascript" src="{{ filepath('frontend/jss/custom3.js') }}"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>  
+<script defer type="text/javascript" src="{{ asset('frontend/jss/custom3.js') }}"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script defer type="text/javascript" src="{{ filepath('frontend/jss/scripts.js') }}"></script>
 
 

@@ -4,9 +4,8 @@
 namespace App\Http\Controllers;
 
 
-use App\Commons\Response;
 use App\Http\Controllers\Controller;
-use App\Models\Amenities;
+use App\Models\Amenity;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Place;
@@ -15,12 +14,6 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    private $response;
-
-    public function __construct(Response $response)
-    {
-        $this->response = $response;
-    }
 
     public function listPlace(Request $request, $slug)
     {
@@ -125,8 +118,8 @@ class CategoryController extends Controller
         $keyword = $request->keyword;
 
         $categories = Category::query()
-            ->whereTranslationLike('name', "%{$keyword}%")
-            ->where('type', Category::TYPE_PLACE)
+            ->where('name', "%{$keyword}%")
+            ->where('status', 1)
             ->limit(20)
             ->get();
 

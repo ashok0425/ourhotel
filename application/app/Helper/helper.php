@@ -1,9 +1,11 @@
 <?php
 
+use App\Models\City;
+use App\Models\Testimonial;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
-function getImageUrl($image_file,$static=false)
+function getImageUrl($image_file, $static = false)
 {
     if ($static) {
         return asset($image_file);
@@ -13,7 +15,7 @@ function getImageUrl($image_file,$static=false)
         // if (config()['app']['env']=='local') {
         //     return asset('uploads/'.$image_file);
         // }
-        return config('services.s3.url').'uploads/'.$image_file;
+        return config('services.s3.url') . 'uploads/' . $image_file;
     }
     return "https://via.placeholder.com/300x300?text=NSN";
 }
@@ -25,9 +27,7 @@ function filepath($image_file)
     //     return asset($image_file);
     // }
 
-    return config('services.s3.url').$image_file;
-
-
+    return config('services.s3.url') . $image_file;
 }
 
 function getUserAvatar($image_file)
@@ -43,10 +43,55 @@ if (!function_exists('setting')) {
     function setting($key)
     {
 
-            $cache = Cache::remember("setting_" . $key, 60, function () use ($key) {
-                return \App\Models\Website::first();
-            });
+        $cache = Cache::remember("setting", 86400, function () use ($key) {
+            return \App\Models\Website::first();
+        });
 
-            return $cache->$key;
+        return $cache->$key;
     }
 }
+
+
+
+if (!function_exists('coupons')) {
+    function coupons()
+    {
+
+        $coupons = Cache::remember("coupons", 86400, function ()  {
+            return \App\Models\Coupon::all();
+        });
+
+        return $coupons;
+    }
+}
+
+
+
+if (!function_exists('popular_cities')) {
+    function popular_cities()
+    {
+      return  Cache::remember('popular_cities',604800, function () {
+            return City::query()
+            ->whereIn('id', [57,151,154,125,39,95,124,123,139,144,104,34])
+            ->orderBy('slug','asc')
+            ->select('name','id','slug','thumbnail as thumb')
+            ->get();
+        });
+    }
+}
+
+
+if (!function_exists('testimonials')) {
+    function testimonials()
+    {
+      return  Cache::remember('testimonials',604800,function(){
+        return Testimonial::query()
+        ->where('status', 1)
+        ->where('property_id', null)
+        ->limit(4)
+        ->get();
+    });
+
+}
+}
+

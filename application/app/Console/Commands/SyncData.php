@@ -294,6 +294,7 @@ class SyncData extends Command
              'thumbnail'=>$coupon->thumb,
              'mobile_thumbnail'=>$coupon->mobile_image,
              'expired_at'=>$coupon->expired_at,
+             'descr'=>$coupon->descr,
              'link'=>$coupon->link
             ]);
          }
@@ -301,13 +302,14 @@ class SyncData extends Command
           // Blogs
           $blogs=DB::connection("mysql_2")->table('posts')->get();
           foreach ($blogs as $key => $blog) {
+            $title=DB::connection("mysql_2")->table('post_translations')->where('post_id',$blog->id)->first();
              DB::connection('mysql')->table('blogs')->insert([
-              'title'=>$blog->title??'No title',
+              'title'=>$title->title??'No title',
               'slug'=>$blog->slug,
               'thumbnail'=>$blog->thumb??'no thumb',
               'slug'=>$blog->slug,
             //   'short_description'=>$blog->content,
-              'long_description'=>$blog->content??'no desc',
+              'long_description'=>$title->content??'no desc',
               'meta_keyword'=>$blog->seo_title,
               'meta_description'=>$blog->seo_description,
               'meta_title'=>$blog->seo_title,
@@ -315,6 +317,8 @@ class SyncData extends Command
               'mobile_meta_description'=>$blog->seo_description,
               'mobile_meta_title'=>$blog->seo_title,
               'status'=>$blog->status,
+              'created_at'=>$blog->created_at,
+
              ]);
           }
 

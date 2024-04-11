@@ -1,20 +1,20 @@
 @php
 use App\Models\City;
-    $city1=City::where('popular',1)->orderBy('id','desc')->where('status',1)->first();
-    $city2=City::where('popular',1)->orderBy('id','desc')->skip(1)->take(1)->where('status',1)->first();
-    $city3=City::where('popular',1)->orderBy('id','desc')->skip(2)->take(1)->where('status',1)->first();
-    $city4=City::where('popular',1)->orderBy('id','desc')->skip(3)->take(1)->where('status',1)->first();
-    $city5=City::where('popular',1)->orderBy('id','desc')->skip(4)->take(1)->where('status',1)->first();
-    $city6=City::where('popular',1)->orderBy('id','desc')->skip(5)->take(1)->where('status',1)->first();
-    $city7=City::where('popular',1)->orderBy('id','desc')->skip(6)->take(1)->where('status',1)->first();
-    $city8=City::where('popular',1)->orderBy('id','desc')->skip(7)->take(1)->where('status',1)->first();
-    $city9=City::where('popular',1)->orderBy('id','desc')->skip(8)->take(1)->where('status',1)->first();
-    $city10=City::where('popular',1)->orderBy('id','desc')->skip(9)->take(1)->where('status',1)->first();
-    $city11=City::where('popular',1)->orderBy('id','desc')->skip(10)->take(1)->where('status',1)->first();
+    $city1=popular_cities()->first();
+    $city2=popular_cities()->skip(1)->take(1)->first();
+    $city3=popular_cities()->skip(2)->take(1)->first();
+    $city4=popular_cities()->skip(3)->take(1)->first();
+    $city5=popular_cities()->skip(4)->take(1)->first();
+    $city6=popular_cities()->skip(5)->take(1)->first();
+    $city7=popular_cities()->skip(6)->take(1)->first();
+    $city8=popular_cities()->skip(7)->take(1)->first();
+    $city9=popular_cities()->skip(8)->take(1)->first();
+    $city10=popular_cities()->skip(9)->take(1)->first();
+    $city11=popular_cities()->skip(10)->take(1)->first();
 
 @endphp
 
-<style>  
+<style>
 
     .popular_location{
  gap: 10px;
@@ -84,7 +84,7 @@ use App\Models\City;
 }
 </style>
 
-<div class="container mt-5">
+<div class="container my-5">
     <h2 class=" pl-0 pl-md-3 font-weight-bold text-dark custom-fs-20 custom-fw-600 mb-3">
         Popular Locations
     </h2>

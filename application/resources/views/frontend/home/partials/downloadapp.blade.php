@@ -15,13 +15,13 @@
                             <div class="col-md-3 col-6">
                                 <a href="https://play.google.com/store/apps/details?id=com.hotel.nsn">
                                     <img src="{{ getImageurl('playstore.svg', true) }}" alt="NSN HOTELS Play Store"
-                                        class="img-fluid">
+                                        class="img-fluid" loading='lazy'>
                                 </a>
                             </div>
                             <div class="col-md-3 col-6">
                                 <a href="https://apple.co/3m8XXgO" class="py-5">
                                     <img src="{{ getImageurl('appstore.svg', true) }}" alt="NSN HOTELS APP Store"
-                                        class="img-fluid ">
+                                        class="img-fluid " loading='lazy'>
                                 </a>
                             </div>
                         </div>

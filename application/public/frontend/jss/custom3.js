@@ -578,7 +578,7 @@ const PRICE_RANGE = {
 
                         } else {
                             name = value.name
-                            name = name.trim()
+                            name = name?name.trim():'';
                             area = '';
 
                         }
@@ -593,11 +593,11 @@ const PRICE_RANGE = {
                                     <a class="my-0 py-0 custom-fs-12 text-capitilize"><small>${value.slug}</small>
                                     </a>
                                     </a>
-                                    <a href=""><i class=\"la la-city\"></i>${type}  <span> 
-                                    ${icon}</span> 
-                                   
+                                    <a href=""><i class=\"la la-city\"></i>${type}  <span>
+                                    ${icon}</span>
+
                                     </a>
-                                  
+
                                  </li>`;
                     });
                     html += '</ul>';

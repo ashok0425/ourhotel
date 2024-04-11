@@ -200,7 +200,9 @@
     <script>
         // whatsapp hide
 
-        function Assistance(id) {
+
+        $(document).ready(function() {
+            function Assistance(id) {
             $(".hideAssistance").hide();
             var myClasses = document.querySelectorAll('.hideAssistance'),
                 i = 0,
@@ -210,10 +212,15 @@
             }
             $(".showAssistance" + id).show();
         }
-        $(document).ready(function() {
+
+            let isajax_applied = false;
             let place_type = $('.place_type_filter:checked').val();
             let star = $('.star_filter:checked').val();
             let price_filter = $('.price_filter:checked').val();
+            let city = $('#city_ids').val()
+
+            ajaxSeacrh();
+
             // place filter
             $('.place_type_filter').click(function() {
                 place_type = $(this).val();
@@ -231,8 +238,6 @@
                 ajaxSeacrh();
             })
 
-            let city = $('#city_ids').val()
-            let isajax_applied = false;
 
             function ajaxSeacrh() {
                 isajax_applied = true;
@@ -250,35 +255,7 @@
                         $('.total_places').html(res.count)
                         $('.nsnhotelssearchdata').html(res.view)
                         $(".hideAssistance").hide();
-                        jQuery(".nsnhotelsimageslider").owlCarousel({
-                            items: 1,
-                            itemsMobile: [599, 1],
-                            nav: false,
-                            navText: false,
-                            margin: 1,
-                            navigationText: false,
-                            autoplay: true,
-                            autoplayTimeout: 5000,
-                            autoplayHoverPause: true,
-                            responsiveClass: true,
-                            responsive: {
-                                0: {
-                                    items: 1,
-                                    nav: false,
-                                    loop: false
-                                },
-                                600: {
-                                    items: 1,
-                                    nav: false,
-                                    loop: false
-                                },
-                                1000: {
-                                    items: 1,
-                                    nav: false,
-                                    loop: false
-                                }
-                            }
-                        })
+
                     }
                 })
             }
@@ -317,7 +294,7 @@
                         $(".hideAssistance").hide();
                          setTimeout(() => {
                     loadData()
-                }, 10)
+                    }, 10)
 
 
                     }

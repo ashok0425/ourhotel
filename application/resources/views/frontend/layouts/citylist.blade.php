@@ -1,7 +1,7 @@
 <!--Special drop down menu start-->
 <div class="dropdownspmenu">
     <div class="navbarsp row mx-0 px-5">
-        @foreach ($popular_cities->take(8) as $city)
+        @foreach (popular_cities()->take(8) as $city)
             <div class="dropdown col">
                 <button class="dropbtn">{{ $city->name }}
                     <i class="fa fa-caret-down"></i>

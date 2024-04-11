@@ -1,9 +1,18 @@
-<div class="mt-5 container custom-bg-white">
+@php
+    $nsn_resort= Cache::remember('nsn_resort',86400,function(){
+           return App\Models\Property::where('status',1)
+        ->where('property_type_id',41)
+        ->orderBy('id', 'desc')
+        ->limit(4)
+        ->get();
+        })
+@endphp
+<div class="my-5 container custom-bg-white">
     <br>
     <div class="p-1">
         <div class="d-flex justify-content-between align-items-center mb-2 mb-2 p-3 p-md-0">
             <h2 class="custom-fw-800  bold text-dark custom-fs-20 custom-fw-600 mb-3 pt-4">NSN Resort</h2>
-            <div><a href=""
+            <div><a href="/ajax-search?place_type=41"
                     class="btn custom-border-radius-20 custom-bg-primary custom-text-white custom-fw-800 custom-fs-14 hover-on-white">View
                     All ➡</a></div>
         </div>

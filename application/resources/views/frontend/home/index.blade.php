@@ -186,7 +186,7 @@
             let offer =
                 '<h2 class="custom-fw-800  bold text-dark custom-fs-20 custom-fw-600 mb-3 ">NSN Exclusive Offer</h2><div id="offer_bannerslider" class="owl-carousel mt-3 mb-2 mt-md-0 mb-md-0" >   ';
                     @foreach (coupons()->where('descr','!=',null)->take(4) as $item)
-                offer += `<div class="card p-2 pb-0">
+                offer += `<div class="card p-2 pb-0 border-0 shadow-sm">
                 <div class="row pb-0">
                 <div class="col-md-5">
                 <img height="100" width="100" src="{{getImageUrl($item->mobile_thumbnail)}}" alt="offer image" class="img-fluid img_height" loading="lazy"></div>

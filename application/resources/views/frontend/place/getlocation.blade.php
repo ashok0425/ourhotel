@@ -1,35 +1,35 @@
 @php
-    $token = setting('goolge_map_api_key');
+    $token = config('services.google.api_key');
     // $url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$long,$lat&radius=2000&type=restaurant&keyword=restro&key=$token";
     // $curl = curl_init($url);
     // curl_setopt($curl, CURLOPT_URL, $url);
     // curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    
+
     // $headers = ['Authorization: Bearer 393|woEcPMnz2ycSaX6amRu1LppexklHP3nEIUZ8veKh'];
     // curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
     // //for debug only!
     // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
     // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-    
+
     // $resp = curl_exec($curl);
     // curl_close($curl);
     // $resturant_data1 = json_decode($resp);
-    
+
     // $url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$long,$lat&radius=2000&type=cafe&keyword=cafe&key=$token";
     // $curl = curl_init($url);
     // curl_setopt($curl, CURLOPT_URL, $url);
     // curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    
+
     // $headers = ['Authorization: Bearer 393|woEcPMnz2ycSaX6amRu1LppexklHP3nEIUZ8veKh'];
     // curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
     // //for debug only!
     // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
     // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-    
+
     // $resp = curl_exec($curl);
     // curl_close($curl);
     // $resturant_data2 = json_decode($resp);
-    
+
     // $url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$long,$lat&radius=2000&type=taxi_stand&keyword=taxi_stand&key=$token";
     // $curl = curl_init($url);
     // curl_setopt($curl, CURLOPT_URL, $url);
@@ -42,7 +42,7 @@
     // $resp = curl_exec($curl);
     // curl_close($curl);
     // $transport1 = json_decode($resp);
-    
+
     // $url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$long,$lat&radius=2000&type=airport&keyword=airport&key=$token";
     // $curl = curl_init($url);
     // curl_setopt($curl, CURLOPT_URL, $url);
@@ -55,7 +55,7 @@
     // $resp = curl_exec($curl);
     // curl_close($curl);
     // $transport2 = json_decode($resp);
-    
+
     // $url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$long,$lat&radius=2000&type=train_station&keyword=train_station&key=$token";
     // $curl = curl_init($url);
     // curl_setopt($curl, CURLOPT_URL, $url);
@@ -68,7 +68,7 @@
     // $resp = curl_exec($curl);
     // curl_close($curl);
     // $transport3 = json_decode($resp);
-    
+
     // $url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$long,$lat&radius=2000&type=bus_station&keyword=bus_station&key=$token";
     // $curl = curl_init($url);
     // curl_setopt($curl, CURLOPT_URL, $url);
@@ -81,7 +81,7 @@
     // $resp = curl_exec($curl);
     // curl_close($curl);
     // $transport4 = json_decode($resp);
-    
+
     // $url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$long,$lat&radius=2000&type=art_gallery&keyword=park&key=$token";
     // $curl = curl_init($url);
     // curl_setopt($curl, CURLOPT_URL, $url);
@@ -94,7 +94,7 @@
     // $resp = curl_exec($curl);
     // curl_close($curl);
     // $famous_places1 = json_decode($resp);
-    
+
     // $url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$long,$lat&radius=2000&type=museum&keyword=museum&key=$token";
     // $curl = curl_init($url);
     // curl_setopt($curl, CURLOPT_URL, $url);
@@ -107,7 +107,7 @@
     // $resp = curl_exec($curl);
     // curl_close($curl);
     // $famous_places2 = json_decode($resp);
-    
+
     // $url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$long,$lat&radius=2000&type=stadium&keyword=stadium&key=$token";
     // $curl = curl_init($url);
     // curl_setopt($curl, CURLOPT_URL, $url);

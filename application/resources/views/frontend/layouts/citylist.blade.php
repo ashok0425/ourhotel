@@ -9,7 +9,7 @@
                 <div class="dropdown-content">
                     @foreach ($city->locations()->limit(7)->pluck('slug') as $location)
                         <a
-                            href="{{ route('location.search', ['city' => $city->name, 'location' => str_replace(' ', '_', $location)]) }}">{{ $location }}</a>
+                            href="{{ route('location.search', ['city_name' => $city->name, 'location' => str_replace(' ', '_', $location)]) }}">{{ $location }}</a>
                     @endforeach
                     <a href="{{ route('city-search', strtolower($city->name)) }}" class="color_primary"> All Of
                         {{ $city->name }}</a>

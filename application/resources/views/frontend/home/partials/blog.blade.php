@@ -4,9 +4,12 @@
     $posts =  App\Models\Blog::query()
             ->where('status', 1)->limit(4)->where('id','>',68)->latest()->get();
 @endphp
-	<div class="blogsslider d-none d-md-block mt-5 mb-0 container">
+	<div class="blogsslider  mt-5 mb-0 container">
 		<div class="container">
-		<h2 class="custom-fw-800  bold text-dark custom-fs-20 custom-fw-600 mb-3 pt-4">Recent Blog</h2>
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+
+		<h2 class="custom-fw-800  bold text-dark custom-fs-20 custom-fw-600 mb-3">Recent Blog</h2>
 
 			<div  class="row">
 				@foreach($posts as $post)
@@ -27,6 +30,9 @@
 				</div>
 				@endforeach
 			</div>
+
+        </div>
+    </div>
 		</div>
 	</div>
 <br>

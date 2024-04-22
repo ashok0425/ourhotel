@@ -57,25 +57,22 @@
 @endpush
 @section('main')
     @php
-        $name = $place->PlaceTrans->name;
+        $name = $place->name;
     @endphp
 
     <div class="product__slider splide">
         <div class="splide__track">
             <ul class="splide__list gallery" id="productSlider">
 
-
-
-
-                @if (isset($place->gallery))
+                @if (isset($place->gallery) && $place->gallery != '')
                     @foreach ($place->gallery as $gallery)
                         <a href="{{ getImageUrl($gallery) }}" class="splide__slide shadow-sm">
-                            <img src="{{ getImageUrl($gallery) }}" class="img-fluid" alt="{{ $place->PlaceTrans->name }}">
+                            <img src="{{ getImageUrl($gallery) }}" class="img-fluid" alt="{{ $place->name }}">
                         </a>
                     @endforeach
                 @else
                     <li class="">
-                        <img src="https://via.placeholder.com/1280x480?text=NSN" alt="{{ $place->PlaceTrans->name }}"
+                        <img src="https://via.placeholder.com/1280x480?text=NSN" alt="{{ $place->name }}"
                             class="img-responsive" width="1920" height="576" />
                     </li>
                 @endif
@@ -90,7 +87,7 @@
                     <div class="product__info info__container">
                         <div class="row">
                             <div class="col-8 col-sm-10">
-                                <h1 class="custom-fs-24 custom-fw-800">{{ $place->PlaceTrans->name }}</h1>
+                                <h1 class="custom-fs-24 custom-fw-800">{{ $place->name }}</h1>
                                 <p>
                                     {{ $place->address }}
                                 </p>
@@ -101,7 +98,7 @@
 
                                     <small>
                                         <div class="top">
-                                            @if (count($place->reviews) > 0)
+                                            @if (count($place->ratings) > 0)
                                                 {{ number_format($place->avgReview, 1) }}
                                             @else
                                                 0
@@ -113,7 +110,7 @@
                                     </svg>
                                 </div>
                                 <div class="bot">
-                                    {{ count($place->reviews) }} Ratings
+                                    {{ count($place->ratings) }} Ratings
                                 </div>
                                 <div class="d-md-none d-block">
                                     <a href="#booking_form_dev" class="btn btn-primary custom-bg-primary">Book Now</a>
@@ -124,33 +121,46 @@
                 </div>
                 <div class="product__description info__container">
                     <h3>Description</h3>
-                    {!! $place->description !!}
+
+                    {!! Str::substr($place->description,0, 320) !!}<span class="d-none toggle_content">{!! Str::substr($place->description, 320) !!}
+                    </span>
+                    @if (strlen(strip_tags($place->description)) >= 325)
+                    <a  class="link__red" onclick="toggleContent(this,'toggle_content')">Show More</a>
+                    @endif
+
                 </div>
                 <div class="product__amenities info__container">
                     <h3>Amenities</h3>
 
                     <div class="">
-                        <ul class="nsnhotelsamenitiesul row">
+                        <div class="nsnhotelsamenities  row">
                             @if ($amenities)
                                 @foreach ($amenities as $key => $item)
-                                    @if ($key < 12)
-                                        <li
-                                            class="place__amenities col-3  my-1 my-md-2  m-0 p-0 col-md-2 text-center
-
-                            ">
-                                            <div class=" p-2">
-                                                <img src="{{ getImageUrl($item->icon) }}" alt="{{ $item->name }}"
-                                                    width="20" height="26" class="">
-                                            </div>
+                                    @if ($key < 6)
+                                        <div class="place__amenity col-md-4 col-6 my-2">
+                                            <img src="{{ getImageUrl($item->thumbnail) }}" alt="{{ $item->name }}"
+                                                width="20" height="26" loading="lazy">
                                             <span
-                                                class="@if ($item->id == 15) font-weight-bold text-success
-                             font_20 @endif">{{ $item->name }}</span>
-                                        </li>
+                                                class="text-dark font-weight-bold @if($item->id == 15)  text-success @endif">{{ $item->name }}</span>
+                                        </div>
+                                    @else
+                                        <div class="place__amenity col-md-4 col-6 my-2 d-none toggle_amenity">
+                                            <img src="{{ getImageUrl($item->thumbnail) }}" alt="{{ $item->name }}"
+                                                width="20" height="26" loading="lazy">
+                                            <span
+                                                class="font-weight-bold @if ($item->id == 15) text-success @endif">{{ $item->name }}</span>
+                                        </div>
                                     @endif
                                 @endforeach
-                            @endif
 
-                        </ul>
+                            @endif
+                        </div>
+                        @if (count($amenities)>6)
+                        <div class="mt-2">
+                          <a  class="link__red " onclick="toggleContent(this,'toggle_amenity')">Show More</a>
+                        </div>
+                      @endif
+
                     </div>
                 </div>
                 <div class="choose__room info__container" id="room_type_list">
@@ -162,51 +172,40 @@
                                 <div class="top">
                                     <div class="left">
                                         <div class="cat">
-                                            {{ $item->RoomTrans->name }} <i
+                                            {{ $item->name }} <i
                                                 class="fa fa-check-circle mx-1  text-success name_checked @if ($loop->index == 0) d-inline-block
                                             @else
                                             d-none @endif"
                                                 id="room{{ $item->id }}"></i>
                                         </div>
-                                        {{-- <div class="info">
-                                        Room size: 132 sqft
-                                    </div> --}}
+
 
                                         <div class="amenities">
                                             <div class="product__amenities info__container">
                                                 <h3>Amenities</h3>
-                                                @php
-                                                    $eoomamenities = DB::table('amenities')
-                                                        ->whereIn('id', $item->amenities ? $item->amenities : [])
-                                                        ->get(['id', 'name', 'icon']);
-                                                @endphp
-                                                <div class="">
-                                                    @if ($eoomamenities)
-                                                        <ul class="nsnhotelsamenitiesul row">
-                                                            @foreach ($eoomamenities as $key => $items)
-                                                                @if ($key < 12)
-                                                                    <li
-                                                                        class="place__amenities col-1 border p-2 custom-border-radius-5 text-center">
-                                                                        <img src="{{ getImageUrl($items->icon) }}"
+
+                                                @if ($item->amentity)
+                                                        <div class="row">
+                                                            @foreach (App\Models\Amenity::whereIn('id',$item->amentity)->limit(4)->get() as $key => $items)
+                                                                    <div
+                                                                        class=" col-md-3 col-6 my-2">
+                                                                        <img src="{{ getImageUrl($items->thumbnail) }}"
                                                                             alt="{{ $items->name }}" width="26"
                                                                             height="26">
                                                                         <span>{{ $items->name }}</span>
-                                                                    </li>
-                                                                @endif
+                                                                    </div>
                                                             @endforeach
-                                                        </ul>
-                                                    @endif
+                                                @endif
 
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="right gallerys">
                                         <!-- ONLY FIRST IMAGE WILL BE SHOWN  -->
-                                        @if ($item->thumb && file_exists(getImageUrl($item->thumb)))
-                                            <a href="{{ getImageUrl($item->thumb) }}">
-                                                <img src="{{ getImageUrl($item->thumb) }}" alt="{{ $place->PlaceTrans->name }}etewtr"
-                                                    class="img-fluid">
+                                        @if ($item->thumbnail && file_exists(getImageUrl($item->thumbnail)))
+                                            <a href="{{ getImageUrl($item->thumbnail) }}">
+                                                <img src="{{ getImageUrl($item->thumbnail) }}" alt="{{ $place->name }}"
+                                                    class="img-fluid" loading="lazy">
 
                                                 <span>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="13"
@@ -219,12 +218,11 @@
 
                                             </a>
                                         @endif
-
                                         @if ($item->gallery)
                                             @foreach ($item->gallery as $subitem)
                                                 <a href="{{ getImageUrl($subitem) }}">
-                                                    <img src="{{ getImageUrl($subitem) }}" alt="{{ $place->PlaceTrans->name }}etewtr"
-                                                        class="img-fluid">
+                                                    <img src="{{ getImageUrl($subitem) }}" alt="{{ $place->name }}etewtr"
+                                                        class="img-fluid" loading="lazy">
                                                     <span>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16"
                                                             height="13" viewBox="0 0 16 13">
@@ -252,8 +250,7 @@
                                     border-secondary @endif"
                                         data-id="{{ $item->id }}" data-oneprice="{{ $item->onepersonprice }}"
                                         data-twoprice="{{ $item->twopersonprice }}"
-                                        data-threeprice="{{ $item->threepersonprice }}"
-                                        data-name="{{ $item->RoomTrans->name }}"
+                                        data-threeprice="{{ $item->threepersonprice }}" data-name="{{ $item->name }}"
                                         data-hourlyprice="{{ $item->hourlyprice }}">
                                         <i
                                             class="fa fa-check-circle mx-1  text-success
@@ -319,7 +316,7 @@
             </div>
             <div class="col-lg-4">
                 <div class="product__booking__container p-0  ">
-                    <div class="product__booking__login  text-center mx-auto d-flex justify-content-center">
+                    {{-- <div class="product__booking__login  text-center mx-auto d-flex justify-content-center">
                         <div class=" text-center">
 
 
@@ -327,20 +324,17 @@
                                 Booking Details
                             </span>
 
-                        </div>
-
-                        {{-- <span class="btn cutom-bg-primary custom-fw-600  w-25 py-1"
+                        </div> <span class="btn cutom-bg-primary custom-fw-600  w-25 py-1"
                                 onclick="window.location='{{ route('user_login') }}'">
                                 LOGIN
-                            </span> --}}
-                    </div>
+                            </span>
+                    </div> --}}
 
-                    @if (Carbon\Carbon::parse($place->o_u_s_from)>=today() && Carbon\Carbon::parse($place->o_u_s_to)<=today())
-                    <div class="  mt-1 bg-danger text-white custom-fw-600 p-2 px-3">No
-                        Room Left, Property Fully Booked</div>
-                        @else
-                        <div class="  mt-1 custom-bg-primary text-white custom-fw-600 p-2 px-3">Only {{ $inventory_room }}
-                            Room Left</div>
+                    @if (Carbon\Carbon::parse($place->o_u_s_from) >= today() && Carbon\Carbon::parse($place->o_u_s_to) <= today())
+                        <div class="  mt-1 bg-danger text-white custom-fw-600 p-2 px-3">No
+                            Room Left, Property Fully Booked</div>
+                    @else
+                        <div class="  mt-1 custom-bg-primary text-white custom-fw-600 p-2 px-3">Booking Detail</div>
                     @endif
 
                     <div class="product__booking p-0" id="booking_form_dev">
@@ -354,16 +348,18 @@
                                         method="GET">
                                         @csrf
                                         <div class="row">
+                                        <div class="col-12 mt-1 mb-3">
+                                            <div class="text-dark font-weight-bold custom-fs-18">
+                                                ₹ <span id="price" class="custom-fs-22"></span>
+                                                <div class="custom-fs-14 custom-fw-500">Inclusive of all taxes
+                                                </div>
+                                            </div>
+                                        </div>
                                             @if (isset($place->roomsData[0]))
                                                 <div class="col-12 col-sm-12 col-md-12">
                                                     <a class="form-group" href="#room_type_list">
                                                         <div class="product__booking__type">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                height="20" viewBox="0 0 20 20">
-                                                                <path fill="black" fill-rule="nonzero"
-                                                                    d="M4.756.968v.008c-.002 0 0-.002 0-.008zm0 18.55h-.951V.968A.96.96 0 0 1 4.755 0H15.22c.525 0 .95.444.95.968v18.544h-.951V.968c0 .008-10.464.008-10.464.008v18.542zm0-18.55l-.001.008.001-.008zm0 18.056H15.22V.968c0 .008-10.464.008-10.464.008v18.048zm-.951 0V.968A.96.96 0 0 1 4.755 0H15.22c.525 0 .95.444.95.968v18.056h3.353c.263 0 .476.219.476.488 0 .27-.213.488-.476.488H.476A.482.482 0 0 1 0 19.512c0-.27.213-.488.476-.488h3.329zm9.233-8.167s-.878-1.303-.878-1.8c0-.498.393-.9.878-.9a.89.89 0 0 1 .878.9c0 .497-.878 1.8-.878 1.8z"
-                                                                    opacity=".3"></path>
-                                                            </svg>
+                                                          <i class="fas fa-hotel"></i>
 
                                                             <span id="room_name">
                                                                 {{ isset($place->roomsData[0]) ? $place->roomsData[0]->name : '' }}
@@ -444,9 +440,6 @@
 
 
                                         <div class="row">
-
-
-
                                             <div class="col-10 offset-2 offset-md-0 col-sm-6 col-md-6">
                                                 <div class="form-group">
                                                     <label>Children:</label>
@@ -490,16 +483,6 @@
                                         </div>
 
                                         <div class="form-group mb-0">
-                                            <div class="row ">
-                                                <div class="col-6 col-sm-6 col-md-6 totalpricelabel">
-                                                    <label>Total Price:</label>
-                                                </div>
-                                                <div class="col-6 col-sm-6 col-md-6 readonlyforminput">
-                                                    <span><input type="text" name="price" value="0"
-                                                            id="price" readonly></span>
-                                                </div>
-                                            </div>
-
 
                                             @php
                                                 $rooms = json_encode($place->roomsData);
@@ -511,18 +494,8 @@
                                             <input type="hidden" id="room_id" name="room_id"
                                                 value="{{ $place->roomsData[0]->id }}">
                                             <input type="hidden" id="room_type" name="room_type"
-                                                value="{{ $place->roomsData[0]->RoomTrans->name }}">
+                                                value="{{ $place->roomsData[0]->name }}">
 
-
-                                            @guest()
-                                                <div class="form-group mt-4 ">
-                                                    <button type="button"
-                                                        class="btn custom-bg-primary  text-white d-block w-100 custom-fw-700"
-                                                        onclick="window.location='{{ route('user_login') }}'">Login
-                                                        And Book Now</button>
-
-                                                </div>
-                                            @else
                                                 <div class="form-group mt-4 ">
                                                     <div class="row">
 
@@ -530,18 +503,15 @@
                                                     <div class="col-12 col-sm-12 col-md-12 text-center">
                                                         <button class="btn custom-bg-primary text-white d-block w-100 px-5"
                                                             onclick=""
-                                                            @if (Carbon\Carbon::parse($place->o_u_s_from)>=today() && Carbon\Carbon::parse($place->o_u_s_to)<=today())
-                                                                type="button"
-                                                                disabled
-                                                            @endif
-                                                            >Book Now</button>
+                                                            @if (Carbon\Carbon::parse($place->o_u_s_from) >= today() && Carbon\Carbon::parse($place->o_u_s_to) <= today()) type="button"
+                                                                disabled @endif>Book
+                                                            Now</button>
                                                     </div>
                                                 </div>
-                                            @endguest
                                         </div>
 
 
-                                        @include('frontend.offer')
+                                        @include('frontend.place.offer')
 
                                     </form>
                                 </div>
@@ -550,7 +520,8 @@
 
 
 
-                            <p class="guest__policie px-2 py-1">By proceeding, you agree to our <a href="#"
+                            <p class="guest__policie px-2 py-1">By proceeding, you agree to our <a
+                                    href="https://www.nsnhotels.com/Cancellation-and-Reservation.pdf"
                                     class="link__red">Guest
                                     Policies.</a></p>
                         </div>
@@ -560,99 +531,30 @@
             </div>
         </div>
 
-        <div class="col-12">
-            {{--
-                    <div class="nsnrecentlyadded">
-	<div class="container text-center">
-		<h4 class="text-underline my-1">Similar Hotels</h4>
-	</div>
-	<div class="nsnrecentlyaddedslider">
-		<div id="nsnrecentlyaddedslider" class="owl-carousel">
-			 @foreach ($similar_places as $place)
-			@include('frontend.partials.card1',['place'=>$place])
 
-			@endforeach
-		</div>
-	</div>
-</div>
-                    </div> --}}
-        </div>
+            <div class="nsnrecentlyadded pb-5 mt-5">
+                    <h2 class="mb-3 font-weight-bold">Other Nearest Hotels</h2>
+                <div>
+                    <div class="row mx-2">
+                        @foreach ($similar_places as $place)
+                            <div class="col-md-3 col-lg-3 col-6 col-sm-6 mx-0 px-0">
+                                @include('frontend.partials.card1', ['place' => $place])
+
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
     </div>
     </div>
 
 
-
-
-
-    <footer class=" mobile_footers d-none d-md-none">
-        <div class="container py-2">
-            <div class="row">
-                <div class="col-7">
-                    <p class="custom-fs-18 custom-fw-800">Sub Total </p>
-                </div>
-                <div class="col-5 text-right">
-                    <p class="custom-fs-18 custom-fw-800">500 </p>
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-7">
-                    <p class="custom-fs-18 custom-fw-800">Tax Amount </p>
-                </div>
-                <div class="col-5 text-right">
-                    <p class="custom-fs-18 custom-fw-800">500 </p>
-
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-7">
-                    <p class="custom-fs-18 custom-fw-800">Discount </p>
-                </div>
-                <div class="col-5 text-right">
-                    <p class="custom-fs-18 custom-fw-800">500 </p>
-
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-7">
-                    <p class="custom-fs-18 custom-fw-800">Total </p>
-                </div>
-                <div class="col-5 text-right">
-                    <p class="custom-fs-18 custom-fw-800">500 </p>
-
-                </div>
-            </div>
-
-
-            <div class="row mt-2">
-                <div class="col-7">
-                    <a class="custom-fs-18 custom-fw-800 btn custom-bg-primary text-white" href="#booking_form_dev"><i
-                            class="fas fa-edit"></i> Edit Detail </a>
-                </div>
-                <div class="col-5 text-right">
-                    <button class="custom-fs-18 custom-fw-800 btn custom-bg-primary text-white"  @if (Carbon\Carbon::parse($place->o_u_s_from)>=today() && Carbon\Carbon::parse($place->o_u_s_to)<=today())
-                        type="button"
-                        disabled
-                    @endif>Book Now <i
-                            class="fas fa-arrow-right"></i></button>
-
-                </div>
-            </div>
-
-        </div>
-    </footer>
-
-
+    <br>
 
 @endsection
 @push('scripts')
-<script  src="{{ filepath('frontend/jss/plugins.js') }}"></script>
-<script  src="{{ filepath('frontend/jss/daterangepicker.js') }}"></script>
+    <script src="{{ filepath('frontend/jss/plugins.js') }}"></script>
+    <script src="{{ filepath('frontend/jss/daterangepicker.js') }}"></script>
 
     <script>
         $(document).ready(function() {
@@ -663,7 +565,7 @@
 
                     let hrprice = $('.select_room_btn.border-success').data('hourlyprice');
                     if (hrprice != null) {
-                        $('#price').val(hrprice)
+                        $('#price').html(hrprice)
                     }
                 }
             })
@@ -690,6 +592,13 @@
 
 
     <script>
+
+   function toggleContent(ele,element){
+    $(`.` + element).toggleClass('d-none');
+    $(ele).html($(ele).html()=='Show More'?'Show Less':'Show More')
+
+   }
+
         $(".close-btn, .bg-overlay").click(function() {
             $(".custom-model-main").removeClass('model-open');
         });
@@ -982,7 +891,7 @@
             let diffindays = diff / (1000 * 3600 * 24).toFixed(0);
             diffindays = diffindays != 0 ? diffindays : 1
             let final_price = diffindays * final_adult_price;
-            $('#price').val(final_price)
+            $('#price').html(final_price)
         }
 
 

@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 
-use App\Commons\APICode;
-use App\Commons\Response;
-use App\HotelReview;
 use App\Http\Controllers\Controller;
-use App\Models\Place;
-use App\Models\Review;
+use App\Models\Property;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Support\Facades\DB;
 
 class HotelReviewController extends Controller
@@ -29,11 +25,7 @@ try {
         $review['product_id']=$request->product_id;
         $review['rating']=$request->star;
         $review['feedback']=$request->comment;
-        // if ($request->hasFile('file')) {
-        //     $thumb = $request->file('file');
-        //     $thumb_file = $this->uploadImage($thumb, 'review');
-        //     $review['image'] = $thumb_file;
-        // }
+
 
        DB::table('hotel_reviews')->insert($review);
        $avg=HotelReview::where('product_id',$request->product_id)->avg('rating');

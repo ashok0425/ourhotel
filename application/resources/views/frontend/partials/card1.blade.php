@@ -4,7 +4,7 @@
         <a class="card-body p-2" href="{{ route('place_detail', ['slug' => $place->slug]) }}">
             <div class="image_warpper">
                 <img src="{{ getImageUrl($place->thumbnail) }}" class="img-fluid   border card_image_height custom-border-radius-10 w-100"
-                    data-src="{{ getImageUrl($place->thumbnail) }}" alt="{{ $place->name }}" class="" loading='lazy'/>
+                    data-src="{{ getImageUrl($place->thumbnail) }}" alt="{{ $place->name }}"  loading='lazy'/>
             </div>
 
             <div class="text_wrapper mt-3">

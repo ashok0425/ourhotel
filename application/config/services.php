@@ -44,4 +44,8 @@ return [
     'msg99' => [
         'api_key' => env('MSG99_API_KEY'),
     ],
+
+    'google' => [
+        'api_key' => env('GOOGLE_API_KEY'),
+    ],
 ];

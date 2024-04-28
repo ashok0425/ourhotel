@@ -1,7 +1,7 @@
 //   all ------------------
 function  initEasybook() {
     "use strict";
-    
+
     //   Background image ------------------
     var a = $(".bg");
     a.each(function (a) {
@@ -60,7 +60,7 @@ function  initEasybook() {
             });
 
         });
-		
+
     $(".rooms-menu a").on("click", function (a) {
         a.preventDefault();
         $(this).parent().addClass("current");
@@ -68,8 +68,8 @@ function  initEasybook() {
         var b = $(this).attr("href");
         $(".tab-content").not(b).css("display", "none");
         $(b).fadeIn();
-    });		
-		
+    });
+
     }
     initHiddenGal();
     //   Alax modal------------------
@@ -121,13 +121,13 @@ function  initEasybook() {
         $(this).toggleClass("vis-buts h");
         $(".fixed-scroll-column-share-container").slideToggle(400);
     });
-  
+
      $(".share-container").jsSocials({
             showLabel: false,
             showCount: false,
             shares: ["facebook","pinterest","twitter", "linkedin", "whatsapp"]
         });
-     
+
     var shrcn = $(".share-container");
     function showShare() {
         shrcn.removeClass("isShare");
@@ -189,7 +189,7 @@ function  initEasybook() {
 			$("#weather-widget").ideaboxWeather({
 			location		: datacityw,
 		});
- 
+
     // twitter ------------------
     if ($("#footer-twiit").length > 0) {
         var config1 = {
@@ -407,7 +407,7 @@ function  initEasybook() {
         type: "single",
         hide_min_max: true,
     });
-    
+
     $('input[name="header-search"]').daterangepicker({
         autoUpdateInput: false,
         parentEl: $(".date-parent"),
@@ -509,9 +509,9 @@ function  initEasybook() {
                 inputTime.trigger('click');
             });
         });
-    
-    
-    
+
+
+
 
     var searchGuest = $('.search-form__guest.hotel');
     if (searchGuest.length) {
@@ -542,11 +542,11 @@ function  initEasybook() {
                 });
     }
 
-    
-        
 
-    
-  
+
+
+
+
     // $('input[name="bookdates"]').on('apply.daterangepicker', function (ev, picker) {
     //     var start = moment(picker.startDate.format('MM/DD/YYYY')),
     //         end = moment(picker.endDate.format('MM/DD/YYYY')),
@@ -560,9 +560,9 @@ function  initEasybook() {
     // });
 
 
-    
-    
-    
+
+
+
     $(".show-hidden-map").on("click", function (e) {
         e.preventDefault();
         $(".show-hidden-map").find("span").text($(".show-hidden-map span").text() === 'Close' ? 'On The Map' : 'Close');
@@ -1108,14 +1108,14 @@ function  initEasybook() {
 	function hideBookingForm (){
 		$(".booking-modal-wrap , .bmw-overlay").fadeOut(400);
 		$("html, body").removeClass("hid-body");
-	}	
+	}
     $(".booking-modal-close , .bmw-overlay").on("click", function () {
   		hideBookingForm ();
     });
   //   $(".book-btn").on("click", function (e) {
 		// e.preventDefault();
   // 		showBookingForm ();
-  //   });	
+  //   });
 }
 //   Parallax ------------------
 function initparallax() {
@@ -1219,16 +1219,16 @@ $(".notification-close").on("click", function () {
 //     function hideBookingForm (){
 //         $(".booking-modal-wrap , .bmw-overlay").fadeOut(400);
 //         $("html, body").removeClass("hid-body");
-//     }   
+//     }
 //     $(".booking-modal-close , .bmw-overlay").on("click", function () {
 //         hideBookingForm ();
 //     });
     // $(".book-btn").on("click", function (e) {
     //     e.preventDefault();
     //     showBookingForm ();
-    // }); 
+    // });
 
-    
+
 //   Init All ------------------
 $(document).ready(function () {
     initEasybook();

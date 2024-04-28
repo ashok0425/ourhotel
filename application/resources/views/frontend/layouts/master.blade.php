@@ -157,6 +157,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <script>
         @if (Session::has('messege')) //toatser
+
             var type = "{{ Session::get('alert-type', 'info') }}"
             switch (type) {
                 case 'info':

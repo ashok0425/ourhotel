@@ -6,7 +6,7 @@
     <div class="corporate-inner">
         <div class="row">
           <div class="col-lg-6 align-center" >
-            <div class="corporate-list" style="color: white;background: rgba(7, 136, 144, 0.5);border-radius: 5px;">
+            <div class="corporate-list p-3" style="color: white;background: rgba(7, 136, 144, 0.5);border-radius: 5px;">
                 <h2 class="text-center">Corporate Offers</h2>
               <ul>
                 <li>Exclusive Corporate Rates</li>
@@ -21,7 +21,9 @@
             </div>
           </div>
           <div class="col-lg-6">
-            <form>
+            <form method="POST">
+                <x-errormsg/>
+                @csrf
               <h2>NSN BUSINESS</h2>
               <div class="form-group">
                 <label for="yname">Name</label>
@@ -43,7 +45,7 @@
                 <label for="city">Address</label>
                 <input type="text" class="form-control" id="city" name = "city" placeholder="Company name">
               </div>
-              <div class="text-center pt-3">
+              <div class="text-center pt-3 mt-5">
                 <button type="submit" class="btn btn-primary nsn-btn">Register Now</button>
               </div>
             </form>
@@ -56,7 +58,7 @@
 
 <div class="nsn-corporate-info">
   <div class="container">
-    <div class="corporate-info">
+    <div class="corporate-info card">
       Corporate Stay offered by NSN in India with best price and best location.
       <h5>We Promise</h5>
       <p>Easy check-in access to our properties with up to big savings, manage all your company bookings on a single portal, which overcome to third-party agents.</p>
@@ -69,17 +71,5 @@
     </div>
   </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-<script>
-  $(window).load(function(){
-                 @if($new =='new')
-   swal("Thanks!", "Thanks For Submitting you Details. Our team will reach you soon to complete the onboarding process..", "success");
 
-
-@endif
-
-  });
-</script>
 @stop

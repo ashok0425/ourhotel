@@ -2,29 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Commons\Response;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
-use App\Models\Place;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
-    private $response;
 
-    public function __construct(Response $response)
+    public function index()
     {
-        $this->response = $response;
-    }
+        // Get list places
+        $bookings = Booking::query()
+            ->with('user')
+            ->with('property')
+            ->where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-
-    public function bookingPage(Request $request){
-        if(!Auth::check()){
-            return redirect()->route('user_login');
-        }
-        $hotel=Place::find($request->place_id);
-        return view('frontend.booking_page',compact("request",'hotel'));
+        return view('frontend.user.user_my_place', [
+            'bookings' => $bookings,
+        ]);
     }
 
      public function cancelBooking($id) {
@@ -71,10 +69,7 @@ class BookingController extends Controller
 
     public function recipt(Request $request)
     {
-            $Bookings = Booking::with('user','place')->where('id',$request->id)->first();
-            if(!$Bookings){
-abort(404);
-            }
-        return view('frontend.place.modal_booking_detail', compact('Bookings'));
+            $booking = Booking::with('user','property')->where('uuid',$request->uuid)->firstOrFail();
+        return view('frontend.place.modal_booking_detail', compact('booking'));
     }
 }

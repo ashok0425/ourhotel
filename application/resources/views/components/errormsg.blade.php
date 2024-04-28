@@ -11,7 +11,7 @@
 
 
 @if (session()->has('message'))
-<div class="alert @if(session()->get('type')=='success') 
+<div class="alert @if(session()->get('type')=='success')
     alert-success @else alert-danger @endif alert-dismissible fade show" role="alert">
             <span>{{ session()->get('message') }}</span>
 </div>

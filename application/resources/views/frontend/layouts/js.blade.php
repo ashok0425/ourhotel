@@ -1,5 +1,5 @@
 <script>
-  
+
   var app_url = window.location.origin
     $(document).ready(function() {
              room =  sessionStorage.getItem("room");
@@ -27,7 +27,7 @@
             var date = new Date(start_date_db);
             var end_date = new Date(start_end_db);
           }
-       
+
         $('#checkInOut').daterangepicker({
             "minDate":new Date(),
             "autoUpdateInput": true,
@@ -41,15 +41,15 @@
                      sessionStorage.setItem("end_date",end.format('D MMMM, YYYY'));
         });
     });
-    
-    // prevent from submit search form 
+
+    // prevent from submit search form
        $(document).ready(function(){
         $(document).on('click','#serach_form_btn',function(e){
 		e.preventDefault();
 		let city=$('#city').val();
 		let area=$('#area').val();
 		let budget=$('#budget').val();
-		sessionStorage.setItem('budget',budget);    
+		sessionStorage.setItem('budget',budget);
 		$('#total_guest').val(sessionStorage.getItem('guest'));
 		$('#total_room').val(sessionStorage.getItem('room'));
 		$('.check-in-field').val(sessionStorage.getItem('start_date'));
@@ -79,7 +79,7 @@ if(jQuery('body > div.sweet-alert.showSweetAlert.visible > p:contains(Thank)').i
 
 
 
-    
+
 function guest_room(){
         var room = parseFloat($('#room').text());guest
          var gueststotal = parseFloat($('.gueststotal').text());
@@ -119,21 +119,21 @@ function guest_room(){
             }
              if(gueststotal1 !='NaN'){
                  total= total+gueststotal1;
-             } 
+             }
                if(gueststotal2 !='NaN'){
                    total= total+gueststotal2;
-             } 
+             }
                if(gueststotal3 !='NaN'){
                    total= total+gueststotal3;
-             } 
+             }
                if(gueststotal4 !='NaN'){
                   total= total+gueststotal4;
-             } 
-              $('.gueststotal').text(total); 
+             }
+              $('.gueststotal').text(total);
         }
     };
-    
-   
+
+
     function add(){
         var room = parseFloat($('#room').text());
          var total = 0;
@@ -166,24 +166,24 @@ function guest_room(){
             }
              if(gueststotal1 !='NaN'){
                  total= total+gueststotal1;
-             } 
+             }
                if(gueststotal2 !='NaN'){
                    total= total+gueststotal2;
-             } 
+             }
                if(gueststotal3 !='NaN'){
                    total= total+gueststotal3;
-             } 
+             }
                if(gueststotal4 !='NaN'){
                   total= total+gueststotal4;
-             } 
-              $('.gueststotal').text(total); 
+             }
+              $('.gueststotal').text(total);
               sessionStorage.setItem('room',room)
     };
 
      function del_room(){
           var room = parseFloat($('#room').text());
           if(room > 1){
-               $('#room').text(room - 1); 
+               $('#room').text(room - 1);
                  var room = parseFloat($('#room').text());
                 if( room == 1){
             $('#room2').addClass('d-none');
@@ -228,16 +228,16 @@ function guest_room(){
             }
              if(gueststotal1 !='NaN'){
                  total= total+gueststotal1;
-             } 
+             }
                if(gueststotal2 !='NaN'){
                    total= total+gueststotal2;
-             } 
+             }
                if(gueststotal3 !='NaN'){
                    total= total+gueststotal3;
-             } 
+             }
                if(gueststotal4 !='NaN'){
                   total= total+gueststotal4;
-             } 
+             }
               $('.gueststotal').text(total);
 
               sessionStorage.setItem('room',room)

@@ -63,9 +63,10 @@ Route::get('/post/{slug}-{id}', [PostController::class, 'detail'])
 
 Route::get('/page/contact', [HomeController::class, 'pageContact'])->name('page_contact');
 Route::get('/refer', [HomeController::class, 'refer'])->name('refer');
-Route::any('corporate', [HomeController::class, 'corporate'])->name('corporate');
-Route::post('/page/contact', [HomeController::class, 'sendContact'])->name('page_contact_send');
+Route::get('corporate', [HomeController::class, 'corporate'])->name('corporate');
+Route::post('corporate', [HomeController::class, 'corporateStore']);
 
+Route::post('/page/contact', [HomeController::class, 'sendContact'])->name('page_contact_send');
 Route::get('/page/landing/{page_number}', [HomeController::class, 'pageLanding'])->name('page_landing');
 
 Route::get('/city/{slug}', [CityController::class, 'detail'])->name('city_detail');
@@ -83,27 +84,37 @@ Route::get('/places/filter', [PlaceController::class, 'getListFilter'])->name('p
 
 Route::post('/review', [ReviewController::class, 'create'])->name('review_create')->middleware('auth');
 Route::post('/create-rating', [ReviewController::class, 'createRating'])->name('create_rating');
-Route::post('/wishlist', [UserController::class, 'addWishlist'])->name('add_wishlist')->middleware('auth');
-Route::delete('/wishlist', [UserController::class, 'removeWishlist'])->name('remove_wishlist')->middleware('auth');
 
-Route::get('/user/profile', [UserController::class, 'pageProfile'])->name('user_profile')->middleware('auth');
-Route::put('/user/profile', [UserController::class, 'updateProfile'])->name('user_profile_update')->middleware('auth');
-Route::put('/user/profile/password', [UserController::class, 'updatePassword'])->name('user_password_update')->middleware('auth');
-Route::get('/user/reset-password', [UserController::class, 'pageResetPassword'])->name('user_reset_password');
-Route::put('/user/reset-password', [ResetPasswordController::class, 'reset'])->name('user_update_password');
-Route::get('/user/my-place', [UserController::class, 'pageMyPlace'])->name('user_my_place')->middleware('auth');
-Route::get('/user/my-wallet', [UserController::class, 'pageMyWallet'])->name('user_my_wallet')->middleware('auth');
+Route::group(['middleware'=>'auth','prefix'=>'user'], function () {
 
-Route::any('/user/thanku', [UserController::class, 'thanku'])->name('thanku')->middleware('auth');
-
-Route::get('/user/wishlist', [UserController::class, 'pageWishList'])->name('user_wishlist')->middleware('auth');
+    Route::get('/profile', [UserController::class, 'pageProfile'])->name('user_profile');
+    Route::put('/profile', [UserController::class, 'updateProfile'])->name('user_profile_update');
+    Route::put('/profile/password', [UserController::class, 'updatePassword'])->name('user_password_update');
+    Route::get('/reset-password', [UserController::class, 'pageResetPassword'])->name('user_reset_password');
+    Route::put('/reset-password', [ResetPasswordController::class, 'reset'])->name('user_update_password');
+    Route::get('/bookings', [BookingController::class, 'index'])->name('user_my_place');
+    Route::get('/wallet', [UserController::class, 'pageMyWallet'])->name('user_my_wallet');
+    Route::get('/cancel-booking/{id}', [BookingController::class, 'cancelBooking'])->name('cancel_booking');
+});
 
 
-Route::get('/book-now', [BookingController::class, 'bookingPage'])->name('book.now');
+Route::group(['middleware'=>'guest','prefix'=>'user'], function () {
+
+Route::get('/login', [UserController::class, 'loginPage'])->name('user_login');
+Route::post('/login', [UserController::class, 'loginPage'])->name('login');
+
+Route::get('/register', [UserController::class, 'registerPage'])->name('user_register');
+Route::post('/register', [UserController::class, 'registerStore'])->name('user_register');
+Route::post('loginWithOtp', [UserController::class, 'loginWithOtp'])->name('loginWithOtp');
+Route::post('sendOtp', [UserController::class, 'sendOtp'])->name('send_otp');
+});
+
+Route::get('/thanku/{uuid}', [CheckoutController::class, 'thanku'])->name('thanku');
+
+
 Route::post('/bookings', [BookingController::class, 'booking'])->name('booking_submit');
-Route::get('/cancel-booking/{id}', [BookingController::class, 'cancelBooking'])->name('cancel_booking');
 Route::get('/load-booking-detail/{id}', [BookingController::class, 'loadDetail']);
-Route::get('recipt/{id}', [BookingController::class, 'recipt'])->name('recipt');
+Route::get('booking-detail/{uuid?}', [BookingController::class, 'recipt'])->name('recipt');
 
 
 
@@ -128,19 +139,15 @@ Route::get('/category/{slug}', [CategoryController::class, 'listPlace'])->name('
 
 Route::get('/categories', [CategoryController::class, 'search'])->name('category_search');
 
-Route::post('/checkout/payment', [CheckoutController::class, 'checkout'])->name('payment.checkout');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('book.now');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('payment.checkout');
 Route::post('rozer/payment/pay-success/{booking_id}', [RazorpayController::class, 'payment'])->name('payment.rozer');
-Route::post('coupon', [CheckoutController::class, 'checkCoupon'])->name('check.coupon');
+Route::post('coupon/apply', [CheckoutController::class, 'applyCoupon'])->name('coupon.apply');
+Route::get('coupon/remove', [CheckoutController::class, 'removeCoupon'])->name('coupon.remove');
 Route::get('apply-offer', [CheckoutController::class, 'applyoffer']);
 
 
-Route::get('/user/login', [UserController::class, 'loginPage'])->name('user_login');
-Route::get('/login', [UserController::class, 'loginPage'])->name('login');
 
-Route::get('/user/register', [UserController::class, 'registerPage'])->name('user_register');
-Route::post('/user/register', [UserController::class, 'registerStore'])->name('user_register');
-Route::post('loginWithOtp', [UserController::class, 'loginWithOtp'])->name('loginWithOtp');
-Route::post('sendOtp', [UserController::class, 'sendOtp'])->name('send_otp');
 Route::get('/setcookie', [HomeController::class, 'setCookie'])->name('set_cookie');
 Route::post('/subscribe', [HomeController::class, 'subscribe'])->name('subscribe');
 

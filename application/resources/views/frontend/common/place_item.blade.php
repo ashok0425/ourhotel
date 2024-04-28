@@ -4,8 +4,8 @@
                                                 <div class="listing-item has_two_column">
                                                     <article class="geodir-category-listing fl-wrap">
                                                         <div class="geodir-category-img">
-                                                            <a title="{{$place->PlaceTrans->name}}" href="{{route('place_detail', $place->slug)}}"><img src="{{getImageUrl($place->thumb)}}" alt="{{$place->PlaceTrans->name}}"></a>
-                                                          
+                                                            <a title="{{$place->name}}" href="{{route('place_detail', $place->slug)}}"><img src="{{getImageUrl($place->thumbnail)}}" alt="{{$place->name}}"></a>
+
                                                             <div class="listing-avatar"><a href="author-single.html"><img src="images/avatar/1.jpg" alt=""></a>
                                                             </div>
                                                             <div class="sale-window">Sale 20%</div>
@@ -17,14 +17,14 @@
                                                                         <span>{{number_format($place->avgReview, 1)}}</span>
                                                                         <i class="la la-star"></i>
                                                                     @endif</span>
-                                                                    
+
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="geodir-category-content fl-wrap title-sin_item">
                                                             <div class="geodir-category-content-title fl-wrap">
                                                                 <div class="geodir-category-content-title-item">
-                                                                    <h3 class="title-sin_map"><a href="{{route('place_detail', $place->slug)}}" title="{{$place->PlaceTrans->name}}">{{$place->PlaceTrans->name}}</a></h3>
+                                                                    <h3 class="title-sin_map"><a href="{{route('place_detail', $place->slug)}}" title="{{$place->name}}">{{$place->name}}</a></h3>
                                                                     <div class="geodir-category-location fl-wrap"><a href="#" class="map-item"><i class="fas fa-map-marker-alt"></i> 27th Brooklyn New York, USA</a></div>
                                                                 </div>
                                                             </div>
@@ -47,7 +47,7 @@
                                                     </article>
                                                 </div>
                                                 <!-- listing-item end -->
-                                                                    
+
                                             </div>
                                             <!-- listing-item-container end-->
 

@@ -23,7 +23,7 @@
                         <form class="loginform" method="POST" action="{{ route('user_register') }}">
                             @csrf
                             <p class="login-title">Please fill the below form to continue...</p>
-                            @include('errors.errormsg')
+                            <x-errormsg/>
 
                             <div class="form-group otp">
                                 <input type="text" style="min-width:100%!important" class="form-control" name="name"
@@ -46,11 +46,11 @@
                             <div class="form-group otp">
                                 <input type="hidden" id="phone_code" value="91" name="phone_code">
 
-                                <input type="text" style="min-width:100%!important" class="form-control"
+                                {{-- <input type="text" style="min-width:100%!important" class="form-control"
                                     name="referral_code" placeholder="Referral Code (optional)"
                                     value=" @if (isset($_GET['q'])) {{ $_GET['q'] }}
                             @else {{ old('referral_code') }} @endif
-                            " />
+                            " /> --}}
                             </div>
 
                             <div class="form-group otp">

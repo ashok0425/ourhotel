@@ -391,7 +391,6 @@
                                                 <div class="col-6 col-sm-6 col-md-6">
                                                     <div class="form-group">
 
-
                                                         <label>No. of Room:</label>
                                                         <div>
                                                             <div class="d-flex">
@@ -466,11 +465,13 @@
                                                     <label>Check-In / Check Out</label>
                                                     <input type="text" class="form-control" autocomplete="off"
                                                         placeholder="Date In-Out" name="bookdates" id="checkInOuts"
-                                                        value=""/ onchange="">
+                                                        value="" onchange="">
+                                               <input type="hidden"  id="price_input" name="price" >
+
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row m-0">
+                                        {{-- <div class="row m-0">
                                             <div class="form-group">
                                                 <label data-toggle="tooltip" data-placement="top"
                                                     title="Extra Charges is Applicable depends upon the Availability of Rooms."><input
@@ -480,7 +481,7 @@
                                                 <textarea name="reason_for_early_checkout" id="reason_for_early_checkout" class="form-control d-none w-100"
                                                     rows="1"></textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="form-group mb-0">
 
@@ -566,6 +567,8 @@
                     let hrprice = $('.select_room_btn.border-success').data('hourlyprice');
                     if (hrprice != null) {
                         $('#price').html(hrprice)
+                        $('#price_input').val(hrprice)
+
                     }
                 }
             })
@@ -892,6 +895,8 @@
             diffindays = diffindays != 0 ? diffindays : 1
             let final_price = diffindays * final_adult_price;
             $('#price').html(final_price)
+            $('#price_input').val(final_price)
+
         }
 
 

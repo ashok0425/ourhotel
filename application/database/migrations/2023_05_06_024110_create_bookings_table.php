@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->string('booking_id');
+            $table->string('uuid')->unique();
             $table->integer('user_id')->nullable();
             $table->integer('property_id')->nullable();
             $table->integer('room_id')->nullable();
@@ -40,7 +41,7 @@ return new class extends Migration
             $table->integer('status')->default(1);
             $table->string('is_paid')->nullable();
             $table->integer('booked_by')->nullable()->default(0);
-            $table->string('channel')->nullable();
+            $table->string('channel')->nullable()->default('Web');
             $table->string('booking_type')->nullable();
             $table->integer('refer_amount_spent')->nullable();
             $table->integer('refer_id')->nullable();

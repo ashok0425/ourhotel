@@ -27,9 +27,6 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-
-        // SEO Meta
-
         return view("frontend.home.index");
     }
 
@@ -52,27 +49,36 @@ class HomeController extends Controller
 
     public function corporate(Request $request)
     {
-        $new = 'old';
-        if ($request->mobile) {
-            $new = new User;
-            $new->phone_number = $request->mobile;
-            $new->name = $request->company;
-            $new->email = $request->email;
-            $new->save();
-            $user  = User::where('phone_number', $request->mobile)->orderBy('id', 'desc')->first();
+
+        return view('frontend.page.corporate');
+    }
+
+
+    public function corporateStore(Request $request)
+    {
+        $request->validate([
+            'mobile'=>'required|unique:users,phone_number',
+            'company'=>'required',
+            'email'=>'required|unique:users,email'
+        ]);
+            $user = new User;
+            $user->phone_number = $request->mobile;
+            $user->name = $request->company;
+            $user->email = $request->email;
+            $user->save();
+
             $add = new Corporate;
             $add->name = $request->name;
             $add->user_id = $user->id;
             $add->address     = $request->address;
             $add->company_name     = $request->city;
             $add->save();
-            $new = 'new';
 
-            $this->sendBookingMsge($request->mobile, $request->name, $request->address, $request->city);
-        }
-        return view('frontend.page.corporate', [
-            'new' => $new,
-        ]);
+
+        $notification= array(
+            'message'=>'Your query has been placed successfully. We will contact you soon!',
+            'type'=>'success');
+       return redirect()->route('corporate')->with($notification);
     }
 
 
@@ -219,7 +225,7 @@ class HomeController extends Controller
             }
         }
         if (isset($l)) {
-            $c_location = Location::where('name', str_replace('_', ' ', $l))->first();
+            $c_location = Location::where('slug', str_replace('_', ' ', $l))->first();
             $latitude = $c_location->lat_n;
             $longitude = $c_location->long_e;
         }

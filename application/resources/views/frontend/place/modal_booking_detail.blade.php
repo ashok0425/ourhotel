@@ -30,67 +30,73 @@
 </head>
 <body>
 <!-- Container -->
-<div class="container invoice-container"> 
+<div class="container invoice-container">
   <!-- Header -->
   <header>
     <div class="row align-items-center">
       <div class="col-sm-4 text-center w-50 text-sm-start mb-3 mb-sm-0"> <img id="logo" src="{{getImageUrl(setting('logo') ?  setting('logo') : 'assets/images/assets/logo.png')}}" title="NSN Hotel" alt="NSN Hotel" style="max-width: 70px!important;" />   </div>
       <div class="col-sm-4">
-      	<p class="text-center mb-3 mb-sm-0" style="color: blue">NSN Hotels</p><br> <p class="text-center mb-3 mb-sm-0" style="color: blue">www.nsnhotels.com<p>
+        <p class="text-center mb-3 mb-sm-0" style="color: blue">www.nsnhotels.com<p>
       </div>
-       
-      <div class="col-sm-3 text-sm-end">
-        <!--<h4 class="mb-0">Invoice</h4>-->
-        <p class="mb-0">Booking-{{$Bookings->booking_id}}</p>
+
+      <div class="col-sm-4">
+
+        <p class="mb-0">Booking ID-{{$booking->booking_id}}</p>
         <p class="mb-0">GST NO. - <span >07AAICN0116F1ZW</span></p>
 
       </div>
     </div>
     <hr>
   </header>
-  
+
   <!-- Main Content -->
   <main>
     <div class="row">
-      <div class="col-sm-6 mb-3"> <strong>Guest Name:</strong> <span>{{$Bookings->user->name}}</span> </div>
-      <div class="col-sm-6 mb-3 text-sm-end"> <strong>Booking Date:</strong> <span>{{$Bookings->booking_start}}</span> </div>
+      <div class="col-sm-6 mb-3"> <strong>Guest Name:</strong> <span>{{$booking->user?->name}}</span> </div>
+      <div class="col-sm-6 mb-3 text-sm-end"> <strong>Booking Date:</strong> <span>{{$booking->booking_start}}</span> </div>
     </div>
     <hr class="mt-0">
     <div class="row">
       <div class="col-sm-5"> <strong>Hotel Details:</strong>
         <address>
-        {{$Bookings->place->name}}<br />
-        {{$Bookings->place->address}}.<br />
+        {{$booking->property->name}}<br/>
+        {{$booking->property->address}}<br/>
         </address>
       </div>
       <div class="col-sm-7">
         <div class="row">
           <div class="col-sm-4"> <strong>Check In:</strong>
-            <p>{{$Bookings->booking_start}}</p>
+            <p>{{$booking->booking_start}}</p>
           </div>
           <div class="col-sm-4"> <strong>Check Out:</strong>
-            <p>{{$Bookings->booking_end}}</p>
-          </div>
-          <div class="col-sm-4"> <strong>Rooms:</strong>
-            <p>{{$Bookings->number_of_room}}</p>
-          </div>
-          <div class="col-sm-4"> <strong>Booking No:</strong>
-            <p>{{$Bookings->booking_id}}</p>
+            <p>{{$booking->booking_end}}</p>
           </div>
           <div class="col-sm-4"> <strong>Payment Mode:</strong>
-            @if ($Bookings->payment_type=='offline')
+            @if ($booking->payment_type=='offline')
             <p>Pay at Hotel</p>
-              
+
             @else
             <p>Online</p>
 
             @endif
           </div>
+          <div class="col-sm-4"> <strong>Discount</strong>
+            <p>{{$booking->discount?$booking->discount:'N/A'}}</p>
+          </div>
+
+
+          <div class="col-sm-4"> <strong>Amount</strong>
+            <p>{{$booking->final_amount}}</p>
+          </div>
+
+
+
+
         </div>
       </div>
     </div>
     <div class="card">
-      
+
       <div class="card-body p-0">
         <div class="table-responsive">
           <table class="table mb-0">
@@ -105,27 +111,23 @@
           </thead>
 			<tbody>
               <tr>
-                <td class="col-4">Room Charges</td>
-                
+                <td class="col-4">Room Charges ({{$booking->room_type}})</td>
+
+                <td class="col-3 text-end">{{number_format($booking->no_of_room,0)}}</td>
+                 <td class="col-2 text-end">{{number_format($booking->no_of_adult,0)}}</td>
+                <td class="col-2 text-end">{{number_format($booking->no_of_children,0)}}</td>
                 @php
-                
-             
-                @endphp
-                <td class="col-3 text-end">{{$Bookings->number_of_room}}</td>
-                 <td class="col-2 text-end">{{$Bookings->numbber_of_adult}}</td>
-                <td class="col-2 text-end">{{$Bookings->numbber_of_children}}</td>
-                @php
-                $datediff = strtotime($Bookings->booking_end) - strtotime($Bookings->booking_start) ;
+                $datediff = strtotime($booking->booking_end) - strtotime($booking->booking_start) ;
                 @endphp
                          <td class="col-3 text-end">@php echo round($datediff / (60 * 60 * 24)); @endphp</td>
               </tr>
-             
+
             </tbody>
 			<tfoot class="card-footer">
-			 
+
 			  <tr>
                 <td colspan="2" class="text-end border-bottom-0"><strong>Total:</strong></td>
-                <td class="text-end border-bottom-0">{{$Bookings->amount}}</td>
+                <td class="text-end border-bottom-0">{{$booking->amount}}</td>
               </tr>
 			</tfoot>
           </table>
@@ -138,11 +140,11 @@
   <!-- Footer -->
   <footer class="text-center">
     <hr>
-    <p><a href = "https://maps.google.com/?q={{$Bookings->place->address}}"><strong>Click here for Direction<img src = "https://cdn-icons-png.flaticon.com/128/854/854878.png" width = "2%"></strong></a><br>
+    <p><a href = "https://maps.google.com/?q={{$booking->property->address}}"><strong>Click here for Direction<img src = "https://cdn-icons-png.flaticon.com/128/854/854878.png" width = "2%"></strong></a><br>
        </p>
     <hr>
     <p class="text-1"><strong>NOTE :</strong> This is computer generated receipt and does not require physical signature.</p>
-    <div class="btn-group btn-group-sm d-print-none"> <a href="javascript:window.print()" class="btn btn-light border text-black-50 shadow-none"><i class="fa fa-print"></i> Print</a> <a href="" class="btn btn-light border text-black-50 shadow-none"><i class="fa fa-download"></i> Download</a> </div>
+    <div class="btn-group btn-group-sm d-print-none"> <a href="javascript:window.print()" class="btn btn-light border text-black-50 shadow-none"><i class="fas fa-print"></i> Print</a>  </div>
   </footer>
 </div>
 <!-- Back to My Account Link -->

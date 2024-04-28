@@ -245,6 +245,7 @@ class PropertyController extends Controller
         $booking->payment_type = $request['payment_type'];
         $booking->room_type = $request['room_type'];
         $booking->booking_type = $request['booking_type'];
+        $booking->uuid = Str::uuid();
         $booking->is_paid  = $request->is_paid ? 1 : 0;
         $booking->booked_by  = Auth::user()?->id ?? 1;
         $booking->status  = 2;

@@ -207,44 +207,5 @@
 
         </div>
     </div>
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-
-                <div class="modal-body text-center">
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-
 @stop
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-    <script>
-        $(window).load(function() {
-            @if (session()->has('success'))
-                swal("Thanks!", "Thanks for the booking Hotel with NSN Hotels.", "success");
-            @endif
 
-        });
-    </script>
-    <script>
-        $(document).on('click', '.view_btn', function() {
-            let id = $(this).attr('id');
-            $.ajax({
-                url: '{{ url('load-booking-detail') }}/' + id,
-                success: function(data) {
-                    console.log(data)
-                    $('.modal-body').html(data)
-                }
-            })
-        })
-    </script>
-@endpush

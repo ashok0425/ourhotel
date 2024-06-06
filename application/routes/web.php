@@ -38,11 +38,6 @@ Route::get('/getCity/{stateId}',[PropertyController::class,'getCity'])->name('ge
 
 Route::post('/fcm-token', [HomeController::class, 'updateToken'])->name('fcmToken');
 
-Route::get('/mapapi', [HomeController::class, 'mapapi']);
-
-Route::get('/webhooks', [WebHookController::class, 'webhook']);
-Route::post('/webhooks', [WebHookController::class, 'webhookPost']);
-
 Route::get('/banquet', [HomeController::class, 'banquote'])->name('banquet');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -51,10 +46,6 @@ Route::get('load-mobile-content/', [HomeController::class, 'mobileLocation']);
 
 Route::get('load-subcity', [HomeController::class, 'subCity']);
 
-Route::get('/sitemapCity.xml', [SitemapController::class, 'sitemapCity']);
-Route::get('/sitemapBlog.xml', [SitemapController::class, 'sitemapBlog']);
-Route::get('/sitemapHotel.xml/{slug}', [SitemapController::class, 'sitemapHotel']);
-Route::get('/sitemapindex.xml', [SitemapController::class, 'index']);
 Route::get('/blog/all', [PostController::class, 'list'])->name('post_list_all');
 Route::get('/blog/{cat_slug}', [PostController::class, 'list'])->where('cat_slug', '[a-zA-Z0-9-_]+')->name('post_list');
 Route::get('/post/{slug}-{id}', [PostController::class, 'detail'])
@@ -110,10 +101,7 @@ Route::post('sendOtp', [UserController::class, 'sendOtp'])->name('send_otp');
 });
 
 Route::get('/thanku/{uuid}', [CheckoutController::class, 'thanku'])->name('thanku');
-
-
 Route::post('/bookings', [BookingController::class, 'booking'])->name('booking_submit');
-Route::get('/load-booking-detail/{id}', [BookingController::class, 'loadDetail']);
 Route::get('booking-detail/{uuid?}', [BookingController::class, 'recipt'])->name('recipt');
 
 
@@ -129,15 +117,10 @@ Route::get('/places/map', [PlaceController::class, 'getListMap'])->name('place_g
 Route::get('/cities/{country_id}', [CityController::class, 'getListByCountry'])->name('city_get_list');
 Route::get('/cities', [CityController::class, 'search'])->name('city_search');
 Route::get('/location-search', [HomeController::class, 'locationSearch'])->name('location_search');
-
 Route::get('/hotel/best-hotel-in-{city_name?}-near-{location?}', [HomeController::class, 'pageSearchListing'])->name('location.search');
-
 Route::get('/search-listing', [HomeController::class, 'pageSearchListing'])->name('page_search_listing');
-
 Route::get('/hotel/best-hotel-in-{slug}', [HomeController::class, 'pageSearchListing'])->name('city-search');
 Route::get('/category/{slug}', [CategoryController::class, 'listPlace'])->name('category_list');
-
-Route::get('/categories', [CategoryController::class, 'search'])->name('category_search');
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('book.now');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('payment.checkout');
@@ -145,13 +128,5 @@ Route::post('rozer/payment/pay-success/{booking_id}', [RazorpayController::class
 Route::post('coupon/apply', [CheckoutController::class, 'applyCoupon'])->name('coupon.apply');
 Route::get('coupon/remove', [CheckoutController::class, 'removeCoupon'])->name('coupon.remove');
 Route::get('apply-offer', [CheckoutController::class, 'applyoffer']);
-
-
-
-Route::get('/setcookie', [HomeController::class, 'setCookie'])->name('set_cookie');
 Route::post('/subscribe', [HomeController::class, 'subscribe'])->name('subscribe');
 
-Route::post('review-store',[HotelReviewController::class, 'store'])->name('review.store');
-
-Route::post('review-reply',[HotelReviewController::class, 'replyStore'])->name('review.reply');
-Route::get('load-review/{place}',[HotelReviewController::class, 'loadreview']);

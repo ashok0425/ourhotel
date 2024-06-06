@@ -151,8 +151,8 @@
         @include('frontend.home.partials.downloadapp')
 
         @include('frontend.home.partials.popular_location')
-        @include('frontend.home.partials.offer3')
         @include('frontend.home.partials.blog')
+        @include('frontend.home.partials.offer3')
 
 
 
@@ -238,11 +238,10 @@
 
             let testimonial =
                 `<div class="nsnhotelspeoplessays mt-3 mt-md-0 container"><div class=""><h2 class="pl-0 pl-md-3 font-weight-bold text-dark custom-fs-20 custom-fw-600  mb-3">People Talking About Us</h2><div id="nsnhotelspeoplessays" class="owl-carousel">`;
-
-            testimonials.map((item) => {
+                    @foreach (testimonials()->take(4) as $item)
                 testimonial +=
-                    `<div class="nsnhotelspeoplessaysbox"><div class="nsnhotelsclientname d-flex"><div><div class="user_icon"><i class="fas fa-user "></i></div></div> <div class="ml-2"><p class="mb-0">${item.name}</p>"${item.content}"</div></div></div>`
-            })
+                    `<div class="nsnhotelspeoplessaysbox"><div class="nsnhotelsclientname d-flex"><div><div class="user_icon"><i class="fas fa-user "></i></div></div> <div class="ml-2"><p class="mb-0">{{$item->name}}</p>"{{$item->feedback}}"</div></div></div>`
+            @endforeach
 
 
             testimonial += `</div></div></div>`

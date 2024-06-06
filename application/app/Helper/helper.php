@@ -88,7 +88,8 @@ if (!function_exists('testimonials')) {
         return Testimonial::query()
         ->where('status', 1)
         ->where('property_id', null)
-        ->limit(4)
+        ->where('feedback','!=', null)
+        ->limit(6)
         ->get();
     });
 

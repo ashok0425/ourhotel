@@ -12,7 +12,6 @@
       @else
       <a href="{{route('cancel_booking',['id'=>$booking->id])}}" class="btn btn-sm btn-danger">Cancel</a>
       @endif
-    {{-- <a href="" class="btn btn-sm btn-info view_btn"  data-toggle="modal" data-target="#exampleModal" id="{{$booking->id}}"><i class="fas fa-eye"></i></a> --}}
 
     <a href="{{route('recipt',['uuid'=>$booking->uuid])}}" class="btn btn-sm btn-danger " target="_blank" id="{{$booking->id}}"><i class="fas fa-eye"></i></a>
   </td>

@@ -4,15 +4,12 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Amenity;
 use App\Models\Category;
-use App\Models\Coupon;
-use App\Models\PlaceType;
-use App\Models\Booking;
+use App\Models\City;
 use App\Models\Property;
 use App\Models\PropertyType;
+use App\Models\State;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use App\Models\ReferelMoney;
 class PlaceController extends Controller
 {
 
@@ -49,6 +46,45 @@ class PlaceController extends Controller
             'place_types'      => $place_types,
             'similar_places'   => $similar_places,
         ]);
+
+    }
+
+
+    public function pageAddNew()
+    {
+
+
+        $countries  = State::all();
+        $cities     = City::all();
+
+        $place_types = PropertyType::query()
+            ->get();
+
+            $categories = Category::query()
+            ->get();
+
+        return view('frontend.place.place_addnew', [
+            'countries'   => $countries,
+            'cities'      => $cities,
+            'place_types' => $place_types,
+            'categories'=>$categories
+        ]);
+    }
+
+
+    public function create(Request $request)
+    {
+        dd($request->all());
+        $request->validate(
+            ['partner_name'=>'required',
+            'partner_name'=>'required',
+            'address'=>'required',
+            'email'=>'required|unique:users,email',
+            'phone_number'=>'required|unique:users,phone_number'
+            ]
+        );
+
+
 
     }
 

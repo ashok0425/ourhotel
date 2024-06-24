@@ -73,9 +73,6 @@ Route::post('/place', [PlaceController::class, 'create'])->name('place_create');
 Route::put('/place', [PlaceController::class, 'update'])->name('place_update')->middleware('auth');
 Route::get('/places/filter', [PlaceController::class, 'getListFilter'])->name('place_get_list_filter');
 
-Route::post('/review', [ReviewController::class, 'create'])->name('review_create')->middleware('auth');
-Route::post('/create-rating', [ReviewController::class, 'createRating'])->name('create_rating');
-
 Route::group(['middleware'=>'auth','prefix'=>'user'], function () {
 
     Route::get('/profile', [UserController::class, 'pageProfile'])->name('user_profile');
@@ -84,8 +81,10 @@ Route::group(['middleware'=>'auth','prefix'=>'user'], function () {
     Route::get('/reset-password', [UserController::class, 'pageResetPassword'])->name('user_reset_password');
     Route::put('/reset-password', [ResetPasswordController::class, 'reset'])->name('user_update_password');
     Route::get('/bookings', [BookingController::class, 'index'])->name('user_my_place');
-    Route::get('/wallet', [UserController::class, 'pageMyWallet'])->name('user_my_wallet');
-    Route::get('/cancel-booking/{id}', [BookingController::class, 'cancelBooking'])->name('cancel_booking');
+    Route::get('reviews', [ReviewController::class, 'index'])->name('user_my_review');
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('user_my_reviews_store');
+    Route::get('/wallets', [UserController::class, 'wallet'])->name('user_my_wallet');
+    Route::post('bookings/cancel', [BookingController::class, 'cancelBooking'])->name('cancel_booking');
 });
 
 

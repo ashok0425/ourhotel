@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Common\PropertyController;
 use App\Http\Controllers\Admin\PropertyTypeController;
+use App\Http\Controllers\Admin\ReferPriceController;
 use App\Http\Controllers\Common\RoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\StateController;
@@ -44,10 +45,6 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::resource('categories', CategoryController::class);
     Route::resource('tour_bookings', TourBookingController::class);
     Route::post('tour_bookings/status', [TourBookingController::class,'update'])->name('tour_bookings.status');
-
-
-
-
-
+    Route::resource('refer_prices', ReferPriceController::class);
 
 });

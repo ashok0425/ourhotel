@@ -46,7 +46,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $user=User::with(['booking','property'])->where('id',$user->id)->first();
+        $user=User::with(['booking','property','referMoney'])->where('id',$user->id)->first();
         return view('admin.user.show',compact('user'));
     }
 

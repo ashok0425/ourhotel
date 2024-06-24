@@ -16,8 +16,6 @@
                             </div>
 
                             <div class="col-12 col-sm-9 col-md-9 bg-white">
-
-
                                 {{-- tab for booking section  --}}
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
@@ -46,8 +44,6 @@
 
 
                                 <div class="tab-content" id="myTabContent">
-
-
                                     {{-- upcoming booking  --}}
                                     <div class="tab-pane fade show active" id="all" role="tabpanel"
                                         aria-labelledby="Upcoming-tab">
@@ -57,10 +53,11 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Booking ID</th>
-                                                        <th>CheckIn/ChekOut</th>
+                                                        <th>CheckIn/Out</th>
                                                         <th>Hotel name</th>
                                                         <th>No. of Guest</th>
                                                         <th>No. of Rooms</th>
+                                                        <th>Payment Mode/status</th>
                                                         <th>Action</th>
 
                                                     </tr>
@@ -86,11 +83,6 @@
                                         </div>
                                     </div>
 
-
-
-
-
-
                                     {{-- upcoming booking  --}}
                                     <div class="tab-pane fade show " id="Upcoming" role="tabpanel"
                                         aria-labelledby="Upcoming-tab">
@@ -100,10 +92,11 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Booking ID</th>
-                                                        <th>CheckIn/ChekOut</th>
+                                                        <th>CheckIn/Out</th>
                                                         <th>Hotel name</th>
                                                         <th>No. of Guest</th>
                                                         <th>No. of Rooms</th>
+                                                        <th>Payment Mode/status</th>
                                                         <th>Action</th>
 
                                                     </tr>
@@ -133,10 +126,11 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Booking ID</th>
-                                                        <th>CheckIn/ChekOut</th>
+                                                        <th>CheckIn/Out</th>
                                                         <th>Hotel name</th>
                                                         <th>No. of Guest</th>
                                                         <th>No. of Rooms</th>
+                                                        <th>Payment Mode/status</th>
                                                         <th>Action</th>
 
                                                     </tr>
@@ -168,10 +162,11 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Booking ID</th>
-                                                        <th>CheckIn/ChekOut</th>
+                                                        <th>CheckIn/Out</th>
                                                         <th>Hotel name</th>
                                                         <th>No. of Guest</th>
                                                         <th>No. of Rooms</th>
+                                                        <th>Payment Mode/status</th>
                                                         <th>Action</th>
 
                                                     </tr>
@@ -188,12 +183,8 @@
                                                 </tbody>
                                             </table>
                                         </div>
-
                                     </div>
-
                                 </div>
-
-
                             </div>
 
                         </div>
@@ -207,5 +198,118 @@
 
         </div>
     </div>
+
+
+
+<!--Cancel reason Modal -->
+<div class="modal" id="bookingCancelModal" tabindex="-1" role="dialog" aria-labelledby="bookingCancelModalLabel" aria-hidden="true" sty>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header d-flex">
+         <div>
+            <h5 class="modal-title" id="bookingCancelModalLabel">Reason For Cancel?</h5>
+            <p>Write a reason for booking cancellation.</p>
+         </div>
+
+        </div>
+        <div class="modal-body">
+         <form action="{{route('cancel_booking')}}" method="post" class="mb-2">
+            @csrf
+                <input type="hidden" id="property_id" name="id" >
+
+                <textarea placeholder="write a reason for booking cancel...." rows="2" name="reason" id="reason" required class="form-control"></textarea>
+                   <br>
+               <div class="text-right d-flex">
+                <button class=" nsnbtn  bg-secondary text-white custom-fw-600 w-100" id="submit">Cancel</button>
+                <button class=" nsnbtn custom-bg-primary text-white custom-fw-600 w-100" id="submit">Submit</button>
+
+               </div>
+                </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<!--Rate hotel Modal -->
+<div class="modal" id="writereviewModal" tabindex="-1" role="dialog" aria-labelledby="writereviewLabel" aria-hidden="true" sty>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header d-flex">
+         <div>
+            <h5 class="modal-title" id="writereviewLabel">   <p class="my-1">Have you book this Hotel before?</p>
+                <p class="my-1">Rate it: *</p></h5>
+         </div>
+
+        </div>
+        <div class="modal-body">
+         <form action="{{route('user_my_reviews_store')}}" method="post" class="mb-2">
+            @csrf
+                <input type="hidden" id="property_id" name="property_id" >
+                <div class="d-flex mb-3">
+                <div class="star-container">
+                    <input type="radio" required name="star" value="5" id="5" class="radio main_rating">
+                    <label class="label" for="5">
+                     <span class="star ">
+                      &#x2729;
+                     </span>
+                    </label>
+
+                    <input type="radio" required name="star" value="4" id="4" class="radio main_rating">
+                    <label class="label" for="4">
+                      <span class="star">
+                        &#x2729;
+                       </span>
+                    </label>
+
+                    <input type="radio" required name="star" value="3" id="3" class="radio main_rating">
+                    <label class="label" for="3">
+                      <span class="star">
+                        &#x2729;
+                       </span>
+                    </label>
+
+                    <input type="radio" required name="star" value="2" id="2" class="radio main_rating">
+                    <label class="label" for="2">
+                      <span class="star">
+                        &#x2729;
+                       </span>
+                    </label>
+
+                    <input type="radio" required name="star" value="1" id="1" class="radio main_rating">
+                    <label class="label" for="1">
+                      <span class="star">
+                        &#x2729;
+                       </span>
+                    </label>
+                </div>
+
+                </div>
+                <textarea placeholder="Write comment" rows="2" name="comment" id="feedback" required class="form-control"></textarea>
+                   <br>
+               <div class="text-right d-flex">
+                <button class=" nsnbtn  bg-secondary text-white custom-fw-600 w-100" id="submit">Cancel</button>
+                <button class=" nsnbtn custom-bg-primary text-white custom-fw-600 w-100" id="submit">Submit</button>
+
+               </div>
+                </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
 @stop
 
+@push('scripts')
+    <script>
+    $(document).on('click','#writereviewBtn',function(){
+       $property_id=$(this).data('id');
+       $('#property_id').val($property_id);
+    })
+    </script>
+@endpush

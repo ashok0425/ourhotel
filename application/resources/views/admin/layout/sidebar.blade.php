@@ -104,5 +104,12 @@
           <span class="menu-title">Offers</span>
         </a>
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('admin.refer_prices.index')}}">
+            <i class="fas fa-redo menu-icon"></i>
+          <span class="menu-title">Refer Price</span>
+        </a>
+      </li>
     </ul>
   </nav>

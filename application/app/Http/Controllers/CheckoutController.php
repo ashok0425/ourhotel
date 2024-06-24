@@ -59,14 +59,18 @@ $price=Property::getPrice($request->numbber_of_adult,$request->number_of_room,$r
      $price_after_discount=(int)$price-(int)$discount_amount;
      $final_price=(int)$price_after_discount+(int)$tax;
 
-        $user = User::updateOrCreate(
-            ['phone_number' => $request->phone_code.$request->phone_number],
+     $user=User::where('phone_number',$request->phone_code.$request->phone_number)->orWhere('phone_number',$request->phone_number)->first();
+     if (!$user) {
+        $user = User::create(
             [
+                'phone_number'=>$request->phone_code.$request->phone_number,
                 'name' => $request->first_name. ' '. $request->last_name,
                 'email' => $request->email,
                 'password' => bcrypt('Nsn@' . rand(1, 99999999))
             ]
         );
+     }
+
 
 
     $booking = new Booking();
@@ -90,7 +94,7 @@ $price=Property::getPrice($request->numbber_of_adult,$request->number_of_room,$r
     $booking->status  = 2;
     $booking->channel = 'Web';
     $booking->early_reason	 = $request->message;
-    $booking->name = $request->name;
+    $booking->name = $request->first_name.' '.$request->last_name??Auth::user()->name;
     $booking->email = $request->email;
     $booking->phone_number = $request->phone_code. '-'. $request->phone_number;
     $booking->save();

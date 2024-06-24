@@ -68,4 +68,8 @@ class User extends Authenticatable
     public function property(){
         return $this->hasMany(Property::class,'owner_id','id');
     }
+
+    public function referMoney(){
+        return $this->hasMany(ReferelMoney::class,'user_id','id');
+    }
 }

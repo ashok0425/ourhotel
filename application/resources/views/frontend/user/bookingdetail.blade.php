@@ -1,7 +1,7 @@
 @php
     $date1 = new DateTime($booking->booking_start);
 $date2 = new DateTime($booking->booking_end);
-$numberOfNights= $date2->diff($date1)->format("%a"); 
+$numberOfNights= $date2->diff($date1)->format("%a");
 @endphp
 <ul class="bookingpersondetails">
     <li>Booking ID<span>NSN{{$booking->id}}</span></li>
@@ -13,7 +13,7 @@ $numberOfNights= $date2->diff($date1)->format("%a");
     <li>No. of Nights <span>{{ $numberOfNights }} </span></li>
     <li>Mail<span>{{ $booking->email }}</span></li>
     <li>Phone<span>{{$booking->phone_number}}</span></li>
-    <li class="inrsymbols">Booking Amount<span>{{number_format($booking->amount,0)}}</span></li> 
+    <li class="inrsymbols">Booking Amount<span>{{number_format($booking->amount,0)}}</span></li>
     @if($booking->payment_type =='offline')
     <li>Payment Mode<span>Pay at Hotel</span></li>
     @endif

@@ -11,7 +11,9 @@
                 <div>
                     User Detail ({{$user->name}})
                 </div>
-
+                <div>
+                    Total Refer Amount ({{$user->referMoney()->where('is_used',0)->sum('price')}})
+                </div>
             </div>
 
         </div>
@@ -76,23 +78,15 @@
                             <td>Customer</td>
                         </tr>
                         <tr>
-                            <td>Referral wallet </td>
-                            <td>100</td>
+                            <td>Referral wallet Amount </td>
+                            <td>{{$user->referMoney()->where('is_used',0)->sum('price')}}</td>
                         </tr>
 
                         <tr>
-                            <td>Total Booking Wallet</td>
-                            <td>2000</td>
-                        </tr>
-                        <tr>
-                            <td>Paid Booking Wallet</td>
-                            <td>1000</td>
+                            <td>Used Wallet Amount</td>
+                            <td>{{$user->referMoney()->where('is_used',1)->sum('price')}}</td>
                         </tr>
 
-                        <tr>
-                            <td>Pending Booking Wallet</td>
-                            <td>1000</td>
-                        </tr>
                     </table>
                 </div>
             </div>
@@ -271,6 +265,105 @@
                             {{ $property->owner?->email }}
                             <br>
                             {{ $property->owner?->phone_number }}
+
+                        </td>
+                        <td style="max-width: 220px;" class="text-wrap">
+                            {{ $property->name }}
+                        </td>
+                        <td>
+                            <a href="{{ getImageUrl($property->thumbnail) }}" target="_blank">
+                           <img src="{{ getImageUrl($property->thumbnail) }}" alt="{{ $property->name }}" width="100" height="100">
+
+                            </a>
+                        </td>
+                        <td style="max-width: 220px;" class="text-wrap">
+                            {{ $property->address }}
+                        </td>
+
+
+                        <td>
+                            @if ($property->status == 1)
+                                <span class="badge bg-success text-white">Active</span>
+                            @else
+                                <span class="badge bg-danger text-white">Inactive</span>
+                            @endif
+                        </td>
+                        <td>
+
+                            <ul class="nav ">
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#"
+                                        role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h fa-2x"></i></a>
+                                    <div class="dropdown-menu">
+                                        <a href="{{ route('admin.properties.edit', $property) }}"
+                                        class="text-dark dropdown-item">Edit</a>
+                                        <a href="#"
+                                                class="text-dark dropdown-item change_status" data-bs-toggle="modal"
+                                                data-userId="{{$property->id}}"
+                                                data-bs-target="#changeStatusModal">Delete</a>
+                                                <a href="#"
+                                                class="text-dark dropdown-item">View</a>
+                                                <a href="{{ route('admin.rooms.index', ['property_id'=>$property->id]) }}"
+                                                    class="text-dark dropdown-item">Manage Room</a>
+                                        <a href="{{ route('admin.booking.create', ['property_id'=>$property->id]) }}"
+                                            class="text-dark dropdown-item">Add Booking</a>
+                                    </div>
+                                </li>
+                                </ul>
+                        </td>
+
+                    </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{{-- Refer Money list  --}}
+<div class="card mt-3">
+    <div class="card-body table-responsive pt-3">
+        <div class="card-title d-flex justify-content-between">
+            <div>
+                Refer Money List
+            </div>
+
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Refer Type
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                    <th>
+                        Refer On
+                    </th>
+                    <th>
+                        Is Used
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($user->referMoney as $refer)
+                    <tr>
+                        <td>
+                            {{ $loop->iteration }}
+                        </td>
+                        <td>
+                            {{ $property->refer->referel_type==1?'JOIN':"SHARE" }}
+                            <br>
+                            {{ $property->refer->price }}
+                            <br>
+                            {{ $property->refer->is_user?'Yes':'No' }}
 
                         </td>
                         <td style="max-width: 220px;" class="text-wrap">

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\BookingCancelNotifyViaWP;
+use App\Jobs\BookingNotifyViaWP;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,35 +21,40 @@ class BookingController extends Controller
             ->where('user_id', Auth::id())
             ->orderBy('created_at', 'desc')
             ->get();
-
         return view('frontend.user.user_my_place', [
             'bookings' => $bookings,
         ]);
     }
 
-     public function cancelBooking($id) {
-         $model = Booking::findOrfail($id);
-         $mm = Booking::where('id',$id)->first();
-        //  dd($mm);
-        $email = $mm->email;
-        $name = $mm->name;
+     public function cancelBooking(Request $request) {
+
+        $request->validate([
+            'id'=>'required',
+            'reason'=>'required',
+        ]);
+         $booking = Booking::where('id',$request->id)->where('user_id',Auth::user()->id)->firstorFail();
+
+        $email = $booking->email;
+        $name = $booking->name;
         // $message =  "Your hotel booking  Cancel successfully";
         //              Mail::send('frontend.mail.cancal_booking', [
-        //         'name' => $mm->name,
-        //         'email' =>  $mm->email,
-        //         'booking_id' =>  $mm->booking_id,
-        //         'phone' => $mm->phone_number,
-        //         'booking_at' => $mm->created_at
-        //     ], function ($message) use ($mm) {
-        //           $email = $mm->email;
-        // $name = $mm->name;
+        //         'name' => $booking->name,
+        //         'email' =>  $booking->email,
+        //         'booking_id' =>  $booking->booking_id,
+        //         'phone' => $booking->phone_number,
+        //         'booking_at' => $booking->created_at
+        //     ], function ($message) use ($booking) {
+        //           $email = $booking->email;
+        // $name = $booking->name;
         //         $message->to($email, "{$name}")->subject('Booking from ' . $name);
         //     });
-         $model->status = 0;
-         $model->save();
+         $booking->status = 0;
+         $booking->cancel_reason = $request->reason;
 
-        $res=$this->whatsapp_cancel('91'.$mm->phone_number, $mm->name?$mm->name:"Customer",$mm->booking_id);
-         $this->whatsapp_cancel('919958277997', $mm->name,$mm->booking_id);
+         $booking->save();
+
+         dispatch(new BookingCancelNotifyViaWP($booking->id));
+
          return back()->with('success', 'Hotel Cancel successfully!');
      }
 

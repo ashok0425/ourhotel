@@ -85,7 +85,7 @@ div, h1, h2, h3, h4, span, p, input, form, img, hr, img, a {
 .refer-form-content form button {background: #ffc3c9; color: #fff; font-weight: 500; font-size: 18px; width: 100%; height: 50px; cursor: pointer; }
 .refer-form-content form button:hover{background: #000;}
 .refer-form-content input::placeholder{color:#c5c5c5; font-size: 14px;}
-.row.refer-form-sec {height: 450px; overflow: hidden; margin-top: 55px; }
+.row.refer-form-sec {height: 580px; overflow: hidden; margin-top: 55px; }
 .referal-progress table td:nth-child(2) {text-align: right; }
 .referal-progress table td {border: 1px solid #cccc; padding: 15px 20px; }
 .row.refer-form-sec .col:first-child {padding-right: 0; }
@@ -139,7 +139,7 @@ div, h1, h2, h3, h4, span, p, input, form, img, hr, img, a {
           <div class="col-sm-12 col-md-3">
             <div class="share-boxes">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4Fa-5hmp2YYVLrqz1q3yR9B9SQa17xGxzLw&usqp=CAU" alt="img2" border="0">
-              <p>Give him/her to ₹ 100 Discount</p>
+              <p>Give him/her to ₹ {{App\Models\ReferPrice::first()->join_price}} Discount</p>
               <img src="https://i.ibb.co/Sr5F70S/dotted-arrow1.png" alt="dotted-arrow1" class="dotted-line">
               <img src="https://i.ibb.co/Fqs2KxB/dotted-arrow2.png" alt="dotted-arrow2" class="dotted-line2">
             </div>
@@ -148,7 +148,7 @@ div, h1, h2, h3, h4, span, p, input, form, img, hr, img, a {
           <div class="col-sm-12 col-md-3">
             <div class="share-boxes">
               <img src="https://i.ibb.co/StC3RWk/img3.png" alt="img3" border="0">
-              <p>Get ₹ 200 for every share</p>
+              <p>Get ₹ {{App\Models\ReferPrice::first()->share_price}} for every share</p>
             </div>
           </div>
         </div>
@@ -167,103 +167,66 @@ div, h1, h2, h3, h4, span, p, input, form, img, hr, img, a {
               </ul>
             </div>
             <div class="refer-form-content">
-              <h2>Friends To Friends</h2>
-              <p>Talking about friends  and suggest best stay option. You can start <a href="#">NOW!</a></p>
-              <!--<form action="#" method="post">-->
-              <!--  <input type="text" name="Your Name" placeholder="Your Friend Name">-->
-              <!--  <input type="email" name="Your Email" placeholder="Your Friend Email">-->
-              <!--  <p>-->
-              <!--    <label class="container-checkbox">i have read and accept the T & C and privacy policy-->
-              <!--      <input type="checkbox">-->
-              <!--      <span class="checkmark"></span>-->
-              <!--    </label></p>-->
-              <!--  <button>REFER & EARN</button>-->
-              <!--</form>-->
-              	<div class="row">
+              <h2 class="text-purple">Friends To Friends</h2>
+              <p>Talking about friends  and suggest best stay option. You can start <a href="#" class="text-purple">NOW!</a></p>
+             <form action="#" method="post" class="mt-2">
+               <input type="text" name="Your Name" placeholder="Your Friend Name">
+               <input type="email" name="Your Email" placeholder="Your Friend Email">
+               <p>
+                 <label class="container-checkbox">i have read and accept the T & C and privacy policy
+                   <input type="checkbox">
+                   <span class="checkmark"></span>
+                 </label></p>
+               <button class="bg-purple">REFER & EARN</button>
+             </form>
+              	<div class="row mx-1">
 
-			<div class="col-12 col-sm-12 col-sm-12">
-				<div class="nsnhotelsamount mytext2"  style = "color:blue">Earn 200 <span class="refertext" style = "color:blue">Rupees</span>	<p  style = "color:blue" class ="mytext1">Just share your referral link with friends.</p></div>
 
-			</div>
-
-		<!--</div>-->
-		@if(Auth::id())
-		  <div class="px-3 mt-2 d-flex gap-2 copy">
-		<input type="text" id="Refer" class="form-control" value="{{'NSN'.Auth::id()}}">
-	   </div>
-		<div class="buttonarea text-center"><button type="submit" class="btn commonbtn bluebtn copy-refer">Copy Code</button></div>
-		@else
-			<div class="buttonarea text-center"><button type="submit" class="btn commonbtn ">Please Login for share you code</button></div>
-		@endif
 			@if(Auth::id())
-		<a style = "color:white; border:1px green groove; background-color:#49adb3" href="whatsapp://send?text= Hi This is Referel Code {{'NSN'.Auth::id()}} Join Through This Refer Code You Will Get Rs 200 !    https://www.nsnhotels.com " data-action="share/whatsapp/share" class = "buttonarea text-center btn commonbtn">Share via Whatsapp <img src = "https://cliply.co/wp-content/uploads/2021/08/372108180_WHATSAPP_ICON_400.gif" width = "10%"></a>
+            @php
+                $join_price=App\Models\ReferPrice::first()->join_price;
+            @endphp
+		<a style = "color:white; border:1px green groove; background-color:#49adb3" href="whatsapp://send?text= Hi This is Referel Code {{'NSN'.Auth::id()}} Join Through This Refer Code You Will Get Rs {{$join_price}} !    https://www.nsnhotels.com " data-action="share/whatsapp/share" class = "buttonarea text-center btn commonbtn">Share via Whatsapp <img src = "https://cliply.co/wp-content/uploads/2021/08/372108180_WHATSAPP_ICON_400.gif" width = "10%"></a>
 	@else
 		<a style = "color:white; border:1px green groove; background-color:#49adb3" href="#" data-action="share/whatsapp/share" class = "buttonarea text-center btn commonbtn">Login for share your refer link through whatsapp <img src = "https://cliply.co/wp-content/uploads/2021/08/372108180_WHATSAPP_ICON_400.gif" width = "10%"></a>
 		@endif
+
+        @if(Auth::id())
+		 <div class="d-flex align-items-center mt-3">
+                <input type="text" id="Refer" class="form-control copyinput" value="{{'NSN'.Auth::id()}}">
+                <input type="button" class="btn form-control copybtn bg-purple text-white border-0 rounded-0 copy-refer" value="Copy Code">
+                @else
+                    <a  href="/login" class="btn bg-purple mt-2 form-control text-white border-0 rounded-0 ">Please Login for share you code</a>
+                @endif
+         </div>
+
 	</div>
             </div>
           </div>
         </div>
-        	@if(Auth::id())
-        <div class="row mt-30 mb-30">
-          <div class="col">
-            <div class="referal-progress">
-              <h2>YOUR REFERAL Money</h2>
-              <table class="table table-hover">
-                <tbody>
-                  <tr>
-                    <td>Total Earn money</td>
-                    <td><strong>₹ : {{$total}}.00</strong></td>
-                  </tr>
-                  <tr>
-                    <td>Total used money</td>
-                    <td><strong>₹ : {{$used_money}}.00</strong></td>
-                  </tr>
-                  <tr>
-                    <td>Wallet available</td>
-                    <td><strong>₹ : {{$referl_money}}.00</strong></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
 
-
-
-        @endif
     </div>
+    <br>
+    <br>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
   </body>
   <script>
        @if(Auth::check())
- @if(empty(Request::cookie('referral')))
-     (function() {
-  var copyButton = document.querySelector('.buttonarea button');
-  var copyInput = document.querySelector('.copy input');
+  var copyButton = document.querySelector('.copybtn');
+  var copyInput = document.querySelector('.copyinput');
 
-//   copyButton.addEventListener('click', function(e) {
-//     e.preventDefault();
-//     var text = copyInput.select();
-//     document.execCommand('copy');
-//   });
+  copyButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    var text = copyInput.select();
+    document.execCommand('copy');
+  });
 
-//   copyInput.addEventListener('click', function() {
-//     this.select();
-//   });
-})();
+  copyInput.addEventListener('click', function() {
+    this.select();
+  });
 @endif
-@endif
-$("#Refer_code").click(function(){
-    $.ajax( {
-        url:'{{route("set_cookie")}}',
-        type:'get',
-        success:function(data) {
-        }
 
-    });
-});
 
   </script>
 </html>

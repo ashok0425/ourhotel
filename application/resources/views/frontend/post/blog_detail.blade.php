@@ -182,12 +182,6 @@ img{
                                                 </div>
                                                  {!! $post->content !!}
 
-                                                <div class="post-opt">
-                                                        <i class="fa fa-calendar"></i>  <span>{{formatDate($post->created_at, 'd M Y')}}</span>
-                                                        @foreach($post['categories'] as $cat)
-                                                            <i class="fa fa-tags"></i>  <a href="{{route('post_list', $cat->slug)}}" title="{{$cat->name}}">{{$cat->name}}</a>
-                                                        @endforeach
-                                                </div>
                                             </div>
 
                                         </article>
@@ -242,7 +236,7 @@ img{
                                                             <a href="{{route('post_detail', [$related_post->slug, $related_post->id])}}" >
                                                             <h5>{{$related_post->title}}</h5></a>
                                                             <p></p>
-                                                            <span class="widget-posts-date"><i class="fa fa-calendar"></i>   {{formatDate($post->created_at, 'd M Y')}} </span>
+                                                            <span class="widget-posts-date"><i class="fa fa-calendar"></i>   {{Carbon\Carbon::parse($post->created_at)->format('d M Y')}} </span>
                                                         </div>
                                                     </div>
                                                     <!--box-image-widget end -->

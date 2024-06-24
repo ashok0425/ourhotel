@@ -143,13 +143,10 @@
 
     <div>
         @include('frontend.home.partials.top_rated')
-
         @include('frontend.home.partials.offer2')
-
         @include('frontend.home.partials.nsn_resort')
         @include('frontend.home.partials.offer1')
         @include('frontend.home.partials.downloadapp')
-
         @include('frontend.home.partials.popular_location')
         @include('frontend.home.partials.blog')
         @include('frontend.home.partials.offer3')

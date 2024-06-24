@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Support\Facades\DB;
@@ -60,29 +61,22 @@ class PostController extends Controller
         ]);
     }
 
-    public function detail($slug, $id)
+    public function detail($slug)
     {
-        $post = Post::query()
-            ->with('categories')
-            ->with('user')
-            ->where('id', $id)
+        $post = Blog::query()
+            ->where('slug', $slug)
             ->first();
 
         if (!$post) abort(404);
 
-        $related_posts = Post::query()
-            ->with('categories')
-            ->where('type', Post::TYPE_BLOG)
+        $related_posts = Blog::query()
             ->limit(3)
+            ->latest()
             ->get();
 
-        ($post->type === Post::TYPE_BLOG) ? $view_name = "frontend.post.blog_detail" : $view_name = "frontend.post.page_detail";
 
         // SEO Meta
-        $title = $post->seo_title ? $post->seo_title : $post->title;
-        $description = $post->seo_description ? $post->seo_description : '';
-        SEOMeta($title, $description);
-        return view($view_name, [
+        return view('frontend.post.blog_detail', [
             'post' => $post,
             'related_posts' => $related_posts,
         ]);

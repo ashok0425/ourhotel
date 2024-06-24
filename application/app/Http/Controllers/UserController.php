@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\ReferPrice;
 use App\Models\ReferelMoney;
+use App\Models\Testimonial;
 use App\Models\Visitor;
 use App\Service\InteraktService;
 use App\Service\SmsService;
@@ -19,7 +20,6 @@ class UserController extends Controller
 
     public function pageProfile()
     {
-        $app_name = setting('app_name', '');
         return view('frontend.user.user_profile');
     }
 
@@ -35,10 +35,13 @@ class UserController extends Controller
         if ($request->hasFile('avatar')) {
             $icon = $request->file('avatar');
             $file_name = $this->uploadImage($icon, '');
-            $data['avatar'] = $file_name;
+
         }
         $user = User::find(Auth::id());
-        $user->fill($data)->save();
+        $user->profile_photo_path=$file_name;
+        $user->name=$request->name;
+        $user->save();
+
         $notification=array(
             'alert-type'=>'success',
             'messege'=>'Profile updated',
@@ -47,6 +50,7 @@ class UserController extends Controller
 
      return redirect()->back()->with($notification);
     }
+
 
     public function updatePassword(Request $request)
     {
@@ -109,26 +113,26 @@ class UserController extends Controller
     $new->email = $request->email;
     $new->save();
 
-    //  if($request->referral_code){
-    //   $refer = str_replace("NSN","",$request->referral_code);
-    //             $referl_price = ReferPrice::first();
-    //             // for share amount
-    //             $referl_money = new ReferelMoney();
-    //             $referl_money->user_id = $refer;
-    //             $referl_money->price =  $referl_price->share_price;
-    //             $referl_money->refewrel_type ='2' ;
-    //             $referl_money->referel_code =$request->referral_code ;
-    //             $referl_money->save();
+     if($request->referral_code){
+      $refer = str_replace("NSN","",$request->referral_code);
+                $referl_price = ReferPrice::first();
+                // for share amount
+                $referl_money = new ReferelMoney();
+                $referl_money->user_id = $refer;
+                $referl_money->price =  $referl_price->share_price;
+                $referl_money->refewrel_type ='2' ;
+                $referl_money->referel_code =$request->referral_code ;
+                $referl_money->save();
 
-    //             // for join amount
-    //             $join_money = new ReferelMoney();
-    //             $join_money->user_id = $new->id;
-    //             $join_money->price =  $referl_price->join_price;
-    //             $join_money->refewrel_type ='1' ;
-    //             $join_money->referel_code =$request->referral_code;
-    //             $join_money->save();
+                // for join amount
+                $join_money = new ReferelMoney();
+                $join_money->user_id = $new->id;
+                $join_money->price =  $referl_price->join_price;
+                $join_money->refewrel_type ='1' ;
+                $join_money->referel_code =$request->referral_code;
+                $join_money->save();
 
-    //          }
+             }
 
     $notification=array(
         'alert-type'=>'success',
@@ -199,6 +203,13 @@ class UserController extends Controller
             $data['user'] = ! empty ($user) ? $user : 400;
             return response()->json($data);
         }
+    }
+
+    public function wallet(){
+        $total = ReferelMoney::where('user_id', Auth::id())->sum('price');
+        $used_money = ReferelMoney::where('user_id', Auth::id())->where('is_used', 1)->sum('price');
+        $referl_money = ReferelMoney::where('user_id', Auth::id())->where('is_used', 0)->sum('price');
+        return view('frontend.user.user_my_wallet',compact('total','used_money','referl_money'));
     }
 
 

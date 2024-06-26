@@ -14,14 +14,27 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users=User::where('is_agent',0)->where('is_admin',0);
-        if(isset($request->partner)){
-            $users=$users->where('is_partner',1);
-        }else{
-            $users=$users->where('is_partner',0);
-        }
-
-        $users=$users->paginate(25);
+        $users=User::where('is_admin',0)
+        ->when($request->is_partner,function($query) use ($request){
+          $query->where('is_partner',1);
+        })
+        ->when($request->is_agent,function($query) use ($request){
+            $query->where('is_agent',1)->limit(20);
+        })
+        ->when($request->is_user,function($query) use ($request){
+          $query->where('is_partner',0)->where('is_agent',0);
+        })
+        ->when($request->status,function($query) use ($request){
+            $query->where('status',$request->status);
+        })
+        ->when($request->keyword,function($query) use ($request){
+            $query->where('name',$request->keyword)
+            ->orwhere('email',$request->keyword)
+            ->orwhere('phone_number',$request->keyword);
+        })
+        ->when($request->from&&$request->to,function($query) use ($request){
+            $query->whereDate('created_at','>=',$request->from)->whereDate('created_at','<=',$request->to);
+        })->paginate(20);
         return view('admin.user.index',compact('users'));
     }
 
@@ -53,7 +66,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Booking $booking)
+    public function edit(User $user)
     {
         //
     }
@@ -61,7 +74,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Booking $booking)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -69,8 +82,20 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Booking $booking)
+    public function destroy(User $user)
     {
         //
+    }
+
+    public function status(Request $request)
+    {
+        $user=User::findOrFail($request->user_id);
+        $user->status=$request->status;
+        $user->save();
+        $notification=array(
+            'type'=>'success',
+             'message'=>'user status updated Sucessfully'
+           );
+           return redirect()->route('admin.users.index')->with($notification);
     }
 }

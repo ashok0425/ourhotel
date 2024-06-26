@@ -29,7 +29,7 @@
                     Properties List
                 </div>
                 <div>
-                    <a href="{{ route('admin.properties.create') }}" class="btn btn-primary btn-rounded btn-fw btn-sm"><i
+                    <a href="{{ route('properties.create') }}" class="btn btn-primary btn-rounded btn-fw btn-sm"><i
                             class="icon-plus menu-icon"></i> Add New</a>
                 </div>
             </div>
@@ -75,7 +75,7 @@
 
                             </td>
                             <td style="max-width: 220px;" class="text-wrap">
-                                {{ $property->name }}
+                                <a href="{{route('place_detail',['slug'=>$property->slug])}}">{{ $property->name }}</a>
                             </td>
                             <td>
                                 <a href="{{ getImageUrl($property->thumbnail) }}" target="_blank">
@@ -103,18 +103,23 @@
                                         <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#"
                                             role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h fa-2x"></i></a>
                                         <div class="dropdown-menu">
-                                            <a href="{{ route('admin.properties.edit', $property) }}"
+                                            <a href="{{ route('properties.edit', $property) }}"
                                             class="text-dark dropdown-item">Edit</a>
-                                            <a href="#"
+                                            {{-- <a href="#"
                                                     class="text-dark dropdown-item change_status" data-bs-toggle="modal"
                                                     data-userId="{{$property->id}}"
-                                                    data-bs-target="#changeStatusModal">Delete</a>
+                                                    data-bs-target="#changeStatusModal">Delete</a> --}}
                                                     <a href="#"
                                                     class="text-dark dropdown-item">View</a>
-                                                    <a href="{{ route('admin.rooms.index', ['property_id'=>$property->id]) }}"
+                                                    <a href="{{ route('rooms.index', ['property_id'=>$property->id]) }}"
                                                         class="text-dark dropdown-item">Manage Room</a>
-                                            <a href="{{ route('admin.booking.create', ['property_id'=>$property->id]) }}"
-                                                class="text-dark dropdown-item">Add Booking</a>
+                                          @if (Auth::user()->is_admin||Auth::user()->is_agent)
+                                          <a href="{{ route('booking.create', ['property_id'=>$property->id]) }}"
+                                            class="text-dark dropdown-item">Add Booking</a>
+                                          @endif
+
+                                          <a href="" class="text-dark dropdown-item updateSatusBtn"
+                                          data-toggle="modal" data-target="#updatestatus" data-property_id="{{$property->id}}">Change Status</a>
                                         </div>
                                     </li>
                                     </ul>
@@ -126,6 +131,52 @@
                 </tbody>
             </table>
         </div>
-        {{$properties->links()}}
+        {{$properties->withQuerystring()->links()}}
     </div>
+
+
+    <!-- Modal -->
+  <div class="modal fade" id="updatestatus" tabindex="-1" role="dialog" aria-labelledby="updatestatusLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updatestatusLabel">Update Booking status</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body  pb-2">
+
+            <form action="{{route('property.status')}}" method="POST" id="updateSatusForm">
+                @method('PATCH')
+                @csrf
+                <input type="hidden" id="property_id" name="property_id">
+                @method('PATCH')
+                @csrf
+                <select name="status" id="" class="form-control form-select" required>
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                </select>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary  btn-rounded" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary btn-rounded">Save</button>
+        </div>
+    </form>
+
+    </div>
+      </div>
+    </div>
+  </div>
 @endsection
+
+@push('script')
+
+<script>
+    // update booking status
+    $(document).on('click','.updateSatusBtn',function(){
+        let bookingId=$(this).data('property_id');
+     $('#property_id').val(bookingId)
+    })
+    </script>
+@endpush

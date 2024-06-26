@@ -4,11 +4,13 @@
   <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
       <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{route('dashboard')}}">
           <i class="icon-grid menu-icon"></i>
           <span class="menu-title">Dashboard</span>
         </a>
       </li>
+
+      @if (Auth::user()->is_admin)
       <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
           <i class="icon-layout menu-icon"></i>
@@ -27,6 +29,8 @@
           </ul>
         </div>
       </li>
+      @endif
+
       <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
           <i class="icon-columns menu-icon"></i>
@@ -35,14 +39,14 @@
         </a>
         <div class="collapse" id="form-elements">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"><a class="nav-link" href="{{route('admin.properties.index')}}">All Property</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{route('admin.rooms.index')}}">All Rooms</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('properties.index')}}">All Property</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('rooms.index')}}">All Rooms</a></li>
           </ul>
         </div>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="{{route('admin.tour_bookings.index')}}">
+        <a class="nav-link" href="{{route('tour_bookings.index')}}">
           <i class="fas fa-envelope menu-icon"></i>
           <span class="menu-title">Tour Booking</span>
         </a>
@@ -56,8 +60,8 @@
         </a>
         <div class="collapse" id="booking-elements">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"><a class="nav-link" href="{{route('admin.bookings.index',['status'=>0])}}">New Booking</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{route('admin.bookings.index')}}">All Booking</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('bookings.index',['status'=>0])}}">New Booking</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('bookings.index')}}">All Booking</a></li>
 
           </ul>
         </div>
@@ -65,6 +69,7 @@
 
 
 
+      @if (Auth::user()->is_admin)
       <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#user-elements" aria-expanded="false" aria-controls="user-elements">
           <i class="icon-columns menu-icon"></i>
@@ -73,8 +78,10 @@
         </a>
         <div class="collapse" id="user-elements">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index')}}">Users</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index',['partner'=>1])}}">Partners</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index',['is_user'=>1])}}">Users</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index',['is_partner'=>1])}}">Partners</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index',['is_agent'=>1])}}">Agent</a></li>
+
           </ul>
         </div>
       </li>
@@ -105,11 +112,22 @@
         </a>
       </li>
 
+
       <li class="nav-item">
-        <a class="nav-link" href="{{route('admin.refer_prices.index')}}">
-            <i class="fas fa-redo menu-icon"></i>
-          <span class="menu-title">Refer Price</span>
+        <a class="nav-link" data-toggle="collapse" href="#refer-elements" aria-expanded="false" aria-controls="user-elements">
+          <i class="fas fa-share menu-icon"></i>
+          <span class="menu-title">Refers</span>
+          <i class="menu-arrow"></i>
         </a>
+        <div class="collapse" id="refer-elements">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.refer_prices.index')}}">Refer Price</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.refer_moneys')}}">All Referel</a></li>
+
+          </ul>
+        </div>
       </li>
+     @endif
     </ul>
+
   </nav>

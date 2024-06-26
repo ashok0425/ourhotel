@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="csrf_token" content="{{csrf_token()}}">
-  <title>Skydash Admin</title>
+  <title>Nsn Hotels</title>
 
   <link rel="stylesheet" href="{{asset('admin/css/vertical-layout-light/style.css')}}">
   <link rel="stylesheet" href="{{asset('admin/css/feather.css')}}">

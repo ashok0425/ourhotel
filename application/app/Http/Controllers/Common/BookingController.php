@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Common;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Property;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
@@ -14,8 +16,14 @@ class BookingController extends Controller
      */
     public function index(Request $request)
     {
-        $page=$request->limit??20;
-        $bookings=Booking::query()->when($request->keyword,function($query) use ($request){
+        $page=$request->limit??15;
+        $bookings=Booking::query()
+           ->when(Auth::user()->is_partner,function($query) {
+            $query->whereHas('property', function ($query) {
+                $query->where('owner_id',Auth::user()->id );
+            });
+           })
+           ->when($request->keyword,function($query) use ($request){
              $query->where('name','LIKE',"%$request->keyword%")->orwhere('phone_number',"%$request->keyword%")->orwhere('email',"%$request->keyword%");
           })
           ->when(isset($request->status) && ($request->status||$request->status==0),function($query) use ($request){
@@ -60,6 +68,7 @@ class BookingController extends Controller
      */
     public function edit(Booking $booking)
     {
+
         $booking_id=$booking->booking_id;
         // return view('common.booking.print', ['booking_id'=>$booking_id]);
 
@@ -75,6 +84,11 @@ class BookingController extends Controller
     public function update(Request $request)
     {
         $booking= Booking::findorFail($request->booking_id);
+
+        if (!Auth::user()->is_admin&&!Auth::user()->is_agent) {
+            Property::where('user_id',Auth::user()->id)->where('id',$booking->id)->firstOrFail();
+        }
+
         $booking->status=$request->status;
         $booking->save();
         $notification=array(

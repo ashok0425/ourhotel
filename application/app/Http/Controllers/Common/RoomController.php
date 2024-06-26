@@ -9,6 +9,7 @@ use App\Models\Amenity;
 use App\Models\City;
 use App\Models\PropertyType;
 use App\Models\Room;
+use Illuminate\Support\Facades\Auth;
 use Str;
 class RoomController extends Controller
 {
@@ -23,7 +24,7 @@ class RoomController extends Controller
             $rooms=Room::query()->latest()->paginate(15);
         }
 
-        return view('admin.room.index',compact('rooms','property_id'));
+        return view('common.room.index',compact('rooms','property_id'));
     }
 
     /**
@@ -35,7 +36,7 @@ class RoomController extends Controller
         $property_id=$request->property_id;
         $amenities=Amenity::where('status',1)->get();
         $properties=Property::all();
-        return view('admin.room.create',compact('property_id','amenities','properties'));
+        return view('common.room.create',compact('property_id','amenities','properties'));
     }
 
     /**
@@ -43,6 +44,10 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::user()->is_admin&&!Auth::user()->is_agent) {
+            Property::where('user_id',Auth::user()->id)->where('id',$request->property_id)->firstOrFail();
+        }
+
         $request->validate([
             'name'=>'required|max:225',
             'thumbnail'=>'required|mimes:png,jpeg,jp,webp,gif|max:2048',
@@ -71,7 +76,7 @@ class RoomController extends Controller
         'type'=>'success',
          'message'=>'Room Create Sucessfully'
        );
-       return redirect()->route('admin.rooms.index',['property_id'=>$request->property_id])->with($notification);
+       return redirect()->back()->with($notification);
 
     }
 
@@ -87,8 +92,11 @@ class RoomController extends Controller
      */
     public function edit(Request $request,Room $room)
     {
+        if (!Auth::user()->is_admin&&!Auth::user()->is_agent) {
+            Property::where('user_id',Auth::user()->id)->where('id',$room->property_id)->firstOrFail();
+        }
         $amenities=Amenity::where('status',1)->get();
-        return view('admin.room.edit',compact('room','amenities'));
+        return view('common.room.edit',compact('room','amenities'));
 
     }
 
@@ -97,6 +105,9 @@ class RoomController extends Controller
      */
     public function update(Request $request,Room $room)
     {
+        if (!Auth::user()->is_admin&&!Auth::user()->is_agent) {
+            Property::where('user_id',Auth::user()->id)->where('id',$request->property_id)->firstOrFail();
+        }
         $request->validate([
             'name'=>'required|max:225',
             'onepersonprice'=>'required',
@@ -125,7 +136,7 @@ class RoomController extends Controller
          'message'=>'Room updated Sucessfully'
        );
 
-       return redirect()->route('admin.rooms.index',['property_id'=>$request->property_id])->with($notification);
+       return redirect()->back()->with($notification);
 
     }
 
@@ -134,12 +145,15 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        Property::where(['user_id'=>1,'id'=>$room->property_id])->firstOrFail();
+        if (!Auth::user()->is_admin&&!Auth::user()->is_agent) {
+            Property::where('user_id',Auth::user()->id)->where('id',$request->property_id)->firstOrFail();
+        }
+        Property::firstOrFail();
        $room->delete();
        $notification=array(
         'type'=>'success',
          'message'=>'Room Deleted Sucessfully'
        );
-       return redirect()->route('admin.rooms.index')->with($notification);
+       return redirect()->back()->with($notification);
     }
 }

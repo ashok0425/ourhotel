@@ -9,7 +9,7 @@
                         Add Tour Booking
                         </div>
                     </div>
-                        <form method="post" action="{{route('admin.tour_bookings.store')}}">
+                        <form method="post" action="{{route('tour_bookings.store')}}">
                             @csrf
                             <div class="row">
 

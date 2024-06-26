@@ -26,6 +26,9 @@ class PropertyController extends Controller
     public function index(Request $request)
     {
         $properties = Property::query()->orderBy('id', 'desc')
+        ->when(Auth::user()->is_partner,function($query) {
+                $query->where('owner_id',Auth::user()->id );
+           })
             ->when($request->keyword, function ($query) use ($request) {
                 $query->where('name', 'LIKE', "%$request->keyword%");
             })->when($request->city, function ($query) use ($request) {
@@ -102,7 +105,7 @@ class PropertyController extends Controller
             'type' => 'success',
             'message' => 'Property Create Sucessfully'
         );
-        return redirect()->route('admin.properties.index')->with($notification);
+        return redirect()->back()->with($notification);
     }
 
     /**
@@ -117,6 +120,9 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
+        if (!Auth::user()->is_admin&&!Auth::user()->is_agent) {
+            Property::where('user_id',Auth::user()->id)->where('id',$property->id)->firstOrFail();
+        }
         $partners = User::where('is_partner', 1)->get();
         $cities = City::where('status', 1)->get();
         $propertyTypes = PropertyType::where('status', 1)->get();
@@ -132,6 +138,9 @@ class PropertyController extends Controller
      */
     public function update(Request $request, Property $property)
     {
+        if (!Auth::user()->is_admin&&!Auth::user()->is_agent) {
+            Property::where('user_id',Auth::user()->id)->where('id',$property->id)->firstOrFail();
+        }
         $request->validate([
             'name' => 'required|max:225',
             'address' => 'required',
@@ -186,7 +195,7 @@ class PropertyController extends Controller
             'type' => 'success',
             'message' => 'Property Updated Sucessfully'
         );
-        return redirect()->route('admin.properties.index')->with($notification);
+        return redirect()->back()->with($notification);
     }
 
     /**
@@ -194,12 +203,15 @@ class PropertyController extends Controller
      */
     public function destroy(Property $property)
     {
+        if (!Auth::user()->is_admin&&!Auth::user()->is_agent) {
+            Property::where('user_id',Auth::user()->id)->where('id',$property->id)->firstOrFail();
+        }
         $property->delete();
         $notification = array(
             'type' => 'success',
             'message' => 'Property Deleted Sucessfully'
         );
-        return redirect()->route('admin.Propertys.index')->with($notification);
+        return redirect()->back()->with($notification);
     }
 
 
@@ -270,5 +282,22 @@ class PropertyController extends Controller
 
 
         return redirect()->back()->with($notification);
+    }
+
+
+    public function status(Request $request)
+    {
+        $property= Property::findorFail($request->property_id);
+        if (!Auth::user()->is_admin&&!Auth::user()->is_agent) {
+            Property::where('owner_id',Auth::user()->id)->where('id',$property->id)->firstOrFail();
+        }
+
+        $property->status=$request->status;
+        $property->save();
+        $notification=array(
+            'type'=>'success',
+             'message'=>'Booking satus updated Sucessfully'
+           );
+           return redirect()->back()->with($notification);
     }
 }

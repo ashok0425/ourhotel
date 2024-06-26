@@ -7,7 +7,7 @@
                     Room List
                 </div>
                 <div>
-                    <a href="{{ route('admin.rooms.create',['property_id'=>$property_id]) }}" class="btn btn-primary btn-rounded btn-fw btn-sm"><i
+                    <a href="{{ route('rooms.create',['property_id'=>$property_id]) }}" class="btn btn-primary btn-rounded btn-fw btn-sm"><i
                             class="icon-plus menu-icon"></i> Add New</a>
                 </div>
             </div>
@@ -71,9 +71,9 @@
                                             <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#"
                                                 role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h fa-2x"></i></a>
                                             <div class="dropdown-menu">
-                                                <a href="{{ route('admin.rooms.edit',[ $room,'property_id'=>$room->property_id]) }}"
+                                                <a href="{{ route('rooms.edit',[ $room,'property_id'=>$room->property_id]) }}"
                                                 class="text-dark dropdown-item">Edit</a>
-                                                <a href="{{ route('admin.rooms.destroy', [ $room,'property_id'=>$room->property_id]) }}"
+                                                <a href="{{ route('rooms.destroy', [ $room,'property_id'=>$room->property_id]) }}"
                                                         class="text-dark dropdown-item delete_row" data-toggle="modal"
                                                         data-target="#deleteModal">Delete</a>
 

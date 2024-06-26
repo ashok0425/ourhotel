@@ -12,7 +12,7 @@
                 Booking Detail ({{$booking->booking_id}})
             </div>
             <div>
-                <a href="{{route('admin.bookings.edit',$booking)}}" class="btb btn btn-primary rounded-0">Download Invoice</a>
+                <a href="{{route('bookings.edit',$booking)}}" class="btb btn btn-primary rounded-0">Download Invoice</a>
 
             </div>
 

@@ -104,4 +104,10 @@ class ReferPriceController extends Controller
     {
         //
     }
+
+    public function referMoney()
+    {
+        $referels = ReferelMoney::latest()->get();
+        return view('admin.referel.refer_money',compact('referels'));
+    }
 }

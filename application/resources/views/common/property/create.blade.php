@@ -10,7 +10,7 @@
         </div>
 
 
-    <form class="forms-sample" method="POST" action="{{ route('admin.properties.store') }}" enctype="multipart/form-data">
+    <form class="forms-sample" method="POST" action="{{ route('properties.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-md-8">
@@ -23,7 +23,7 @@
                     </div>
                     <div>
                       <button type="submit" class="btn btn-primary mr-2 btn-rounded">Submit</button>
-                      <a class="btn btn-secondary  btn-rounded" href="{{ route('admin.properties.index') }}">Cancel</a>
+                      <a class="btn btn-secondary  btn-rounded" href="{{ route('properties.index') }}">Cancel</a>
                     </div>
                 </div>
 

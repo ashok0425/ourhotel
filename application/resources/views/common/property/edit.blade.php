@@ -10,7 +10,7 @@
     </div>
 
 
-    <form class="forms-sample" method="POST" action="{{ route('admin.properties.update', $property) }}"
+    <form class="forms-sample" method="POST" action="{{ route('properties.update', $property) }}"
         enctype="multipart/form-data">
         @csrf
         @method('PATCH')
@@ -26,7 +26,7 @@
                             <div>
                                 <button type="submit" class="btn btn-primary mr-2 btn-rounded">Submit</button>
                                 <a class="btn btn-secondary  btn-rounded"
-                                    href="{{ route('admin.properties.index') }}">Cancel</a>
+                                    href="{{ route('properties.index') }}">Cancel</a>
                             </div>
                         </div>
 

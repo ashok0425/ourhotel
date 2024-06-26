@@ -6,7 +6,7 @@
 @section('content')
 
 <div class="mb-3 align-items-center d-flex justify-content-end">
-    <form action="" method="get" class="d-flex align-items-between">
+    <form action="" method="get" class="d-flex align-items-center">
 
         <div>
             <label for="">Status</label>
@@ -23,11 +23,11 @@
 
         <div>
             <label for="">From</label>
-            <input type="date" name="from" id="" class="form-control">
+            <input type="date" name="from" id="" class="form-control" value="{{request()->query('from')?Carbon\Carbon::parse( request()->query('from'))->format('Y-m-d') : ''}}">
         </div>
         <div>
             <label for="">To</label>
-            <input type="date" name="to" id="" class="form-control">
+            <input type="date" name="to" id="" class="form-control" value="{{request()->query('to')?Carbon\Carbon::parse( request()->query('to'))->format('Y-m-d') : ''}}">
         </div>
         <div>
             <label for="">Search Keyword</label>
@@ -38,7 +38,7 @@
         <button class="btn btn-info rounded-0 mt-4">Search</button>
         </div>
         <div>
-            <a href="{{route('admin.booking.create')}}" class="btn btn-primary rounded-0 mt-4">Book Unlisted Hotel</a>
+            <a href="{{route('booking.create')}}" class="btn btn-primary rounded-0 mt-4">Book Unlisted Hotel</a>
         </div>
     </form>
 </div>
@@ -88,7 +88,13 @@
                             </td>
                             <td class="text-wrap" style="max-width: 200px;">
                           <div class="text-wrap">
-                                 BY: <a href="">{{$booking->user?$booking->user->name:"User Deleted"}}</a>
+
+                                 @if (Auth::user()->is_admin)
+                                 BY:   <a href="">{{$booking->user?$booking->user->name:"User Deleted"}}</a>
+                                 @else
+                                 {{$booking->user?$booking->user->name:"User Deleted"}}
+                                 @endif
+
                                 <br>
                             {{ $booking->name }}
                             <br>
@@ -149,8 +155,8 @@
                                         <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#"
                                             role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h fa-2x"></i></a>
                                         <div class="dropdown-menu">
-                                            <a href="{{route('admin.bookings.show',$booking)}}" class="text-dark dropdown-item">View</a>
-                                            <a href="{{route('admin.bookings.edit',$booking)}}" class="text-dark dropdown-item">Download Invoice</a>
+                                            <a href="{{route('bookings.show',$booking)}}" class="text-dark dropdown-item">View</a>
+                                            <a href="{{route('bookings.edit',$booking)}}" class="text-dark dropdown-item">Download Invoice</a>
                                             <a href="" class="text-dark dropdown-item updateSatusBtn"
                                             data-toggle="modal" data-target="#updatestatus" data-booking_id="{{$booking->id}}">Change Status</a>
 
@@ -165,7 +171,7 @@
                 </tbody>
             </table>
         </div>
-        {{$bookings->links()}}
+        {{$bookings->withQueryString()->links()}}
     </div>
 
 
@@ -182,7 +188,7 @@
         </div>
         <div class="modal-body  pb-2">
 
-            <form action="{{route('admin.bookings.status')}}" method="POST" id="updateSatusForm">
+            <form action="{{route('bookings.status')}}" method="POST" id="updateSatusForm">
                 @method('PATCH')
                 @csrf
                 <input type="hidden" id="booking_id" name="booking_id">
@@ -210,13 +216,10 @@
 @push('script')
 
 <script>
-
-
     // update booking status
     $(document).on('click','.updateSatusBtn',function(){
         let bookingId=$(this).data('booking_id');
      $('#booking_id').val(bookingId)
     })
-
     </script>
 @endpush

@@ -296,7 +296,7 @@
                                     <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#"
                                         role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h fa-2x"></i></a>
                                     <div class="dropdown-menu">
-                                        <a href="{{ route('admin.properties.edit', $property) }}"
+                                        <a href="{{ route('properties.edit', $property) }}"
                                         class="text-dark dropdown-item">Edit</a>
                                         <a href="#"
                                                 class="text-dark dropdown-item change_status" data-bs-toggle="modal"
@@ -304,9 +304,9 @@
                                                 data-bs-target="#changeStatusModal">Delete</a>
                                                 <a href="#"
                                                 class="text-dark dropdown-item">View</a>
-                                                <a href="{{ route('admin.rooms.index', ['property_id'=>$property->id]) }}"
+                                                <a href="{{ route('rooms.index', ['property_id'=>$property->id]) }}"
                                                     class="text-dark dropdown-item">Manage Room</a>
-                                        <a href="{{ route('admin.booking.create', ['property_id'=>$property->id]) }}"
+                                        <a href="{{ route('booking.create', ['property_id'=>$property->id]) }}"
                                             class="text-dark dropdown-item">Add Booking</a>
                                     </div>
                                 </li>
@@ -360,9 +360,11 @@
                         </td>
                         <td>
                             {{ $property->refer->referel_type==1?'JOIN':"SHARE" }}
-                            <br>
+                        </td>
+                        <td>
                             {{ $property->refer->price }}
-                            <br>
+                        </td>
+                        <td>
                             {{ $property->refer->is_user?'Yes':'No' }}
 
                         </td>
@@ -395,7 +397,7 @@
                                     <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" href="#"
                                         role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h fa-2x"></i></a>
                                     <div class="dropdown-menu">
-                                        <a href="{{ route('admin.properties.edit', $property) }}"
+                                        <a href="{{ route('properties.edit', $property) }}"
                                         class="text-dark dropdown-item">Edit</a>
                                         <a href="#"
                                                 class="text-dark dropdown-item change_status" data-bs-toggle="modal"
@@ -403,9 +405,9 @@
                                                 data-bs-target="#changeStatusModal">Delete</a>
                                                 <a href="#"
                                                 class="text-dark dropdown-item">View</a>
-                                                <a href="{{ route('admin.rooms.index', ['property_id'=>$property->id]) }}"
+                                                <a href="{{ route('rooms.index', ['property_id'=>$property->id]) }}"
                                                     class="text-dark dropdown-item">Manage Room</a>
-                                        <a href="{{ route('admin.booking.create', ['property_id'=>$property->id]) }}"
+                                        <a href="{{ route('booking.create', ['property_id'=>$property->id]) }}"
                                             class="text-dark dropdown-item">Add Booking</a>
                                     </div>
                                 </li>

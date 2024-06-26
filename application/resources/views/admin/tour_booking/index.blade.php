@@ -36,7 +36,7 @@
         <button class="btn btn-info rounded-0 mt-4">Search</button>
         </div>
         <div>
-            <a href="{{route('admin.tour_bookings.create')}}" class="btn btn-primary rounded-0 mt-4">Book Tour</a>
+            <a href="{{route('tour_bookings.create')}}" class="btn btn-primary rounded-0 mt-4">Book Tour</a>
         </div>
     </form>
 </div>
@@ -164,7 +164,7 @@
         </div>
         <div class="modal-body  pb-2">
 
-            <form action="{{route('admin.tour_bookings.status')}}" method="POST" id="updateSatusForm">
+            <form action="{{route('tour_bookings.status')}}" method="POST" id="updateSatusForm">
                 @method('PATCH')
                 @csrf
                 <input type="hidden" id="booking_id" name="booking_id">

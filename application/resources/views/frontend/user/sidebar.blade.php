@@ -30,6 +30,16 @@
             <a   class="custom-text-gray-2 custom-fs-16 custom-fw-700 py-0 my-0" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> {{__('Log Out')}}</a>
 
         </li>
+        <li class="col-12 my-2">
+            @if (Auth::check() && Auth::user()->is_partner)
+            <a href="/dashboard" class="nav-link custom-bg-primary custom-border-radius-20 text-center text-white py-2 "><i class="fas fa-money-check"></i>
+                <span>Login to partner panel</span></a>
+                @else
+                <a href="/become-a-partner" class="nav-link custom-bg-primary custom-border-radius-20 text-center text-white py-2 "><i class="fas fa-money-check"></i>
+                    <span> &nbsp; Become  Partner</span></a>
+            @endif
+
+        </li>
     </ul>
 </div>
 

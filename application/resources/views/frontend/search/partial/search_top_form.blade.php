@@ -7,23 +7,16 @@
     <div class="row">
         <div class="col-md-3">
             <label class="custom-text-white custom-fs-12 mb-1 text-uppercase custom-fw-600">City , Area or property name</label>
-            <input type="search" class="border-0 form-control outline-none border-none open-suggestion " placeholder="Enter Location" id="location_search" name="location_search" value="{{isset($_GET['search'])?$_GET['search']:''}}">
-            <input type="hidden" id="city" name = "city">
-            <input type="hidden" id="city" name = "search_filter" value="1">
-
-            <input type="hidden" id="hotel_id"> 
-            <input type="hidden" id="lat" name="lat"> 
-            <input type="hidden" id="lng" name="lng"> 
-            <input type="hidden" id="total_room" name="total_room" value="1"> 
-            <input type="hidden" id="total_guest" name="total_guest" value="1"> 
-
-            <input type="hidden" id="token" value="{{csrf_token()}}"> 
-
-
-                <input type="hidden" name="search" id="search">
+            <input type="search" class="border-0 form-control outline-none border-none open-suggestion " placeholder="{{$cityname}}" id="location_search" name="location_search" value="{{isset($_GET['search'])?$_GET['search']:''}}">
+            <input type="hidden" id="search_type" name = "type" value="{{$type}}">
+            <input type="hidden" id="search_id" name="id" value="{{$id}}">
+            <input type="hidden" id="total_room" name="total_room" value="1">
+            <input type="hidden" id="total_guest" name="total_guest" value="1">
+            <input type="hidden" id="token" value="{{csrf_token()}}">
+            <input type="hidden" name="search" id="search">
             <div class="search-result index-999 search-suggestions"></div>
         </div>
-    
+
         <div class="col-md-3 ">
             <label class="custom-text-white custom-fs-12 mb-1 text-uppercase custom-fw-600">Check in -Check out</label>
             <input type="search" class="border-0 form-control outline-none border-none "  id="checkInOut">
@@ -41,7 +34,7 @@
 
         </select>
         </div>
-    
+
         <div class="col-md-2">
             <label class="custom-text-white custom-fs-12 mb-1 text-uppercase custom-fw-600">Guest & Rooms</label>
             <div class="panel-dropdown">
@@ -53,7 +46,7 @@
                                 <label>Room</label>
                             </div>
                             <div class="col-6 col-sm-6 col-sm-6 text-center">
-                                <label>Guest</label>							
+                                <label>Guest</label>
                             </div>
                         </div>
                         <hr />
@@ -67,7 +60,7 @@
                                     <input type="text"  id="guest"class="booking-guests" value="1" onkeyup ="guest_room()" max="3" min="0"
                                      onKeyUp="if(this.value>3){this.value='3';}else if(this.value<1){this.value='1';}"/>
                                     <div class="plus" onclick ="guest_room()"></div>
-                                </div>													
+                                </div>
                             </div>
                         </div>
                         <div class="row d-none" id="room2" >
@@ -79,7 +72,7 @@
                                     <div class="minus" onclick="guest_room()"></div>
                                     <input type="text" name="" id="guest1"onfocusout="if(this.value.length==2) return false;"class="booking-guests" value="0" onkeyup ="guest_room()" max="3" min="0"/>
                                     <div class="plus" onclick ="guest_room()"></div>
-                                </div>													
+                                </div>
                             </div>
                         </div>
                         <div class="row d-none" id="room3" >
@@ -91,7 +84,7 @@
                                     <div class="minus" onclick="guest_room()"></div>
                                     <input type="text" name="" id="guest2"class="booking-guests" value="0" onkeyup ="guest_room()" max="3" min="0"/>
                                     <div class="plus" onclick ="guest_room()"></div>
-                                </div>													
+                                </div>
                             </div>
                         </div>
                         <div class="row d-none" id="room4" >
@@ -103,7 +96,7 @@
                                     <div class="minus" onclick="guest_room()"></div>
                                     <input type="text" name="" id="guest3"class="booking-guests" value="0" onkeyup ="guest_room()" max="3" min="0"/>
                                     <div class="plus" onclick ="guest_room()"></div>
-                                </div>													
+                                </div>
                             </div>
                         </div>
                         <div class="row d-none" id="room5">
@@ -115,7 +108,7 @@
                                     <div class="minus" onclick="guest_room()"></div>
                                     <input type="text" name="" id="guest4"class="booking-guests" value="1" onkeyup ="guest_room()" max="3" min="0"/>
                                     <div class="plus" onclick ="guest_room()"></div>
-                                </div>													
+                                </div>
                             </div>
                         </div>
                         <hr />
@@ -124,7 +117,7 @@
                                 <label><span id="delete" onclick = "del_room()">Delete Room</span></label>
                             </div>
                             <div class="col-6 col-sm-6 col-sm-6 text-center">
-                                <label><span id="addroom" onclick = "add()">Add Room</span></label>							
+                                <label><span id="addroom" onclick = "add()">Add Room</span></label>
                             </div>
                         </div>
                     </div>

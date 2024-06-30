@@ -69,17 +69,14 @@ justify-content: center;
                             <div class="form-group searchinput  mx-0">
                                 <span class="labeltext"><i class="fas fa-hotel"></i> Where are you going?</span>
                                 <input class="form-control open-suggestion" id="location_search" name="location_search" type="text" placeholder="City, Street or Property Name" autocomplete="off">
-                                <input type="hidden" id="city" name = "city">
-                                <input type="hidden" id="city" name = "search_filter" value="1">
-                                <input type="hidden" id="hotel_id"> 
-                                <input type="hidden" id="lat" name="lat"> 
-                                <input type="hidden" id="lng" name="lng"> 
-                                <input type="hidden" id="total_room" name="total_room" value="1"> 
-                                <input type="hidden" id="total_guest" name="total_guest" value="1"> 
-                                <input type="hidden" id="token" value="{{csrf_token()}}"> 
+                                <input type="hidden" id="search_type" name = "type">
+                                <input type="hidden" id="search_id" name="id">
+                                <input type="hidden" id="total_room" name="total_room" value="1">
+                                <input type="hidden" id="total_guest" name="total_guest" value="1">
+                                <input type="hidden" id="token" value="{{csrf_token()}}">
                                 <input type="hidden" name="search" id="search">
                             </div>
-                            <div class="search-result search-suggestions"></div>  
+                            <div class="search-result search-suggestions"></div>
                         </div>
                         <div class="col-md-3">
                             <div class="border_left_right py-3">
@@ -91,7 +88,7 @@ justify-content: center;
                                 <input type="hidden" class="check-out-field" name="check_out_field"  value="">
                               </div>
                             </div>
-                            
+
                         </div>
                         <div class="col-md-3 py-3 ">
                             <div class="form-group searchinput">
@@ -105,7 +102,7 @@ justify-content: center;
                                                 <label class="custom-text-primary custom-fw-700 custom-fs-14">Room</label>
                                             </div>
                                             <div class="col-6 col-sm-6 col-sm-6 text-center">
-                                                <label class="custom-text-primary custom-fw-700 custom-fs-14">Guest</label>							
+                                                <label class="custom-text-primary custom-fw-700 custom-fs-14">Guest</label>
                                             </div>
                                         </div>
                                         <hr />
@@ -119,7 +116,7 @@ justify-content: center;
                                                     <input type="text" name="booking-Room" id="guest"class="booking-guests" value="1" onkeyup ="" max="3" min="0"
                                                      onKeyUp="if(this.value>3){this.value='3';}else if(this.value<1){this.value='1';}"/>
                                                     <div class="plus" onclick="guest_room()"></div>
-                                                </div>													
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row d-none" id="room2" >
@@ -131,7 +128,7 @@ justify-content: center;
                                                     <div class="minus" onclick="guest_room()"></div>
                                                     <input type="text" name="booking-Room" id="guest1"onfocusout="if(this.value.length==2) return false;"class="booking-guests" value="0" onkeyup ="" max="3" min="0"/>
                                                     <div class="plus" onclick="guest_room()"></div>
-                                                </div>													
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row d-none" id="room3" >
@@ -143,7 +140,7 @@ justify-content: center;
                                                     <div class="minus" onclick="guest_room()"></div>
                                                     <input type="text" name="booking-Room" id="guest2"class="booking-guests" value="0" onkeyup ="" max="3" min="0"/>
                                                     <div class="plus" onclick="guest_room()"></div>
-                                                </div>													
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row d-none" id="room4" >
@@ -155,7 +152,7 @@ justify-content: center;
                                                     <div class="minus" onclick="guest_room()"></div>
                                                     <input type="text" name="booking-Room" id="guest3"class="booking-guests" value="0" onkeyup ="" max="3" min="0"/>
                                                     <div class="plus" onclick="guest_room()"></div>
-                                                </div>													
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row d-none" id="room5" >
@@ -167,7 +164,7 @@ justify-content: center;
                                                     <div class="minus" onclick="guest_room()"></div>
                                                     <input type="text" name="booking-Room" id="guest4"class="booking-guests" value="0" onkeyup ="" max="3" min="0"/>
                                                     <div class="plus" onclick="guest_room()"></div>
-                                                </div>													
+                                                </div>
                                             </div>
                                         </div>
                                         <hr />
@@ -176,7 +173,7 @@ justify-content: center;
                                                 <label><span id="delete" onclick = "del_room()">Delete Room</span></label>
                                             </div>
                                             <div class="col-6 col-sm-6 col-sm-6 text-center">
-                                                <label><span id="addroom" onclick = "add()">Add Room</span></label>							
+                                                <label><span id="addroom" onclick = "add()">Add Room</span></label>
                                             </div>
                                         </div>
                                     </div>
@@ -185,7 +182,7 @@ justify-content: center;
                         </div>
                         <div class="col-md-2  p-0 d-md-flex justify-content-end">
                             <button type="button" id="serach_form_btn"  value="Search" class="btn btn-primary custom-fw-700 text-uppercase" >Search</button>
-                
+
                         </div>
                     </div>
                 </form>
@@ -193,4 +190,3 @@ justify-content: center;
         </div>
     </div>
 
-   

@@ -1,73 +1,27 @@
 <div class="card shadow-sm mt-3 border-0 custom-border-radius-10">
     <div class="card-body">
 
-        @php
-            $city_locations = [];
-            $city_locations2 = [];
-        @endphp
+        @if (count($areas) > 0)
 
-        @if ((isset($_GET['city']) && ($_GET['city'] != null) & ($_GET['city'] != '')) || request()->slug)
             <div class="">
-
-                @php
-                    if (isset($_GET['city'])) {
-                        $city_name = DB::table('cities')
-                            ->orwhere('id', $_GET['city'])
-                            ->first();
-                    } else {
-                        $city_name = DB::table('cities')
-                            ->where('slug', request()->slug)
-                            ->first();
-                    }
-
-                    $city_locations = DB::table('locations')
-                        ->where('city_id', $city_name->id)
-                        ->limit(3)
-                        ->get();
-                    $city_locations2 = DB::table('locations')
-                        ->where('city_id', $city_name->id)
-                        ->skip(5)
-                        ->take(20)
-                        ->get();
-
-                @endphp
-                <p class=" custom-fs-22 border-bottom custom-fw-800 py-2">Where in {{ Str::ucfirst($city_name->slug) }}
+                <p class=" custom-fs-22 border-bottom custom-fw-800 py-2">Where in {{ Str::ucfirst($cityname) }}
                 </p>
-
-                @foreach ($city_locations as $item)
-                    <ul class="my-1 px-3 d-block list-style-disc">
-                        <li class="list-style-disc">
-                            <a href="{{ route('location.search', ['city_name' => $city_name->slug, 'location' => str_replace(' ', '_', $item->name)]) }}"
-                                target="_blank" class="custom-text-gray-2 custom-fw-800">
+                <ul class="my-1 px-3 d-block list-style-disc">
+                    @foreach ($areas as $item)
+                        <li class="list-style-disc {{ $loop->index > 3 ? 'more_content d-none' : '' }}">
+                            <a href="{{"/search-listing?location_search=$item->name&type=area&id=$item->id"}}" target="_blank" class="custom-text-gray-2 custom-fw-800">
                                 {{ $item->name }}
                             </a>
                         </li>
-
-                    </ul>
-                @endforeach
-
-                <div class="more_content d-none">
-                    @foreach ($city_locations2 as $item)
-                        <ul class="my-1 px-3 list-style-disc">
-                            <li class="list-style-disc">
-                                <a href="{{ route('location.search', ['city' => $city_name->slug, 'location' => str_replace(' ', '_', $item->name)]) }}"
-                                    target="_blank" class="custom-text-gray-2 ">
-                                    {{ $item->name }}
-                                </a>
-                            </li>
-                        </ul>
                     @endforeach
-                </div>
-
-                @if (count($city_locations2) > 0)
+                </ul>
+                @if (count($areas) > 4)
                     <div style="text-align: center;font-weight:700">
-
-                        <a href="#" id="load_more" class="text-white"><i class="fa fa-plus"></i> Load More</a>
+                        <a href="#" id="load_more" class="text-dark"><i class="fa fa-plus"></i> Load More</a>
                         <br>
                     </div>
                 @endif
             </div>
-
         @endif
 
         <p class=" custom-fs-24 border-bottom custom-fw-800 py-2">Filters </p>
@@ -127,14 +81,14 @@
             <div class="filter_wrapper">
                 <div class="my-1">
                     <label class="text-uppercase custom-fs-14 custom-fw-800 d-flex align-items-center"><input
-                            type="checkbox" value="0,2000" class="price_filter">&nbsp; upto &nbsp;
+                            type="radio" value="0,2000" name="price_filter" class="price_filter">&nbsp; upto &nbsp;
                         2000</label>
 
                 </div>
 
                 <div class="my-1">
                     <label class="text-uppercase custom-fs-14 custom-fw-800 d-flex align-items-center"><input
-                            type="checkbox" value="2001,5000" class="price_filter">&nbsp;&nbsp; 2001 -
+                            type="radio" value="2001,5000" name="price_filter"  class="price_filter">&nbsp;&nbsp; 2001 -
                         &nbsp; 5000</label>
 
                 </div>
@@ -142,7 +96,7 @@
 
                 <div class="my-1">
                     <label class="text-uppercase custom-fs-14 custom-fw-800 d-flex align-items-center"><input
-                            type="checkbox" value="5001,8000" class="price_filter">&nbsp;&nbsp; 5001 -
+                            type="radio" value="5001,8000" name="price_filter"  class="price_filter">&nbsp;&nbsp; 5001 -
                         &nbsp; 8000</label>
 
                 </div>
@@ -150,14 +104,13 @@
 
                 <div class="my-1">
                     <label class="text-uppercase custom-fs-14 custom-fw-800 d-flex align-items-center"><input
-                            type="checkbox" value="8001,12000" class="price_filter">&nbsp;&nbsp; 8001 -
+                            type="radio" value="8001,12000" name="price_filter"  class="price_filter">&nbsp;&nbsp; 8001 -
                         &nbsp; 12000</label>
-
                 </div>
 
                 <div class="my-1">
                     <label class="text-uppercase custom-fs-14 custom-fw-800 d-flex align-items-center"><input
-                            type="checkbox" value="12000,50000" class="price_filter">&nbsp;&nbsp;
+                            type="radio" value="12000,50000" name="price_filter"  class="price_filter">&nbsp;&nbsp;
                         12000+</label>
 
                 </div>
@@ -212,8 +165,6 @@
             </div>
         </div>
         {{-- filter by star rating End --}}
-
-
 
     </div>
 </div>

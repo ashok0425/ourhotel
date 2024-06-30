@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Amenity;
 use App\Models\City;
 use App\Models\Testimonial;
 use Illuminate\Support\Facades\Cache;
@@ -79,6 +80,18 @@ if (!function_exists('popular_cities')) {
         });
     }
 }
+
+
+if (!function_exists('amentities')) {
+    function amentities()
+    {
+      return  Cache::remember('amentities',604800, function () {
+            return Amenity::select('id','thumbnail')
+            ->get();
+        });
+    }
+}
+
 
 
 if (!function_exists('testimonials')) {

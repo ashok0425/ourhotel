@@ -106,12 +106,6 @@
     </style>
 @endpush
 @section('main')
-    @php
-        if (session()->has('area_url')) {
-            session()->forget('area_url');
-        }
-    @endphp
-
     <div class="nsnnavi bg-white mb-0 d-none d-md-block">
         <div class="container city_list">
         </div>

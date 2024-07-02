@@ -68,9 +68,9 @@ justify-content: center;
                         <div class="col-md-4 py-3 ps-3 pr-0">
                             <div class="form-group searchinput  mx-0">
                                 <span class="labeltext"><i class="fas fa-hotel"></i> Where are you going?</span>
-                                <input class="form-control open-suggestion" id="location_search" name="location_search" type="text" placeholder="City, Street or Property Name" autocomplete="off">
+                                <input class="form-control open-suggestion" id="location_search" required name="location_search" type="text" placeholder="City, Street or Property Name" autocomplete="off">
                                 <input type="hidden" id="search_type" name = "type">
-                                <input type="hidden" id="search_id" name="id">
+                                <input type="hidden" id="search_id" name="id" required>
                                 <input type="hidden" id="total_room" name="total_room" value="1">
                                 <input type="hidden" id="total_guest" name="total_guest" value="1">
                                 <input type="hidden" id="token" value="{{csrf_token()}}">
@@ -181,7 +181,7 @@ justify-content: center;
                             </div>
                         </div>
                         <div class="col-md-2  p-0 d-md-flex justify-content-end">
-                            <button type="button" id="serach_form_btn"  value="Search" class="btn btn-primary custom-fw-700 text-uppercase" >Search</button>
+                            <button type="button" id="serach_form_btn"  value="Search" class="btn btn-primary custom-fw-700 text-uppercase" disabled>Search</button>
 
                         </div>
                     </div>

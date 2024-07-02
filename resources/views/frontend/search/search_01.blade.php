@@ -186,6 +186,7 @@
         </a>
     </div>
     <input type="hidden" id="get_url" value="{{ request()->fullUrl() }}">
+    <br>
 @stop
 
 @push('scripts')

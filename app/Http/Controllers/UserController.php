@@ -11,8 +11,11 @@ use App\Models\ReferPrice;
 use App\Models\ReferelMoney;
 use App\Models\Testimonial;
 use App\Models\Visitor;
+use App\Notifications\SendReferNotification;
 use App\Service\InteraktService;
 use App\Service\SmsService;
+use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Notification as FacadesNotification;
 
 class UserController extends Controller
 {
@@ -210,6 +213,27 @@ class UserController extends Controller
         $used_money = ReferelMoney::where('user_id', Auth::id())->where('is_used', 1)->sum('price');
         $referl_money = ReferelMoney::where('user_id', Auth::id())->where('is_used', 0)->sum('price');
         return view('frontend.user.user_my_wallet',compact('total','used_money','referl_money'));
+    }
+
+    public function referMail(Request $request){
+        $request->validate([
+            'email' => 'required|email',
+            'name'=>'required'
+        ]);
+
+        $code = 'NSN'. Auth()->user()->id;
+        $email=$request->email;
+        $name=$request->name;
+        FacadesNotification::route('mail', $email)->notify(new SendReferNotification($name,$code));
+
+        $notification=array(
+            'alert-type'=>'success',
+            'messege'=>'Refer mail sent Sucessfully',
+
+         );
+
+     return redirect()->back()->with($notification);
+
     }
 
 

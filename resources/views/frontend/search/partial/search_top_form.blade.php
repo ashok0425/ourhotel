@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-3">
             <label class="custom-text-white custom-fs-12 mb-1 text-uppercase custom-fw-600">City , Area or property name</label>
-            <input type="search" class="border-0 form-control outline-none border-none open-suggestion " placeholder="{{$cityname}}" id="location_search" name="location_search" value="{{isset($_GET['search'])?$_GET['search']:''}}">
+            <input type="search" class="border-0 form-control outline-none border-none open-suggestion " placeholder="{{$cityname}}" id="location_search" name="location_search" value="{{isset($_GET['search'])?$_GET['search']:''}}" required>
             <input type="hidden" id="search_type" name = "type" value="{{$type}}">
             <input type="hidden" id="search_id" name="id" value="{{$id}}">
             <input type="hidden" id="total_room" name="total_room" value="1">

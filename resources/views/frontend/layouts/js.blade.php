@@ -70,6 +70,7 @@
                 }
                 $('input[name="location_search"]').attr("placeholder", '').val(name);
                 $('.search-suggestions').hide();
+                $('#serach_form_btn').attr('disabled',false)
             });
 
 

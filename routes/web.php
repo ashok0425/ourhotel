@@ -84,6 +84,7 @@ Route::group(['middleware'=>'auth','prefix'=>'user'], function () {
     Route::get('reviews', [ReviewController::class, 'index'])->name('user_my_review');
     Route::post('/reviews', [ReviewController::class, 'store'])->name('user_my_reviews_store');
     Route::get('/wallets', [UserController::class, 'wallet'])->name('user_my_wallet');
+    Route::post('/refer-mail', [UserController::class, 'referMail'])->name('user_refer_mail');
     Route::post('bookings/cancel', [BookingController::class, 'cancelBooking'])->name('cancel_booking');
 });
 

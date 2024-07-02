@@ -169,15 +169,22 @@ div, h1, h2, h3, h4, span, p, input, form, img, hr, img, a {
             <div class="refer-form-content">
               <h2 class="text-purple">Friends To Friends</h2>
               <p>Talking about friends  and suggest best stay option. You can start <a href="#" class="text-purple">NOW!</a></p>
-             <form action="#" method="post" class="mt-2">
-               <input type="text" name="Your Name" placeholder="Your Friend Name">
-               <input type="email" name="Your Email" placeholder="Your Friend Email">
+             <form action="{{route('user_refer_mail')}}" method="post" class="mt-2">
+                @csrf
+               <input type="text" name="name" placeholder="Your Friend Name">
+               <input type="email" name="email" placeholder="Your Friend Email">
                <p>
                  <label class="container-checkbox">i have read and accept the T & C and privacy policy
                    <input type="checkbox">
                    <span class="checkmark"></span>
                  </label></p>
+                 @if (Auth::check())
                <button class="bg-purple">REFER & EARN</button>
+
+                     @else
+                     <a href="{{route('user_login')}}" class="btn text-white rounder-0 btn-block bg-purple">LOGIN AND REFER</a>
+
+                 @endif
              </form>
               	<div class="row mx-1">
 

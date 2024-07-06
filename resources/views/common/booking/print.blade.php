@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 @php
     $booking=App\Models\Booking::query()->with('property')->where('booking_id',$booking_id)->first();
-    $website=App\Models\website::query()->first();
+    $website=App\Models\Website::query()->first();
 
 @endphp
     <head>

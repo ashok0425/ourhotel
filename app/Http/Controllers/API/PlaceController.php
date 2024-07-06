@@ -119,7 +119,7 @@ class PlaceController extends Controller
             ->whereIn('id', $place->amenities ? $place->amenities : [])
             ->get(['id', 'name', 'thumbnail as icon']);
 
-        $reviews = Testimonial::where('property_id', $id)->join('users', 'users.id', 'testimonials.user_id')->select('testimonials.*', 'users.name', 'users.avatar', 'users.id as uid')->orderBy('hotel_reviews.id', 'desc')->get();
+        $reviews = Testimonial::where('property_id', $id)->join('users', 'users.id', 'testimonials.user_id')->select('testimonials.*', 'users.name', 'users.profile_photo_path as avatar', 'users.id as uid')->orderBy('testimonials.id', 'desc')->get();
         $avg = Testimonial::where('property_id', $id)->avg('rating');
         $avg1 = Testimonial::where('property_id', $id)->where('rating',1)->avg('rating');
         $avg2 = Testimonial::where('property_id', $id)->where('rating',2)->avg('rating');

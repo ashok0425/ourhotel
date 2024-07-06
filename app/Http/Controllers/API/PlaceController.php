@@ -69,11 +69,9 @@ class PlaceController extends Controller
             }
     })
     ->when($type!=null&&$type=='city',function($query) use ($id){
-        dd('typecity');
-
         $query->where('properties.city_id', $id);
     })
-    ->where('testimonial_avg.rating', '>=', 3)
+    ->orderBy('testimonial_avg.rating', 'DESC')
     ->orderBy('price', 'asc')
     ->limit(10)
     ->get();

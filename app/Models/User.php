@@ -72,4 +72,25 @@ class User extends Authenticatable
     public function referMoney(){
         return $this->hasMany(ReferelMoney::class,'user_id','id');
     }
+
+   public static function HandleRefer($referral_code,$userid){
+    $refer = str_replace("NSN", "", $referral_code);
+    $referl_price = ReferPrice::first();
+    // for share amount
+    $referl_money = new ReferelMoney();
+    $referl_money->user_id = $refer;
+    $referl_money->price =  $referl_price->share_price;
+    $referl_money->refewrel_type = '2';
+    $referl_money->referel_code = $referral_code;
+    $referl_money->save();
+
+    // for join amount
+    $join_money = new ReferelMoney();
+    $join_money->user_id = $userid;
+    $join_money->price =  $referl_price->join_price;
+    $join_money->refewrel_type = '1';
+    $join_money->referel_code = $referral_code;
+    $join_money->save();
+   }
+
 }

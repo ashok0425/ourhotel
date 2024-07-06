@@ -24,22 +24,7 @@ use Illuminate\Support\Facades\DB;
 
 class PlaceController extends Controller
 {
-    private $place;
-    private $country;
-    private $city;
-    private $category;
-    private $amenities;
-    private $response;
 
-    public function __construct(Place $place, Country $country, City $city, Category $category, Amenities $amenities, Response $response)
-    {
-        $this->place = $place;
-        $this->country = $country;
-        $this->city = $city;
-        $this->category = $category;
-        $this->amenities = $amenities;
-        $this->response = $response;
-    }
 
     public function placeBycity($id)
     {
@@ -242,7 +227,7 @@ class PlaceController extends Controller
 
     public function locationSearch(Request $request) {
     $keyword =   $request->get('keyword');
-        
+
     $places = DB::table('places')->selectRaw('places.id as hotel_id, place_translations.name , places.slug, places.name, places.address,places.city_id,places.country_id, "2hotel" as type')->leftJoin('place_translations' , 'place_translations.place_id', 'places.id')->where('place_translations.name', 'like', '%' . $keyword . '%');
 
     $citiess = DB::table('cities')->selectRaw('"" as hotel_id, city_translations.name , cities.slug, cities.id as city_id, "" as address, "1city" as type')
@@ -254,7 +239,7 @@ class PlaceController extends Controller
               $citiesssss = DB::table('cities')->selectRaw('"" as hotel_id, city_translations.name , cities.slug,cities.location,cities.country_id, cities.id as city_id, "" as address, "1city" as type')
              ->leftJoin('city_translations' , 'city_translations.city_id', 'cities.id')
              ->where('city_translations.name', 'like', '%' . $keyword . '%')
-         
+
              ->union($places)
              // ->union($location)
              ->orderBy('type', 'asc')
@@ -270,7 +255,7 @@ $cities = DB::table('cities')->selectRaw('"" as hotel_id, city_translations.name
              ->orderBy('type', 'asc')
              ->limit(30)
              ->get();
-          
+
 
 
 
@@ -283,24 +268,24 @@ return $this->success_response("feteched", $c);
              }
 
              if(count($citiess)>0){
-                
+
             $count=Place::where('city_id',$citiess[0])->get()->count();
             $city=City::find($citiess[0]);
 
 
                  $name = $city->name;
                  $names =$city->name.' &nbsp;   &nbsp;   &nbsp; &nbsp;   <br>     '. $count."  Properties";
-             $cities[0] = array("hotel_id" => "","name" =>$names,"slug" => "$city->name" ,"city_id" => $city->id ,"address" => "$names" ,"type" => "1city"); 
+             $cities[0] = array("hotel_id" => "","name" =>$names,"slug" => "$city->name" ,"city_id" => $city->id ,"address" => "$names" ,"type" => "1city");
 
              if(isset($citiess[1])){
                 $count1=Place::where('city_id',$citiess[1])->get()->count();
                 $city1=City::find($citiess[1]);
                  $names1 =$city1->name.' &nbsp;   &nbsp;   &nbsp; &nbsp;   <br>     '. $count1."  Properties";
-                $cities[1] = array("hotel_id" => "","name" =>$names1,"slug" => "$city1->name" ,"city_id" => $city1->id ,"address" => "$names1" ,"type" => "1city"); 
+                $cities[1] = array("hotel_id" => "","name" =>$names1,"slug" => "$city1->name" ,"city_id" => $city1->id ,"address" => "$names1" ,"type" => "1city");
 
              }
 
-            
+
              }
 if(isset($placess)  && !$citiess){
     return $this->success_response("feteched", $cities);
@@ -310,7 +295,7 @@ $names = count($placess)."  Properties";
              $cities[0] = array("hotel_id" => "","name" =>$name,"slug" => "" ,"city_id" => "0" ,"address" => "$names" ,"type" => "3location");
 }
 
-  
+
 
 
 return $this->success_response("feteched", $cities);
@@ -377,7 +362,7 @@ return $this->success_response("feteched", $cities);
             $place_type = $request->place_type;
             $places = $places->where('place_type', 'LIKE',  "%$place_type%");
         }
-        
+
           if (isset($request->couple_friendly) && $request->couple_friendly != null) {
             $places = $places->where('couple_friendly', 1);
         }
@@ -386,12 +371,12 @@ return $this->success_response("feteched", $cities);
    if (isset($request->pet_friendly) && $request->pet_friendly != null) {
             $places = $places->where('pet_friendly', 1);
         }
-        
+
            if (isset($request->corporate) && $request->corporate != null) {
             $places = $places->where('corporate', 1);
         }
-        
-  
+
+
         $places = $places->limit(60);
         $places = $places->get();
 

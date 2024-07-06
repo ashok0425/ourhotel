@@ -30,10 +30,7 @@
                                 <input type="hidden" name="phone_code" value="91" id="phone_code">
 
                             </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="referral_code" id="referral_code"
-                                    placeholder="Enter referral code" />
-                            </div>
+
                             <div class="form-group otp">
                                 <input type="tel" inputmode="numeric" style="min-width:100%!important"
                                     class="form-control" name="otp" id="otp" placeholder="One Time Password" />
@@ -180,7 +177,7 @@
                         var val = data['user'];
                         if (val == 400) {
                             $('#errorMsg').css('color', 'red');
-                            $('#errorMsg').html('Wrong Otp');
+                            $('#errorMsg').html('Incorrect otp');
                             return false;
                         } else {
                             window.location = "{{ session()->get('pre_url') }}";

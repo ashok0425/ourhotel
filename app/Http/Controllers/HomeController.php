@@ -164,7 +164,6 @@ class HomeController extends Controller
          $place_type=$request->place_type;
          $star=$request->star;
 
-
         $filterData= Property::propertyFilter($city_id,$area_id,$minprice,$maxprice,$star,$place_type);
 
         return new PropertyResourceCollection($filterData);
@@ -180,6 +179,10 @@ class HomeController extends Controller
         $cityname='';
         $areaId=null;
         $cityId=null;
+
+        if($id==null&&$city_name==null&&$area_name==null){
+          return redirect()->route('home');
+        }
 
 
         if ($type=='area') {

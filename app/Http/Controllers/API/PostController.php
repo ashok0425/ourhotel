@@ -9,12 +9,6 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
-    private $response;
-
-    public function __construct(Response $response)
-    {
-        $this->response = $response;
-    }
 
     public function postInspiration()
     {

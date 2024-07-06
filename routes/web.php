@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Common\PropertyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WebHookController;
@@ -60,9 +61,6 @@ Route::post('corporate', [HomeController::class, 'corporateStore']);
 Route::post('/page/contact', [HomeController::class, 'sendContact'])->name('page_contact_send');
 Route::get('/page/landing/{page_number}', [HomeController::class, 'pageLanding'])->name('page_landing');
 
-Route::get('/city/{slug}', [CityController::class, 'detail'])->name('city_detail');
-Route::get('/city/{slug}/{cat_slug}', [CityController::class, 'detail'])->name('city_category_detail');
-
 Route::get('/hotels/{slug}/{id?}', [PlaceController::class, 'detail'])->name('place_detail');
 Route::get('/become-a-partner', [PlaceController::class, 'pageAddNew'])->name('become_a_partner');
 Route::get('/edit-place/{id}', [PlaceController::class, 'pageAddNew'])->name('place_edit')->middleware('auth');
@@ -76,9 +74,9 @@ Route::get('/places/filter', [PlaceController::class, 'getListFilter'])->name('p
 Route::group(['middleware'=>'auth','prefix'=>'user'], function () {
 
     Route::get('/profile', [UserController::class, 'pageProfile'])->name('user_profile');
-    Route::put('/profile', [UserController::class, 'updateProfile'])->name('user_profile_update');
-    Route::put('/profile/password', [UserController::class, 'updatePassword'])->name('user_password_update');
-    Route::get('/reset-password', [UserController::class, 'pageResetPassword'])->name('user_reset_password');
+    Route::put('/profile', [AuthController::class, 'updateProfile'])->name('user_profile_update');
+    Route::put('/profile/password', [AuthController::class, 'updatePassword'])->name('user_password_update');
+    Route::get('/reset-password', [AuthController::class, 'pageResetPassword'])->name('user_reset_password');
     Route::put('/reset-password', [ResetPasswordController::class, 'reset'])->name('user_update_password');
     Route::get('/bookings', [BookingController::class, 'index'])->name('user_my_place');
     Route::get('reviews', [ReviewController::class, 'index'])->name('user_my_review');
@@ -91,13 +89,13 @@ Route::group(['middleware'=>'auth','prefix'=>'user'], function () {
 
 Route::group(['middleware'=>'guest','prefix'=>'user'], function () {
 
-Route::get('/login', [UserController::class, 'loginPage'])->name('user_login');
-Route::post('/login', [UserController::class, 'loginPage'])->name('login');
+Route::get('/login', [AuthController::class, 'loginPage'])->name('user_login');
+Route::post('/login', [AuthController::class, 'loginPage'])->name('login');
 
-Route::get('/register', [UserController::class, 'registerPage'])->name('user_register');
-Route::post('/register', [UserController::class, 'registerStore'])->name('user_register');
-Route::post('loginWithOtp', [UserController::class, 'loginWithOtp'])->name('loginWithOtp');
-Route::post('sendOtp', [UserController::class, 'sendOtp'])->name('send_otp');
+Route::get('/register', [AuthController::class, 'registerPage'])->name('user_register');
+Route::post('/register', [AuthController::class, 'registerStore'])->name('user_register');
+Route::post('loginWithOtp', [AuthController::class, 'loginWithOtp'])->name('loginWithOtp');
+Route::post('sendOtp', [AuthController::class, 'sendOtp'])->name('send_otp');
 });
 
 Route::get('/thanku/{uuid}', [CheckoutController::class, 'thanku'])->name('thanku');
@@ -114,13 +112,10 @@ Route::get('/ajax-search-listing', [HomeController::class, 'searchListing']);
 Route::get('/search', [HomeController::class, 'search'])->name('search');
 Route::get('/places/map', [PlaceController::class, 'getListMap'])->name('place_get_list_map');
 
-Route::get('/cities/{country_id}', [CityController::class, 'getListByCountry'])->name('city_get_list');
-Route::get('/cities', [CityController::class, 'search'])->name('city_search');
 Route::get('/location-search', [HomeController::class, 'locationSearch'])->name('location_search');
 Route::get('/hotel/best-hotel-in-{city_name?}-near-{location?}', [HomeController::class, 'pageSearchListing'])->name('location.search');
 Route::get('/search-listing', [HomeController::class, 'pageSearchListing'])->name('page_search_listing');
 Route::get('/hotel/best-hotel-in-{slug}', [HomeController::class, 'pageSearchListing'])->name('city-search');
-Route::get('/category/{slug}', [CategoryController::class, 'listPlace'])->name('category_list');
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('book.now');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('payment.checkout');

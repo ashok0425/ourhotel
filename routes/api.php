@@ -48,10 +48,12 @@ $router->group([
     $router->middleware(['auth:sanctum'])->group(function () use ($router) {
         $router->post('/checkout', [CheckoutController::class, 'store']);
         $router->post('/update-checkout', [CheckoutController::class, 'updateAfterPayment']);
-        $router->get('/users', [UserController::class, 'getUserInfo']);
         $router->get('/coupon', [CheckoutController::class, 'Coupon']);
+        $router->get('/users', [UserController::class, 'getUserInfo']);
         $router->get('/booking-list', [UserController::class, 'mybooking']);
-        $router->get('/cancel-booking', [AuthController::class, 'cancelBooking']);
+        $router->get('/cancel-booking', [UserController::class, 'cancelBooking']);
+        $router->get('/download-invoice/{id}', [UserController::class, 'invoice']);
+
     });
 
 });

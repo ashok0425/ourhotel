@@ -70,12 +70,9 @@ class BookingController extends Controller
     {
 
         $booking_id=$booking->booking_id;
-        // return view('common.booking.print', ['booking_id'=>$booking_id]);
-
         $pdf = Pdf::loadView('common.booking.print', ['booking_id'=>$booking_id]);
         // return $pdf;
       return $pdf->download("$booking_id|invoice.pdf");
-        // return view('common.booking.print',compact('booking_id'));
     }
 
     /**

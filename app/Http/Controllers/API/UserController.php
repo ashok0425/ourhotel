@@ -8,6 +8,7 @@ use App\Models\Place;
 use App\Models\ReferelMoney;
 use App\Models\User;
 use App\Models\Wishlist;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -50,7 +51,7 @@ class UserController extends Controller
         if(!$booking){
          return $this->error_response('Unauthorized','',400);
         }
-        $booking->status=0;
+        // $booking->status=0;
         $booking->cancel_reason=$request->cancel_reason;
 
         $booking->save();
@@ -59,6 +60,13 @@ class UserController extends Controller
        //  $this->whatsapp_cancel('91'.$mm->phone_number, $mm->name);
         // $this->whatsapp_cancel('919958277997'.$booking->phone_number, $booking->name,$booking->booking_id);
         return $this->success_response('Booking  updated successfully',$booking);
+    }
+
+    public function invoice($id){
+        $booking_id=Booking::find($id)->booking_id;
+        $pdf = Pdf::loadView('common.booking.print', ['booking_id'=>$booking_id]);
+        // return $pdf;
+      return $pdf->download("$booking_id|invoice.pdf");
     }
 
 }

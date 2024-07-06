@@ -73,12 +73,11 @@ class PlaceController extends Controller
     })
     ->orderBy('testimonial_avg.rating', 'DESC')
     ->orderBy('price', 'asc')
-    ->limit(65)
     ->get();
 
     $places->map(function ($place) {
         $amenityIds = $place->amenities;
-        $place->list_amenities = Amenity::whereIn('id', $amenityIds)->select('id', 'thumbnail as icon')->get();
+        $place->list_amenities = Amenity::whereIn('id', $amenityIds??[])->select('id', 'thumbnail as icon')->get();
         return $place;
     });
         return $this->success_response('Data ', $places);

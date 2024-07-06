@@ -97,7 +97,6 @@ class AuthController extends Controller
               $user->save();
               Notification::route('mail',$user->email)->notify(new SendotpNotification($otp));
             return $this->success_response("We have sent an otp at your Email address.,$otp");
-
         }
         $customer=User::where('phone_number', $request->mobile)->first();
         if(!$customer)
@@ -159,20 +158,12 @@ class AuthController extends Controller
         ];
 
         // making token nullable
-        $user->token = null;
+        $user->otp = null;
         $user->save();
 
         // Return success response
         return $this->success_response("You've been logged in successfully.", $data);
     }
-
-
-
-
-
-
-
-
 
     public function myBooking(Request $request){
         $user=$this->getUserByApiToken($request);

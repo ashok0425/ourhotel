@@ -24,8 +24,7 @@ use Illuminate\Http\Request;
 $router->group([
     'prefix' => 'app',
     'namespace' => 'API',
-    'as' => 'api_app_',
-    'middleware' => []
+    'as' => 'api_app_'
 ], function () use ($router) {
     $router->get('/cities/popular', [CityController::class, 'popularCity']);
     $router->get('/cities/{ishomepage?}', [CityController::class, 'list']);
@@ -45,7 +44,7 @@ $router->group([
     $router->post('verify/login', [AuthController::class, 'getLogin']);
     $router->get('customer/delete-account', [AuthController::class, 'deactiveAccount']);
 
-    $router->middleware(['Hastoken'])->group(function () use ($router) {
+    $router->middleware(['auth:sanctum'])->group(function () use ($router) {
         $router->post('update/profile/customer', [UpdateController::class, 'updateCustomerProfile']);
         $router->post('room/booking', [BookingController::class, 'bookRoom']);
         $router->post('/checkout', [CheckoutController::class, 'store']);

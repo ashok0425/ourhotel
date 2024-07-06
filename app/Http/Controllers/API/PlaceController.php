@@ -32,11 +32,11 @@ class PlaceController extends Controller
 
     public function placeBycity(Request $request,$cityid=null)
     {
-        $type=$request->type;
-        $id=$request->id;
 
+    $type=$request->type;
+    $id=$request->id;
 
-        $places = Property::join('rooms', 'rooms.property_id', '=', 'properties.id')
+    $places = Property::join('rooms', 'rooms.property_id', '=', 'properties.id')
     ->join('cities', 'properties.city_id', '=', 'cities.id')
     ->leftJoin(DB::raw('(SELECT property_id, AVG(rating) as rating FROM testimonials GROUP BY property_id) as testimonial_avg'),
         'testimonial_avg.property_id', '=', 'properties.id')
@@ -70,6 +70,24 @@ class PlaceController extends Controller
     })
     ->when($type!=null&&$type=='city',function($query) use ($id){
         $query->where('properties.city_id', $id);
+    })->when(isset($request->price_filter) && $request->price_filter != null,function($query) use ($request){
+        $price=explode(',',$request->price_filter);
+        $query->whereBetween('rooms.onepersonprice', [$price[0], $price[1]]);
+    })->when(isset($request->star) && $request->star != null,function($query) use ($request){
+        $star = $request->star;
+        $query->whereIn('testimonial_avg.rating', [$star]);
+    })->when(isset($request->city_id) && $request->city_id != null,function($query) use ($request) {
+        $city_id = $request->city_id;
+        $query->where('properties.city_id', $city_id);
+    })->when(isset($request->property_type) && $request->property_type != null,function($query) use ($request) {
+        $place_type = $request->property_type;
+        $query->where('place_type',  $place_type);
+    })->when(isset($request->amenities) && $request->amenities ==1,function($query) use ($request) {
+        $query->where('couple_friendly', 1);
+    })->when(isset($request->amenities) && $request->amenities ==2,function($query) use ($request) {
+        $query->where('pet_friendly', 1);
+    })->when(isset($request->amenities) && $request->amenities==3,function($query) use ($request){
+        $query->where('corporate', 1);
     })
     ->orderBy('testimonial_avg.rating', 'DESC')
     ->orderBy('price', 'asc')
@@ -160,79 +178,6 @@ class PlaceController extends Controller
         return $this->success_response('Data fetched', $data, 200);
     }
 
-    public function search(Request $request)
-    {
-        $cityname = "";
-        $keyword = $request->keyword;
-        $filter_category = $request->category;
-        $filter_amenities = $request->amenities;
-        $filter_place_type = $request->place_type;
-        $filter_city = $request->city;
-
-        // $cityname = $filter_city;
-
-        $filter_search = $request->search;
-        if ($request->get('hotel')) {
-            $filter_hotel = $request->get('hotel');
-        }
-        $categories = Category::where('type', Category::TYPE_PLACE)->get();
-
-        $place_types = PlaceType::query()
-            ->get();
-
-        $amenities = Amenities::query()
-            ->get();
-
-        $cities = City::query()
-            ->get();
-
-        $places = Place::select('properties.*', 'properties.id as place_id')->where('properties.status', 1)->where('rooms.onepersonprice', '>', 0)->join('cities', 'properties.city_id', 'cities.id')
-            ->select("properties.*", "rooms.onepersonprice as price")->leftjoin('rooms', 'rooms.property_id', 'properties.id');
-        if (isset($keyword)) {
-            $places = $places->where('properties.name', 'LIKE', "%{$keyword}%")->orwhere('properties.slug', 'LIKE', "%{$keyword}%")->orwhere('cities.slug', 'LIKE', "%{$keyword}%");
-        }
-        if (isset($request->lat) && isset($request->lng)) {
-            $latitude =   $request->lat;
-            $longitude =   $request->lng;
-
-            $placess = Place::selectRaw("properties.* , rooms.onepersonprice as price , properties.slug, properties.city_id,properties.address, '2hotel' as type,( 6371 * acos( cos( radians(?) ) * cos( radians( lat ) )* cos( radians( lng ) - radians(?)) + sin( radians(?) ) * sin( radians( lat ) ) )) AS distance", [$latitude, $longitude, $latitude])->leftJoin('rooms', 'rooms.property_id', 'properties.id')
-                ->having("distance", "<", '2')
-                ->orderBy("distance", 'asc')->get();
-            $data = [
-                'cityname' => $cityname,
-                'keyword' => $keyword,
-                'places' => $placess,
-                'categories' => $categories,
-                'place_types' => $place_types,
-                'amenities' => $amenities,
-                'cities' => $cities,
-                'filter_category' => $filter_category,
-                'filter_amenities' => $filter_amenities,
-                'filter_place_type' => $filter_place_type,
-                'filter_city' => $request->city,
-            ];
-
-            return $this->success_response('Fetched Data', $data);
-        }
-        $places = $places->get();
-        $data = [
-            'cityname' => $cityname,
-            'keyword' => $keyword,
-            'places' => $places,
-            'categories' => $categories,
-            'place_types' => $place_types,
-            'amenities' => $amenities,
-            'cities' => $cities,
-            'filter_category' => $filter_category,
-            'filter_amenities' => $filter_amenities,
-            'filter_place_type' => $filter_place_type,
-            'filter_city' => $request->city,
-        ];
-
-        return $this->success_response('Fetched Data', $data);
-    }
-
-
 
     public function locationSearch(Request $request) {
     $keyword =   $request->get('keyword');
@@ -266,55 +211,4 @@ class PlaceController extends Controller
     // }
 
 
-    public function filter(Request $request)
-    {
-        $price = explode(',', $request->price_filter);
-
-        $places = Place::with([
-            'list_amenities' => function ($query) {
-                $query->select('id', 'icon');
-            }
-        ])->join('place_translations', 'place_translations.place_id', 'properties.id')
-            ->join('rooms', 'rooms.property_id', 'properties.id')->select('properties.id', 'properties.amenities', 'rooms.onepersonprice as price', 'rooms.discount_percent', 'city_translations.name as city_name',
-             'properties.address','properties.rating', 'place_translations.name as name', 'properties.thumb','properties.couple_friendly','properties.pet_friendly','properties.corporate')->where('rooms.onepersonprice', '!=', null)->join('cities', 'properties.city_id', 'cities.id')->join('city_translations', 'city_translations.city_id', 'cities.id');
-
-
-        if (isset($request->price_filter) && $request->price_filter != null) {
-            $places = $places->whereBetween('rooms.onepersonprice', [$price[0], $price[1]]);
-        }
-
-        if (isset($request->star) && $request->star != null) {
-            $star = $request->star;
-            $places = $places->whereIn('properties.rating', [$star]);
-        }
-        if (isset($request->city_id) && $request->city_id != null) {
-            $city_id = $request->city_id;
-            $places = $places->where('properties.city_id', $city_id);
-        }
-
-        if (isset($request->place_type) && $request->place_type != null) {
-            $place_type = $request->place_type;
-            $places = $places->where('place_type', 'LIKE',  "%$place_type%");
-        }
-
-          if (isset($request->couple_friendly) && $request->couple_friendly != null) {
-            $places = $places->where('couple_friendly', 1);
-        }
-
-
-   if (isset($request->pet_friendly) && $request->pet_friendly != null) {
-            $places = $places->where('pet_friendly', 1);
-        }
-
-           if (isset($request->corporate) && $request->corporate != null) {
-            $places = $places->where('corporate', 1);
-        }
-
-
-        $places = $places->limit(60);
-        $places = $places->get();
-
-
- return $this->success_response('Filter data', $places);
-    }
 }

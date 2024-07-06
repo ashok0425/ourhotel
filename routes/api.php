@@ -43,6 +43,7 @@ $router->group([
     $router->post('send/otp', [AuthController::class, 'sendOtp']);
     $router->post('verify/login', [AuthController::class, 'getLogin']);
     $router->get('customer/delete-account', [AuthController::class, 'deactiveAccount']);
+    $router->get('/filter', [PlaceController::class, 'filter']);
 
     $router->middleware(['auth:sanctum'])->group(function () use ($router) {
         $router->post('update/profile/customer', [UpdateController::class, 'updateCustomerProfile']);
@@ -55,6 +56,5 @@ $router->group([
         $router->get('/cancel-booking', [AuthController::class, 'cancelBooking']);
     });
 
-    $router->get('/filter', [PlaceController::class, 'filter']);
 });
 

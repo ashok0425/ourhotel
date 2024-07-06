@@ -222,8 +222,11 @@ class Property extends Model
     $places = Property::select('properties.*')
         ->with('ratings')
         ->with('roomsData')
-        ->whereHas('roomsData', function ($query) {
-            $query->whereNotNull('onepersonprice');
+        ->whereHas('roomsData', function ($query) use ($minprice,$maxprice) {
+            $query->whereNotNull('onepersonprice')
+            ->when($minprice && $maxprice, function ($query) use ($minprice, $maxprice) {
+                $query->whereBetween('onepersonprice', [$minprice, $maxprice]);
+            });
         })
         ->selectSub(function($query) {
             $query->from('rooms')
@@ -246,9 +249,6 @@ class Property extends Model
                       ->having('distance', '<=', 2);
             }
         })
-        ->when($minprice && $maxprice, function ($query) use ($minprice, $maxprice) {
-            $query->whereBetween('onepersonprice', [$minprice, $maxprice]);
-        })
         ->when($star, function ($query) use ($star) {
             // Use HAVING clause instead of WHERE for avg_rating
             $query->havingRaw('avg_rating IN (?)', $star);
@@ -256,7 +256,7 @@ class Property extends Model
         ->when($place_type, function ($query) use ($place_type) {
             $query->whereIn('property_type_id', $place_type);
         })
-        ->paginate(65);
+        ->paginate(125);
 
     return $places;
 }

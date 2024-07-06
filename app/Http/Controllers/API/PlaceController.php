@@ -219,78 +219,8 @@ class PlaceController extends Controller
 
     public function locationSearch(Request $request) {
     $keyword =   $request->get('keyword');
-
-    $places = DB::table('places')->selectRaw('properties.id as property_id, place_translations.name , properties.slug, properties.name, properties.address,properties.city_id,properties.country_id, "2hotel" as type')->leftJoin('place_translations' , 'place_translations.place_id', 'properties.id')->where('place_translations.name', 'like', '%' . $keyword . '%');
-
-    $citiess = DB::table('cities')->selectRaw('"" as property_id, city_translations.name , cities.slug, cities.id as city_id, "" as address, "1city" as type')
-             ->leftJoin('city_translations' , 'city_translations.city_id', 'cities.id')
-             ->where('city_translations.name', 'like', '%%' . $keyword . '%%')
-             ->orderBy('city_translations.name', 'asc')
-             ->limit(7)
-             ->pluck('city_id')->toArray();
-              $citiesssss = DB::table('cities')->selectRaw('"" as property_id, city_translations.name , cities.slug,cities.location,cities.country_id, cities.id as city_id, "" as address, "1city" as type')
-             ->leftJoin('city_translations' , 'city_translations.city_id', 'cities.id')
-             ->where('city_translations.name', 'like', '%' . $keyword . '%')
-
-             ->union($places)
-             // ->union($location)
-             ->orderBy('type', 'asc')
-             ->get();
-
-$cities = DB::table('cities')->selectRaw('"" as property_id, city_translations.name, city_location.location_name,city_location.url , cities.slug, cities.id as city_id, "" as address, "1city" as type')
-             ->leftJoin('city_translations' , 'city_translations.city_id', 'cities.id')
-             ->leftJoin('city_location' , 'city_location.city_id', 'cities.id')
-             ->where('city_translations.name', 'like', '%' . $keyword . '%')
-             ->orwhere('city_location.location_name', 'like', '%' . $keyword . '%')
-             ->union($places)
-             // ->union($location)
-             ->orderBy('type', 'asc')
-             ->limit(30)
-             ->get();
-
-
-
-
-             if(count($cities)<=0){
-                 $c = DB::table('city_location')->select('location_name as name','city_id','url',"type as type","location_name as location_name","location_name as address","location_name as slug"  )
-                 ->where('location_name', 'LIKE', '%' . "$keyword" . '%')
-                 ->get();
-return $this->success_response("feteched", $c);
-
-             }
-
-             if(count($citiess)>0){
-
-            $count=Place::where('city_id',$citiess[0])->get()->count();
-            $city=City::find($citiess[0]);
-
-
-                 $name = $city->name;
-                 $names =$city->name.' &nbsp;   &nbsp;   &nbsp; &nbsp;   <br>     '. $count."  Properties";
-             $cities[0] = array("property_id" => "","name" =>$names,"slug" => "$city->name" ,"city_id" => $city->id ,"address" => "$names" ,"type" => "1city");
-
-             if(isset($citiess[1])){
-                $count1=Place::where('city_id',$citiess[1])->get()->count();
-                $city1=City::find($citiess[1]);
-                 $names1 =$city1->name.' &nbsp;   &nbsp;   &nbsp; &nbsp;   <br>     '. $count1."  Properties";
-                $cities[1] = array("property_id" => "","name" =>$names1,"slug" => "$city1->name" ,"city_id" => $city1->id ,"address" => "$names1" ,"type" => "1city");
-
-             }
-
-
-             }
-if(isset($placess)  && !$citiess){
-    return $this->success_response("feteched", $cities);
-
-//    $name = $add;
-$names = count($placess)."  Properties";
-             $cities[0] = array("property_id" => "","name" =>$name,"slug" => "" ,"city_id" => "0" ,"address" => "$names" ,"type" => "3location");
-}
-
-
-
-
-return $this->success_response("feteched", $cities);
+    $cities= Property::searchSuggestion($keyword) ;
+   return $this->success_response("feteched", $cities);
     }
 
 

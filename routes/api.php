@@ -29,7 +29,7 @@ $router->group([
     $router->get('/cities/popular', [CityController::class, 'popularCity']);
     $router->get('/cities/{ishomepage?}', [CityController::class, 'list']);
     $router->get('/posts/inspiration', [PostController::class, 'postInspiration']);
-    $router->get('/placebycity/{city_id}', [PlaceController::class, 'placeBycity']);
+    $router->get('/placebycity/{city_id?}', [PlaceController::class, 'placeBycity']);
     $router->get('/places/{id}', [PlaceController::class, 'detail']);
     $router->get('/placesbytype/{type_id}/{is_toprated?}', [PlaceController::class, 'PlaceBytype']);
     $router->get('/places-search', [PlaceController::class, 'search']);

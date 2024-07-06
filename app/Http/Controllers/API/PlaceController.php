@@ -18,6 +18,7 @@ use App\Models\PlaceType;
 use App\Models\Property;
 use App\Models\Review;
 use App\Models\Room;
+use App\Models\Testimonial;
 use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
@@ -110,38 +111,23 @@ class PlaceController extends Controller
 
     public function detail($id)
     {
-        $place = Place::with(['list_amenities' => function ($query) {
-            $query->select('id', 'icon');
-        }])->join('place_translations', 'place_translations.place_id', 'properties.id')->select('properties.*', 'place_translations.name as name', 'place_translations.description as description')->find($id);
+        $place = Property::find($id);
         if (!$place) abort(404);
         $rooms = Room::where('property_id', $id)->get();
 
-        $amenities = Amenities::query()
+        $amenities = Amenity::query()
             ->whereIn('id', $place->amenities ? $place->amenities : [])
-            ->get(['id', 'name', 'icon']);
+            ->get(['id', 'name', 'thumbnail as icon']);
 
-        $reviews = DB::table('hotel_reviews')->where('product_id', $id)->join('users', 'users.id', 'hotel_reviews.user_id')->select('hotel_reviews.*', 'users.name', 'users.avatar', 'users.id as uid')->orderBy('hotel_reviews.id', 'desc')->get();
-        $avg = DB::table('hotel_reviews')->where('product_id', $id)->avg('rating');
-        $avg1 = DB::table('hotel_reviews')->where('product_id', $id)->where('rating', 1)->avg('rating');
-        $avg2 = DB::table('hotel_reviews')->where('product_id', $id)->where('rating', 2)->avg('rating');
-        $avg3 = DB::table('hotel_reviews')->where('product_id', $id)->where('rating', 3)->avg('rating');
-        $avg4 = DB::table('hotel_reviews')->where('product_id', $id)->where('rating', 4)->avg('rating');
-        $avg5 = DB::table('hotel_reviews')->where('product_id', $id)->where('rating', 5)->avg('rating');
+        $reviews = Testimonial::where('property_id', $id)->join('users', 'users.id', 'testimonials.user_id')->select('testimonials.*', 'users.name', 'users.avatar', 'users.id as uid')->orderBy('hotel_reviews.id', 'desc')->get();
+        $avg = Testimonial::where('property_id', $id)->avg('rating');
+        $avg1 = Testimonial::where('property_id', $id)->where('rating',1)->avg('rating');
+        $avg2 = Testimonial::where('property_id', $id)->where('rating',2)->avg('rating');
+        $avg3 = Testimonial::where('property_id', $id)->where('rating',3)->avg('rating');
+        $avg4 = Testimonial::where('property_id', $id)->where('rating',4)->avg('rating');
+        $avg5 = Testimonial::where('property_id', $id)->where('rating',5)->avg('rating');
 
-
-        $similar_places = Place::query()
-            ->with('place_types')
-            ->with('avgReview')
-            ->withCount('reviews')
-            ->withCount('wishList')
-            ->where('city_id', $place->city_id)
-            ->where('id', '<>', $place->id);
-        foreach ($place->category as $cat_id) :
-            $similar_places->where('category', 'like', "%{$cat_id}%");
-        endforeach;
-        $similar_places = $similar_places->limit(4)->get();
-
-        return $this->response->formatResponse(200, [
+        $data= [
             'place' => $place,
             'rooms' => $rooms,
             'amenities' => $amenities,
@@ -152,9 +138,9 @@ class PlaceController extends Controller
             'avg_rating3' => $avg3,
             'avg_rating4' => $avg4,
             'avg_rating5' => $avg5
+        ];
 
-
-        ]);
+        return $this->success_response('Data fetched', $data, 200);
     }
 
     public function search(Request $request)

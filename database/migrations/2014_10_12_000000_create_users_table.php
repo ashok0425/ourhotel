@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('app_fcm_token')->nullable();
             $table->string('address')->nullable();
             $table->string('otp')->nullable();
-            $table->integer('status')->default(0);
+            $table->integer('status')->default(1);
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();

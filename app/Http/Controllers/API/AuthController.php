@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\BookingNotifyViaWP;
 use App\Jobs\SendOtp;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Booking;
-use App\Models\ReferPrice;
 use App\Models\ReferelMoney;
-use App\Models\Testimonial;
 use App\Notifications\sendOtp as SendotpNotification;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
@@ -172,10 +169,6 @@ class AuthController extends Controller
 
 
 
-    public function Testimonial(){
-        $testimonials = Testimonial::where('status',1)->get();
-        return $this->success_response('Testimonial fetched successfully',$testimonials);
-    }
 
 
 

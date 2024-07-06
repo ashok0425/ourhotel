@@ -36,8 +36,8 @@ $router->group([
     $router->get('/places-search', [PlaceController::class, 'search']);
     $router->get('/location/search', [PlaceController::class, 'locationSearch']);
     $router->get('/nearbyplace', [PlaceController::class, 'nearbyplace']);
-    $router->get('/testimonial', [AuthController::class, 'Testimonial']);
-    $router->get('/banners', [CityController::class, 'Bannerlist']);
+    $router->get('/testimonial', [PostController::class, 'Testimonial']);
+    $router->get('/banners', [PostController::class, 'Bannerlist']);
 
     $router->post('customer/registers', [AuthController::class, 'register']);
     $router->post('customer/login', [AuthController::class, 'loginCustomer']);

@@ -15,16 +15,6 @@ use Illuminate\Support\Facades\DB;
 class CityController extends Controller
 {
 
-
-
-    public function Bannerlist()
-    {
-        $data = coupons();
-        return $this->success_response('Data fetched',$data,200);
-
-    }
-
-
     public function list($ishomepage=null)
     {
 
@@ -33,9 +23,6 @@ class CityController extends Controller
             $query->whereIn('id',[43,41,42,151,152,62]);
         })
         ->get();
-
-
-
         return $this->success_response('Data fetched',$cities,200);
     }
 

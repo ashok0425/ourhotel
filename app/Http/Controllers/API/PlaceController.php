@@ -73,7 +73,7 @@ class PlaceController extends Controller
     })
     ->orderBy('testimonial_avg.rating', 'DESC')
     ->orderBy('price', 'asc')
-    ->limit(10)
+    ->limit(65)
     ->get();
 
     $places->map(function ($place) {

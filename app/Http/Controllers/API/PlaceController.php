@@ -81,7 +81,7 @@ class PlaceController extends Controller
         $query->where('properties.city_id', $city_id);
     })->when(isset($request->property_type) && $request->property_type != null,function($query) use ($request) {
         $place_type = $request->property_type;
-        $query->where('place_type',  $place_type);
+        $query->where('property_type_id',  $place_type);
     })->when(isset($request->amenities) && $request->amenities ==1,function($query) use ($request) {
         $query->where('couple_friendly', 1);
     })->when(isset($request->amenities) && $request->amenities ==2,function($query) use ($request) {

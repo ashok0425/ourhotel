@@ -59,7 +59,7 @@ if (!function_exists('coupons')) {
     {
 
         $coupons = Cache::remember("coupons", 86400, function ()  {
-            return \App\Models\Coupon::all();
+            return \App\Models\Coupon::where('thumbnail','!=',null)->get();
         });
 
         return $coupons;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
 use App\Models\Place;
 use App\Models\ReferelMoney;
 use App\Models\User;
@@ -34,32 +35,30 @@ class UserController extends Controller
        return $this->success_response('Fetched successfully',$data);
     }
 
-    public function getPlaceByUser($user_id)
-    {
-        $places = Place::query()
-            ->where('user_id', $user_id)
-            ->paginate();
 
-        return $places;
+    public function myBooking(Request $request){
+        $user=Auth::user();
+        $booking = Booking::join('properties','properties.id','bookings.property_id')->where('bookings.user_id',$user->id)->select('bookings.*','properties.name as hotel_name','properties.thumbnail as thumbnail','properties.address as address')->get();
+        return $this->success_response('Booking list fetched successfully',$booking);
     }
 
-    public function getPlaceWishlistByUser($user_id)
-    {
-        $wishlists = Wishlist::query()
-            ->where('user_id', $user_id)
-            ->get('place_id')->toArray();
+    public function cancelBooking(Request $request){
 
-        $wishlists = array_column($wishlists, 'place_id');
+        $user=Auth::user();
+        $booking = Booking::where('user_id',$user->id)->where('id',$request->id)->first();
 
-        $places = Place::query()
-            ->with('place_types')
-            ->withCount('reviews')
-            ->with('avgReview')
-            ->withCount('wishList')
-            ->whereIn('id', $wishlists)
-            ->paginate();
+        if(!$booking){
+         return $this->error_response('Unauthorized','',400);
+        }
+        $booking->status=0;
+        $booking->cancel_reason=$request->cancel_reason;
 
-        return $places;
+        $booking->save();
+        // $this->whatsapp_cancel('977'.$booking->phone_number, $booking->name);
+        // $this->whatsapp_cancel('91'.$booking->phone_number, $booking->name,$booking->booking_id);
+       //  $this->whatsapp_cancel('91'.$mm->phone_number, $mm->name);
+        // $this->whatsapp_cancel('919958277997'.$booking->phone_number, $booking->name,$booking->booking_id);
+        return $this->success_response('Booking  updated successfully',$booking);
     }
 
 }

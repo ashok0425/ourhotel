@@ -25,8 +25,7 @@ class CheckoutController extends Controller
 
 
     public function store(Request $request) {
-$user= $this->getUserByApiToken($request);
-
+      $user=Auth()->user();
         $request['user_id'] =$user->id;
         $request['booking_id'] = 'NSN'.str_pad(rand(1,1000000),6,0);
         $request['place_id']=Room::where('id',$request['place_id'])->value('hotel_id');

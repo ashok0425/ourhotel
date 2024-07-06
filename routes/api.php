@@ -46,13 +46,11 @@ $router->group([
     $router->get('/filter', [PlaceController::class, 'filter']);
 
     $router->middleware(['auth:sanctum'])->group(function () use ($router) {
-        $router->post('update/profile/customer', [UpdateController::class, 'updateCustomerProfile']);
-        $router->post('room/booking', [BookingController::class, 'bookRoom']);
         $router->post('/checkout', [CheckoutController::class, 'store']);
         $router->post('/update-checkout', [CheckoutController::class, 'updateAfterPayment']);
         $router->get('/users', [UserController::class, 'getUserInfo']);
         $router->get('/coupon', [CheckoutController::class, 'Coupon']);
-        $router->get('/booking-list', [AuthController::class, 'mybooking']);
+        $router->get('/booking-list', [UserController::class, 'mybooking']);
         $router->get('/cancel-booking', [AuthController::class, 'cancelBooking']);
     });
 

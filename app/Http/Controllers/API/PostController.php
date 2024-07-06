@@ -51,6 +51,7 @@ class PostController extends Controller
                 "coupon_min"=>$coupon->coupon_min,
                 "coupon_percent"=> $coupon->coupon_percent,
                 "mobile_image"=> $coupon->thumbnail,
+                "thumb"=> $coupon->thumbnail,
                 "expired_at"=> $coupon->expired_at,
                 "descr"=> $coupon->descr,
                 "link"=> $coupon->link,

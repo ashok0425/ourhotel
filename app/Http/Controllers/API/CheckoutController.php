@@ -106,7 +106,7 @@ class CheckoutController extends Controller
 
             return $this->error_response($datas,'',400);
         }
-        $cp=DB::table('coupon')->where('coupon_name',$request->coupon)->where('status',1)->first();
+        $cp=DB::table('coupons')->where('coupon_name',$request->coupon)->where('status',1)->first();
         if (!$cp) {
             return $this->error_response('Invalid coupon','',400);
 

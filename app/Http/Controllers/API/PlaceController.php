@@ -188,27 +188,43 @@ class PlaceController extends Controller
 
 
 
-    // public function nearbyplace(Request $request, $radius = 8000)
-    // {
-    //     $latitude = $request->lat;
-    //     $longitude = $request->lng;
+    public function nearbyplace(Request $request, $radius = 8000)
+    {
+        $latitude = $request->lat;
+        $longitude = $request->lng;
+   $places = Property::join('rooms', 'rooms.property_id', '=', 'properties.id')
+        ->join('cities', 'properties.city_id', '=', 'cities.id')
+        ->leftJoin(DB::raw('(SELECT property_id, AVG(rating) as rating FROM testimonials GROUP BY property_id) as testimonial_avg'),
+            'testimonial_avg.property_id', '=', 'properties.id')
+        ->select(
+            'properties.id',
+            'properties.amenities',
+            'rooms.onepersonprice as price',
+            'rooms.discount_percent',
+            'properties.address',
+            'cities.name as city_name',
+            'properties.name as name',
+            'properties.thumbnail as thumb',
+            'properties.couple_friendly',
+            'properties.pet_friendly',
+            'properties.corporate',
+            'testimonial_avg.rating'
+        )
+        ->where('rooms.onepersonprice', '!=', null)
+        ->where('rooms.onepersonprice', '!=', 'null')
+        ->where('rooms.onepersonprice', '!=', 0)
+        ->where('testimonial_avg.rating', '>=', 3)
+        ->orderBy('price', 'asc')
+        ->where("( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance", [$latitude, $longitude, $latitude])
+        ->having('distance', '<=', 2)
+        ->limit(10);
 
-    //     $places = Place::query()
-    //         ->selectRaw("properties.id,place_id,properties.user_id,city_translations.name as cityname,place_translations.name,properties.slug,address,properties.lat,properties.lng,properties.status,properties.city_id,properties.country_id,place_translations.description,properties.thumb,amenities,( 6371000 * acos( cos( radians(?) ) * cos( radians( properties.lat ) ) * cos( radians( properties.lng ) - radians(?) ) + sin( radians(?) ) * sin( radians( properties.lat ) ) )) AS distances", [$latitude, $longitude, $latitude])
-    //         ->select("properties.*", "city_translations.name as city_name", "hotel_reviews.avg_rating", "hotel_reviews.rating_count", "rooms.onepersonprice as price", "rooms.discount_percent")
-    //         ->leftjoin(DB::raw("(SELECT avg(rating) as avg_rating,hotel_reviews.product_id,count(*) as rating_count FROM hotel_reviews ) as hotel_reviews"), function ($join) {
-    //             $join->on("hotel_reviews.product_id", "=", "properties.id");
-    //         })->join('cities', 'properties.city_id', 'cities.id')->join('city_translations', 'city_translations.city_id', 'cities.id')
-    //         ->join('rooms', 'rooms.property_id', 'properties.id')
-    //         ->limit(8)
-    //         ->get();
+        $data = [
+            'places' => $places
+        ];
 
-    //     $data = [
-    //         'places' => $places
-    //     ];
-
-    //     return $this->success_response('NearBy hotel fetched', $data);
-    // }
+        return $this->success_response('NearBy hotel fetched', $data);
+    }
 
 
 }

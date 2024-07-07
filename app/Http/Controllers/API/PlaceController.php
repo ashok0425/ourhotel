@@ -192,7 +192,7 @@ class PlaceController extends Controller
     {
         $latitude = $request->lat;
         $longitude = $request->lng;
-   $places = Property::join('rooms', 'rooms.property_id', '=', 'properties.id')
+ $places = Property::join('rooms', 'rooms.property_id', '=', 'properties.id')
         ->join('cities', 'properties.city_id', '=', 'cities.id')
         ->leftJoin(DB::raw('(SELECT property_id, AVG(rating) as rating FROM testimonials GROUP BY property_id) as testimonial_avg'),
             'testimonial_avg.property_id', '=', 'properties.id')
@@ -215,9 +215,10 @@ class PlaceController extends Controller
         ->where('rooms.onepersonprice', '!=', 0)
         ->where('testimonial_avg.rating', '>=', 3)
         ->orderBy('price', 'asc')
-        ->where("( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance", [$latitude, $longitude, $latitude])
+        ->selectRaw("( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance", [$latitude, $longitude, $latitude])
         ->having('distance', '<=', 2)
-        ->limit(10)->get();
+        ->limit(10)
+        ->get();
 
         $data = [
             'places' => $places

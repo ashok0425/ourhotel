@@ -74,7 +74,7 @@ class CheckoutController extends Controller
         $booking->tax = $tax;
         $booking->payment_type = $request['payment_type'];
         $booking->room_type = $room->name;
-        $booking->booking_type = $request->is_hourly?'Hourly':'Day';
+        $booking->booking_type = $request->is_hourly==true?'Hourly':'Day';
         $booking->is_paid  = $request->is_paid ? 1 : 0;
         $booking->booked_by  = Auth::user()->id;
         $booking->status  = 2;

@@ -56,14 +56,12 @@
                         <th>
                             #
                         </th>
-                        <th>Bookin Id</th>
-                        <th>
-                           User Detail
-                        </th>
-
                         <th>
                             Hotel
                         </th>
+                        <th>
+                            User Detail
+                         </th>
 
                         <th>Detail</th>
                         <th>Amount</th>
@@ -85,9 +83,18 @@
                             <td>
                                 {{ $loop->iteration }}
                             </td>
-                            <td>
+
+                            <td class="text-wrap" style="max-width: 200px;">
+                                @if ($booking->property_id==0)
+                                   {{$booking->hotel_data['name']??''}}
+
+                                   @else
+                                   {{$booking->property?$booking->property->name:"Hotel Deleted"}}
+                                @endif
+                                <br>
                                 {{$booking->booking_id}}
-                            </td>
+                                  </td>
+
                             <td class="text-wrap" style="max-width: 200px;">
                           <div class="text-wrap">
 
@@ -104,19 +111,12 @@
                           </div>
                             </td>
 
-                            <td class="text-wrap" style="max-width: 200px;">
-                           @if ($booking->property_id==0)
-                              {{$booking->hotel_data['name']??''}}
 
-                              @else
-                              {{$booking->property?$booking->property->name:"Hotel Deleted"}}
-                           @endif
-                             </td>
                              <td>
                                 Room Type: {{$booking->room_type}}
 
                                 <br>
-                                Booking Type: {{$booking->booking_type?'Hourly':'Normal'}}
+                                Booking Type: {{$booking->booking_type}}
                                 <br>
                                No.of Adult: {{$booking->no_of_adult}}
                                 <br>

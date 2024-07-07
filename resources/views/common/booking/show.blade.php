@@ -80,7 +80,7 @@
                         Name
                     </td>
                     <td>
-                        {{$booking->property->owner?->name??$booking->hotel_data['name']}}
+                        {{$booking->property->owner?->name??$booking->hotel_data['name']??null}}
                     </td>
                 </tr>
                 <tr>
@@ -88,7 +88,7 @@
                         Phone
                     </td>
                     <td>
-                        {{$booking->property?->owner?->phone_number??$booking->hotel_data['phone_number']}}
+                        {{$booking->property?->owner?->phone_number??$booking->hotel_data['phone_number']?null}}
                     </td>
                 </tr>
 
@@ -134,7 +134,7 @@
 <tr>
     <td>Booking Type</td>
     <td class="text-wrap">
-        {{$booking->booking_type?'Hourly':'Normal'}}
+        {{$booking->booking_type}}
     </td>
 </tr>
 <tr>

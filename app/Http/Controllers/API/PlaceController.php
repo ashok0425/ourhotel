@@ -161,7 +161,11 @@ class PlaceController extends Controller
         $avg3 = Testimonial::where('property_id', $id)->where('rating',3)->avg('rating');
         $avg4 = Testimonial::where('property_id', $id)->where('rating',4)->avg('rating');
         $avg5 = Testimonial::where('property_id', $id)->where('rating',5)->avg('rating');
-
+        if($place->full_booked_from&&$place->full_booked_to){
+            $place['is_full_booked']=1;
+        }else{
+            $place['is_full_booked']=0;
+        }
         $data= [
             'place' => $place,
             'rooms' => $rooms,

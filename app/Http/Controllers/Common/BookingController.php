@@ -26,7 +26,7 @@ class BookingController extends Controller
            ->when($request->keyword,function($query) use ($request){
              $query->where('name','LIKE',"%$request->keyword%")->orwhere('phone_number',"%$request->keyword%")->orwhere('email',"%$request->keyword%");
           })
-          ->when(isset($request->status) && ($request->status||$request->status==0),function($query) use ($request){
+          ->when(isset($request->status),function($query) use ($request){
              $query->where('status',$request->status);
           })
           ->when($request->from&&$request->to,function($query) use ($request){

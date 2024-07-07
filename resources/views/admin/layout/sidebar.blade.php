@@ -60,7 +60,7 @@
         </a>
         <div class="collapse" id="booking-elements">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"><a class="nav-link" href="{{route('bookings.index',['status'=>0])}}">New Booking</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('bookings.index',['status'=>2])}}">New Booking</a></li>
             <li class="nav-item"><a class="nav-link" href="{{route('bookings.index')}}">All Booking</a></li>
 
           </ul>

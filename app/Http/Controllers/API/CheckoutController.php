@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Booking;
+use App\Models\Coupon;
 use App\Models\Property;
 use App\Models\Room;
 use App\Models\Tax;
@@ -20,8 +21,6 @@ class CheckoutController extends Controller
 
     public function store(Request $request) {
 
-
-
         $validator = Validator::make($request->all(), [
             'place_id' => 'required',
             'numbber_of_adult' => 'required',
@@ -31,11 +30,11 @@ class CheckoutController extends Controller
             'name' => 'required',
             'email' => 'required',
             'phone_number' => 'required',
-            'message' => '',
-            'type' => '',
+            'message' => 'nullable',
             'payment_type' => 'required',
             'amount'    =>  'required',
-            'discountPrice' => '',
+            'discountPrice' => 'nullable',
+            'is_hourly'=>'nullable',
             'TotalPrice' => 'required',
             'tax' => 'required',
             'number_of_room' => 'required'
@@ -51,10 +50,10 @@ class CheckoutController extends Controller
         }
 
         $room=Room::find($request['place_id']);
-        $price = Property::getPrice($$request->numbber_of_adult, $request->number_of_room, $room->id);
+        $price = Property::getPrice($request->numbber_of_adult, $request->number_of_room, $room->id);
         $taxes=Tax::where('price_min','<=',$price)->where('price_max','>=',$price)->value('percentage');
         $tax=($taxes*$price)/100;
-        $discount=session()->get('discount')?session()->get('discount.percent'):0||0;
+        $discount=Coupon::where('coupon_name',$request->coupon)->first()->coupon_percent??0;
         $discount_amount=number_format((int)$discount*(int)$price/100,0);
         $price_after_discount=(int)$price-(int)$discount_amount;
         $final_price=(int)$price_after_discount+(int)$tax;
@@ -75,7 +74,7 @@ class CheckoutController extends Controller
         $booking->tax = $tax;
         $booking->payment_type = $request['payment_type'];
         $booking->room_type = $room->name;
-        $booking->booking_type = $request['booking_type'];
+        $booking->booking_type = $request->is_hourly?'Hourly':'Day';
         $booking->is_paid  = $request->is_paid ? 1 : 0;
         $booking->booked_by  = Auth::user()->id;
         $booking->status  = 2;
@@ -84,9 +83,6 @@ class CheckoutController extends Controller
         $booking->name = $request->name??Auth::user()->name;
         $booking->email = $request->email;
         $booking->phone_number = $request->phone_number;
-
-
-
 
         return $this->success_response('Thanks for your hotel booking with NSN Hotels!',$booking);
 
@@ -127,18 +123,16 @@ class CheckoutController extends Controller
 
         $payment_id=$request->payment_id;
         $payment_mode='online';
-        $is_paid='paid';
         $booking_id=$request->booking_id;
         $order_id=$request->razorpay_order_id;
-     $booking=Booking::find($booking_id);
-     $booking->payment_id=$payment_id;
-     $booking->payment_type=$payment_mode;
-     $booking->is_paid=$is_paid;
-     $booking->payment_status=1;
-     $booking->razorpay_order_id=$order_id;
-
-$booking->save();
-        return $this->success_response('Booking Updated',$booking);
+      $booking=Booking::find($booking_id);
+      $booking->payment_id=$payment_id;
+      $booking->payment_type=$payment_mode;
+      $booking->is_paid=1;
+      $booking->payment_status=1;
+      $booking->razorpay_order_id=$order_id;
+      $booking->save();
+    return $this->success_response('Booking Updated',$booking);
 
 
     }

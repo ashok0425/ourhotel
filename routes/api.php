@@ -4,12 +4,8 @@ use App\Http\Controllers\API\CityController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\PlaceController;
 use App\Http\Controllers\API\PostController;
-use App\Http\Controllers\API\UpdateController;
-use App\Http\Controllers\API\BookingController;
 use App\Http\Controllers\Api\CheckoutController;
 use App\Http\Controllers\API\UserController;
-use App\Http\Controllers\ImageController;
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,9 +49,8 @@ $router->group([
         $router->get('/booking-list', [UserController::class, 'mybooking']);
         $router->get('/cancel-booking', [UserController::class, 'cancelBooking']);
         $router->get('/notifications', [UserController::class, 'notifications']);
-
-
     });
+
     $router->get('/download-invoice/{id}', [UserController::class, 'invoice']);
 
 });

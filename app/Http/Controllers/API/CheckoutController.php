@@ -2,37 +2,27 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Coupon;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Booking;
-use App\Models\Place;
-use App\Models\ReferelMoney;
+use App\Models\Property;
 use App\Models\Room;
+use App\Models\Tax;
 use Carbon\Carbon;
-use Razorpay\Api\Api;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Session;
-use Redirect;
+use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
 
 
     public function store(Request $request) {
-      $user=Auth()->user();
-        $request['user_id'] =$user->id;
-        $request['booking_id'] = 'NSN'.str_pad(rand(1,1000000),6,0);
-        $request['place_id']=Room::where('id',$request['place_id'])->value('hotel_id');
-        $request['booking_id'] = 'NSN'.str_pad(rand(1,1000000),6,0);
+
+
 
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required',
             'place_id' => 'required',
             'numbber_of_adult' => 'required',
             'numbber_of_children' => 'required',
@@ -57,60 +47,46 @@ class CheckoutController extends Controller
             foreach ($errors as $key => $value) {
                 $datas[]=$value[0];
             }
-
             return $this->error_response($datas,'',400);
         }
 
+        $room=Room::find($request['place_id']);
+        $price = Property::getPrice($$request->numbber_of_adult, $request->number_of_room, $room->id);
+        $taxes=Tax::where('price_min','<=',$price)->where('price_max','>=',$price)->value('percentage');
+        $tax=($taxes*$price)/100;
+        $discount=session()->get('discount')?session()->get('discount.percent'):0||0;
+        $discount_amount=number_format((int)$discount*(int)$price/100,0);
+        $price_after_discount=(int)$price-(int)$discount_amount;
+        $final_price=(int)$price_after_discount+(int)$tax;
+        $property = $room->property;
 
-        $request['amount'] = $request->amount;
-        $place = Place::find($request['place_id']);
-   $place_email =  User::where('id',$place->user_id)->first();
-   $data=$request->all();
         $booking = new Booking();
-        $booking->fill($data);
+        $booking->user_id = Auth::user()->id;
+        $booking->property_id = $property->id;
+        $booking->uuid = Str::uuid();
+        $booking->booking_id = Booking::getBookingId();
+        $booking->booking_start = $request['booking_start'];
+        $booking->booking_end = $request['booking_end'];
+        $booking->no_of_room = $request['number_of_room'];
+        $booking->no_of_adult = $request['numbber_of_adult'];
+        $booking->final_amount = $final_price;
+        $booking->total_price = $price;
+        $booking->discount = $discount_amount;
+        $booking->tax = $tax;
+        $booking->payment_type = $request['payment_type'];
+        $booking->room_type = $room->name;
+        $booking->booking_type = $request['booking_type'];
+        $booking->is_paid  = $request->is_paid ? 1 : 0;
+        $booking->booked_by  = Auth::user()->id;
+        $booking->status  = 2;
+        $booking->channel = 'App';
+        $booking->early_reason	 = $request->message;
+        $booking->name = $request->name??Auth::user()->name;
+        $booking->email = $request->email;
+        $booking->phone_number = $request->phone_number;
 
-        if ($booking->save()) {
-            $name = $request->name;
-            $email = $request->email;
-            $phone = $request->phone_number;
-            $start_date = $booking->booking_start;
-            $end_date = $booking->booking_end;
-            $numberofadult = $booking->numbber_of_adult;
-            $numberofchildren = $booking->numbber_of_children;
-            $book_id = $booking->id;
-            $text_message = "";
-            if($request->email){
-          Mail::send('frontend.mail.new_booking', [
-                'name' => $user->name,
-                'email' => $request->email,
-                'phone' => $request->phone_number,
-                'place' => $place->PlaceTrans->name,
-                'start_date' => $start_date,
-                'end_date' => $end_date,
-                'book_id' => $book_id,
-                'numberofadult' => $numberofadult,
-                'numberofchildren' => $numberofchildren,
-                'text_message' => $text_message,
-                'booking_at' => $booking->created_at
-            ], function ($message) use ($request,$place_email,$user) {
-                   $email = [$request->email,$place_email->email,'nsnhotels@gmail.com'];
-                $message->to($email, "{$user->name}")->subject('Booking from ' . $user->name);
-            });
-            }
-        }
-            # code...
-        $this->sendBookingMsg($phone,$place->PlaceTrans->name,$start_date,$end_date,$numberofadult,$booking->amount,$place->address,$booking->payment_type);
-        $this->sendBookingMsg($place_email->phone_number,$place->PlaceTrans->name,$start_date,$end_date,$numberofadult,$booking->amount,$place->address,$booking->payment_type);
-        $this->sendBookingMsg('9958277997',$place->PlaceTrans->name,$start_date,$end_date,$numberofadult,$booking->amount,$place->address,$booking->payment_type);
 
-// $ph=substr($phone,1);
-$data="Hotel Name:$place->name, Check-in Date:$start_date 12pm onwards, Check-out Date:$end_date 11 am, Number of Rooms:$booking->number_of_room, Number of Adult:-$numberofadult, Number of Children:-$numberofchildren, Booking Amount:$booking->amount, Hotel Address:$place->address";
-$map='map';
-        $this->whatsapp_review('977'.$phone, $user->name);
-       $res= $this->whatsapp_booking('977'.$phone,$request->name,$booking->booking_id,$data,$map);
-        $this->whatsapp_booking('91'.$phone,$request->name,$booking->booking_id,$data,$map);
-        $this->whatsapp_booking('91'.$place_email->phone_number,$request->name,$booking->booking_id,$data,$map);
-        $this->whatsapp_booking('919958277997',$request->name,$booking->booking_id,$data,$map);
+
 
         return $this->success_response('Thanks for your hotel booking with NSN Hotels!',$booking);
 

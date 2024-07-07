@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\FcmNotification;
 use App\Models\Place;
 use App\Models\ReferelMoney;
 use App\Models\User;
@@ -67,6 +68,13 @@ class UserController extends Controller
         $pdf = Pdf::loadView('common.booking.print', ['booking_id'=>$booking_id]);
         // return $pdf;
       return $pdf->download("$booking_id|invoice.pdf");
+    }
+
+    public function notifications(){
+       $notifications=FcmNotification::whereJsonContains('userIds',Auth::user()->id)->latest()->select('created_at','body')
+          ->limit(60)->get();
+        return $this->success_response('Notification fetched',$notifications);
+
     }
 
 }

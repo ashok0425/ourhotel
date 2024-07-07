@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class FcmNotification extends Model
 {
     use HasFactory;
+   protected  $casts=[
+        'userIds'=>'array'
+   ];
 }

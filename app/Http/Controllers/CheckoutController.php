@@ -96,7 +96,7 @@ $price=Property::getPrice($request->numbber_of_adult,$request->number_of_room,$r
     $booking->early_reason	 = $request->message;
     $booking->name = $request->first_name.' '.$request->last_name??Auth::user()->name;
     $booking->email = $request->email;
-    $booking->phone_number = $request->phone_code. '-'. $request->phone_number;
+    $booking->phone_number =$request->phone_number;
     $booking->save();
 
     dispatch(new BookingNotifyViaWP($booking->id));

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\ReferelMoney;
 use App\Notifications\sendOtp as SendotpNotification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 
@@ -167,7 +168,7 @@ class AuthController extends Controller
 
 
     public function deactiveAccount(Request $request){
-        $user=$this->getUserByApiToken($request);
+        $user=Auth::user();
         $user->status=3;
         $user->save();
         return $this->success_response('Account Deleted','');

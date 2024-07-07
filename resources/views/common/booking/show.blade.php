@@ -88,7 +88,7 @@
                         Phone
                     </td>
                     <td>
-                        {{$booking->property?->owner?->phone_number??$booking->hotel_data['phone_number']?null}}
+                        {{$booking->property?->owner?->phone_number??$booking->hotel_data['phone_number']??null}}
                     </td>
                 </tr>
 

@@ -39,7 +39,7 @@ class Property extends Model
     }
 
 
-    static function getPrice($number_of_adult, $number_of_room, $room_id,$ishourly=null)
+    static function getPrice($number_of_adult=1, $number_of_room=1, $room_id,$ishourly=0,$days=1)
     {
         $room = Room::find($room_id);
         $oneprice = $room->onepersonprice;
@@ -47,7 +47,7 @@ class Property extends Model
         $diffinprice = $room->threepersonprice ? $room->threepersonprice - $twoprice : $twoprice - $oneprice;
         $threeprice = $room->threepersonprice ? $room->threepersonprice : $twoprice + $diffinprice;
 
-        if ($ishourly) {
+        if ($ishourly==1) {
             $final_adult_price=$room->hourly_price * $number_of_room;
         }else{
         switch ($number_of_adult) {
@@ -166,7 +166,7 @@ class Property extends Model
         }
     }
 
-        return $final_adult_price;
+        return $final_adult_price*$days;
     }
 
 

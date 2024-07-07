@@ -107,10 +107,11 @@ class CheckoutController extends Controller
             return $this->error_response($datas,'',400);
         }
         $cp=DB::table('coupons')->where('coupon_name',$request->coupon)->where('status',1)->first();
+
         if (!$cp) {
             return $this->error_response('Invalid coupon','',400);
-
         }
+
         if($request->price<$cp->coupon_min){
             return $this->error_response("Total amount must be greater or equal to $cp->coupon_min inorder to apply coupon",'',400);
         }
@@ -126,12 +127,12 @@ class CheckoutController extends Controller
         $payment_mode='online';
         $booking_id=$request->booking_id;
         $order_id=$request->razorpay_order_id;
-      $booking=Booking::find($booking_id);
-      $booking->payment_id=$payment_id;
-      $booking->payment_type=$payment_mode;
-      $booking->is_paid=1;
-      $booking->payment_status=1;
-      $booking->razorpay_order_id=$order_id;
+        $booking=Booking::find($booking_id);
+        $booking->payment_id=$payment_id;
+       $booking->payment_type=$payment_mode;
+       $booking->is_paid=1;
+       $booking->payment_status=1;
+       $booking->razorpay_order_id=$order_id;
       $booking->save();
     return $this->success_response('Booking Updated',$booking);
 
@@ -139,6 +140,39 @@ class CheckoutController extends Controller
     }
 
 
+
+    function getRoomPrice(Request $request){
+
+        $no_of_room=$request->no_of_room??1;
+        $no_of_adult=$request->no_of_adult??1;
+        $days=$request->days??1;
+        $room_id=$request->room_id;
+        $hourly=$request->is_hourly??0;
+        $coupon=$request->coupon;
+
+
+        $actualprice=Property::getPrice($no_of_adult,$no_of_room,$room_id,$hourly,$days);
+
+
+         $tax_percent=taxes()->where('price_min','<=',$actualprice)->where('price_max','>=',$actualprice)->first()->percentage;
+
+         $tax=($actualprice*$tax_percent)/100;
+
+         $discount=0;
+         if($coupon!=null){
+            $discount_percent=coupons()->where('coupon_name',$coupon)->first()->coupon_percent??0;
+            $discount=number_format((int)$discount_percent*(int)$actualprice/100,0);
+         }
+
+        $data=[
+            'subtotal'=>$actualprice,
+             'tax'=>(int)$tax,
+             'discount'=>(int)$discount,
+             'total'=>(int)$actualprice+$tax-$discount,
+        ];
+        return $this->success_response('Booking Updated',$data);
+
+    }
 
 
 }

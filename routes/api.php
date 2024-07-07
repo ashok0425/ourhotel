@@ -40,6 +40,8 @@ $router->group([
     $router->post('verify/login', [AuthController::class, 'getLogin']);
     $router->get('customer/delete-account', [AuthController::class, 'deactiveAccount']);
     $router->get('/filter', [PlaceController::class, 'filter']);
+    $router->get('/getprice', [CheckoutController::class, 'getRoomPrice']);
+
 
     $router->middleware(['auth:sanctum'])->group(function () use ($router) {
         $router->post('/checkout', [CheckoutController::class, 'store']);

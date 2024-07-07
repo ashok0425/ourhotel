@@ -2,6 +2,7 @@
 
 use App\Models\Amenity;
 use App\Models\City;
+use App\Models\Tax;
 use App\Models\Testimonial;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
@@ -91,6 +92,18 @@ if (!function_exists('amentities')) {
         });
     }
 }
+
+
+if (!function_exists('taxes')) {
+    function taxes()
+    {
+      return  Cache::remember('taxes',604800, function () {
+            return Tax::all();
+        });
+    }
+}
+
+
 
 
 

@@ -51,7 +51,7 @@ class UserController extends Controller
         if(!$booking){
          return $this->error_response('Unauthorized','',400);
         }
-        // $booking->status=0;
+        $booking->status=0;
         $booking->cancel_reason=$request->cancel_reason;
 
         $booking->save();

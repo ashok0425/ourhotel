@@ -4,7 +4,7 @@ use App\Http\Controllers\API\CityController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\PlaceController;
 use App\Http\Controllers\API\PostController;
-use App\Http\Controllers\Api\CheckoutController;
+use App\Http\Controllers\API\CheckoutController;
 use App\Http\Controllers\API\UserController;
 
 /*

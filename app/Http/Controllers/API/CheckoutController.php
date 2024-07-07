@@ -83,6 +83,7 @@ class CheckoutController extends Controller
         $booking->name = $request->name??Auth::user()->name;
         $booking->email = $request->email;
         $booking->phone_number = $request->phone_number;
+        $booking->save();
 
         return $this->success_response('Thanks for your hotel booking with NSN Hotels!',$booking);
 

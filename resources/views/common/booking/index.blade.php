@@ -56,6 +56,7 @@
                         <th>
                             #
                         </th>
+                        <th>Bookin Id</th>
                         <th>
                            User Detail
                         </th>
@@ -83,6 +84,9 @@
                         <tr>
                             <td>
                                 {{ $loop->iteration }}
+                            </td>
+                            <td>
+                                {{$booking->booking_id}}
                             </td>
                             <td class="text-wrap" style="max-width: 200px;">
                           <div class="text-wrap">

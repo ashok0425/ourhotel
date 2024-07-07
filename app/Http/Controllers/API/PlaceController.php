@@ -220,11 +220,14 @@ class PlaceController extends Controller
         ->limit(10)
         ->get();
 
-        $data = [
-            'places' => $places
-        ];
 
-        return $this->success_response('NearBy hotel fetched', $data);
+        $places->map(function ($place) {
+            $amenityIds = $place->amenities;
+            $place->list_amenities = Amenity::whereIn('id', $amenityIds)->select('id', 'thumbnail as icon')->get();
+            return $place;
+        });
+
+        return $this->success_response('NearBy hotel fetched', ['places' => $places]);
     }
 
 

@@ -212,7 +212,7 @@ a:hover{
 <body>
 
     <div class="container" style="max-width: 800px;margin:3rem auto"><div class="well">
-        <x-error-msg/>
+        <x-errormsg/>
         <form action="#" method="POST">
             @csrf
           <hggroup>

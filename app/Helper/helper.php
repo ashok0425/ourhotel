@@ -138,7 +138,9 @@ if (!function_exists('getFinalPrice')) {
         $coupon = $request->coupon;
 
 
-        $actualprice = getPrice($no_of_adult, $no_of_room, $room_id, $hourly, $days);
+        $prices = getPrice($no_of_adult, $no_of_room, $room_id, $hourly, $days);
+        $actualprice=$prices['actualprice'];
+        $room_discount_percent=$prices['room_discount_percent'];
 
 
         $tax_percent = taxes()->where('price_min', '<=', $actualprice)->where('price_max', '>=', $actualprice)->first()->percentage;
@@ -151,7 +153,7 @@ if (!function_exists('getFinalPrice')) {
             $discount = number_format((int)$discount_percent * (int)$actualprice / 100, 0);
         }
 
-        $price_discount=$room->discount_percent??5;
+        $price_discount=$room_discount_percent??5;
         if ($price_discount) {
            $price_before_discount= number_format($price_discount * (int)$actualprice / 100, 0);
         }
@@ -297,6 +299,9 @@ if (!function_exists('getPrice')) {
         }
     }
 
-        return $final_adult_price*$days;
+        return [
+           'actualprice' =>$final_adult_price*$days,
+           'room_discount_percent'=>$room->discount_percent
+        ];
     }
 }

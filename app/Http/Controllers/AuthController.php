@@ -40,7 +40,7 @@ class AuthController extends Controller
 
     public function sendOtp(Request $request){
          dispatch(new SendOtp($request->phone_code,$request->phone_no));
-         return response()->json(0,200);
+         return response()->json(['otp sent'],200);
     }
 
     public function updatePassword(Request $request)

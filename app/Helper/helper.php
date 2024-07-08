@@ -151,11 +151,16 @@ if (!function_exists('getFinalPrice')) {
             $discount = number_format((int)$discount_percent * (int)$actualprice / 100, 0);
         }
 
+        $price_discount=$room->discount_percent??5;
+        if ($price_discount) {
+           $price_before_discount= number_format($price_discount * (int)$actualprice / 100, 0);
+        }
         $data = [
             'subtotal' => $actualprice,
             'tax' => (int)$tax,
             'discount' => (int)$discount,
             'total' => (int)$actualprice + $tax - $discount,
+            'mrp'=>$actualprice+$price_before_discount
         ];
 
         return $data;

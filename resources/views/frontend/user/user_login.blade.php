@@ -26,8 +26,8 @@
                                 <input type="text" class="form-control custominput" style="width:100%!important"
                                     name="phone_no" id="phone_no" placeholder="Type Number" maxlength="10" minlength="10"
                                     pattern="[1-9]{1}[0-9]{9}" autocomplete="off" required autofocus
-                                    @if (isset($_GET['phone'])) value="{{ $_GET['phone'] }}" @endif />
-                                <input type="hidden" name="phone_code" value="91" id="phone_code">
+                                     value="{{ isset($_GET['phone'])?$_GET['phone']:'' }}" />
+
 
                             </div>
 
@@ -71,9 +71,6 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-
-
-
             $('#resendotps').hide();
             $('.icon-container').hide();
             $("#phone_no").keydown(function(event) {
@@ -102,7 +99,6 @@
             $("#resendotps").text('Resend OTP');
         };
 
-        $('#referral_code').hide();
         $('.otp').hide();
         $.ajaxSetup({
             headers: {
@@ -123,15 +119,13 @@
                 type: 'post',
                 data: {
                     phone_no: $('#phone_no').val(),
-                    phone_code: $('#phone_code').val()
+                    phone_code: '91'
                 },
                 success: function(data) {
-                    console.log(data)
+
                     $('.icon-container').hide();
                     if (data != 0) {
-                        $('.otp').show();
-                        $('#resendotps').show();
-                        $('.send-otp').hide();
+
                         var counter = 120;
                         var interval = setInterval(function() {
                             counter--;
@@ -146,10 +140,10 @@
 
                             }
                         }, 1000);
-                        setInterval(resendButtonShow, 120000);
+
+                        setInterval(resendButtonShow,1000);
                     } else {
                         $('.otp').show();
-                        $('#referral_code').show();
                         $('.send-otp').hide();
 
                     }
@@ -193,7 +187,7 @@
         };
     </script>
 
-    <script>
+    {{-- <script>
         var input = document.querySelector("#phone_no");
         let inpuFiled = window.intlTelInput(input, {
             preferredCountries: ['in', 'np', 'us'],
@@ -204,5 +198,5 @@
             let code = inpuFiled.getSelectedCountryData()['dialCode'];
             $('#phone_code').val(code);
         })
-    </script>
+    </script> --}}
 @endpush

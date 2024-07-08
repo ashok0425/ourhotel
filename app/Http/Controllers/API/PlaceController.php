@@ -100,7 +100,7 @@ class PlaceController extends Controller
                 'id' => $amenity->id,
                 'icon' => $amenity->thumbnail,
             ];
-        });
+        })->values()->toArray();
         return $place;
     });
         return $this->success_response('Data ', $places);
@@ -148,7 +148,7 @@ class PlaceController extends Controller
                     'id' => $amenity->id,
                     'icon' => $amenity->thumbnail,
                 ];
-            });
+            })->values()->toArray();
             return $place;
         });
         return $this->success_response('Data fetched', $places, 200);
@@ -242,7 +242,7 @@ class PlaceController extends Controller
                     'id' => $amenity->id,
                     'icon' => $amenity->thumbnail,
                 ];
-            });
+            })->values()->toArray();
             return $place;
         });
 

@@ -99,7 +99,7 @@
                           <div class="text-wrap">
 
                                  @if (Auth::user()->is_admin)
-                                 BY:   <a href="">{{$booking->user?$booking->user->name:"User Deleted"}}</a>
+                                 BY:   <a href="{{route('admin.users.show',$booking->user)}}">{{$booking->user?$booking->user->name:"User Deleted"}}</a>
                                  @else
                                  {{$booking->user?$booking->user->name:"User Deleted"}}
                                  @endif
@@ -124,7 +124,16 @@
                                 <br>
                                 No.of Room: {{$booking->no_of_room}}
                             </td>
-                             <td>{{$booking->final_amount}}</td>
+                             <td>
+                               SubTotal: {{$booking->total_price}}
+                               <br>
+                               Tax: + {{$booking->tax}}
+                               <br>
+                               Discount: - {{$booking->discount}}
+                               <br>
+                               Final Amount: {{$booking->final_amount}}
+
+                            </td>
 
                              <td>
                                 {{-- ({{Carbon\Carbon::parse($booking->booked_hour_from)->format('G:i:A')}}) --}}

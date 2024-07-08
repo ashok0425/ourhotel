@@ -211,7 +211,7 @@
 
 <tr>
     <td>Discount</td>
-    <td>{{$booking->discount}}</td>
+    <td>{{$booking->discount}} ({{$booking->coupon_code}})</td>
 </tr>
 @endif
 <tr>
@@ -226,6 +226,14 @@
 <tr>
 <td>Payment status</td>
 <td>{{$booking->ispaid?'Paid':'Unpaid'}}</td>
+</tr>
+<tr>
+    <td>
+        Channel:
+    </td>
+    <td>
+       {{ucfirst($booking->channel)}}
+    </td>
 </tr>
 </table>
 </div>

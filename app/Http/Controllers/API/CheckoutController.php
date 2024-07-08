@@ -19,7 +19,8 @@ class CheckoutController extends Controller
 {
 
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             'place_id' => 'required',
@@ -34,29 +35,42 @@ class CheckoutController extends Controller
             'payment_type' => 'required',
             'amount'    =>  'required',
             'discountPrice' => 'nullable',
-            'is_hourly'=>'nullable',
+            'is_hourly' => 'nullable',
             'TotalPrice' => 'required',
             'tax' => 'required',
             'number_of_room' => 'required'
         ]);
 
         if ($validator->fails()) {
-            $errors=$validator->errors()->messages();
-            $datas=[];
+            $errors = $validator->errors()->messages();
+            $datas = [];
             foreach ($errors as $key => $value) {
-                $datas[]=$value[0];
+                $datas[] = $value[0];
             }
-            return $this->error_response($datas,'',400);
+            return $this->error_response($datas, '', 400);
         }
 
-        $room=Room::find($request['place_id']);
-        $price = Property::getPrice($request->numbber_of_adult, $request->number_of_room, $room->id);
-        $taxes=Tax::where('price_min','<=',$price)->where('price_max','>=',$price)->value('percentage');
-        $tax=($taxes*$price)/100;
-        $discount=Coupon::where('coupon_name',$request->coupon)->first()->coupon_percent??0;
-        $discount_amount=number_format((int)$discount*(int)$price/100,0);
-        $price_after_discount=(int)$price-(int)$discount_amount;
-        $final_price=(int)$price_after_discount+(int)$tax;
+        $room = Room::find($request['place_id']);
+        $date1 = Carbon::parse($request->booking_start);
+        $date2 = Carbon::parse($request->booking_end);
+
+        $differenceInDays = $date1->diffInDays($date2);
+        $params = [
+            'room_id' => $room->id,
+            'no_of_room' => $request->number_of_room,
+            'no_of_adult' => $request->numbber_of_adult,
+            'days' => $differenceInDays,
+            'hourly' => $request->is_hourly,
+            'coupon' => $request->coupon,
+        ];
+
+        $prices = getFinalPrice(new Request($params));
+        $price=$prices['subtotal'];
+        $final_price=$prices['total'];
+        $discount=$prices['discount'];
+        $tax=$prices['tax'];
+
+
         $property = $room->property;
 
         $booking = new Booking();
@@ -70,110 +84,80 @@ class CheckoutController extends Controller
         $booking->no_of_adult = $request['numbber_of_adult'];
         $booking->final_amount = $final_price;
         $booking->total_price = $price;
-        $booking->discount = $discount_amount;
+        $booking->discount = $discount;
+        $booking->coupon_code = $request->coupon;
         $booking->tax = $tax;
         $booking->payment_type = $request['payment_type'];
         $booking->room_type = $room->name;
-        $booking->booking_type = $request->is_hourly==true?'Hourly':'Day';
+        $booking->booking_type = $request->is_hourly == true ? 'Hourly' : 'Day';
         $booking->is_paid  = $request->is_paid ? 1 : 0;
         $booking->booked_by  = Auth::user()->id;
         $booking->status  = 2;
         $booking->channel = 'App';
-        $booking->early_reason	 = $request->message;
-        $booking->name = $request->name??Auth::user()->name;
+        $booking->early_reason     = $request->message;
+        $booking->no_of_night     = $differenceInDays;
+        $booking->name = $request->name ?? Auth::user()->name;
         $booking->email = $request->email;
         $booking->phone_number = $request->phone_number;
         $booking->save();
 
-        return $this->success_response('Thanks for your hotel booking with NSN Hotels!',$booking);
-
+        return $this->success_response('Thanks for your hotel booking with NSN Hotels!', $booking);
     }
 
 
-    public function Coupon(Request $request){
-         // $response = array();
-         $validator = Validator::make($request->all(), [
+    public function Coupon(Request $request)
+    {
+        // $response = array();
+        $validator = Validator::make($request->all(), [
             'coupon' => 'required',
             'price' => 'required',
         ]);
 
         if ($validator->fails()) {
-            $errors=$validator->errors()->messages();
-            $datas=[];
+            $errors = $validator->errors()->messages();
+            $datas = [];
             foreach ($errors as $key => $value) {
-                $datas[]=$value[0];
+                $datas[] = $value[0];
             }
 
-            return $this->error_response($datas,'',400);
+            return $this->error_response($datas, '', 400);
         }
-        $cp=DB::table('coupons')->where('coupon_name',$request->coupon)->where('status',1)->first();
+        $cp = DB::table('coupons')->where('coupon_name', $request->coupon)->where('status', 1)->first();
 
         if (!$cp) {
-            return $this->error_response('Invalid coupon','',400);
+            return $this->error_response('Invalid coupon', '', 400);
         }
 
-        if($request->price<$cp->coupon_min){
-            return $this->error_response("Total amount must be greater or equal to $cp->coupon_min inorder to apply coupon",'',400);
+        if ($request->price < $cp->coupon_min) {
+            return $this->error_response("Total amount must be greater or equal to $cp->coupon_min inorder to apply coupon", '', 400);
         }
-        return $this->success_response('Coupon applied successfully.',$cp);
-
+        return $this->success_response('Coupon applied successfully.', $cp);
     }
 
 
 
-    public function updateAfterPayment(Request $request){
+    public function updateAfterPayment(Request $request)
+    {
 
-        $payment_id=$request->payment_id;
-        $payment_mode='online';
-        $booking_id=$request->booking_id;
-        $order_id=$request->razorpay_order_id;
-        $booking=Booking::find($booking_id);
-        $booking->payment_id=$payment_id;
-       $booking->payment_type=$payment_mode;
-       $booking->is_paid=1;
-       $booking->payment_status=1;
-       $booking->razorpay_order_id=$order_id;
-      $booking->save();
-    return $this->success_response('Booking Updated',$booking);
-
-
+        $payment_id = $request->payment_id;
+        $payment_mode = 'online';
+        $booking_id = $request->booking_id;
+        $order_id = $request->razorpay_order_id;
+        $booking = Booking::find($booking_id);
+        $booking->payment_id = $payment_id;
+        $booking->payment_type = $payment_mode;
+        $booking->is_paid = 1;
+        $booking->payment_status = 1;
+        $booking->razorpay_order_id = $order_id;
+        $booking->save();
+        return $this->success_response('Booking Updated', $booking);
     }
 
 
 
-    function getRoomPrice(Request $request){
-
-        $no_of_room=$request->no_of_room??1;
-        $no_of_adult=$request->no_of_adult??1;
-        $days=$request->days??1;
-        $room_id=$request->room_id;
-        $hourly=$request->is_hourly??0;
-        $coupon=$request->coupon;
-
-
-        $actualprice=Property::getPrice($no_of_adult,$no_of_room,$room_id,$hourly,$days);
-
-
-         $tax_percent=taxes()->where('price_min','<=',$actualprice)->where('price_max','>=',$actualprice)->first()->percentage;
-
-         $tax=($actualprice*$tax_percent)/100;
-
-         $discount=0;
-         if($coupon!=null){
-            $discount_percent=coupons()->where('coupon_name',$coupon)->first()->coupon_percent??0;
-            $discount=number_format((int)$discount_percent*(int)$actualprice/100,0);
-         }
-
-        $data=[
-            'subtotal'=>$actualprice,
-             'tax'=>(int)$tax,
-             'discount'=>(int)$discount,
-             'total'=>(int)$actualprice+$tax-$discount,
-        ];
-        return $this->success_response('Booking Updated',$data);
-
+    function getRoomPrice(Request $request)
+    {
+        $data=getFinalPrice($request);
+        return $this->success_response('Booking Updated', $data);
     }
-
-
 }
-

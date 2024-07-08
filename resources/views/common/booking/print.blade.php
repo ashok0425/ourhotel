@@ -234,7 +234,7 @@
                                                         Discount:
                                                     </td>
                                                     <td style="font-size: 14px; line-height: 18px; color: #666666; width: 130px; text-align: right;">
-                                                        {{$booking->discount}}
+                                                        {{$booking->discount}} ({{$booking->coupon_code}})
                                                     </td>
                                                 </tr>
                                                 @endif
@@ -261,7 +261,7 @@
                                                         Channel:
                                                     </td>
                                                     <td style="font-size: 14px; font-weight: bold; line-height: 18px; color: #666666; text-align: right;">
-                                                       {{ucfirst($booking->channel??'Web')}}
+                                                       {{ucfirst($booking->channel)}}
                                                     </td>
                                                 </tr>
 

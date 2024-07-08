@@ -95,7 +95,12 @@ class PlaceController extends Controller
 
     $places->map(function ($place) {
         $amenityIds = $place->amenities;
-        $place->list_amenities = Amenity::whereIn('id', $amenityIds??[])->select('id', 'thumbnail as icon')->get();
+        $place->list_amenities = amentities()->whereIn('id', $amenityIds)->map(function($amenity) {
+            return [
+                'id' => $amenity->id,
+                'icon' => $amenity->thumbnail,
+            ];
+        });
         return $place;
     });
         return $this->success_response('Data ', $places);
@@ -138,7 +143,12 @@ class PlaceController extends Controller
 
         $places->map(function ($place) {
             $amenityIds = $place->amenities;
-            $place->list_amenities = Amenity::whereIn('id', $amenityIds)->select('id', 'thumbnail as icon')->get();
+            $place->list_amenities = amentities()->whereIn('id', $amenityIds)->map(function($amenity) {
+                return [
+                    'id' => $amenity->id,
+                    'icon' => $amenity->thumbnail,
+                ];
+            });
             return $place;
         });
         return $this->success_response('Data fetched', $places, 200);
@@ -227,7 +237,12 @@ class PlaceController extends Controller
 
         $places->map(function ($place) {
             $amenityIds = $place->amenities;
-            $place->list_amenities = Amenity::whereIn('id', $amenityIds)->select('id', 'thumbnail as icon')->get();
+            $place->list_amenities =  amentities()->whereIn('id', $amenityIds)->map(function($amenity) {
+                return [
+                    'id' => $amenity->id,
+                    'icon' => $amenity->thumbnail,
+                ];
+            });
             return $place;
         });
 

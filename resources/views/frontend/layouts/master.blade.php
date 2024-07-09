@@ -8,16 +8,8 @@
     <meta name="robots" content="index, no-follow" />
     <link rel="icon" sizes="16x16" href="{{ getImageUrl(setting('logo')) }}">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+    @include('frontend.layouts.seo');
 
-    @if (url()->current() == '/')
-        <title>Home - NSN Hotels</title>
-        <meta name="title" content="The Best Top 10 Online Hotel Booking Websites" />
-        <meta name="keyword"
-            content="Best online hotel booking site, online hotel booking sites, online hotel booking websites, websites to book hotels" />
-        <meta name="description"
-            content="NSN Hotels provides the best online hotel booking site in India. Get the best hotel prices and huge discounts on your online hotel bookings. It is also very easy to use.
-            both done" />
-    @endif
 
     <link rel="preload stylesheet" href="{{ filepath('frontend/css/bootstrap.css') }}" as="style" type="text/css"
         onload="this.rel='stylesheet'">
@@ -26,7 +18,6 @@
         <link rel="preload stylesheet" href="{{ asset('splide.css') }}" as="style">
     @endif
 
-    <meta name="twitter:card" content="summary_large_image">
     <link rel="preload stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
         as="style">
     <link href="{{ filepath('frontend/css/daterangepicker.css') }}" rel="preload stylesheet" as="style" />
@@ -105,6 +96,9 @@
         }
         .bg-purple{
             background-color: #5f319c!important;
+        }
+        :root{
+            --color-secondary:#1d4783;
         }
     </style>
     @stack('style')

@@ -75,7 +75,7 @@ class User extends Authenticatable
 
    public static function HandleRefer($referral_code,$userid){
     $refer = str_replace("NSN", "", $referral_code);
-    $referl_price = ReferPrice::first();
+      $referl_price = ReferPrice::first();
     // for share amount
     $referl_money = new ReferelMoney();
     $referl_money->user_id = $refer;
@@ -91,6 +91,8 @@ class User extends Authenticatable
     $join_money->refewrel_type = '1';
     $join_money->referel_code = $referral_code;
     $join_money->save();
+
+    return true;
    }
 
 }

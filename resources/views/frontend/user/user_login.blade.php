@@ -18,46 +18,46 @@
                             alt="NSN Hotels Login" />
                     </div>
                     <div class="col-md-6">
-                        <form class="loginform" method="POST" id="loginotpform" name="loginotpform">
+                        <form class="loginform" method="POST" id="loginotpform" name="loginotpform" style="width: 100%">
                             @csrf
-                            <p class="login-title">Please enter your phone to continue</p>
-                            <div class="form-group ">
-
-                                <input type="text" class="form-control custominput" style="width:100%!important"
-                                    name="phone_no" id="phone_no" placeholder="Type Number" maxlength="10" minlength="10"
+                            <p class="login-title">Signin to continue</p>
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <select name="phone_code" id="phone_code" class="form-select input-group-text text-white bg-purple" style="border:2px solid #6838af">
+                                        <option value="91">+91</option>
+                                        <option value="977">+977</option>
+                                    </select>
+                                    </div>
+                                    <input type="text" class="form-control px-3" aria-describedby="basic-addon1"  name="phone_no" id="phone_no" placeholder="Enter your phone number" maxlength="10" minlength="10"
                                     pattern="[1-9]{1}[0-9]{9}" autocomplete="off" required autofocus
-                                     value="{{ isset($_GET['phone'])?$_GET['phone']:'' }}" />
+                                    value="{{ isset($_GET['phone'])?$_GET['phone']:'' }}" style="border-bottom:2px solid #6838af" >
 
-
+                                  </div>
                             </div>
 
                             <div class="form-group otp">
-                                <input type="tel" inputmode="numeric" style="min-width:100%!important"
-                                    class="form-control" name="otp" id="otp" placeholder="One Time Password" />
-                                <div class="icon-container">
-                                    <i class="loader"></i>
-                                </div>
+                                <input type="tel" inputmode="numeric"
+                                    class="form-control" name="otp" id="otp" placeholder="One Time Password" style="border-bottom:2px solid #6838af" />
+
                                 <span id="errorMsg"></span>
                             </div>
 
 
                             <div class="form-group otp">
                                 <button type="button" onclick="otpSubmit()"
-                                    class="btn commonbtn bluebtn text-white">{{ __('Login') }}</button>
-
-
+                                    class="btn commonbtn bg-purple text-white">{{ __('Login') }}</button>
                             </div>
-                            <button class="btn btn-info text-white" id="resendotps"
-                                onclick="sendOtp(event)">{{ __('Resend Otp') }}</button>
+                            <button class="btn custom-bg-primary  text-white" id="resendotps"
+                                onclick="sendOtp(event)">Resend Otp</button>
                             <div class="form-group send-otp">
-                                <button class="btn commonbtn bluebtn text-white" id="login"
-                                    onclick="sendOtp(event)">{{ __('Send Otp') }}</button>
-
+                                <button class="btn commonbtn bg-purple text-white" id="login"
+                                    onclick="sendOtp(event)">Send Otp</button>
                             </div>
+
                             <div class="form-group">
                                     <a href="{{ route('login_social', 'google') }}" class="btn custom-fw-600 btn-danger d-block btn-block text-center w-100">
-                                        <span
-                                                class="fab fa-google"></span> SignIn with Google</a>
+                                        <span   class="fab fa-google"></span> SignIn with Google</a>
                             </div>
                         </form>
                     </div>
@@ -71,6 +71,7 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+
             $('#resendotps').hide();
             $('.icon-container').hide();
             $("#phone_no").keydown(function(event) {
@@ -79,15 +80,10 @@
                         keycode == 39 || (keycode >= 48 && keycode <= 57)))) {
                     event.preventDefault();
                 }
-                //Reference the Button.
                 var btnSubmit = document.getElementById("login");
-
-                //Verify the TextBox value.
                 if (phone_no.value.trim() != "") {
-                    //Enable the TextBox when TextBox has value.
                     btnSubmit.disabled = false;
                 } else {
-                    //Disable the TextBox when TextBox is empty.
                     btnSubmit.disabled = true;
                 }
             });
@@ -99,6 +95,7 @@
             $("#resendotps").text('Resend OTP');
         };
 
+        $('#referral_code').hide();
         $('.otp').hide();
         $.ajaxSetup({
             headers: {
@@ -119,13 +116,12 @@
                 type: 'post',
                 data: {
                     phone_no: $('#phone_no').val(),
-                    phone_code: '91'
+                    phone_code: $('#phone_code').val()
                 },
                 success: function(data) {
-
-                    $('.icon-container').hide();
-                    if (data != 0) {
-
+                    $('.otp').show();
+                    $('.send-otp').hide();
+                    $('#resendotps').show();
                         var counter = 120;
                         var interval = setInterval(function() {
                             counter--;
@@ -140,13 +136,8 @@
 
                             }
                         }, 1000);
+                        setInterval(resendButtonShow, 120000);
 
-                        setInterval(resendButtonShow,1000);
-                    } else {
-                        $('.otp').show();
-                        $('.send-otp').hide();
-
-                    }
                 },
                 error: function(jqXHR) {
                     var response = $.parseJSON(jqXHR.responseText);
@@ -187,16 +178,4 @@
         };
     </script>
 
-    {{-- <script>
-        var input = document.querySelector("#phone_no");
-        let inpuFiled = window.intlTelInput(input, {
-            preferredCountries: ['in', 'np', 'us'],
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-
-        });
-        $(document).on('click', '.iti__country', function() {
-            let code = inpuFiled.getSelectedCountryData()['dialCode'];
-            $('#phone_code').val(code);
-        })
-    </script> --}}
 @endpush

@@ -13,6 +13,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\HotelReviewController;
@@ -62,13 +63,11 @@ Route::post('/page/contact', [HomeController::class, 'sendContact'])->name('page
 Route::get('/page/landing/{page_number}', [HomeController::class, 'pageLanding'])->name('page_landing');
 
 Route::get('/hotels/{slug}/{id?}', [PlaceController::class, 'detail'])->name('place_detail');
-Route::get('/become-a-partner', [PlaceController::class, 'pageAddNew'])->name('become_a_partner');
-Route::get('/edit-place/{id}', [PlaceController::class, 'pageAddNew'])->name('place_edit')->middleware('auth');
+Route::get('/become-a-partner', [EnquiryController::class, 'becomePartner'])->name('become_a_partner');
+Route::post('/become-a-partner', [PlaceController::class, 'becomePartner']);
 
 Route::get('/near-by-hotels', [PlaceController::class, 'nearByHotels'])->name('near_by_hotels');
 
-Route::post('/place', [PlaceController::class, 'create'])->name('place_create');
-Route::put('/place', [PlaceController::class, 'update'])->name('place_update')->middleware('auth');
 Route::get('/places/filter', [PlaceController::class, 'getListFilter'])->name('place_get_list_filter');
 
 Route::group(['middleware'=>'auth','prefix'=>'user'], function () {
@@ -86,6 +85,7 @@ Route::group(['middleware'=>'auth','prefix'=>'user'], function () {
     Route::post('bookings/cancel', [BookingController::class, 'cancelBooking'])->name('cancel_booking');
 });
 
+Route::redirect('/login','/user/login',301);
 
 Route::group(['middleware'=>'guest','prefix'=>'user'], function () {
 

@@ -96,7 +96,7 @@
         <div class="collapse" id="general-elements">
           <ul class="nav flex-column sub-menu">
             <li class="nav-item"><a class="nav-link" href="{{route('admin.blogs.index')}}">Blog</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{route('admin.banners.index')}}">Banner</a></li>
+            {{-- <li class="nav-item"><a class="nav-link" href="{{route('admin.banners.index')}}">Banner</a></li> --}}
             <li class="nav-item"><a class="nav-link" href="{{route('admin.websites.edit',1)}}">cms</a></li>
             <li class="nav-item"><a class="nav-link" href="{{route('admin.faqs.index')}}">FAQ</a></li>
 
@@ -104,11 +104,23 @@
         </div>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('admin.enquires.index')}}">
+          <i class="fas fa-users menu-icon"></i>
+          <span class="menu-title">Request/Enquiry</span>
+        </a>
+      </li>
 
       <li class="nav-item">
         <a class="nav-link" href="{{route('admin.coupons.index')}}">
-          <i class="fas fa-envelope menu-icon"></i>
+          <i class="fas fa-bell menu-icon"></i>
           <span class="menu-title">Offers</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('admin.fcms.index')}}">
+          <i class="fas fa-envelope menu-icon"></i>
+          <span class="menu-title">Fcm Notification</span>
         </a>
       </li>
 
@@ -128,6 +140,16 @@
         </div>
       </li>
      @endif
+
+     @if (Auth::user()->isisSeoExpert||Auth::user()->is_admin)
+     <li class="nav-item">
+        <a class="nav-link" href="{{route('seos.index')}}">
+          <i class="fas fa-envelope menu-icon"></i>
+          <span class="menu-title">Seo</span>
+        </a>
+      </li>
+     @endif
+
     </ul>
 
   </nav>

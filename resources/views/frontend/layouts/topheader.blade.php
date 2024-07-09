@@ -46,14 +46,14 @@
                             <li class="nav-item custom-fs-16 custom-fw-700 mx-md-3">
                                 <span>
                                     <a href="https://nsnwedding.in/"
-                                        class="custom-bg-secondary custom-border-radius-20  text-white py-2 px-3">
+                                        class="custom-bg-primary custom-border-radius-20  text-white py-2 px-3">
                                         <i class="fas fa-briefcase"></i> <span class="profilename">Book Your Events</span>
                                     </a>
                                 </span>
                             </li>
                             <li class="nav-item custom-fs-16 custom-fw-700 mx-md-3 d-none d-md-inline-block">
                                 <a href="{{ route('become_a_partner') }}"
-                                    class="nav-link custom-bg-primary custom-border-radius-20  text-white py-2 px-3"
+                                    class="nav-link bg-purple custom-border-radius-20  text-white py-2 px-3"
                                     title="Become A Partner"><i class="fas fa-money-check"></i>
                                     <span>{{ __('List Your Property') }}</span></a>
                             </li>
@@ -105,7 +105,7 @@
                             </li>
                             <li class="nav-item custom-fs-16 custom-fw-700 mx-md-3">
                                 <a href="{{ route('become_a_partner') }}"
-                                    class="nav-link custom-bg-primary custom-border-radius-20  text-white py-2 px-3 nav-link"
+                                    class="nav-link bg-purple custom-border-radius-20  text-white py-2 px-3 nav-link"
                                     title="Become A Partner"><i class="fas fa-money-check"></i>
                                     <span>{{ __('List Your Property') }}</span></a>
                             </li>

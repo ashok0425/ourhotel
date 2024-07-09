@@ -36,6 +36,11 @@ class PlaceController extends Controller
             ->where('city_id', $city->id)
             ->where('id', '!=', $place->id)->limit(4)->get();
 
+            $seo=[
+                'title'=>$place->meta_title,
+                'description'=>$place->meta_description,
+                'keywords'=>$place->meta_keywords,
+            ];
 
         return view("frontend.place.place_detail_01", [
             'place'            => $place,
@@ -45,48 +50,12 @@ class PlaceController extends Controller
             'categories'       => $categories,
             'place_types'      => $place_types,
             'similar_places'   => $similar_places,
+            'seo'=>$seo
         ]);
 
     }
 
 
-    public function pageAddNew()
-    {
-
-
-        $countries  = State::all();
-        $cities     = City::all();
-
-        $place_types = PropertyType::query()
-            ->get();
-
-            $categories = Category::query()
-            ->get();
-
-        return view('frontend.place.place_addnew', [
-            'countries'   => $countries,
-            'cities'      => $cities,
-            'place_types' => $place_types,
-            'categories'=>$categories
-        ]);
-    }
-
-
-    public function create(Request $request)
-    {
-        dd($request->all());
-        $request->validate(
-            ['partner_name'=>'required',
-            'partner_name'=>'required',
-            'address'=>'required',
-            'email'=>'required|unique:users,email',
-            'phone_number'=>'required|unique:users,phone_number'
-            ]
-        );
-
-
-
-    }
 
 
 }

@@ -9,10 +9,12 @@ use App\Http\Controllers\Common\BookingController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\FcmNotificationController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Common\PropertyController;
 use App\Http\Controllers\Admin\PropertyTypeController;
 use App\Http\Controllers\Admin\ReferPriceController;
+use App\Http\Controllers\Admin\SeoController;
 use App\Http\Controllers\Common\RoomController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\StateController;
@@ -40,8 +42,12 @@ Route::middleware('isadmin')->prefix('admin')->name('admin.')->group(function(){
     Route::resource('users', UserController::class);
     Route::resource('coupons', CouponController::class);
     Route::resource('refer_prices', ReferPriceController::class);
+    Route::resource('fcms', FcmNotificationController::class);
     Route::get('refer_moneys', [ReferPriceController::class,'referMoney'])->name('refer_moneys');
 });
+
+Route::resource('seos', SeoController::class);
+
 
 Route::middleware(['ispartner','isactive'])->group(function(){
     Route::get('dashboard',[AuthController::class,'dashboard'])->name('dashboard');
@@ -56,4 +62,5 @@ Route::middleware(['ispartner','isactive'])->group(function(){
     Route::resource('tour_bookings', TourBookingController::class);
     Route::post('tour_bookings/status', [TourBookingController::class,'update'])->name('tour_bookings.status');
 });
+
 });

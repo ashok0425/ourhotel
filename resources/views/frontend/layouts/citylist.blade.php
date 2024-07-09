@@ -1,6 +1,6 @@
 <!--Special drop down menu start-->
 <div class="dropdownspmenu">
-    <div class="navbarsp row mx-0 px-5">
+    <div class="row mx-0 px-5" style="background:  rgba(6, 119, 160, 0.8)">
         @foreach (popular_cities()->take(8) as $city)
             <div class="dropdown col">
                 <button class="dropbtn">{{ $city->name }}

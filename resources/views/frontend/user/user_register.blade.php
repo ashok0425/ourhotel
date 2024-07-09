@@ -20,42 +20,50 @@
                     <div class="col-md-6">
                         {{-- display error message  --}}
 
-                        <form class="loginform" method="POST" action="{{ route('user_register') }}">
+                        <form class="loginform" method="POST" action="{{ route('user_register') }}" style="width:100%">
                             @csrf
-                            <p class="login-title">Please fill the below form to continue...</p>
+                            <p class="login-title">Signup  to continue</p>
                             <x-errormsg/>
-
-                            <div class="form-group otp">
-                                <input type="text" style="min-width:100%!important" class="form-control" name="name"
-                                    placeholder="Enter Your Full Name" required value="{{ old('name') }}" />
+                      <div class="form-group otp" >
+                                <input type="text" class="form-control" name="name"
+                                    placeholder="Enter Your Full Name" required value="{{ old('name') }}" style="border-bottom:2px solid #6838af"  />
                             </div>
-
-                            <div class="form-group otp">
+                      {{-- <div class="form-group otp">
                                 <input type="email" style="min-width:100%!important" class="form-control" name="email"
                                     required placeholder="Enter Your Email Address" value="{{ old('email') }}" />
-                            </div>
+                            </div> --}}
 
                             <div class="form-group ">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <select name="phone_code" id="phone_code" class="form-select input-group-text text-white bg-purple" style="border:2px solid #6838af">
+                                        <option value="91">+91</option>
+                                        <option value="977">+977</option>
+                                    </select>
+                                    </div>
+                                    <input type="text" class="form-control px-3" aria-describedby="basic-addon1"  name="phone_no" id="phone_no" placeholder="Enter your phone number" maxlength="10" minlength="10"
+                                    pattern="[1-9]{1}[0-9]{9}" autocomplete="off" required autofocus
+                                    value="{{ isset($_GET['phone'])?$_GET['phone']:'' }}" style="border-bottom:2px solid #6838af" >
 
-                                <input type="text" class="form-control custominput" style="min-width:100%!important"
-                                    name="phone_no" id="phone_no" placeholder="Type Number" maxlength="10" minlength="10"
-                                    pattern="[1-9]{1}[0-9]{9}" autocomplete="off" required value="{{ old('phone_no') }}" />
+                                  </div>
                             </div>
 
 
                             <div class="form-group otp">
-                                <input type="hidden" id="phone_code" value="91" name="phone_code">
+                                @if (isset($_GET['q']))
+                                <label for="">Referral Code (optional)</label>
+                                @endif
 
-                                <input type="text" style="min-width:100%!important" class="form-control"
-                                    name="referral_code" placeholder="Referral Code (optional)"
-                                    value=" @if (isset($_GET['q'])) {{ $_GET['q'] }}
-                            @else {{ old('referral_code')??'Referral Code (optional)' }} @endif
-                            "  {{isset($_GET['q'])?'readonly':''}} />
+                                @php
+                                    $q=$_GET['q']??null;
+                                @endphp
+                                <input type="text" class="form-control"
+                                    name="referral_code" placeholder="Referral Code (optional"
+                                    {{isset($_GET['q']) ? 'value='.$q.'':''}}  {{isset($_GET['q'])?'readonly':''}} style="border-bottom:2px solid #6838af"/>
                             </div>
 
                             <div class="form-group otp">
-                                <button type="submit" class="btn commonbtn bluebtn text-white">{{ __('SignUp') }}</button>
-
+                                <button type="submit" class="btn commonbtn bg-purple custom-fw-600 text-white">{{ __('SignUp') }}</button>
                             </div>
 
 
@@ -68,18 +76,3 @@
 
 
 @stop
-
-@push('scripts')
-    <script>
-        var input = document.querySelector("#phone_no");
-        let inpuFiled = window.intlTelInput(input, {
-            preferredCountries: ['in', 'np', 'us'],
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-
-        });
-        $(document).on('click', '.iti__country', function() {
-            let code = inpuFiled.getSelectedCountryData()['dialCode'];
-            $('#phone_code').val(code);
-        })
-    </script>
-@endpush

@@ -70,12 +70,7 @@ class AuthController extends Controller
 
     public function loginPage()
     {
-
-        if (Auth::user() == null) {
-            return view("frontend.user.user_login");
-        } else {
-            return redirect('/');
-        }
+     return view("frontend.user.user_login");
     }
 
 
@@ -89,21 +84,23 @@ class AuthController extends Controller
     public function registerStore(Request $request)
     {
         $request->validate([
-            'email' => 'email|required|unique:users',
             'phone_no' => 'required|unique:users,phone_number',
             'name' => 'required',
         ]);
         try {
-            //code...
 
             $new = new User;
             $new->phone_number = $request->phone_no;
             $new->name = $request->name;
-            $new->email = $request->email;
+            // $new->email = $request->email;
             $new->save();
 
             if ($request->referral_code) {
-                $new::HandleRefer($request->referral_code,$new->id);
+                $refer = str_replace("NSN", "", $request->referral_code);
+                if(!User::where('id',$refer)->first()){
+                    return back()->withErrors(['refer'=>'Invalid referral code']);
+                }
+                $res=$new::HandleRefer($request->referral_code,$new->id);
             }
 
             $notification = array(
@@ -135,7 +132,7 @@ class AuthController extends Controller
             User::where('phone_number', '=', $request->phone_no)->update(['otp' => null]);
 
                 if ($request->referral_code) {
-                    $user::HandleRefer($request->referral_code,$new->id);
+                    $user::HandleRefer($request->referral_code,$user->id);
                 }
             return redirect('/');
         } else {

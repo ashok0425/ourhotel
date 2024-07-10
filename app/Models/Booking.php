@@ -10,7 +10,8 @@ class Booking extends Model
     use HasFactory;
 
     protected $casts=[
-        'hotel_data'=>'array'
+        'hotel_data'=>'array',
+        'total_price'=>'string'
     ];
 
     public function user(){

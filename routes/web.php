@@ -3,20 +3,15 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Common\PropertyController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\WebHookController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BookingController;
-use App\Http\Controllers\SitemapController;
-use App\Http\Controllers\CityController;
 use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\ResetPasswordController;
-use App\Http\Controllers\HotelReviewController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\RazorpayController;
 
@@ -78,6 +73,7 @@ Route::group(['middleware'=>'auth','prefix'=>'user'], function () {
     Route::get('reviews', [ReviewController::class, 'index'])->name('user_my_review');
     Route::post('/reviews', [ReviewController::class, 'store'])->name('user_my_reviews_store');
     Route::get('/wallets', [UserController::class, 'wallet'])->name('user_my_wallet');
+    Route::get('/notification', [UserController::class, 'notification'])->name('user_my_notification');
     Route::post('/refer-mail', [UserController::class, 'referMail'])->name('user_refer_mail');
     Route::post('bookings/cancel', [BookingController::class, 'cancelBooking'])->name('cancel_booking');
 });
@@ -114,6 +110,7 @@ Route::get('/hotel/best-hotel-in-{city_name?}-near-{location?}', [HomeController
 Route::get('/search-listing', [HomeController::class, 'pageSearchListing'])->name('page_search_listing');
 Route::get('/hotel/best-hotel-in-{slug}', [HomeController::class, 'pageSearchListing'])->name('city-search');
 
+$router->get('/getprice', [CheckoutController::class, 'getRoomPrice']);
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('book.now');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('payment.checkout');
 Route::post('rozer/payment/pay-success/{booking_id}', [RazorpayController::class, 'payment'])->name('payment.rozer');

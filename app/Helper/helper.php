@@ -137,7 +137,6 @@ if (!function_exists('getFinalPrice')) {
         $hourly = $request->is_hourly ?? 0;
         $coupon = $request->coupon;
 
-
         $prices = getPrice($no_of_adult, $no_of_room, $room_id, $hourly, $days);
         $actualprice=$prices['actualprice'];
         $room_discount_percent=$prices['room_discount_percent'];
@@ -150,12 +149,12 @@ if (!function_exists('getFinalPrice')) {
         $discount = 0;
         if ($coupon != null) {
             $discount_percent = coupons()->where('coupon_name', $coupon)->first()->coupon_percent ?? 0;
-            $discount = number_format((int)$discount_percent * (int)$actualprice / 100, 0);
+            $discount = (int)$discount_percent * (int)$actualprice / 100;
         }
 
         $price_discount=$room_discount_percent??5;
         if ($price_discount) {
-           $price_before_discount= number_format($price_discount * (int)$actualprice / 100, 0);
+           $price_before_discount=(int) number_format($price_discount * (int)$actualprice / 100, 0);
         }
         $data = [
             'subtotal' => number_format($actualprice,0),
@@ -181,7 +180,7 @@ if (!function_exists('getPrice')) {
         $threeprice = $room->threepersonprice ? $room->threepersonprice : $twoprice + $diffinprice;
 
         if ($ishourly==1) {
-            $final_adult_price=$room->hourly_price * $number_of_room;
+            $final_adult_price=($room->hourlyprice==null||$room->hourlyprice==0||$room->hourlyprice==''?$room->oneprice:$room->hourlyprice) * $number_of_room;
         }else{
         switch ($number_of_adult) {
             case 1:

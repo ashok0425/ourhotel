@@ -8,7 +8,7 @@
     <meta name="robots" content="index, no-follow" />
     <link rel="icon" sizes="16x16" href="{{ getImageUrl(setting('logo')) }}">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    @include('frontend.layouts.seo');
+    @include('frontend.layouts.seo')
 
 
     <link rel="preload stylesheet" href="{{ filepath('frontend/css/bootstrap.css') }}" as="style" type="text/css"

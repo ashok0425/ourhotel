@@ -350,7 +350,8 @@
                                         <div class="row">
                                         <div class="col-12 mt-1 mb-3">
                                             <div class="text-dark font-weight-bold custom-fs-18">
-                                                ₹ <span id="price" class="custom-fs-22"></span>
+                                                ₹ <span id="price" class="custom-fs-28 text-success"></span>
+                                                <del id="before_price" class="custom-fs-20 text-danger"></del>
                                                 <div class="custom-fs-14 custom-fw-500">Inclusive of all taxes
                                                 </div>
                                             </div>
@@ -371,7 +372,7 @@
                                                 </div>
 
 
-                                                <div class="col-12 col-sm-12 col-md-12" id="">
+                                                <div class="col-12 mt-2 col-sm-12 col-md-12" id="">
                                                     <div class="form-group booking_type_div">
                                                         <label>Booking Type:</label>
                                                         <select class="form-control" name="booking_type"
@@ -563,13 +564,9 @@
             //if booking type is selected to houly
             $('#booking_type').on('change', function() {
                 if ($(this).val() == 'hourlyprice') {
-
-                    let hrprice = $('.select_room_btn.border-success').data('hourlyprice');
-                    if (hrprice != null) {
-                        $('#price').html(hrprice)
-                        $('#price_input').val(hrprice)
-
-                    }
+                    calculatePrice(1);
+                }else{
+                    calculatePrice();
                 }
             })
 
@@ -755,147 +752,28 @@
 
         calculatePrice();
 
-        function calculatePrice() {
+        function calculatePrice(is_hourly=0) {
             let number_of_room = parseInt(no_of_room.val());
             let number_of_adult = parseInt(no_of_adult.val());
             let selected_room = $(".select_room_btn.border-success");
-
-            let oneprice = parseInt(selected_room.data('oneprice'))
-            let twoprice = parseInt(selected_room.data('twoprice')) || oneprice
-            let diffinprice = selected_room.data('threeprice') ? selected_room.data('threeprice') - twoprice : twoprice -
-                oneprice;
-            let threeprice = selected_room.data('threeprice') ? parseInt(selected_room.data('threeprice')) : twoprice +
-                diffinprice;
-            let final_adult_price
-            switch (number_of_adult) {
-                case 1:
-                    final_adult_price = number_of_room * oneprice
-                    break;
-                case 2:
-
-                    if (number_of_room == 1) {
-                        final_adult_price = twoprice
-                    } else {
-                        final_adult_price = 2 * oneprice
-                    }
-
-                    break;
-                case 3:
-                    if (number_of_room == 1) {
-                        final_adult_price = threeprice
-                    } else if (number_of_room == 2) {
-                        final_adult_price = 2 * twoprice
-                    } else {
-                        final_adult_price = number_of_room * oneprice
-                    }
-                    break;
-
-                case 4:
-                    final_adult_price = number_of_room * twoprice
-                    break;
-
-                case 5:
-                    if (number_of_room == 2) {
-                        final_adult_price = (2 * twoprice) + diffinprice
-                    } else {
-                        final_adult_price = number_of_room * twoprice
-                    }
-                    break;
-
-                case 6:
-                    final_adult_price = number_of_room * threeprice
-                    break;
-                case 7:
-
-                    if (number_of_room == 3) {
-                        final_adult_price = (3 * twoprice) + diffinprice
-
-                    } else {
-                        final_adult_price = number_of_room * twoprice
-                    }
-
-                    break;
-                case 8:
-
-                    if (number_of_room == 3) {
-                        final_adult_price = (3 * twoprice) + twoprice
-                    } else {
-                        final_adult_price = number_of_room * twoprice
-                    }
-                    break;
-                case 9:
-
-                    if (number_of_room == 3) {
-                        final_adult_price = 3 * threeprice
-
-                    } else {
-                        final_adult_price = number_of_room * twoprice
-                    }
-                    break;
-                case 10:
-
-                    if (number_of_room == 4) {
-                        final_adult_price = (2 * threeprice) + (2 * twoprice)
-
-                    } else {
-                        final_adult_price = number_of_room * twoprice
-                    }
-
-                    break;
-                case 11:
-                    final_adult_price = (2 * threeprice) + twoprice
-
-                    if (number_of_room == 4) {
-                        final_adult_price = (2 * threeprice) + (2 * twoprice) + diffinprice
-
-                    } else {
-                        final_adult_price = number_of_room * twoprice
-                    }
-
-                    break;
-                case 12:
-                    if (number_of_room == 4) {
-                        final_adult_price = 4 * threeprice
-
-                    } else {
-                        final_adult_price = (3 * threeprice) + twoprice + diffinprice
-                    }
-                    break;
-                case 13:
-                    if (number_of_room == 4) {
-                        final_adult_price = (4 * threeprice) + diffinprice
-
-                    } else {
-                        final_adult_price = (3 * threeprice) + (2 * twoprice)
-                    }
-                    break;
-                case 14:
-                    if (number_of_room == 4) {
-                        final_adult_price = (3 * threeprice) + (2 * twoprice) + diffinprice
-
-                    } else {
-                        final_adult_price = (3 * threeprice) + (3 * twoprice)
-                    }
-                    break;
-                case 15:
-                    final_adult_price = 5 * threeprice
-                    break;
-
-                default:
-                    final_adult_price = number_of_room * oneprice
-
-                    break;
-            }
+            let selected_room_id=selected_room.data('id');
             let from = sessionStorage.getItem("start_date");
             let to = sessionStorage.getItem("end_date");
-
-
             let diff = new Date(to).getTime() - new Date(from).getTime()
             let diffindays = diff / (1000 * 3600 * 24).toFixed(0);
             diffindays = diffindays != 0 ? diffindays : 1
-            let final_price = diffindays * final_adult_price;
-            $('#price').html(final_price)
-            $('#price_input').val(final_price)
+
+            let url=`/getprice?no_of_room=${number_of_room}&no_of_adult=${number_of_adult}&room_id=${selected_room_id}&days=${diffindays}&is_hourly=${is_hourly}`
+
+            $.ajax({
+                url:url,
+                success:function(res){
+                    $('#price').html(res.data.subtotal)
+                    $('#before_price').html(res.data.mrp)
+                    $('#price_input').val(res.data.subtotal)
+                }
+
+            })
 
         }
 

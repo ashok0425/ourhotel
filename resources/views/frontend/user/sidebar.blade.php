@@ -27,6 +27,11 @@
         </li>
 
         <li class="col-12 my-2">
+
+            <a href="{{route('user_my_notification')}}" class=" custom-fs-16 custom-fw-700 py-0 my-0 @if(Request()->segment(2)=='notification') custom-text-primary @else custom-text-gray-2  @endif"><i class="fas fa-bell"></i> Notification</a>
+        </li>
+
+        <li class="col-12 my-2">
             <a   class="custom-text-gray-2 custom-fs-16 custom-fw-700 py-0 my-0" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> {{__('Log Out')}}</a>
 
         </li>

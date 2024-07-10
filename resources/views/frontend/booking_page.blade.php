@@ -21,25 +21,14 @@
 
 @section('main')
     @php
-        $date = $request->bookdates;
-        $ex = explode('-', $date);
-        $checkin = $ex ? $ex[0] : today();
-        $checkout = $ex ? $ex[1] : today()->addDay(1);
-        $price = $request->price;
-
-        $taxes = App\Models\Tax::where('price_min','<', "$price")->where('price_max', '>', "$price")->first()->percentage??0;
-
-        $tax = ($taxes * $price) / 100;
-        $discount = session()->get('discount') ? session()->get('discount.percent') : 0 || 0;
-        $discount_amount = number_format(((int) $discount * (int) $price) / 100, 0);
-        $price_after_discount = (int) $price - (int) $discount_amount;
-        $total_price = (int) $price_after_discount + (int) $tax;
+        $tax = (int) str_replace(',', '', $prices['tax']);
+        $price = (int) str_replace(',', '', $prices['subtotal']);
+        $discount_amount = (int) str_replace(',', '', $prices['discount']);
+        $total_price = (int) str_replace(',', '', $prices['total']);
         $adult = $request->number_of_adult;
         $children = $request->number_of_child;
         $room = $request->number_of_room;
         $night = Carbon\Carbon::parse($checkout)->diffInDays(Carbon\Carbon::parse($checkin));
-
-        //  if($price)
     @endphp
     @include('frontend.user.breadcrum', ['title' => 'Book now'])
 
@@ -289,38 +278,27 @@
                                 <div class="d-flex justify-content-between my-2">
                                     <p>Sub Total</p>
                                     <p>
-                                       {{ number_format($price,0)}}
+                                       {{ $price}}
                                     </p>
 
                                 </div>
-                                @if ($discount != 0)
-
+                                @if ($discount_amount != 0)
                                 <div class="d-flex justify-content-between my-2">
                                     <p>Discount
-
-
                                     </p>
                                     <p>
-                                          {{  number_format((int) $discount_amount,0)}}
+                                          {{  $discount_amount}}
 
                                     </p>
 
                                 </div>
                                 @endif
 
-                                <div class="d-flex justify-content-between">
-                                    <p>Price After Discount</p>
-                                    <p>
-                                        {{number_format($price_after_discount,0)}}
-
-                                    </p>
-
-                                </div>
 
                                 <div class="d-flex justify-content-between my-2">
                                     <p>Taxes and Fees</p>
                                     <p>
-                                        {{number_format($tax,0)}}
+                                        {{$tax}}
                                     </p>
 
                                 </div>
@@ -331,7 +309,7 @@
                                     class="d-flex justify-content-between border-top border-bottom custom-fw-700 custom-fs-20 my-3 pt-3 pb-2">
                                     <p>Payable Amount</p>
                                     <p>
-                                        {{number_format($total_price,0)}}
+                                        {{$total_price}}
 
                                     </p>
 

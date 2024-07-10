@@ -10,15 +10,11 @@ use App\Models\User;
 use App\Models\Booking;
 use App\Models\Coupon;
 use App\Models\Property;
-use App\Models\ReferelMoney;
 use App\Models\Room;
-use App\Models\Tax;
 use Carbon\Carbon;
-use Dotenv\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Validator as FacadesValidator;
 use Illuminate\Support\Str;
 class CheckoutController extends Controller
 {
@@ -26,7 +22,27 @@ class CheckoutController extends Controller
     public function index(Request $request){
 
         $hotel=Property::find($request->place_id);
-        return view('frontend.booking_page',compact("request",'hotel'));
+        $date = $request->bookdates;
+        $ex = explode('-', $date);
+        $checkin = $ex ? $ex[0] : today();
+        $checkout = $ex ? $ex[1] : today()->addDay(1);
+        $differenceInDays = Carbon::parse($checkin)->diffInDays(Carbon::parse($checkout));
+
+        $adult = $request->number_of_adult;
+        $children = $request->number_of_child;
+        $room = $request->number_of_room;
+
+        $params = [
+            'room_id' => $request->room_id,
+            'no_of_room' => $request->number_of_room,
+            'no_of_adult' => $request->number_of_adult,
+            'days' => $differenceInDays,
+            'hourly' => $request->booking_type=='night_price'?null:1,
+            'coupon' => session()->get('discount')??null,
+        ];
+        $prices=getFinalPrice(new Request($params));
+
+        return view('frontend.booking_page',compact("request",'hotel','checkin','checkout','prices'));
     }
 
 
@@ -187,6 +203,12 @@ public function thanku($uuid){
     return view('frontend.user.thanku',compact('uuid'));
 }
 
+
+function getRoomPrice(Request $request)
+{
+    $data=getFinalPrice($request);
+    return $this->success_response('Booking Updated', $data);
+}
 
 
 }

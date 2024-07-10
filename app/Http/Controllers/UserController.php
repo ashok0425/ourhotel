@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\SendOtp;
+use App\Models\FcmNotification;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -50,4 +51,10 @@ class UserController extends Controller
 
         return redirect()->back()->with($notification);
     }
+
+    public function notification(){
+        $notifications=FcmNotification::whereJsonContains('userIds',Auth::user()->id)->latest()->select('created_at','body')
+           ->paginate(30);
+           return view('frontend.user.user_my_notification', compact('notifications'));
+     }
 }

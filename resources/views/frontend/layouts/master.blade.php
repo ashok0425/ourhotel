@@ -29,6 +29,13 @@
         type="text/css" />
 
     <style>
+        .pagination {
+    display: -ms-flexbox;
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: .25rem;
+}
         .bg_animities {
             background: rgb(158, 156, 156);
         }

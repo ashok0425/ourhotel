@@ -39,7 +39,7 @@ class PlaceController extends Controller
             $seo=[
                 'title'=>$place->meta_title,
                 'description'=>$place->meta_description,
-                'keywords'=>$place->meta_keywords,
+                'keyword'=>$place->meta_keywords,
             ];
 
         return view("frontend.place.place_detail_01", [

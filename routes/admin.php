@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Common\BookingController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\EnquiryController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\FcmNotificationController;
 use App\Http\Controllers\Admin\LocationController;
@@ -43,6 +44,7 @@ Route::middleware('isadmin')->prefix('admin')->name('admin.')->group(function(){
     Route::resource('coupons', CouponController::class);
     Route::resource('refer_prices', ReferPriceController::class);
     Route::resource('fcms', FcmNotificationController::class);
+    Route::resource('enquries', EnquiryController::class);
     Route::get('refer_moneys', [ReferPriceController::class,'referMoney'])->name('refer_moneys');
 });
 

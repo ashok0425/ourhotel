@@ -50,14 +50,27 @@ class CheckoutController extends Controller
             $request['booking_end']=today();
             }
 
+            $room = Room::find($request['place_id']);
+            $date1 = Carbon::parse($request->booking_start);
+            $date2 = Carbon::parse($request->booking_end);
 
-$price=Property::getPrice($request->numbber_of_adult,$request->number_of_room,$request->room_id);
-     $taxes=Tax::where('price_min','<=',$price)->where('price_max','>=',$price)->value('percentage');
-     $tax=($taxes*$price)/100;
-     $discount=session()->get('discount')?session()->get('discount.percent'):0||0;
-     $discount_amount=number_format((int)$discount*(int)$price/100,0);
-     $price_after_discount=(int)$price-(int)$discount_amount;
-     $final_price=(int)$price_after_discount+(int)$tax;
+            $differenceInDays = $date1->diffInDays($date2);
+            $params = [
+                'room_id' => $room->id,
+                'no_of_room' => $request->number_of_room,
+                'no_of_adult' => $request->numbber_of_adult,
+                'days' => $differenceInDays,
+                'hourly' => $request->is_hourly,
+                'coupon' => session()->get('discount')??null,
+            ];
+
+            $prices = getFinalPrice(new Request($params));
+            $price=$prices['subtotal'];
+            $final_price=$prices['total'];
+            $discount=$prices['discount'];
+            $tax=$prices['tax'];
+
+
 
      $user=User::where('phone_number',$request->phone_code.$request->phone_number)->orWhere('phone_number',$request->phone_number)->first();
      if (!$user) {
@@ -84,12 +97,12 @@ $price=Property::getPrice($request->numbber_of_adult,$request->number_of_room,$r
     $booking->no_of_adult = $request['numbber_of_adult'];
     $booking->final_amount = $final_price;
     $booking->total_price = $price;
-    $booking->discount = $discount_amount;
+    $booking->discount = $discount;
+    $booking->coupon_code = session()->get('discount')??null;
     $booking->tax = $tax;
     $booking->payment_type = $request['payment_type'];
     $booking->room_type = $request['room_type'];
     $booking->booking_type = $request['booking_type'];
-    $booking->is_paid  = $request->is_paid ? 1 : 0;
     $booking->booked_by  = $user->id;
     $booking->status  = 2;
     $booking->channel = 'Web';

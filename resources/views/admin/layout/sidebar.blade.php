@@ -88,7 +88,7 @@
 
 
       <li class="nav-item">
-        <a class="nav-link" data-toggle="collapse" href="#general-elements" aria-expanded="false" aria-controls="user-elements">
+        <a class="nav-link" data-toggle="collapse" href="#general-elements" aria-expanded="false" aria-controls="general-elements">
           <i class="icon-columns menu-icon"></i>
           <span class="menu-title">General Setting</span>
           <i class="menu-arrow"></i>
@@ -105,10 +105,20 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="{{route('admin.enquires.index')}}">
-          <i class="fas fa-users menu-icon"></i>
-          <span class="menu-title">Request/Enquiry</span>
+        <a class="nav-link" data-toggle="collapse" href="#enquiry-elements" aria-expanded="false" aria-controls="enquiry-elements">
+          <i class="fas fa-phone menu-icon"></i>
+          <span class="menu-title">Enquiry/Request</span>
+          <i class="menu-arrow"></i>
         </a>
+        <div class="collapse" id="enquiry-elements">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.enquries.index',['type'=>1])}}">General Enquiry</a></li>
+
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.enquries.index',['type'=>3])}}">Corporate</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.enquries.index',['type'=>2])}}">Become Partner</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.enquries.index',['type'=>4])}}">Subscriber List</a></li>
+          </ul>
+        </div>
       </li>
 
       <li class="nav-item">

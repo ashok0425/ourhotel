@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-12 col-sm-8 col-md-8 order-sm-1 order-md-1 order-2">
                     <x-errormsg/>
-                    <form action="{{route('place_create')}}" method="post" class="partnerinnerform">
+                    <form action="" method="post" class="partnerinnerform">
                     @csrf
                         <div class="row">
                             <div class="col-12 col-sm-6 col-md-6">

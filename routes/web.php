@@ -49,24 +49,21 @@ Route::get('load-mobile-content/', [HomeController::class, 'mobileLocation']);
 Route::get('load-subcity', [HomeController::class, 'subCity']);
 
 Route::get('/blog/all', [PostController::class, 'list'])->name('post_list_all');
-Route::get('/blog/{cat_slug}', [PostController::class, 'list'])->where('cat_slug', '[a-zA-Z0-9-_]+')->name('post_list');
 Route::get('/post/{slug}-{id}', [PostController::class, 'detail'])
     ->where('slug', '[a-zA-Z0-9-_]+')
     ->where('id', '[0-9]+')->name('post_detail');
 
-Route::get('/page/contact', [HomeController::class, 'pageContact'])->name('page_contact');
-Route::get('/refer', [HomeController::class, 'refer'])->name('refer');
-Route::get('corporate', [HomeController::class, 'corporate'])->name('corporate');
-Route::post('corporate', [HomeController::class, 'corporateStore']);
-
-Route::post('/page/contact', [HomeController::class, 'sendContact'])->name('page_contact_send');
-Route::get('/page/landing/{page_number}', [HomeController::class, 'pageLanding'])->name('page_landing');
+Route::view('privacy','frontend.privacy');
+Route::get('/page/contact', [EnquiryController::class, 'pageContact'])->name('page_contact');
+Route::get('/refer', [EnquiryController::class, 'refer'])->name('refer');
+Route::get('corporate', [EnquiryController::class, 'corporate'])->name('corporate');
+Route::post('corporate', [EnquiryController::class, 'corporateStore']);
+Route::post('/page/contact', [EnquiryController::class, 'sendContact'])->name('page_contact_send');
+Route::get('/become-a-partner', [EnquiryController::class, 'becomePartner'])->name('become_a_partner');
+Route::post('/become-a-partner', [EnquiryController::class, 'becomePartnerStore']);
+Route::post('/subscribe', [EnquiryController::class, 'subscribe'])->name('subscribe');
 
 Route::get('/hotels/{slug}/{id?}', [PlaceController::class, 'detail'])->name('place_detail');
-Route::get('/become-a-partner', [EnquiryController::class, 'becomePartner'])->name('become_a_partner');
-Route::post('/become-a-partner', [PlaceController::class, 'becomePartner']);
-
-Route::get('/near-by-hotels', [PlaceController::class, 'nearByHotels'])->name('near_by_hotels');
 
 Route::get('/places/filter', [PlaceController::class, 'getListFilter'])->name('place_get_list_filter');
 
@@ -123,5 +120,4 @@ Route::post('rozer/payment/pay-success/{booking_id}', [RazorpayController::class
 Route::post('coupon/apply', [CheckoutController::class, 'applyCoupon'])->name('coupon.apply');
 Route::get('coupon/remove', [CheckoutController::class, 'removeCoupon'])->name('coupon.remove');
 Route::get('apply-offer', [CheckoutController::class, 'applyoffer']);
-Route::post('/subscribe', [HomeController::class, 'subscribe'])->name('subscribe');
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\BookingNotifyViaMsg;
+use App\Jobs\BookingNotifyViaWP;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\Coupon;
@@ -100,7 +102,8 @@ class CheckoutController extends Controller
         $booking->email = $request->email;
         $booking->phone_number = $request->phone_number;
         $booking->save();
-
+        dispatch(new BookingNotifyViaWP($booking->id));
+        dispatch(new BookingNotifyViaMsg($booking->id));
         return $this->success_response('Thanks for your hotel booking with NSN Hotels!', $booking);
     }
 

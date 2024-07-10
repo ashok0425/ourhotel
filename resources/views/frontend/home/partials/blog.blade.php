@@ -4,6 +4,7 @@
     $posts =  App\Models\Blog::query()
             ->where('status', 1)->limit(4)->where('id','>',68)->latest()->get();
 @endphp
+
 	<div class="blogsslider  mt-5 mb-0 container">
 		<div class="container">
             <div class="card shadow-sm border-0">
@@ -13,7 +14,7 @@
 
 			<div  class="row">
 				@foreach($posts as $post)
-				<div class="col-md-3 col-lg-3 col-6 col-sm-6">
+				<div class="col-md-3 col-lg-3 my-2 my-md-0">
 					<div class="nsnrecentstoriesbox">
 						<a href="{{route('post_detail', [$post->slug, $post->id])}}">
 						<img src="{{getImageUrl($post->thumbnail)}}" class="img-fluid" alt="{{$post->title}}" loading="lazy" />

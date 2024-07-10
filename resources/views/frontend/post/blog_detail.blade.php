@@ -174,13 +174,13 @@ img{
                                             <div class="list-single-main-item fl-wrap">
                                                 <div class="list-single-main-media fl-wrap">
                                                 <div class="single-slider-wrapper fl-wrap">
-                                                     <img src="{{getImageUrl($post->thumb)}}" alt="{{$post->title}}">
+                                                     <img src="{{getImageUrl($post->thumbnail)}}" alt="{{$post->title}}">
                                                 </div>
                                             </div>
                                                 <div class="list-single-main-item-title fl-wrap pt-3">
                                                     <h3>{{$post->title}}</h3>
                                                 </div>
-                                                 {!! $post->content !!}
+                                                 {!! $post->long_description !!}
 
                                             </div>
 
@@ -229,7 +229,7 @@ img{
                                                     <!--box-image-widget-->
                                                     <div class="box-image-widget">
                                                         <div class="box-image-widget-media mr-2">
-                                                            <img src="{{getImageUrl($related_post->thumb)}}" alt="{{$related_post->title}}">
+                                                            <img src="{{getImageUrl($related_post->thumbnail)}}" alt="{{$related_post->title}}">
                                                         </div>
                                                         </a>
                                                         <div class="box-image-widget-details">

@@ -37,7 +37,7 @@ class EnquiryController extends Controller
             'countries'   => $countries,
             'cities'      => $cities,
             'place_types' => $place_types,
-            'categories'=>$categories
+            'categories' => $categories
         ]);
     }
 
@@ -45,19 +45,26 @@ class EnquiryController extends Controller
     public function becomePartnerStore(Request $request)
     {
         $request->validate(
-            ['partner_name'=>'required',
-            'partner_name'=>'required',
-            'address'=>'required',
-            'email'=>'required|unique:users,email',
-            'phone_number'=>'required|unique:users,phone_number'
+            [
+                'partner_name' => 'required',
+                'partner_name' => 'required',
+                'address' => 'required',
+                'email' => 'required',
+                'phone_number' => 'required'
             ]
         );
 
-      $enquiry=new Enquiry();
-      $enquiry->type=2;
-      $enquiry->data=$request->all();
-      $enquiry->save();
 
+        $enquiry = new Enquiry();
+        $enquiry->type = 2;
+        $enquiry->data = $request->all();
+        $enquiry->save();
+
+        $notification = array(
+            'message' => 'Your Request  has been placed successfully. We will contact you soon!',
+            'type' => 'success'
+        );
+        return redirect()->route('corporate')->with($notification);
     }
 
 
@@ -73,11 +80,7 @@ class EnquiryController extends Controller
         ]);
     }
 
-    public function pageContact()
-    {
 
-        return view('frontend.page.contact');
-    }
 
     public function corporate(Request $request)
     {
@@ -89,36 +92,35 @@ class EnquiryController extends Controller
     public function corporateStore(Request $request)
     {
         $request->validate([
-            'mobile'=>'required|unique:users,phone_number',
-            'company'=>'required',
-            'email'=>'required|unique:users,email'
+            'mobile' => 'required',
+            'company' => 'required',
+            'email' => 'required'
         ]);
-            $user = new User();
-            $user->phone_number = $request->mobile;
-            $user->name = $request->company;
-            $user->email = $request->email;
-            $user->save();
-
-            $add = new Corporate();
-            $add->name = $request->name;
-            $add->user_id = $user->id;
-            $add->address     = $request->address;
-            $add->company_name     = $request->city;
-            $add->save();
 
 
-        $notification= array(
-            'message'=>'Your query has been placed successfully. We will contact you soon!',
-            'type'=>'success');
-       return redirect()->route('corporate')->with($notification);
+        $enquiry = new Enquiry();
+        $enquiry->type = 3;
+        $enquiry->data = $request->all();
+        $enquiry->save();
+
+        $notification = array(
+            'message' => 'Your query has been placed successfully. We will contact you soon!',
+            'type' => 'success'
+        );
+        return redirect()->route('corporate')->with($notification);
     }
 
+
+    public function pageContact()
+    {
+        return view('frontend.page.contact');
+    }
 
     public function sendContact(Request $request)
     {
         $request->validate([
-            'email'=>'required|email',
-            'phone'=>'required'
+            'email' => 'required|email',
+            'phone' => 'required'
         ]);
         $enquiry = new Enquiry();
         $enquiry->type = 1;
@@ -129,35 +131,25 @@ class EnquiryController extends Controller
             'messege' => 'Thanks for contacting us.We will get back to you as soon as possible.',
 
         );
-        session()->put('messege', 'dddd');
         return back()->with($notification);
     }
 
 
     public function subscribe(Request $request)
     {
-$request->validate([
-    'email'=>'required|email'
-]);
+        $request->validate([
+            'email' => 'required|email'
+        ]);
         $enquiry = new Enquiry();
-        $enquiry->data = ['email'=>$request->email];
-        $enquiry->type = 3;
+        $enquiry->data = ['email' => $request->email];
+        $enquiry->type = 4;
         $enquiry->save();
-        if ($request->type == 0) {
-            $notification = array(
-                'alert-type' => 'success',
-                'messege' => 'Thanks for for your query. we will get back to you as sson as possible',
-
-            );
-
-            return redirect()->back()->with($notification);
-        }
-        Mail::send('frontend.mail.sub', [
-            'email' =>  $request->email,
-        ], function ($message) use ($request) {
-            $email = $request->email;
-            $message->to($email, "{$email}")->from('noreply@nsnhotels.com')->subject('Thanks for subscribing ' . 'Nsn Hotels ');
-        });
+        // Mail::send('frontend.mail.sub', [
+        //     'email' =>  $request->email,
+        // ], function ($message) use ($request) {
+        //     $email = $request->email;
+        //     $message->to($email, "{$email}")->from('noreply@nsnhotels.com')->subject('Thanks for subscribing ' . 'Nsn Hotels ');
+        // });
 
         $notification = array(
             'alert-type' => 'success',
@@ -167,7 +159,4 @@ $request->validate([
 
         return redirect()->back()->with($notification);
     }
-
-
-
 }

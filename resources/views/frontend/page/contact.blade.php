@@ -2,14 +2,8 @@
 @section('main')
 <div class="midarea">
 
-			<div class="pageindicator">
-				<div class="container">
-					<ul>
-						<li><a href="">Home</a></li>
-						<li><a href="" class="active">Contact us</a></li>
-					</ul>
-				</div>
-			</div>
+    @include('frontend.user.breadcrum', ['title' => 'Contact us'])
+
 			<div class="contactinner">
 				<div class="container">
 					<div class="row">

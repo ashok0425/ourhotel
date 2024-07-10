@@ -157,11 +157,11 @@ if (!function_exists('getFinalPrice')) {
            $price_before_discount=(int) number_format($price_discount * (int)$actualprice / 100, 0);
         }
         $data = [
-            'subtotal' => number_format($actualprice,0),
-            'tax' => number_format($tax,0),
-            'discount' => number_format($discount,0),
-            'total' => number_format($actualprice + $tax - $discount,0),
-            'mrp'=>number_format($actualprice+$price_before_discount,0)
+            'subtotal' => (int) $actualprice,
+            'tax' => (int) $tax,
+            'discount' => (int) $discount,
+            'total' => (int) $actualprice + $tax - $discount,
+            'mrp'=>(int) $actualprice+$price_before_discount
         ];
 
         return $data;

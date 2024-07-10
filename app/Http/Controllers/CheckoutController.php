@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Jobs\BookingNotifyViaMsg;
 use App\Jobs\BookingNotifyViaWP;
+use App\Jobs\SendOtp;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Booking;
@@ -66,7 +67,7 @@ class CheckoutController extends Controller
             $request['booking_end']=today();
             }
 
-            $room = Room::find($request['place_id']);
+            $room = Room::find($request['room_id']);
             $date1 = Carbon::parse($request->booking_start);
             $date2 = Carbon::parse($request->booking_end);
 
@@ -89,17 +90,6 @@ class CheckoutController extends Controller
 
 
      $user=User::where('phone_number',$request->phone_code.$request->phone_number)->orWhere('phone_number',$request->phone_number)->first();
-     if (!$user) {
-        $user = User::create(
-            [
-                'phone_number'=>$request->phone_code.$request->phone_number,
-                'name' => $request->first_name. ' '. $request->last_name,
-                'email' => $request->email,
-                'password' => bcrypt('Nsn@' . rand(1, 99999999))
-            ]
-        );
-     }
-
 
 
     $booking = new Booking();
@@ -111,11 +101,11 @@ class CheckoutController extends Controller
     $booking->booking_end = $request['booking_end'];
     $booking->no_of_room = $request['number_of_room'];
     $booking->no_of_adult = $request['numbber_of_adult'];
-    $booking->final_amount = $final_price;
-    $booking->total_price = $price;
-    $booking->discount = $discount;
+    $booking->final_amount = (int)$final_price;
+    $booking->total_price = (int)$price;
+    $booking->discount = (int)$discount;
     $booking->coupon_code = session()->get('discount')??null;
-    $booking->tax = $tax;
+    $booking->tax = (int)$tax;
     $booking->payment_type = $request['payment_type'];
     $booking->room_type = $request['room_type'];
     $booking->booking_type = $request['booking_type'];
@@ -208,6 +198,38 @@ function getRoomPrice(Request $request)
 {
     $data=getFinalPrice($request);
     return $this->success_response('Booking Updated', $data);
+}
+
+
+function sendOtp(Request $request){
+        User::UpdateOrCreate(
+            ['phone_number'=>$request->phone_number],
+            [
+                'email'=>$request->email,
+                'name'=>$request->first_name. ' '. $request->last_name,
+
+            ]
+            );
+
+        dispatch(new SendOtp($request->phone_code,$request->phone_number));
+        $queryParams = http_build_query($request->all());
+
+        // Redirect back with the query parameters and fragment
+        return redirect()->to(url()->previous() . '?' . $queryParams . '#demo-modal')
+                         ->withInput();
+
+}
+
+function verifyOtp(Request $request){
+
+    $user=User::where('phone_number',$request->phone_number)->where('otp',$request->otp)->first();
+    if(!$user){
+        return back()->withFragment('demo-modal')->withErrors(['otp'=>'You have enter incorrect otp.']);
+  }
+  $user->otp=null;
+  $user->save();
+
+ return $this->store(new Request($request->all()));
 }
 
 

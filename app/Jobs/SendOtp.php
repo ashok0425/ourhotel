@@ -42,7 +42,8 @@ class SendOtp implements ShouldQueue
            $res= $InteraktService->sendOtp($this->country_code.$this->phone,$otp);
            Log::info($res);
             $smsService=new SmsService();
-            $smsService->sendOtpMessage($this->country_code.$this->phone,$otp);
+            $sms=$smsService->sendOtpMessage($this->country_code.$this->phone,$otp);
+            Log::info($sms);
         }
     }
 }

@@ -1,6 +1,55 @@
 @extends('frontend.layouts.master')
 @push('style')
     <style>
+        .modal {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(77, 77, 77, .7);
+            transition: all .4s;
+        }
+
+        .modal:target {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal__content {
+            border-radius: 4px;
+            position: relative;
+            width: 500px;
+            max-width: 90%;
+            background: #fff;
+            padding: 1em 2em;
+        }
+
+        .modal__footer {
+            text-align: right;
+
+            a {
+                color: #585858;
+            }
+
+            i {
+                color: #d02d2c;
+            }
+        }
+
+        .modal__close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #585858;
+            text-decoration: none;
+        }
+
         .iti--allow-dropdown {
             width: 100% !important;
         }
@@ -12,8 +61,10 @@
         .custom-bg-secondary-400 {
             background: rgb(180, 216, 224);
         }
-        .breadcrumarea:before{
-            background: #1d4783;!important;
+
+        .breadcrumarea:before {
+            background: #1d4783;
+            !important;
 
         }
     </style>
@@ -38,7 +89,7 @@
 
             <div class="row">
                 <div class="col-md-8 order-md-1 order-2 mt-2 mt-md-0">
-                    <form action="{{ route('payment.checkout') }}" method="POST">
+                    <form action="{{ Auth::check() ? route('payment.checkout') : route('guest.checkout') }}">
                         @csrf
 
                         <div class="card  border-none border-0 shadow-m">
@@ -67,10 +118,11 @@
 
                                                 <div class="rating_wrapper d-flex mt-0 pt-0">
                                                     <div class="w-50">
-                                                        <div class="mt-0 pt-0 custom-fs-14 custom-fw-600 custom-text-dark my-2">
+                                                        <div
+                                                            class="mt-0 pt-0 custom-fs-14 custom-fw-600 custom-text-dark my-2">
                                                             <span
                                                                 class="rating_inner custom-text-white bg-success p-1 custom-border-radius-1  custom-fs-12 custom-fw-600 text-center">
-                                                                {{  number_format($hotel->ratings()->avg('rating'), 0) }}/5
+                                                                {{ number_format($hotel->ratings()->avg('rating'), 0) }}/5
 
                                                             </span>
                                                             <span
@@ -95,14 +147,14 @@
                                                 <div class="col-md-4 mb-2">
                                                     <p class="custom-fs-14 text-dark custom-fw-600 py-0 my-0">Check In</p>
                                                     <p class="custom-fs-18 text-dark custom-fw-600 py-0 my-0">
-                                                       {{ Carbon\Carbon::parse($checkin)->format('d M Y')}}
+                                                        {{ Carbon\Carbon::parse($checkin)->format('d M Y') }}
                                                     </p>
                                                 </div>
 
                                                 <div class="col-md-4 mb-2">
                                                     <p class="custom-fs-14 text-dark custom-fw-600 py-0 my-0">Check Out</p>
                                                     <p class="custom-fs-18 text-dark custom-fw-600 py-0 my-0">
-                                                        {{ Carbon\Carbon::parse($checkout)->format('d M Y')}}
+                                                        {{ Carbon\Carbon::parse($checkout)->format('d M Y') }}
                                                     </p>
                                                 </div>
 
@@ -262,8 +314,8 @@
                     </form>
                 </div>
                 <div class="col-md-4 order-md-2 order-1">
-                            <x-errormsg/>
-                            <div class="card  border-none border-0 shadow-m">
+                    <x-errormsg />
+                    <div class="card  border-none border-0 shadow-m">
 
                         <a data-toggle="collapse" href="#price" role="button" aria-expanded="false"
                             aria-controls="price"
@@ -278,27 +330,27 @@
                                 <div class="d-flex justify-content-between my-2">
                                     <p>Sub Total</p>
                                     <p>
-                                       {{ $price}}
+                                        {{ $price }}
                                     </p>
 
                                 </div>
                                 @if ($discount_amount != 0)
-                                <div class="d-flex justify-content-between my-2">
-                                    <p>Discount
-                                    </p>
-                                    <p>
-                                          {{  $discount_amount}}
+                                    <div class="d-flex justify-content-between my-2">
+                                        <p>Discount
+                                        </p>
+                                        <p>
+                                            {{ $discount_amount }}
 
-                                    </p>
+                                        </p>
 
-                                </div>
+                                    </div>
                                 @endif
 
 
                                 <div class="d-flex justify-content-between my-2">
                                     <p>Taxes and Fees</p>
                                     <p>
-                                        {{$tax}}
+                                        {{ $tax }}
                                     </p>
 
                                 </div>
@@ -309,7 +361,7 @@
                                     class="d-flex justify-content-between border-top border-bottom custom-fw-700 custom-fs-20 my-3 pt-3 pb-2">
                                     <p>Payable Amount</p>
                                     <p>
-                                        {{$total_price}}
+                                        {{ $total_price }}
 
                                     </p>
 
@@ -319,7 +371,9 @@
                                     @if (session()->has('discount'))
                                         <div class="alert alert-success d-flex justify-content-between align-items-center">
                                             <i class="fas fa-tag text-success"></i>
-                                            {{ session()->get('discount.name') }} Promo Code Applied  <a href="{{route('coupon.remove')}}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                                            {{ session()->get('discount.name') }} Promo Code Applied <a
+                                                href="{{ route('coupon.remove') }}" class="btn btn-danger btn-sm"><i
+                                                    class="fas fa-trash"></i></a>
                                         </div>
                                     @else
                                         <form action="{{ route('coupon.apply') }}"
@@ -343,10 +397,39 @@
 
             </div>
         </div>
-
-
     </div>
 
+
+    {{-- otp modal  --}}
+
+    <div id="demo-modal" class="modal">
+        <div class="modal__content">
+
+            <h3>Verify phone number</h3>
+            <p class="text-success my-2">We have sent otp to your phone number/whatsapp.</p>
+
+            <p>
+            <form action="{{ route('guest.checkout.verify') }}">
+                @foreach (request()->query() as $key => $item)
+                    <input type="hidden" name="{{ $key }}" value="{{ $item }}">
+                @endforeach
+
+                <div class="from-group mt-3">
+                    <label for="">Enter otp</label>
+                    <input type="number" name="otp" class="form-control" required minlength="6" maxlength="6" value="{{old('otp')}}">
+                    @if ($errors->has('otp'))
+                    <span class="text-danger">{{ $errors->first('otp') }}</span>
+                @endif
+                    <div class=" mt-2 text-right">
+                        <button class="btn bg-purple text-white">Submit</button>
+
+                    </div>
+                </div>
+            </form>
+            </p>
+            <a href="#" class="modal__close custom-fs-28">&times;</a>
+        </div>
+    </div>
 @endsection
 @push('scripts')
     <script>

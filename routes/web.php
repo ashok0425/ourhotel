@@ -63,7 +63,7 @@ Route::get('/hotels/{slug}/{id?}', [PlaceController::class, 'detail'])->name('pl
 Route::get('/places/filter', [PlaceController::class, 'getListFilter'])->name('place_get_list_filter');
 
 Route::group(['middleware'=>'auth','prefix'=>'user'], function () {
-
+    Route::get('/checkout', [CheckoutController::class, 'store'])->name('payment.checkout');
     Route::get('/profile', [UserController::class, 'pageProfile'])->name('user_profile');
     Route::put('/profile', [AuthController::class, 'updateProfile'])->name('user_profile_update');
     Route::put('/profile/password', [AuthController::class, 'updatePassword'])->name('user_password_update');
@@ -112,7 +112,8 @@ Route::get('/hotel/best-hotel-in-{slug}', [HomeController::class, 'pageSearchLis
 
 $router->get('/getprice', [CheckoutController::class, 'getRoomPrice']);
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('book.now');
-Route::post('/checkout', [CheckoutController::class, 'store'])->name('payment.checkout');
+Route::get('/guest/checkout', [CheckoutController::class, 'sendOtp'])->name('guest.checkout');
+Route::get('/guest/verify', [CheckoutController::class, 'verifyOtp'])->name('guest.checkout.verify');
 Route::post('rozer/payment/pay-success/{booking_id}', [RazorpayController::class, 'payment'])->name('payment.rozer');
 Route::post('coupon/apply', [CheckoutController::class, 'applyCoupon'])->name('coupon.apply');
 Route::get('coupon/remove', [CheckoutController::class, 'removeCoupon'])->name('coupon.remove');

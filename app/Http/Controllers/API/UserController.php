@@ -40,7 +40,7 @@ class UserController extends Controller
 
     public function myBooking(Request $request){
         $user=Auth::user();
-        $booking = Booking::join('properties','properties.id','bookings.property_id')->where('bookings.user_id',$user->id)->select('bookings.*','properties.name as hotel_name','properties.thumbnail as thumbnail','properties.address as address')->get();
+        $booking = Booking::join('properties','properties.id','bookings.property_id')->where('bookings.user_id',$user->id)->select('bookings.*','properties.name as hotel_name','properties.thumbnail as thumbnail','properties.address as address','final_amount as TotalPrice','discount as discountPrice','total_price as amount')->get();
         return $this->success_response('Booking list fetched successfully',$booking);
     }
 

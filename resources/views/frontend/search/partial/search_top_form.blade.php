@@ -3,7 +3,7 @@
         z-index: 9999999999;
     }
 </style>
-<form action="{{route('page_search_listing')}}" id="search-hotel" class="mt-3 mt-md-0">
+<form action="{{route('page_search_listing')}}" id="search-hotel" class="mt-5 pt-5 pt-md-0 mt-md-0">
     <div class="row">
         <div class="col-md-3">
             <label class="custom-text-white custom-fs-12 mb-1 text-uppercase custom-fw-600">City , Area or property name</label>

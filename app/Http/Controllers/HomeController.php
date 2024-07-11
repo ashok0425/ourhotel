@@ -3,26 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PropertyCollection;
-use App\Http\Resources\PropertyResource;
 use App\Http\Resources\PropertyResourceCollection;
 use App\Models\Category;
 use App\Models\City;
-use App\Models\Corporate;
 use App\Models\Faq;
 use App\Models\Location;
-use App\Models\Place;
 use App\Models\Property;
 use App\Models\PropertyType;
-use App\Models\User;
-use App\Models\Subscribe;
-use App\Models\ReferelMoney;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use Svg\Tag\Rect;
+
 // use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -67,10 +59,9 @@ class HomeController extends Controller
         $areaId=null;
         $cityId=null;
 
-        if($id==null&&$city_name==null&&$area_name==null){
+        if($id==null&&$city_name==null&&$area_name==null && $request->top_rated){
           return redirect()->route('home');
         }
-
 
         if ($type=='area') {
             $location=Location::findOrFail($id);
@@ -161,4 +152,89 @@ class HomeController extends Controller
         return $cities;
     }
 
+    public function toprated(Request $request){
+        $places = Property::where('status', 1)
+    ->with('ratings')
+    ->select('properties.*')
+    ->selectSub(function ($query) {
+        $query->from('testimonials')
+            ->selectRaw('AVG(rating)')
+            ->whereColumn('properties.id', 'testimonials.property_id');
+    }, 'avg_rating')
+    ->selectSub(function($query) {
+        $query->from('rooms')
+            ->select('onepersonprice')
+            ->whereColumn('properties.id', 'rooms.property_id')
+            ->limit(1);
+    }, 'onepersonprice')
+    ->havingRaw('avg_rating IN (4, 5)')
+    ->limit(25)
+    ->get();
+    return view('frontend.top_rated',compact('places'));
+    }
+
+
+    public function nsnResort(Request $request){
+        $places = Property::where('status', 1)
+    ->with('ratings')
+    ->select('properties.*')
+    ->selectSub(function ($query) {
+        $query->from('testimonials')
+            ->selectRaw('AVG(rating)')
+            ->whereColumn('properties.id', 'testimonials.property_id');
+    }, 'avg_rating')
+    ->selectSub(function($query) {
+        $query->from('rooms')
+            ->select('onepersonprice')
+            ->whereColumn('properties.id', 'rooms.property_id')
+            ->limit(1);
+    }, 'onepersonprice')
+    ->havingRaw('avg_rating IN (3,4, 5)')
+    ->where('property_type_id',41)
+    ->limit(25)
+    ->get();
+    return view('frontend.top_rated',compact('places'));
+    }
+
+    function nearbyHotel(){
+        $latitude = Cache::get('latlon')['latitude'];
+        $longitude =  Cache::get('latlon')['longitude'];
+        if (Cache::get('latlon')) {
+     $places = Property::where('status', 1)
+     ->with('ratings')
+     ->select('properties.*')
+     ->selectSub(function ($query) {
+         $query->from('testimonials')
+             ->selectRaw('AVG(rating)')
+             ->whereColumn('properties.id', 'testimonials.property_id');
+     }, 'avg_rating')
+     ->selectSub(function($query) {
+         $query->from('rooms')
+             ->select('onepersonprice')
+             ->whereColumn('properties.id', 'rooms.property_id')
+             ->limit(1);
+     }, 'onepersonprice')
+     ->havingRaw('avg_rating IN (3,4, 5)')
+     ->where('property_type_id',41)
+        ->selectRaw("( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance", [$latitude, $longitude, $latitude])
+        ->having('distance', '<=', 20)
+        ->orderBy('distance','asc')
+        ->limit(20)
+        ->get();
+    }else{
+  $places=[];
+    }
+        return view('frontend.top_rated',compact('places'));
+
+    }
+
+    public function storeLocation(Request $request){
+        $lat=$request->latitude;
+        $lon=$request->longitude;
+        $data=[
+            'latitude'=>$lat,
+            'longitude'=>$lon
+        ];
+        Cache::put('latlon', $data, 3600);
+    }
 }

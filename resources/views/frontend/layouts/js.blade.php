@@ -68,7 +68,7 @@
                         $('#search_type').val(type);
                         $('#search_id').val(id);
                 }
-                $('input[name="location_search"]').attr("placeholder", '').val(name);
+                $('input[name="location_search"]').val(name);
                 $('.search-suggestions').hide();
                 $('#serach_form_btn').attr('disabled',false)
             });
@@ -334,4 +334,9 @@
         sessionStorage.setItem('room', room)
 
     };
+
+    $('.mobilebtn').click(function () {
+    $(this).toggleClass("click");
+    $('.sidebar').toggleClass("show");
+});
 </script>

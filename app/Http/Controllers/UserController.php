@@ -57,4 +57,22 @@ class UserController extends Controller
            ->paginate(30);
            return view('frontend.user.user_my_notification', compact('notifications'));
      }
+
+     public function updateToken(Request $request){
+        try{
+           $user=User::find(auth()->user()->id);
+           $user->fcm_token=$request->token;
+           $user->save();
+
+            return response()->json([
+                'success'=>true,
+                'token'=>$request->token,
+                   ]);
+        }catch(\Exception $e){
+            report($e);
+            return response()->json([
+                'success'=>false
+            ],500);
+        }
+    }
 }

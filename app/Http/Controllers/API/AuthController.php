@@ -99,7 +99,8 @@ class AuthController extends Controller
               Notification::route('mail',$user->email)->notify(new SendotpNotification($otp));
             return $this->success_response("We have sent an otp at your Email address.,$otp");
         }
-        $customer=User::where('phone_number', $request->mobile)->first();
+
+        $customer=User::where('phone_number', $request->mobile)->orwhere('phone_number', '91'.$request->mobile)->first();
         if(!$customer)
         {
             return $this->error_response('We could not find the customer associated with that mobile number.','',400);

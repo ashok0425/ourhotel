@@ -65,7 +65,7 @@ justify-content: center;
                     <div class="card-body p-0">
                 <form class="searchform" action="{{route('page_search_listing')}}" method="get" id="search-hotel" class="p-0 m-0">
                     <div class="row m-0">
-                        <div class="col-md-4 py-3 ps-3 pr-0">
+                        <div class="col-md-4 pt-3 pb-0 pt-md-3 pb-md-3 ps-3 pr-0">
                             <div class="form-group searchinput  mx-0">
                                 <span class="labeltext"><i class="fas fa-hotel"></i> Where are you going?</span>
                                 <input class="form-control open-suggestion" id="location_search" required name="location_search" type="text" placeholder="City, Street or Property Name" autocomplete="off">
@@ -79,7 +79,7 @@ justify-content: center;
                             <div class="search-result search-suggestions"></div>
                         </div>
                         <div class="col-md-3">
-                            <div class="border_left_right py-3">
+                            <div class="border_left_right pt-3 pb-0 pt-md-3 pb-md-3">
 
                             <div class="form-group searchinput mx-3">
                                 <span class="labeltext"><i class="fas fa-calendar"></i> Check in Check out</span>
@@ -90,7 +90,7 @@ justify-content: center;
                             </div>
 
                         </div>
-                        <div class="col-md-3 py-3 ">
+                        <div class="col-md-3 pt-3 pb-0 pt-md-3 pb-md-3 ">
                             <div class="form-group searchinput">
                                 <span class="labeltext"><i class="fas fa-users"></i> How many you are?</span>
                                 <div class="panel-dropdown custom-bg-white">

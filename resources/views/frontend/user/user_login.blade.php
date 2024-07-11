@@ -9,8 +9,8 @@
             width: 100% !important;
         }
     </style>
-    <div class="login-wrap">
-        <div class="container">
+    <div class="login-wrap  mt-5 mt-md-0">
+        <div class="container pt-5 mt-5 pt-md-0 pt-md-0">
             <div class="login-inner">
                 <div class="row">
                     <div class="col-md-6">
@@ -31,7 +31,7 @@
                                     </div>
                                     <input type="text" class="form-control px-3" aria-describedby="basic-addon1"  name="phone_no" id="phone_no" placeholder="Enter your phone number" maxlength="10" minlength="10"
                                     pattern="[1-9]{1}[0-9]{9}" autocomplete="off" required autofocus
-                                    value="{{ isset($_GET['phone'])?$_GET['phone']:'' }}" style="border-bottom:2px solid #6838af" >
+                                    value="{{ isset($_GET['phone'])?$_GET['phone']:'' }}" style="border-bottom:2px solid #6838af;max-width:100%!important" >
 
                                   </div>
                             </div>

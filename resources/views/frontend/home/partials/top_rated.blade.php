@@ -7,7 +7,7 @@
 
         <div class="d-flex justify-content-between align-items-center mb-2 mb-2 p-3 p-md-0">
             <h2 class="custom-fw-800  bold text-dark custom-fs-20 custom-fw-600 mb-3 pt-4">Top Rated Hotels</h2>
-            <div><a href="ajax-search?star=5"
+            <div><a href="/top-rated-hotels"
                     class="btn custom-border-radius-20 custom-bg-primary custom-text-white custom-fw-800 custom-fs-14 hover-on-white">View
                     All ➡</a></div>
         </div>

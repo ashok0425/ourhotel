@@ -33,7 +33,6 @@ Route::get('/delete-image',[ImageController::class,'delete']);
 Route::get('/getCity/{stateId}',[PropertyController::class,'getCity'])->name('getcities');
 
 
-Route::post('/fcm-token', [HomeController::class, 'updateToken'])->name('fcmToken');
 
 Route::get('/banquet', [HomeController::class, 'banquote'])->name('banquet');
 
@@ -49,6 +48,7 @@ Route::get('/post/{slug}-{id}', [PostController::class, 'detail'])
     ->where('id', '[0-9]+')->name('post_detail');
 
 Route::view('privacy','frontend.privacy');
+Route::get('store-location',[HomeController::class,'storeLocation']);
 Route::get('/page/contact', [EnquiryController::class, 'pageContact'])->name('page_contact');
 Route::get('/refer', [EnquiryController::class, 'refer'])->name('refer');
 Route::get('corporate', [EnquiryController::class, 'corporate'])->name('corporate');
@@ -63,6 +63,7 @@ Route::get('/hotels/{slug}/{id?}', [PlaceController::class, 'detail'])->name('pl
 Route::get('/places/filter', [PlaceController::class, 'getListFilter'])->name('place_get_list_filter');
 
 Route::group(['middleware'=>'auth','prefix'=>'user'], function () {
+    Route::post('/fcm-token', [UserController::class, 'updateToken'])->name('fcmToken');
     Route::get('/checkout', [CheckoutController::class, 'store'])->name('payment.checkout');
     Route::get('/profile', [UserController::class, 'pageProfile'])->name('user_profile');
     Route::put('/profile', [AuthController::class, 'updateProfile'])->name('user_profile_update');
@@ -109,6 +110,11 @@ Route::get('/location-search', [HomeController::class, 'locationSearch'])->name(
 Route::get('/hotel/best-hotel-in-{city_name?}-near-{location?}', [HomeController::class, 'pageSearchListing'])->name('location.search');
 Route::get('/search-listing', [HomeController::class, 'pageSearchListing'])->name('page_search_listing');
 Route::get('/hotel/best-hotel-in-{slug}', [HomeController::class, 'pageSearchListing'])->name('city-search');
+Route::get('/top-rated-hotels', [HomeController::class, 'toprated']);
+Route::get('/nsn-resorts', [HomeController::class, 'nsnResort']);
+Route::get('/hotels-near-me', [HomeController::class, 'nearbyHotel']);
+
+
 
 $router->get('/getprice', [CheckoutController::class, 'getRoomPrice']);
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('book.now');

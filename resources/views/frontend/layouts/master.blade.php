@@ -313,6 +313,33 @@
         @endif
 
 
+
+        <script>
+
+            function getLocation() {
+         if (navigator.geolocation) {
+         navigator.geolocation.getCurrentPosition(showPosition);
+         }
+         }
+
+
+    function showPosition(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      $.ajax({
+        url:`/store-location?latitude=${latitude}&longitude=${longitude}`, // your url
+        success:function(){
+            console.log('success');
+        }
+      })
+    }
+        </script>
+
+   @if (!Cache::get('latlon')||Cache::get('latlon'))
+   <script>
+       getLocation();
+   </script>
+@endif
     </body>
 
     </html>

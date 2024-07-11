@@ -136,6 +136,7 @@
     <div id="mobile_location"></div>
 
     <div>
+        @include('frontend.home.partials.nearByhotel')
         @include('frontend.home.partials.top_rated')
         @include('frontend.home.partials.offer2')
         @include('frontend.home.partials.nsn_resort')

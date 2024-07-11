@@ -10,11 +10,7 @@
 	-ms-transition: all 0.5s ease 0s;
 	-o-transition: all 0.5s ease 0s;
 }
-html, body, address, blockquote, div, dl, form, h1, h2, h3, h4, h5, h6, ol, p, pre, table, ul, dd, dt, li, tbody, td, tfoot, th, thead, tr, button, del, ins, map, object, a, abbr, acronym, b, bdo, big, br, cite, code, dfn, em, i, img, kbd, q, samp, small, span, strong, sub, sup, tt, var, legend, fieldset, p {
-	margin: 0;
-	padding: 0;
-	border: none;
-}
+
 a, input, select, textarea {
 	outline: none;
 	margin: 0;
@@ -126,9 +122,15 @@ div, h1, h2, h3, h4, span, p, input, form, img, hr, img, a {
 }
 }
 </style>
-  <!--<body>-->
-    <div class="container">
-        <div class="row mt-30 mb-30">
+<br>
+<br>
+<br><br>
+<br>
+<br>
+
+
+    <div class="container ">
+        <div class="row">
           <div class="col-sm-12 col-md-3">
             <div class="share-boxes">
               <img src="https://i.ibb.co/PtYrLNy/img1.png" alt="img1" border="0">
@@ -217,7 +219,6 @@ div, h1, h2, h3, h4, span, p, input, form, img, hr, img, a {
     <br>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  </body>
   <script>
        @if(Auth::check())
   var copyButton = document.querySelector('.copybtn');
@@ -236,6 +237,5 @@ div, h1, h2, h3, h4, span, p, input, form, img, hr, img, a {
 
 
   </script>
-</html>
 
 @stop

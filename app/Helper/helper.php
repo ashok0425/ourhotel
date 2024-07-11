@@ -48,9 +48,9 @@ if (!function_exists('setting')) {
     function setting($key)
     {
 
-        // $cache = Cache::remember("setting",6048000000, function () use ($key) {
+        $cache = Cache::remember("setting",6048000000, function () use ($key) {
             return \App\Models\Website::first();
-        // });
+        });
 
         return $cache->$key;
     }

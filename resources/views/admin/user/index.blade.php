@@ -85,7 +85,7 @@
                             </td>
 
                             <td>
-                           {{$user->phone}}
+                           {{$user->phone_number}}
                              </td>
                              <td>
                                 {{Carbon\Carbon::parse($user->created_at)->format('d/m/Y')}}
@@ -106,7 +106,7 @@
                                             role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-h fa-2x"></i></a>
                                         <div class="dropdown-menu">
                                             <a href="{{ route('admin.users.show', $user) }}" class="text-dark dropdown-item">View</a>
-
+                                            <a href="{{ route('admin.users.edit', $user) }}" class="text-dark dropdown-item">Edit</a>
                                             <a href="" class="text-dark dropdown-item updateSatusBtn"
                                             data-toggle="modal" data-target="#updatestatus" data-booking_id="{{$user->id}}">Change Status</a>
 

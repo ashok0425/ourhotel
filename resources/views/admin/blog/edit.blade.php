@@ -32,16 +32,16 @@
                         name="title" value="{{$blog->title}}">
                 </div>
 
-                <div class="form-group ">
+                {{-- <div class="form-group ">
                   <label for="exampleInputUsername1">Short Description</label>
                   <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Short Description" required
                       name="short_description" value="{{$blog->short_description}}">
-              </div>
+              </div> --}}
 
 
               <div class="form-group ">
                 <label for="exampleInputUsername1">Long Description</label>
-                <textarea type="text" class="form-control" id="exampleInputUsername1" placeholder="Long Description" required
+                <textarea type="text" class="form-control" id="editor" placeholder="Long Description" required
                     name="long_description">{{$blog->long_description}}</textarea>
             </div>
 
@@ -72,3 +72,14 @@
 
     </form>
 @endsection
+@push('script')
+<script src="{{ asset('admin/vendors/ckeditor.js') }}"></script>
+<script>
+     ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+
+</script>
+@endpush

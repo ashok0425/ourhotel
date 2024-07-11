@@ -13,7 +13,7 @@
             <div class="col-md-8">
               <div class="card">
                 <div class="card-body">
- 
+
                 <div class="card-title d-flex justify-content-between">
                     <div>
                         Enter Blog Detail
@@ -25,30 +25,30 @@
                 </div>
 
 
-                <div class="form-group "> 
+                <div class="form-group ">
                     <label for="exampleInputUsername1">Title</label>
                     <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Blog Title" required
                         name="title">
                 </div>
 
-                <div class="form-group "> 
+                {{-- <div class="form-group ">
                   <label for="exampleInputUsername1">Short Description</label>
                   <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Short Description" required
                       name="short_description">
-              </div>
+              </div> --}}
 
 
-              <div class="form-group "> 
+              <div class="form-group ">
                 <label for="exampleInputUsername1">Long Description</label>
-                <textarea type="text" class="form-control" id="exampleInputUsername1" placeholder="Long Description" required
+                <textarea type="text" class="form-control" id="editor" placeholder="Long Description" required
                     name="long_description"></textarea>
             </div>
 
-             
+
 
                 <div class="form-group ">
                   <label for="exampleInputUsername1">Thumbnail</label>
-                  <br> 
+                  <br>
                   <img id="preview_thumb" src="https://via.placeholder.com/120x150?text=thumbnail" width="100" height="100" class="d-none">
                   <div class="custom-file">
                     <input type="file" class="custom-file-input" id="thumb" name="thumbnail" required>
@@ -119,9 +119,20 @@
             </div>
           </div>
 
-          
+
         </div>
       </div>
 
     </form>
 @endsection
+@push('script')
+<script src="{{ asset('admin/vendors/ckeditor.js') }}"></script>
+<script>
+     ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+
+</script>
+@endpush

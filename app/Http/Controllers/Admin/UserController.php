@@ -68,7 +68,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('admin.user.edit',compact('user'));
     }
 
     /**
@@ -76,7 +76,26 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $user->name=$request->name;
+        $user->email=$request->email;
+        $user->phone_number=$request->phone_number;
+        if ($request->role==2) {
+        $user->is_agent=1;
+        }
+        if ($request->role==3) {
+            $user->is_partner=1;
+            }
+
+            if ($request->role==4) {
+                $user->isSeoExpert=1;
+                }
+
+                $user->save();
+                $notification=array(
+                    'type'=>'success',
+                     'message'=>'user profile updated Sucessfully'
+                   );
+                   return redirect()->route('admin.users.index')->with($notification);
     }
 
     /**

@@ -58,4 +58,9 @@ class AuthController extends Controller
 
         return view('admin.dashboard',compact('pendingBooking','allBooking','todayBookingAmount','allBookingAmount','todayBooking','bookings'));
     }
+
+    function logout(){
+        Auth::logout();
+        return redirect('/');
+    }
 }

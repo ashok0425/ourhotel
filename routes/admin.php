@@ -26,6 +26,8 @@ use App\Models\TourBooking;
 
 Route::view('admin/login','admin.login');
 Route::post('admin/login',[AuthController::class,'login']);
+Route::get('admin/logout',[AuthController::class,'logout']);
+
 
 
 Route::middleware('isadmin')->prefix('admin')->name('admin.')->group(function(){

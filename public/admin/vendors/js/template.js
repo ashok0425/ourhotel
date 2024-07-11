@@ -119,7 +119,7 @@
 })(jQuery);
 
 
-let fileLimit=6;
+let fileLimit=8;
 function previewUploadImage(input, element_id) {
     if (input.files && input.files[0]) {
         let reader = new FileReader();

@@ -270,7 +270,7 @@
                         <td style="max-width: 220px;" class="text-wrap">
                             {{ $property->name }}
                         </td>
-                        <td>
+                        <td style="max-width: 150px;" class="text-wrap">
                             <a href="{{ getImageUrl($property->thumbnail) }}" target="_blank">
                            <img src="{{ getImageUrl($property->thumbnail) }}" alt="{{ $property->name }}" width="100" height="100">
 

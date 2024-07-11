@@ -85,10 +85,10 @@ use App\Models\City;
 </style>
 
 <div class="container my-5">
-    <h2 class=" pl-0 pl-md-3 font-weight-bold text-dark custom-fs-20 custom-fw-600 mb-3">
+    <h2 class=" pl-0  font-weight-bold text-dark custom-fs-20 custom-fw-600 mb-3">
         Popular Locations
     </h2>
-<p class="pl-0 pl-md-3">
+<p class="pl-0">
     We have selected some best locations around the world for you.
 </p>
     <br>

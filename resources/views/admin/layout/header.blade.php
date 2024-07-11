@@ -25,72 +25,40 @@
             <i class="icon-bell mx-0"></i>
             <span class="count"></span>
           </a>
+          @php
+             $bookings= App\Models\Booking::query()
+           ->when(Auth::user()->is_partner,function($query) {
+            $query->whereHas('property', function ($query) {
+                $query->where('owner_id',Auth::user()->id );
+            });
+           })->whereDate('created_at','>=',today()->subDays(30))->where('status',2)->get();
+          @endphp
+
           <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
             <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <div class="preview-icon bg-success">
-                  <i class="ti-info-alt mx-0"></i>
-                </div>
-              </div>
+
+            @foreach ($bookings as $booking)
+            <a class="dropdown-item preview-item" href="{{route('bookings.show',$booking)}}">
+
               <div class="preview-item-content">
-                <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                <h6 class="preview-subject font-weight-normal">New Booking #{{$booking->booking_id}}</h6>
                 <p class="font-weight-light small-text mb-0 text-muted">
-                  Just now
+                  You have a new booking.
                 </p>
               </div>
             </a>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <div class="preview-icon bg-warning">
-                  <i class="ti-settings mx-0"></i>
-                </div>
-              </div>
-              <div class="preview-item-content">
-                <h6 class="preview-subject font-weight-normal">Settings</h6>
-                <p class="font-weight-light small-text mb-0 text-muted">
-                  Private message
-                </p>
-              </div>
-            </a>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <div class="preview-icon bg-info">
-                  <i class="ti-user mx-0"></i>
-                </div>
-              </div>
-              <div class="preview-item-content">
-                <h6 class="preview-subject font-weight-normal">New user registration</h6>
-                <p class="font-weight-light small-text mb-0 text-muted">
-                  2 days ago
-                </p>
-              </div>
-            </a>
+            @endforeach
+
           </div>
         </li>
         <li class="nav-item nav-profile dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-            <img src="images/faces/face28.jpg" alt="profile"/>
+          <a class="nav-link dropdown-toggle" href="/admin/logout">
+            Logout
           </a>
-          <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-            <a class="dropdown-item">
-              <i class="ti-settings text-primary"></i>
-              Settings
-            </a>
-            <a class="dropdown-item">
-              <i class="ti-power-off text-primary"></i>
-              Logout
-            </a>
-          </div>
+
         </li>
-        <li class="nav-item nav-settings d-none d-lg-flex">
-          <a class="nav-link" href="#">
-            <i class="icon-ellipsis"></i>
-          </a>
-        </li>
+
       </ul>
-      <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-        <span class="icon-menu"></span>
-      </button>
+
     </div>
   </nav>

@@ -51,6 +51,7 @@ class AuthController extends Controller
             $user->phone_number = $input['phone'];
             $user->password = bcrypt(123456);
             $user->otp = $otp;
+            $user->status = 1;
             $user->save();
 
           if($request->referral_code){
@@ -92,6 +93,7 @@ class AuthController extends Controller
               $user->phone_number ="9813".rand(1,80000000);
               $user->password = bcrypt(123456);
               $user->otp = $otp;
+              $user->status = 1;
               $user->save();
           }
              $user->otp = $otp;

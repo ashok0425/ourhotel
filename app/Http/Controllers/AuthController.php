@@ -92,6 +92,7 @@ class AuthController extends Controller
             $new = new User;
             $new->phone_number = $request->phone_no;
             $new->name = $request->name;
+            $new->status = 1;
             // $new->email = $request->email;
             $new->save();
 

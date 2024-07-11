@@ -148,7 +148,7 @@
                                 <span class="badge bg-info text-white">upcoming</span>
                             @endif
                             @if ($booking->status == 1)
-                                <span class="badge bg-success text-white">Approved</span>
+                                <span class="badge bg-success text-white">Completed</span>
                             @endif
 
                             @if ($booking->status == 0)
@@ -202,10 +202,9 @@
                 @method('PATCH')
                 @csrf
                 <select name="status" id="" class="form-control form-select" required>
-                    <option value="1">Approved</option>
-                    <option value="2">Checkin</option>
-                    <option value="3">Checkout</option>
-                    <option value="4">Cancel</option>
+                    <option value="2">Upcoming</option>
+                    <option value="1">Completed</option>
+                    <option value="0">Cancel</option>
                 </select>
 
         <div class="modal-footer">

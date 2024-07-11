@@ -12,9 +12,9 @@
             <label for="">Status</label>
             <select name="status" id="" class="form-select form-control">
                 <option value="">Status</option>
-                <option value="0" {{request()->query('status')==0? 'selected':''}}>Pending</option>
+                <option value="0" {{request()->query('status')==2? 'selected':''}}>Upcoming</option>
                 <option value="1" {{request()->query('status')==1? 'selected':''}}>Approved</option>
-                <option value="4" {{request()->query('status')==4? 'selected':''}}>Cancelled</option>
+                <option value="4" {{request()->query('status')==0? 'selected':''}}>Cancelled</option>
 
             </select>
         </div>
@@ -116,13 +116,13 @@
 
                                   </td>
                             <td>
-                                @if ($booking->status == 0)
-                                <span class="badge bg-danger text-white">Pending</span>
+                                @if ($booking->status == 2)
+                                <span class="badge bg-danger text-white">upcoming</span>
                             @endif
                             @if ($booking->status == 1)
                                 <span class="badge bg-success text-white">Approved</span>
                             @endif
-                          @if ($booking->status == 4)
+                          @if ($booking->status == 0)
                                         <span class="badge bg-danger text-white">Cancelled</span>
                                     @endif
                             </td>
@@ -171,8 +171,8 @@
                 @method('PATCH')
                 @csrf
                 <select name="status" id="" class="form-control form-select" required>
-                    <option value="1">Approved</option>
-                    <option value="4">Cancel</option>
+                    <option value="1">Completed</option>
+                    <option value="0">Cancel</option>
                 </select>
 
         <div class="modal-footer">

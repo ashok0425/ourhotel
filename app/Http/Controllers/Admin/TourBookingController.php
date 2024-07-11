@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Jobs\BookingCancelNotifyViaWP;
 use App\Jobs\BookingNotifyViaMsg;
 use App\Jobs\BookingNotifyViaWP;
+use App\Jobs\CheckinNotifyViaWP;
 use App\Models\TourBooking;
 use App\Models\User;
+use App\Service\InteraktService;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class TourBookingController extends Controller
@@ -81,9 +84,13 @@ class TourBookingController extends Controller
 
 
         $booking->save();
+        $data="Tour Name:$request->tour_name, Start Date:$request->check_in, End Date :$booking->check_out, Number of Adult:-$request->adult, Number of Children:$request->children, Booking Amount:$booking->price";
 
-        // dispatch(new BookingNotifyViaWP($booking->id));
-        // dispatch(new BookingNotifyViaMsg($booking->id));
+      $wpService=new InteraktService();
+      $wpService->sendBookingMsg($request->phone,$request->name,$booking->booking_id,$data);
+      $wpService->sendBookingMsg('919958277997',$request->name,$booking->booking_id,$data);
+      $wpService->sendReviewMsg($request->phone,$request->name,$booking->booking_id,$data);
+
 
         $notification = array(
             'type' => 'success',
@@ -125,6 +132,13 @@ class TourBookingController extends Controller
         $booking= TourBooking::findorFail($request->booking_id);
         $booking->status=$request->status;
         $booking->save();
+
+        // if($request->status==0){
+        //     dispatch(new BookingCancelNotifyViaWP($booking->id));
+        // }
+        // if($request->status==1){
+        //     dispatch(new CheckinNotifyViaWP($booking->id));
+        // }
         $notification=array(
             'type'=>'success',
              'message'=>'Booking satus updated Sucessfully'

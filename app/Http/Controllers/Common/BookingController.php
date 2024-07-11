@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Common;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Jobs\BookingCancelNotifyViaWP;
+use App\Jobs\CheckinNotifyViaWP;
 use App\Models\Property;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
@@ -88,6 +90,12 @@ class BookingController extends Controller
 
         $booking->status=$request->status;
         $booking->save();
+        if($request->status==0){
+            dispatch(new BookingCancelNotifyViaWP($booking->id));
+        }
+        if($request->status==1){
+            dispatch(new CheckinNotifyViaWP($booking->id));
+        }
         $notification=array(
             'type'=>'success',
              'message'=>'Booking satus updated Sucessfully'

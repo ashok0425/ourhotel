@@ -154,7 +154,7 @@ class InteraktService{
 
 
 
-    public function whatsapp_checkin($phone,$name){
+    public function sendCheckinMsg($phone,$name){
         $curl = curl_init();
         curl_setopt_array($curl, array(
           CURLOPT_URL => 'https://api.interakt.ai/v1/public/message/',

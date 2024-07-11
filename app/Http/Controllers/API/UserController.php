@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\BookingCancelNotifyViaWP;
 use App\Models\Booking;
 use App\Models\FcmNotification;
 use App\Models\Place;
@@ -57,10 +58,7 @@ class UserController extends Controller
         $booking->cancel_reason=$request->cancel_reason;
 
         $booking->save();
-        // $this->whatsapp_cancel('977'.$booking->phone_number, $booking->name);
-        // $this->whatsapp_cancel('91'.$booking->phone_number, $booking->name,$booking->booking_id);
-       //  $this->whatsapp_cancel('91'.$mm->phone_number, $mm->name);
-        // $this->whatsapp_cancel('919958277997'.$booking->phone_number, $booking->name,$booking->booking_id);
+        dispatch(new BookingCancelNotifyViaWP($booking->id));
         return $this->success_response('Booking  updated successfully',$booking);
     }
 

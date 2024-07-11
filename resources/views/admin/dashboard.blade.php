@@ -72,6 +72,7 @@
         <div class="card tale-bg">
             <div class="card-body">
             <p class="card-title">Upcoming Booking</p>
+           <div class="table-responsive">
             <table class="table table-bordered w-100">
                 <thead>
                     <tr>
@@ -190,6 +191,7 @@
 
                 </tbody>
             </table>
+           </div>
             </div>
 
         </div>

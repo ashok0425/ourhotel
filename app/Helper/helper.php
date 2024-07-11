@@ -48,9 +48,9 @@ if (!function_exists('setting')) {
     function setting($key)
     {
 
-        $cache = Cache::remember("setting", 86400, function () use ($key) {
+        // $cache = Cache::remember("setting",6048000000, function () use ($key) {
             return \App\Models\Website::first();
-        });
+        // });
 
         return $cache->$key;
     }
@@ -61,7 +61,7 @@ if (!function_exists('coupons')) {
     function coupons()
     {
 
-        $coupons = Cache::remember("coupons", 86400, function ()  {
+        $coupons = Cache::remember("coupons", 6048000000,function ()  {
             return \App\Models\Coupon::where('thumbnail','!=',null)->get();
         });
 
@@ -74,7 +74,7 @@ if (!function_exists('coupons')) {
 if (!function_exists('popular_cities')) {
     function popular_cities()
     {
-      return  Cache::remember('popular_cities',604800, function () {
+      return  Cache::remember('popular_cities', 6048000000,function () {
             return City::query()
             ->whereIn('id', [57,151,154,125,39,95,124,123,139,144,104,34])
             ->orderBy('slug','asc')
@@ -88,7 +88,7 @@ if (!function_exists('popular_cities')) {
 if (!function_exists('amentities')) {
     function amentities()
     {
-      return  Cache::remember('amentities',604800, function () {
+      return  Cache::remember('amentities', 6048000000,function () {
             return Amenity::select('id','thumbnail')
             ->get();
         });
@@ -99,7 +99,7 @@ if (!function_exists('amentities')) {
 if (!function_exists('taxes')) {
     function taxes()
     {
-      return  Cache::remember('taxes',604800, function () {
+      return  Cache::remember('taxes',6048000000, function () {
             return Tax::all();
         });
     }
@@ -112,7 +112,7 @@ if (!function_exists('taxes')) {
 if (!function_exists('testimonials')) {
     function testimonials()
     {
-      return  Cache::remember('testimonials',604800,function(){
+      return  Cache::remember('testimonials',6048000000,function(){
         return Testimonial::query()
         ->where('status', 1)
         ->where('property_id', null)

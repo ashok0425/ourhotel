@@ -177,4 +177,10 @@ class AuthController extends Controller
         return $this->success_response('Account Deleted','');
 
     }
+
+    public function logout(Request $request){
+        Auth::logout();
+        return $this->success_response('user logout',200);
+
+    }
 }

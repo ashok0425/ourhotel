@@ -51,6 +51,8 @@ $router->group([
         $router->get('/booking-list', [UserController::class, 'mybooking']);
         $router->get('/cancel-booking', [UserController::class, 'cancelBooking']);
         $router->get('/notifications', [UserController::class, 'notifications']);
+        $router->get('/logout', [AuthController::class, 'logout']);
+
     });
 
     $router->get('/download-invoice/{id}', [UserController::class, 'invoice']);

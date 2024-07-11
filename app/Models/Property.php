@@ -131,6 +131,7 @@ class Property extends Model
         ->when($place_type, function ($query) use ($place_type) {
             $query->whereIn('property_type_id', $place_type);
         })
+        ->where('properties.status',1)
         ->paginate(125);
 
     return $places;

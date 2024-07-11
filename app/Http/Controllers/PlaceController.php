@@ -16,7 +16,7 @@ class PlaceController extends Controller
     public function detail(Request $request,$slug)
     {
 
-        $place =Property::where('slug',$request->slug)->firstOrFail();
+        $place =Property::where('slug',$request->slug)->where('status',1)->firstOrFail();
 
           $city = $place->city;
         $amenities = Amenity::whereIn('id', $place->amenities ? $place->amenities : [])

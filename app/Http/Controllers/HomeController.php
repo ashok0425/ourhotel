@@ -169,6 +169,7 @@ class HomeController extends Controller
     }, 'onepersonprice')
     ->havingRaw('avg_rating IN (4, 5)')
     ->limit(25)
+    ->where('properties.status',1)
     ->get();
     return view('frontend.top_rated',compact('places'));
     }
@@ -192,6 +193,7 @@ class HomeController extends Controller
     ->havingRaw('avg_rating IN (3,4, 5)')
     ->where('property_type_id',41)
     ->limit(25)
+    ->where('properties.status',1)
     ->get();
     return view('frontend.top_rated',compact('places'));
     }
@@ -220,6 +222,7 @@ class HomeController extends Controller
         ->having('distance', '<=', 20)
         ->orderBy('distance','asc')
         ->limit(20)
+        ->where('properties.status',1)
         ->get();
     }else{
   $places=[];

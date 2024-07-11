@@ -91,6 +91,7 @@ class PlaceController extends Controller
     })
     ->orderBy('testimonial_avg.rating', 'DESC')
     ->orderBy('price', 'asc')
+    ->where('properties.status',1)
     ->get();
 
     $places->map(function ($place) {
@@ -139,7 +140,7 @@ class PlaceController extends Controller
         } else {
             $places = $places->where('property_type_id', $id);
         }
-        $places = $places->limit(10)->get();
+        $places = $places->where('properties.status',1)->limit(10)->get();
 
         $places->map(function ($place) {
             $amenityIds = $place->amenities;
@@ -213,6 +214,7 @@ class PlaceController extends Controller
         ->select(
             'properties.id',
             'properties.amenities',
+            'properties.status',
             'rooms.onepersonprice as price',
             'rooms.discount_percent',
             'properties.address',
@@ -222,7 +224,7 @@ class PlaceController extends Controller
             'properties.couple_friendly',
             'properties.pet_friendly',
             'properties.corporate',
-            'testimonial_avg.rating'
+            'testimonial_avg.rating',
         )
         ->where('rooms.onepersonprice', '!=', null)
         ->where('rooms.onepersonprice', '!=', 'null')
@@ -232,6 +234,7 @@ class PlaceController extends Controller
         ->selectRaw("( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance", [$latitude, $longitude, $latitude])
         ->having('distance', '<=', 12)
         ->limit(10)
+        ->where('properties.status',1)
         ->get();
 
 

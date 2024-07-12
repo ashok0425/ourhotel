@@ -46,6 +46,7 @@ return new class extends Migration
             $table->integer('refer_amount_spent')->nullable();
             $table->integer('refer_id')->nullable();
             $table->string('razorpay_order_id')->nullable();
+            $table->string('payment_id')->nullable();
             $table->enum('payment_type',['online','offline'])->default('online');
             $table->json('hotel_data')->nullable();
             $table->timestamps();

@@ -142,6 +142,22 @@ class CheckoutController extends Controller
     public function updateAfterPayment(Request $request)
     {
 
+        $validator = Validator::make($request->all(), [
+            'booking_id' => 'required',
+            'payment_id' => 'required',
+            'order_id'=>'requred'
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->messages();
+            $datas = [];
+            foreach ($errors as $key => $value) {
+                $datas[] = $value[0];
+            }
+
+            return $this->error_response($datas, '', 400);
+        }
+
         $payment_id = $request->payment_id;
         $payment_mode = 'online';
         $booking_id = $request->booking_id;

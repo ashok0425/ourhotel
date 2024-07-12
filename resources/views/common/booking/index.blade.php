@@ -6,11 +6,11 @@
 @section('content')
 
 <div class="mb-3 align-items-center d-flex justify-content-end">
-    <form action="" method="get" class="d-flex align-items-center">
-
-        <div>
+    <form action="" method="get" class="align-items-center">
+<div class="row">
+        <div class="col-md-2 col-6 mx-0 px-0">
             <label for="">Status</label>
-            <select name="status" id="" class="form-select form-control">
+            <select name="status" id="" class="form-select form-control rounded-0">
                 <option value="">Status</option>
                 <option value="0" {{request()->query('status')==0? 'selected':''}}>Cancelled</option>
                 <option value="1" {{request()->query('status')==1? 'selected':''}}>Completed</option>
@@ -18,35 +18,39 @@
 
             </select>
         </div>
-
-        <div>
-            <label for="">From</label>
-            <input type="date" name="from" id="" class="form-control" value="{{request()->query('from')?Carbon\Carbon::parse( request()->query('from'))->format('Y-m-d') : ''}}">
-        </div>
-        <div>
-            <label for="">To</label>
-            <input type="date" name="to" id="" class="form-control" value="{{request()->query('to')?Carbon\Carbon::parse( request()->query('to'))->format('Y-m-d') : ''}}">
-        </div>
-        <div>
+        <div class="col-md-2 col-6  mx-0 px-0">
             <label for="">Search Keyword</label>
-            <input type="search" name="keyword" id="" class="form-control" value="{{request()->query('keyword')}}" placeholder="Enter search keyword">
+            <input type="search" name="keyword" id="" class="form-control rounded-0" value="{{request()->query('keyword')}}" placeholder="Enter search keyword">
+        </div>
+        <div class="col-md-2 col-4  mx-0 px-0">
+            <label for="">From</label>
+            <input type="date" name="from" id="" class="form-control rounded-0" value="{{request()->query('from')?Carbon\Carbon::parse( request()->query('from'))->format('Y-m-d') : ''}}">
+        </div>
+        <div class="col-md-2 col-4  mx-0 px-0">
+            <label for="">To</label>
+            <input type="date" name="to" id="" class="form-control rounded-0" value="{{request()->query('to')?Carbon\Carbon::parse( request()->query('to'))->format('Y-m-d') : ''}}">
         </div>
 
-        <div>
+
+        <div class="col-md-1 col-4  mx-0 px-0">
+            <div class="mt-1"></div>
         <button class="btn btn-info rounded-0 mt-4">Search</button>
         </div>
-        <div>
-            <a href="{{route('booking.create')}}" class="btn btn-primary rounded-0 mt-4">Book Unlisted Hotel</a>
-        </div>
+
+    </div>
     </form>
 </div>
 
     <div class="card">
 
         <div class="card-body table-responsive pt-3">
-            <div class="card-title d-flex justify-content-between">
+            <div class="card-title d-flex justify-content-between align-items-center">
                 <div>
                     Booking List
+                </div>
+                <div>
+            <a href="{{route('booking.create')}}" class="btn btn-primary btn-rounded btn-fw btn-sm">Book Unlisted Hotel</a>
+
                 </div>
 
             </div>
@@ -201,7 +205,7 @@
                 <input type="hidden" id="booking_id" name="booking_id">
                 @method('PATCH')
                 @csrf
-                <select name="status" id="" class="form-control form-select" required>
+                <select name="status" id="" class="form-control rounded-0 form-select" required>
                     <option value="2">Upcoming</option>
                     <option value="1">Completed</option>
                     <option value="0">Cancel</option>

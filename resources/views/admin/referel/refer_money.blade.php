@@ -7,8 +7,9 @@
                 <div>
                    Referel Money
                 </div>
-
             </div>
+
+            <div class="table-responsive">
             <table class="table table-bordered w-100">
                 <thead>
                     <tr>
@@ -72,6 +73,7 @@
 
                 </tbody>
             </table>
+            </div>
         </div>
         {{$users->withQueryString()->links()}}
     </div>

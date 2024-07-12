@@ -48,8 +48,9 @@
                 <div>
                    Tour Booking List
                 </div>
-
             </div>
+
+            <div class="table-responsive">
             <table class="table table-bordered w-100">
                 <thead>
                     <tr>
@@ -146,6 +147,7 @@
 
                 </tbody>
             </table>
+            </div>
         </div>
         {{$bookings->links()}}
     </div>

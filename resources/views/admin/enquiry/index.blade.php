@@ -22,6 +22,8 @@
                 </div>
 
             </div>
+
+            <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -71,6 +73,7 @@
 
                 </tbody>
             </table>
+            </div>
             {{ $enquries->links() }}
         </div>
     </div>

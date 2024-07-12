@@ -11,6 +11,8 @@
                             class="icon-plus menu-icon"></i> Add New</a>
                 </div>
             </div>
+
+            <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -51,6 +53,7 @@
 
                 </tbody>
             </table>
+            </div>
             {{$fcms->links()}}
         </div>
     </div>

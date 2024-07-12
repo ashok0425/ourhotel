@@ -166,7 +166,6 @@ class CheckoutController extends Controller
         $booking->payment_id = $payment_id;
         $booking->payment_type = $payment_mode;
         $booking->is_paid = 1;
-        $booking->payment_status = 1;
         $booking->razorpay_order_id = $order_id;
         $booking->save();
         return $this->success_response('Booking Updated', $booking);

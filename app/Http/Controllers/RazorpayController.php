@@ -1,12 +1,8 @@
 <?php
 namespace App\Http\Controllers;
-use App\Models\Booking;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Razorpay\Api\Api;
-use Session;
-use Redirect;
-use auth;
 
 class RazorpayController extends Controller
 {

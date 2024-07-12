@@ -30,11 +30,12 @@ class RazorpayController extends Controller
             try {
 
                 $response = $api->payment->fetch($input['razorpay_payment_id'])->capture(array('amount'=>$payment['amount']));
-
+                $uuid=session()->get('uuid');
+                return redirect()->route('thanku',compact('uuid'));
             }
             catch (\Exception $e) {
                 return  $e->getMessage();
-                \Session::put('error',$e->getMessage());
+                Session()->put('error',$e->getMessage());
                 return redirect()->back();
             }
         }

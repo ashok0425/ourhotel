@@ -42,7 +42,7 @@ public function sendBookingMsg($phone,$hotel_name,$start_date,$end_date,$number_
 }
 
 
-public function sendOtpMessage($number,$otp)
+public function sendOtpMessage($number,$otp,$signature=null)
 {
 
     $curl = curl_init();
@@ -55,7 +55,7 @@ public function sendOtpMessage($number,$otp)
       CURLOPT_TIMEOUT => 30,
       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
       CURLOPT_CUSTOMREQUEST => "POST",
-      CURLOPT_POSTFIELDS => "{\n  \"flow_id\": \"6129d0b64e38b3307e5f35e3\",\n  \n  \"mobiles\": \"91".$number."\",\n  \"otp\": \"".$otp."\"\n}",
+      CURLOPT_POSTFIELDS => "{\n  \"flow_id\": \"6129d0b64e38b3307e5f35e3\",\n  \n  \"mobiles\": \"91".$number."\",\n  \"otp\": \"".$otp.'        '.$signature."\"\n}",
       CURLOPT_HTTPHEADER => array(
         "authkey: ".config('services.msg99.api_key'),
         "content-type: application/JSON"

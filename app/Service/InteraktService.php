@@ -4,7 +4,7 @@ namespace App\Service;
 class InteraktService{
 
 
-    public function sendOtp($phone,$otp){
+    public function sendOtp($phone,$otp,$signature=null){
 
         $curl = curl_init();
 

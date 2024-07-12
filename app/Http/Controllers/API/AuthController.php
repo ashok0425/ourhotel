@@ -110,7 +110,8 @@ class AuthController extends Controller
         else
         {
               if($customer->status){
-              dispatch(new SendOtp('91',$request->mobile));
+                $signature=$request->signature;
+              dispatch(new SendOtp('91',$request->mobile,$signature));
                 return $this->success_response('We have sent an otp at your registered mobile number.');
             }
             return $this->error_response('Invalid Credientials','',400);

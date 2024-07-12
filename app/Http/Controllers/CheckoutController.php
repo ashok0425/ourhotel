@@ -122,6 +122,7 @@ class CheckoutController extends Controller
     dispatch(new BookingNotifyViaMsg($booking->id));
 
                 if ($request->payment_type == 'online'){
+                    session()->put('uuid',$booking->uuid);
                     $razorpay = new RazorpayController;
                     return $razorpay->payWithRazorpay($booking);
                 }

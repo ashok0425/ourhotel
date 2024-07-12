@@ -22,11 +22,15 @@ class SendOtp implements ShouldQueue
      */
     protected $phone;
     protected $country_code;
+    protected $signature;
 
-    public function __construct($country_code,$phone)
+
+    public function __construct($country_code,$phone,$signature=null)
     {
         $this->phone=$phone;
         $this->country_code=$country_code;
+        $this->signature=$signature;
+
 
     }
 
@@ -39,10 +43,10 @@ class SendOtp implements ShouldQueue
         $user = User::where('phone_number','=',$this->phone)->update(['otp' => $otp]);
         if($user){
             $InteraktService=new InteraktService();
-           $res= $InteraktService->sendOtp($this->country_code.$this->phone,$otp);
+           $res= $InteraktService->sendOtp($this->country_code.$this->phone,$otp,$this->signature);
            Log::info($res);
             $smsService=new SmsService();
-            $sms=$smsService->sendOtpMessage($this->country_code.$this->phone,$otp);
+            $sms=$smsService->sendOtpMessage($this->country_code.$this->phone,$otp,$this->signature);
             Log::info($sms);
         }
     }

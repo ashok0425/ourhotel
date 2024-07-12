@@ -145,7 +145,7 @@ class CheckoutController extends Controller
         $validator = Validator::make($request->all(), [
             'booking_id' => 'required',
             'payment_id' => 'required',
-            'order_id'=>'requred'
+            'order_id'=>'required'
         ]);
 
         if ($validator->fails()) {

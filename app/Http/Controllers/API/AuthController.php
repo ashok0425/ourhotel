@@ -67,7 +67,8 @@ class AuthController extends Controller
     public function loginCustomer(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'mobile' => 'required'
+            'mobile' => 'required_without:email',
+            'email' => 'required_without:mobile',
         ]);
 
         if ($validator->fails()) {
@@ -80,8 +81,8 @@ class AuthController extends Controller
 
         }
 
-        $email= (int) $request->mobile;
-      if($email==0&&filter_var( $email, FILTER_VALIDATE_EMAIL)){
+        $email= $request->email;
+      if($email && $email!=null){
 
             $user=User::where('email',$email)->where('email','!=',null)->first();
             $otp=str_pad(rand(1,1000000),6,'0');

@@ -11,9 +11,15 @@
     </div>
     </td>
     <td>{{Carbon\Carbon::parse($booking->booking_start)->format('d/m/Y')}}  - {{Carbon\Carbon::parse($booking->booking_end)->format('d/m/Y')}}</td>
-    <td>    <a href="{{route('place_detail',['slug'=> $booking->property->slug?:''??$booking['place']['name']??'']) }}"> {{ $booking->property->name?:''??$booking['place']['name']??'' }} </a>
+    <td>
+        @if ($booking->property)
+        <a href="{{route('place_detail',['slug'=> $booking->property->slug?:''??$booking['place']['name']??'']) }}"> {{ $booking->property->name?:''??$booking['place']['name']??'' }} </a>
+        @else
+         <a href=""> {{ $booking->property?$booking->property->name?:''??$booking['place']['name']??'':'Deleted' }} </a>
+        @endif
+
         <br>
-        <small>{{Str::limit($booking->property->address,50)??null}}</small>
+        <small>{{Str::limit($booking->property?->address,50)??null}}</small>
     </td>
     <td>{{$booking->no_of_adult}}</td>
     <td>{{$booking->no_of_room}}</td>

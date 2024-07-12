@@ -24,7 +24,7 @@
                                            <strong> {{ $item->user->name }}</strong>  <span class="custom-fw-600 custom-fs-14">&nbsp; <i class="fas -fa-calendar"></i>{{  carbon\carbon::parse($item->created_at)->format('d M,Y') }}</span>
                                            <div>
                                             <div>
-                                                <a href="{{$item->property?route('place_detail',['slug'=>$item->property->slug]) :''}}">{{$item->property->name??''}}</a>
+                                                <a href="{{$item->property?route('place_detail',['slug'=>$item->property->slug]) :''}}">{{$item->property?->name??'Property Deleted'}}</a>
                                             </div>
                                             @for ($i = 0; $i < $item->rating; $i++)
                                             <span class=" custom-text-orange custom-fs-14">

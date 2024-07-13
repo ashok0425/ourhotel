@@ -161,7 +161,7 @@ class CheckoutController extends Controller
         $payment_id = $request->payment_id;
         $payment_mode = 'online';
         $booking_id = $request->booking_id;
-        $order_id = $request->razorpay_order_id;
+        $order_id = $request->order_id;
         $booking = Booking::find($booking_id);
         $booking->payment_id = $payment_id;
         $booking->payment_type = $payment_mode;

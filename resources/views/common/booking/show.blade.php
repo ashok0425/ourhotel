@@ -225,7 +225,7 @@
 
 <tr>
 <td>Payment status</td>
-<td>{{$booking->ispaid==1?'Paid':'Unpaid'}}</td>
+<td>{{$booking->is_paid==1?'Paid':'Unpaid'}}</td>
 </tr>
 <tr>
     <td>

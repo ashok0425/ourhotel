@@ -159,7 +159,7 @@
                                 <span class="badge bg-danger text-white">Cancelled</span>
                                 @endif
 
-<div class="badge bg-info text-white">{{$booking->ispaid==1?'Paid':'Unpaid'}}</div>
+<div class="badge bg-warning text-white">{{$booking->is_paid==1?'Paid':'Unpaid'}}</div>
 
                             </td>
                             <td style="max-width: 50px">

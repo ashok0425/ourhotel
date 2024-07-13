@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Jobs\BookingCancelNotifyViaWP;
 use App\Models\Booking;
+use App\Models\Enquiry;
 use App\Models\FcmNotification;
 use App\Models\Place;
 use App\Models\ReferelMoney;
@@ -14,6 +15,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
@@ -75,5 +77,34 @@ class UserController extends Controller
         return $this->success_response('Notification fetched',$notifications);
 
     }
+
+
+    public function help(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required',
+            'phone'=>'required',
+            'message'=>'required',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->messages();
+            $datas = [];
+            foreach ($errors as $key => $value) {
+                $datas[] = $value[0];
+            }
+            return $this->error_response($datas, '', 400);
+
+        }
+
+        $enquiry = new Enquiry();
+        $enquiry->type = 1;
+        $enquiry->data = $request->all();
+        $enquiry->save();
+
+        return $this->success_response('Your query has been placed successfully.We will get back to you soon.','');
+
+     }
 
 }

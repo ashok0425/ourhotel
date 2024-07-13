@@ -41,6 +41,8 @@ $router->group([
     $router->get('customer/delete-account', [AuthController::class, 'deactiveAccount']);
     $router->get('/filter', [PlaceController::class, 'filter']);
     $router->get('/getprice', [CheckoutController::class, 'getRoomPrice']);
+    $router->post('/help', [UserController::class, 'help']);
+
 
 
     $router->middleware(['auth:sanctum'])->group(function () use ($router) {

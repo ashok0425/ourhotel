@@ -81,7 +81,7 @@ class AuthController extends Controller
 
         }
 
-        if(isset($request->phone)&&$request->phone=='9813519397'){
+        if(isset($request->mobile)&&$request->mobile=='9813519397'){
             $customer = User::where('phone_number','9813519397')->orWhere('phone_number','9779813519397')->first();
             $customer->otp = 123456;
             $customer->save();

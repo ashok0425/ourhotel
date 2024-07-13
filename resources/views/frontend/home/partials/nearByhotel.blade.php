@@ -33,7 +33,7 @@
     <div class="container my-5  custom-bg-white">
 
         <div class="d-flex justify-content-between align-items-center mb-2 mb-2 p-3 p-md-0">
-            <h2 class="custom-fw-800  bold text-dark custom-fs-20 custom-fw-600 mb-3 pt-4">NearBy Places</h2>
+            <h2 class="custom-fw-800  bold text-dark custom-fs-20 custom-fw-600 mb-3 pt-4">Places near me</h2>
             <div><a href="/hotels-near-me"
                     class="btn custom-border-radius-20 custom-bg-primary custom-text-white custom-fw-800 custom-fs-14 hover-on-white">View
                     All ➡</a></div>

@@ -219,7 +219,7 @@ class HomeController extends Controller
      ->havingRaw('avg_rating IN (3,4, 5)')
      ->where('property_type_id',41)
         ->selectRaw("( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance", [$latitude, $longitude, $latitude])
-        ->having('distance', '<=', 20)
+        ->having('distance', '<=', 2)
         ->orderBy('distance','asc')
         ->limit(20)
         ->where('properties.status',1)

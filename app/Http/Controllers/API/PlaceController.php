@@ -232,7 +232,7 @@ class PlaceController extends Controller
         ->where('testimonial_avg.rating', '>=', 3)
         ->orderBy('price', 'asc')
         ->selectRaw("( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance", [$latitude, $longitude, $latitude])
-        ->having('distance', '<=', 12)
+        ->having('distance', '<=', 2)
         ->limit(10)
         ->where('properties.status',1)
         ->get();

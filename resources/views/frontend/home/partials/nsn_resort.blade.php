@@ -1,11 +1,12 @@
 @php
-    $nsn_resort= Cache::remember('nsn_resort',86400,function(){
-           return App\Models\Property::where('status',1)
+    $nsn_resort= App\Models\Property::where('status',1)
+           ->whereHas('roomsData', function ($query) use ($minprice,$maxprice) {
+            $query->whereNotNull('onepersonprice')->where('onepersonprice','!=',0);
+        })
         ->where('property_type_id',41)
         ->orderBy('id', 'desc')
         ->limit(4)
         ->get();
-        })
 @endphp
 <div class="my-5 container custom-bg-white">
     <br>

@@ -1,6 +1,6 @@
 @php
     $nsn_resort= App\Models\Property::where('status',1)
-           ->whereHas('roomsData', function ($query) use ($minprice,$maxprice) {
+           ->whereHas('roomsData', function ($query) {
             $query->whereNotNull('onepersonprice')->where('onepersonprice','!=',0);
         })
         ->where('property_type_id',41)

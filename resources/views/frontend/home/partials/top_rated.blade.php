@@ -1,6 +1,6 @@
 @php
     $top_rated = App\Models\Property::where('status',1)
-           ->whereHas('roomsData', function ($query) use ($minprice,$maxprice) {
+           ->whereHas('roomsData', function ($query) {
             $query->whereNotNull('onepersonprice')->where('onepersonprice','!=',0);
         })->where('top_rated', 1)->orderBy('id', 'desc')->limit(4)->get();
 @endphp

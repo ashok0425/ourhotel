@@ -87,9 +87,9 @@ class TourBookingController extends Controller
         $data="Tour Name:$request->tour_name, Start Date:$request->check_in, End Date :$booking->check_out, Number of Adult:-$request->adult, Number of Children:$request->children, Booking Amount:$booking->price";
 
       $wpService=new InteraktService();
-      $wpService->sendBookingMsg($request->phone,$request->name,$booking->booking_id,$data);
+      $wpService->sendBookingMsg('91'.$request->phone,$request->name,$booking->booking_id,$data);
       $wpService->sendBookingMsg('919958277997',$request->name,$booking->booking_id,$data);
-      $wpService->sendReviewMsg($request->phone,$request->name,$booking->booking_id,$data);
+      $wpService->sendReviewMsg('91'.$request->phone,$request->name,$booking->booking_id,$data);
 
 
         $notification = array(

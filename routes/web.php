@@ -147,7 +147,10 @@ Route::get('/demo-type',function(){
             }
         }
    $property=Property::find($place->id);
-   $property->property_type_id=$type;
-   $property->save();
+   if($property){
+    $property->property_type_id=$type;
+    $property->save();
+   }
+
     }
 });

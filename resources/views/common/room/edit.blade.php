@@ -77,7 +77,7 @@
                                   <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputUsername1">Hourly Price</label>
-                                        <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Hourly price" required
+                                        <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Hourly price"
                                             name="hourlyprice" value="{{old('hourlyprice',$room->hourlyprice)}}">
                                             <small class="text-primary">Hourly Price means 3 hrs price</small>
                                     </div>
@@ -95,7 +95,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Select Amenities </label>
-                                    <select name="amenity[]" id="amenities" class="form-select form-control" required
+                                    <select name="amenity[]" id="amenities" class="form-select form-control"
                                         multiple>
                                         @foreach ($amenities as $amenity)
                                             <option value="{{ $amenity->id }}"

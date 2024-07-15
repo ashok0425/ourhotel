@@ -35,9 +35,8 @@
           @endphp
 
           <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-            <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
 
-            @foreach ($bookings as $booking)
+            @forelse ($bookings as $booking)
             <a class="dropdown-item preview-item" href="{{route('bookings.show',$booking)}}">
 
               <div class="preview-item-content">
@@ -47,7 +46,10 @@
                 </p>
               </div>
             </a>
-            @endforeach
+            @empty
+            <p class="mb-0 font-weight-normal float-left dropdown-header">No Booking Yet</p>
+
+            @endforelse
 
           </div>
         </li>

@@ -16,6 +16,7 @@ class IsPartner
      */
     public function handle(Request $request, Closure $next): Response
     {
+
         if(Auth::check() && (Auth::user()->is_admin||Auth::user()->is_agent||Auth::user()->is_partner)){
             return $next($request);
         }

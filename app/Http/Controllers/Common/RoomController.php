@@ -115,7 +115,7 @@ class RoomController extends Controller
         ]);
        $room->name=$request->name;
        $room->status=$request->status;
-       $room->amenity=$request->amenity;
+       $room->amenity=$request->amenity??[];
        $room->onepersonprice=$request->onepersonprice;
        $room->twopersonprice=$request->twopersonprice;
        $room->threepersonprice=$request->threepersonprice;

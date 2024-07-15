@@ -45,12 +45,7 @@
         </div>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link" href="{{route('tour_bookings.index')}}">
-          <i class="fas fa-envelope menu-icon"></i>
-          <span class="menu-title">Tour Booking</span>
-        </a>
-      </li>
+
 
       <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#booking-elements" aria-expanded="false" aria-controls="booking-elements">
@@ -66,6 +61,16 @@
           </ul>
         </div>
       </li>
+
+      @if (Auth::user()->is_admin || Auth::user()->is_agent)
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('tour_bookings.index')}}">
+          <i class="fas fa-envelope menu-icon"></i>
+          <span class="menu-title">Tour Booking</span>
+        </a>
+      </li>
+      @endif
 
 
 

@@ -38,12 +38,24 @@ class AuthController extends Controller
 
     public function dashboard(){
         if (Auth::user()->is_partner) {
-            $pendingBooking=Booking::whereDate('booking_start',today())->where('status',2)->count();
-            $todayBooking=Booking::whereDate('created_at',today())->where('status',2)->count();
-            $allBooking=Booking::count();
-            $todayBookingAmount=Booking::whereDate('created_at',today())->sum('final_amount');
-            $allBookingAmount=Booking::sum('final_amount');
-            $bookings=Booking::whereDate('booking_start',today())->where('status',2)->limit(10)->get();
+            $pendingBooking=Booking::whereDate('booking_start',today())->where('status',2)->whereHas('property',function($query){
+                $query->where('owner_id',Auth::user()->id);
+            })->count();
+            $todayBooking=Booking::whereDate('created_at',today())->where('status',2)->whereHas('property',function($query){
+                $query->where('owner_id',Auth::user()->id);
+            })->count();
+            $allBooking=Booking::whereHas('property',function($query){
+                $query->where('owner_id',Auth::user()->id);
+            })->count();
+            $todayBookingAmount=Booking::whereDate('created_at',today())->whereHas('property',function($query){
+                $query->where('owner_id',Auth::user()->id);
+            })->sum('final_amount');
+            $allBookingAmount=Booking::whereHas('property',function($query){
+                $query->where('owner_id',Auth::user()->id);
+            })->sum('final_amount');
+            $bookings=Booking::whereDate('booking_start',today())->where('status',2)->whereHas('property',function($query){
+                $query->where('owner_id',Auth::user()->id);
+            })->limit(10)->get();
 
         }else{
             $pendingBooking=Booking::whereDate('booking_start',today())->where('status',2)->count();

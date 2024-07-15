@@ -83,7 +83,7 @@ class PropertyController extends Controller
         $property->status = $request->status;
         $property->state_id = $request->state;
         $property->description = $request->description;
-        $property->amenities = $request->amenity;
+        $property->amenities = $request->amenity??[];
         $property->longitude = $request->longitude;
         $property->latitude = $request->latitude;
         $property->address = $request->address;

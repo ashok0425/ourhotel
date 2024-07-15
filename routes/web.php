@@ -14,7 +14,8 @@ use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\RazorpayController;
-
+use App\Models\Property;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -125,3 +126,28 @@ Route::post('coupon/apply', [CheckoutController::class, 'applyCoupon'])->name('c
 Route::get('coupon/remove', [CheckoutController::class, 'removeCoupon'])->name('coupon.remove');
 Route::get('apply-offer', [CheckoutController::class, 'applyoffer']);
 
+Route::get('/demo-type',function(){
+    $places=DB::connection("mysql_2")->table('places')->select('id','place_type')->get();
+    foreach($places as $place){
+        $type=49;
+        if(isset(json_decode($place->place_type)[0])){
+            if(count(json_decode($place->place_type))>=2){
+                $type=(int)json_decode($place->place_type)[1];
+            }
+            elseif (json_decode($place->place_type)[0]=='Select Place') {
+                $type=49;
+            }else if(json_decode($place->place_type)[0]=='33'){
+                if(count(json_decode($place->place_type))>=2){
+                    $type=(int)json_decode($place->place_type)[1];
+                }else{
+                $type=43;
+                }
+            }else{
+           $type=(int)json_decode($place->place_type)[0];
+            }
+        }
+   $property=Property::find($place->id);
+   $property->property_type_id=$type;
+   $property->save();
+    }
+});

@@ -35,7 +35,7 @@ Route::get('/getCity/{stateId}',[PropertyController::class,'getCity'])->name('ge
 
 
 
-Route::get('/banquet', [HomeController::class, 'banquote'])->name('banquet');
+// Route::get('/banquet', [HomeController::class, 'banquote'])->name('banquet');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('loadcontent/{contentId}', [HomeController::class, 'loadContent']);

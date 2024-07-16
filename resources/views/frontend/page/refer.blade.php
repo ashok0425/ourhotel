@@ -141,7 +141,7 @@ div, h1, h2, h3, h4, span, p, input, form, img, hr, img, a {
           <div class="col-sm-12 col-md-3">
             <div class="share-boxes">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4Fa-5hmp2YYVLrqz1q3yR9B9SQa17xGxzLw&usqp=CAU" alt="img2" border="0">
-              <p>Give him/her to ₹ {{App\Models\ReferPrice::first()->join_price}} Discount</p>
+              <p>Give him/her to ₹ {{App\Models\ReferPrice::first()?->join_price}} Discount</p>
               <img src="https://i.ibb.co/Sr5F70S/dotted-arrow1.png" alt="dotted-arrow1" class="dotted-line">
               <img src="https://i.ibb.co/Fqs2KxB/dotted-arrow2.png" alt="dotted-arrow2" class="dotted-line2">
             </div>
@@ -193,7 +193,7 @@ div, h1, h2, h3, h4, span, p, input, form, img, hr, img, a {
 
 			@if(Auth::id())
             @php
-                $join_price=App\Models\ReferPrice::first()->join_price;
+                $join_price=App\Models\ReferPrice::first()?->join_price;
             @endphp
 		<a style = "color:white; border:1px green groove; background-color:#49adb3" href="whatsapp://send?text= Hi This is Referel Code {{'NSN'.Auth::id()}} Join Through This Refer Code You Will Get Rs {{$join_price}} !    https://www.nsnhotels.com " data-action="share/whatsapp/share" class = "buttonarea text-center btn commonbtn">Share via Whatsapp <img src = "https://cliply.co/wp-content/uploads/2021/08/372108180_WHATSAPP_ICON_400.gif" width = "10%"></a>
 	@else

@@ -107,7 +107,9 @@ class HomeController extends Controller
             $areaId=$location->id;
         }
 
-
+       if(!isset($cityid)){
+        return redirect()->route('home');
+       }
         $faq=Faq::where('city_id',$cityid)->get();
         $categories=Category::all();
         $place_types=PropertyType::all();

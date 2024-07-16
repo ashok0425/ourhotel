@@ -38,7 +38,6 @@ $router->group([
     $router->post('customer/login', [AuthController::class, 'loginCustomer']);
     $router->post('send/otp', [AuthController::class, 'sendOtp']);
     $router->post('verify/login', [AuthController::class, 'getLogin']);
-    $router->get('customer/delete-account', [AuthController::class, 'deactiveAccount']);
     $router->get('/filter', [PlaceController::class, 'filter']);
     $router->get('/getprice', [CheckoutController::class, 'getRoomPrice']);
     $router->post('/help', [UserController::class, 'help']);
@@ -46,6 +45,7 @@ $router->group([
 
 
     $router->middleware(['auth:sanctum'])->group(function () use ($router) {
+    $router->get('customer/delete-account', [AuthController::class, 'deactiveAccount']);
         $router->post('/checkout', [CheckoutController::class, 'store']);
         $router->post('/update-checkout', [CheckoutController::class, 'updateAfterPayment']);
         $router->get('/coupon', [CheckoutController::class, 'Coupon']);

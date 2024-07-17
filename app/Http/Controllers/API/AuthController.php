@@ -178,6 +178,46 @@ class AuthController extends Controller
         return $this->success_response("You've been logged in successfully.", $data);
     }
 
+    public function updateProfile(Request $request)
+	{
+      // $response = array();
+      $userId = auth()->user()->id;
+
+      $validator = Validator::make($request->all(), [
+          'name' => 'required|string',
+          'email' => 'required|string|email|unique:users,email,' . $userId,
+          'phone' => 'nullable|unique:users,phone_number,' . $userId
+      ]);
+
+    if ($validator->fails()) {
+        $errors=$validator->errors()->messages();
+        $datas=[];
+        foreach ($errors as $key => $value) {
+            $datas[]=$value[0];
+        }
+
+        return $this->error_response($datas,'',400);
+    }
+
+            $user =Auth::user();
+        	$user->name = $request->name;
+        	$user->email = $request->email;
+        	$user->phone_number = $request->phone;
+          $file=$request->file('thumbnail');
+
+         if($file){
+            $file_name = $this->uploadImage($file, '');
+            $user->profile_photo_path = $file_name;
+         }
+            $user->save();
+
+
+
+      return $this->success_response('user information updated',$user);
+
+
+	}
+
 
     public function deactiveAccount(Request $request){
         $user=Auth::user();

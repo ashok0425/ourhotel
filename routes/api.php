@@ -33,18 +33,18 @@ $router->group([
     $router->get('/nearbyplace', [PlaceController::class, 'nearbyplace']);
     $router->get('/testimonial', [PostController::class, 'Testimonial']);
     $router->get('/banners', [PostController::class, 'Bannerlist']);
-
-    $router->post('customer/registers', [AuthController::class, 'register']);
-    $router->post('customer/login', [AuthController::class, 'loginCustomer']);
-    $router->post('send/otp', [AuthController::class, 'sendOtp']);
-    $router->post('verify/login', [AuthController::class, 'getLogin']);
     $router->get('/filter', [PlaceController::class, 'filter']);
     $router->get('/getprice', [CheckoutController::class, 'getRoomPrice']);
     $router->post('/help', [UserController::class, 'help']);
 
 
+    $router->post('customer/registers', [AuthController::class, 'register']);
+    $router->post('customer/login', [AuthController::class, 'loginCustomer']);
+    $router->post('send/otp', [AuthController::class, 'sendOtp']);
+    $router->post('verify/login', [AuthController::class, 'getLogin']);
 
     $router->middleware(['auth:sanctum'])->group(function () use ($router) {
+        $router->post('update/profile/customer',[AuthController::class, 'updateProfile']);
     $router->get('customer/delete-account', [AuthController::class, 'deactiveAccount']);
         $router->post('/checkout', [CheckoutController::class, 'store']);
         $router->post('/update-checkout', [CheckoutController::class, 'updateAfterPayment']);

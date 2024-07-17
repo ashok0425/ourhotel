@@ -185,8 +185,8 @@ class AuthController extends Controller
 
       $validator = Validator::make($request->all(), [
           'name' => 'required|string',
-          'email' => 'required|string|email|unique:users,email,' . $userId,
-          'phone' => 'nullable|unique:users,phone_number,' . $userId
+          'email' => 'required|string|email',
+          'phone' => 'nullable'
       ]);
 
     if ($validator->fails()) {

@@ -201,11 +201,12 @@ class AuthController extends Controller
 
     $user =Auth::user();
 
-    if ($request->otp&&$user->otp != $request->otp) {
-        return $this->error_response('Invalid Otp.','',400);
-    }
+
 
     if (isset($request->email) && $request->email!=null) {
+        if (isset($request->otp)&&$user->otp != $request->otp) {
+            return $this->error_response('Invalid Otp.','',400);
+        }
         $otp=str_pad(rand(1,1000000),6,'0');
         $user->otp=$otp;
         $user->save();
@@ -214,6 +215,9 @@ class AuthController extends Controller
     }
 
     if (isset($request->phone) && $request->phone!=null) {
+        if (isset($request->otp)&&$user->otp != $request->otp) {
+            return $this->error_response('Invalid Otp.','',400);
+        }
         $otp=str_pad(rand(1,1000000),6,'0');
         $user->otp=$otp;
         $user->save();

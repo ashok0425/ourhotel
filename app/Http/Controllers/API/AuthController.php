@@ -184,8 +184,8 @@ class AuthController extends Controller
       $userId = auth()->user()->id;
 
       $validator = Validator::make($request->all(), [
-          'name' => 'required|string',
-          'email' => 'required|string|email',
+          'name' => 'nullable|string',
+          'email' => 'nullable|string|email',
           'phone' => 'nullable'
       ]);
 
@@ -199,11 +199,32 @@ class AuthController extends Controller
         return $this->error_response($datas,'',400);
     }
 
-            $user =Auth::user();
+    $user =Auth::user();
+
+    if ($request->otp&&$user->otp != $request->otp) {
+        return $this->error_response('Invalid Otp.','',400);
+    }
+
+    if (isset($request->email) && $request->email!=null) {
+        $otp=str_pad(rand(1,1000000),6,'0');
+        $user->otp=$otp;
+        $user->save();
+      Notification::route('mail',$user->email)->notify(new SendotpNotification($otp));
+      return $this->success_response('We have sent an otp at your Email address',$user);
+    }
+
+    if (isset($request->phone) && $request->phone!=null) {
+        $otp=str_pad(rand(1,1000000),6,'0');
+        $user->otp=$otp;
+        $user->save();
+        dispatch(new SendOtp('91',$request->phone));
+        return $this->success_response('We have sent an otp at your mobile number.');
+    }
+
         	$user->name = $request->name;
-        	$user->email = $request->email;
-        	$user->phone_number = $request->phone;
-          $file=$request->file('thumbnail');
+        	$user->email = $request->email??$user->email;
+        	$user->phone_number = $request->phone??$user->phone_number;
+           $file=$request->file('thumbnail');
 
          if($file){
             $file_name = $this->uploadImage($file, '');

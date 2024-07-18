@@ -84,9 +84,9 @@
                                 </a>
                             </td>
                             <td style="max-width: 220px;" class="text-wrap">
+                              <div> <strong> {{ $property->city->name }}</strong></div>
                                 {{ $property->address }}
                             </td>
-
 
                             <td>
                                 @if ($property->status == 1)

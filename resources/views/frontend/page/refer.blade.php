@@ -150,7 +150,7 @@ div, h1, h2, h3, h4, span, p, input, form, img, hr, img, a {
           <div class="col-sm-12 col-md-3">
             <div class="share-boxes">
               <img src="https://i.ibb.co/StC3RWk/img3.png" alt="img3" border="0">
-              <p>Get ₹ {{App\Models\ReferPrice::first()->share_price}} for every share</p>
+              <p>Get ₹ {{App\Models\ReferPrice::first()?->share_price}} for every share</p>
             </div>
           </div>
         </div>

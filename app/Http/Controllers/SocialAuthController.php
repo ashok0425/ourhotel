@@ -19,7 +19,10 @@ class SocialAuthController extends Controller
     {
 
         $googleuser = Socialite::driver($social)->stateless()->user();
-        $user=User::where('email',$googleuser->email)->first();
+        $user=User::updateorCreate(
+            ['email'=>$googleuser->email],
+            ['name'=>$googleuser->name]
+        );
         auth()->login($user);
 
         return redirect()->to(session()->get('pre_url'));

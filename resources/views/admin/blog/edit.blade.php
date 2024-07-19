@@ -32,16 +32,12 @@
                         name="title" value="{{$blog->title}}">
                 </div>
 
-                {{-- <div class="form-group ">
-                  <label for="exampleInputUsername1">Short Description</label>
-                  <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Short Description" required
-                      name="short_description" value="{{$blog->short_description}}">
-              </div> --}}
+
 
 
               <div class="form-group ">
                 <label for="exampleInputUsername1">Long Description</label>
-                <textarea type="text" class="form-control" id="editor" placeholder="Long Description" required
+                <textarea type="text" class="form-control" id="editor" placeholder="Long Description"
                     name="long_description">{{$blog->long_description}}</textarea>
             </div>
 

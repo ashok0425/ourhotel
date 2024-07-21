@@ -209,25 +209,43 @@ class AuthController extends Controller
 
 
     if (isset($request->email) && $request->email!=null) {
-        if (isset($request->otp)&&$user->otp != $request->otp) {
-            return $this->error_response('Invalid Otp.','',400);
+        if (isset($request->otp)) {
+            if($user->otp == $request->otp){
+                $user->email = $request->email;
+                $user->otp = null;
+                $user->save();
+            }else{
+                return $this->error_response('Invalid Otp.','',400);
+
+            }
+
+        }else{
+            $otp=str_pad(rand(1,1000000),6,'0');
+            $user->otp=$otp;
+            $user->save();
+          Notification::route('mail',$request->email)->notify(new SendotpNotification($otp));
+          return $this->success_response('We have sent an otp at your Email address',$user);
         }
-        $otp=str_pad(rand(1,1000000),6,'0');
-        $user->otp=$otp;
-        $user->save();
-      Notification::route('mail',$request->email)->notify(new SendotpNotification($otp));
-      return $this->success_response('We have sent an otp at your Email address',$user);
+
     }
 
     if (isset($request->phone) && $request->phone!=null) {
-        if (isset($request->otp)&&$user->otp != $request->otp) {
-            return $this->error_response('Invalid Otp.','',400);
-        }
+        if (isset($request->otp)) {
+            if($user->otp == $request->otp){
+                $user->phone_number = $request->phone;
+                $user->otp = null;
+                $user->save();
+            }else{
+                return $this->error_response('Invalid Otp.','',400);
+            }
+
+        }else{
         $otp=str_pad(rand(1,1000000),6,'0');
         $user->otp=$otp;
         $user->save();
         dispatch(new SendOtp('91',$request->phone));
         return $this->success_response('We have sent an otp at your mobile number.');
+        }
     }
 
         	$user->name = $request->name;

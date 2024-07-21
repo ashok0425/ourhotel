@@ -141,4 +141,31 @@ class UserController extends Controller
         return $this->success_response('Feedback fetched',$feedbacks);
      }
 
+     public function storeTestimonial(Request $request){
+        $validator = Validator::make($request->all(), [
+            'rating' => 'required',
+            'feedback' => 'nullable',
+            'property_id'=>'required',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->messages();
+            $datas = [];
+            foreach ($errors as $key => $value) {
+                $datas[] = $value[0];
+            }
+            return $this->error_response($datas, '', 400);
+
+        }
+       $feedback=new Testimonial();
+       $feedback->user_id=Auth::user()->id;
+       $feedback->property_id=$request->property_id;
+       $feedback->name=Auth::user()->name;
+       $feedback->feedback=$request->comment;
+       $feedback->rating=$request->star;
+       $feedback->save();
+
+        return $this->success_response('Thank you for your feedback',$feedback);
+     }
+
 }

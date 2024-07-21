@@ -214,6 +214,8 @@ class AuthController extends Controller
                 $user->email = $request->email;
                 $user->otp = null;
                 $user->save();
+          return $this->success_response('Email updated successfully',$user->fresh());
+
             }else{
                 return $this->error_response('Invalid Otp.','',400);
 
@@ -235,6 +237,8 @@ class AuthController extends Controller
                 $user->phone_number = $request->phone;
                 $user->otp = null;
                 $user->save();
+          return $this->success_response('Phone number updated successfully',$user->fresh());
+
             }else{
                 return $this->error_response('Invalid Otp.','',400);
             }

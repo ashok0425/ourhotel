@@ -210,7 +210,7 @@ class AuthController extends Controller
         $otp=str_pad(rand(1,1000000),6,'0');
         $user->otp=$otp;
         $user->save();
-      Notification::route('mail',$user->email)->notify(new SendotpNotification($otp));
+      Notification::route('mail',$request->email)->notify(new SendotpNotification($otp));
       return $this->success_response('We have sent an otp at your Email address',$user);
     }
 

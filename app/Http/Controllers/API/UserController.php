@@ -9,6 +9,8 @@ use App\Models\Enquiry;
 use App\Models\FcmNotification;
 use App\Models\Place;
 use App\Models\ReferelMoney;
+use App\Models\ReferPrice;
+use App\Models\Testimonial;
 use App\Models\User;
 use App\Models\Wishlist;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -104,7 +106,39 @@ class UserController extends Controller
         $enquiry->save();
 
         return $this->success_response('Your query has been placed successfully.We will get back to you soon.','');
+     }
 
+     public function getRefer(){
+        $refers = ReferelMoney::where('user_id',Auth::user()->id)->latest()->get();
+        $refers->map(function($refer){
+            return [
+                'id' => $refer->id,
+                'price' => $refer->price,
+                'user_id' => $refer->user_id,
+                'referel_type' => $refer->referel_type,
+                'is_used' => $refer->is_used,
+                'created_at' => $refer->created_at,
+                'coupon_code' => 'REFER'.$refer->price.$refer->id.str_pad(rand(1,9),2,0),
+            ];
+        });
+        return $this->success_response('refer money fetched',$refers);
+     }
+
+     public function getTestimonial(){
+        $feedbacks = Testimonial::with('property')->where('user_id',Auth::user()->id)->latest()->get();
+        $feedbacks->map(function($feedback){
+          return  [
+            'id'=>$feedback->id,
+            'name'=>$feedback->name??$feedback->user->name??'Guest',
+            'thumbnail'=>$feedback->thumbnail??$feedback->user->profile_photo_path??null,
+            'feedback'=>$feedback->feedback,
+            'rating'=>$feedback->rating,
+            'hotel_name'=>$feedback->property->name??'',
+            'hotel_id'=>$feedback->property_id??'',
+
+           ];
+        });
+        return $this->success_response('Feedback fetched',$feedbacks);
      }
 
 }

@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\ReferelMoney;
+use App\Models\ReferPrice;
 use App\Notifications\sendOtp as SendotpNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
@@ -159,6 +160,7 @@ class AuthController extends Controller
                                       ->where('is_used', 0)
                                       ->sum('price');
 
+        $referPrice=ReferPrice::query()->first();
         // Prepare response data
         $data = [
             'id' => $user->id,
@@ -167,7 +169,10 @@ class AuthController extends Controller
             'email' => $user->email,
             'token' => $token,
             'refer_earn' => $referral_money,
-            'refer_coupon' => base64_encode($user->id)
+            'refer_coupon' => base64_encode($user->id),
+            'join_price' => $referPrice->join_price,
+            'share_price' => $referPrice->share_price,
+
         ];
 
         // making token nullable

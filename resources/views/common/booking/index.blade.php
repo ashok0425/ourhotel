@@ -106,7 +106,7 @@
 
                                     @if (Auth::user()->is_admin)
                                         BY: <a
-                                            href="{{ route('admin.users.show', $booking->user) }}">{{ $booking->user ? $booking->user->name : 'User Deleted' }}</a>
+                                            href="{{ $booking->user?route('admin.users.show', $booking->user):'' }}">{{ $booking->user ? $booking->user->name : 'User Deleted' }}</a>
                                     @else
                                         {{ $booking->user ? $booking->user->name : 'User Deleted' }}
                                     @endif

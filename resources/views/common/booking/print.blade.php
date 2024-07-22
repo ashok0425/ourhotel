@@ -73,7 +73,7 @@
                                                         {{$booking->name}}
                                                     </td>
                                                     <td style="width: 45%; font-size: 14px; line-height: 18px; color: #666666;">
-                                                        {{$booking->user?->name??$booking->bookedBy?->name}}
+                                                        {{$booking->user?->name??$booking->bookedBy?->name??null}}
 
                                                     </td>
                                                 </tr>
@@ -82,7 +82,7 @@
                                                         {{$booking->phone}}
                                                     </td>
                                                     <td style="width: 45%; font-size: 14px; line-height: 18px; color: #666666;">
-                                                        {{$booking->user->phone}}
+                                                        {{$booking->user?->phone??null}}
                                                     </td>
                                                 </tr>
                                                 <tr>

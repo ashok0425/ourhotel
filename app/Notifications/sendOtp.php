@@ -42,10 +42,10 @@ class sendOtp extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('We received Login OTP request at NSNHOTEL')
-                    ->line('Below is your resquested otp')
+                    ->line('We received verification code request at NSNHOTEL')
+                    ->line('Below is your resquested code')
                     ->line($this->otp)
-                    ->subject('Login Otp')
+                    ->subject('Verification Code')
                     ->line('Thank you for using our application!');
     }
 

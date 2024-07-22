@@ -124,48 +124,4 @@ class UserController extends Controller
         return $this->success_response('refer money fetched',$refers);
      }
 
-     public function getTestimonial(){
-        $feedbacks = Testimonial::with('property')->where('user_id',Auth::user()->id)->latest()->get();
-        $feedbacks->map(function($feedback){
-          return  [
-            'id'=>$feedback->id,
-            'name'=>$feedback->name??$feedback->user->name??'Guest',
-            'thumbnail'=>$feedback->thumbnail??$feedback->user->profile_photo_path??null,
-            'feedback'=>$feedback->feedback,
-            'rating'=>$feedback->rating,
-            'hotel_name'=>$feedback->property->name??'',
-            'hotel_id'=>$feedback->property_id??'',
-
-           ];
-        });
-        return $this->success_response('Feedback fetched',$feedbacks);
-     }
-
-     public function storeTestimonial(Request $request){
-        $validator = Validator::make($request->all(), [
-            'rating' => 'required',
-            'feedback' => 'nullable',
-            'property_id'=>'required',
-        ]);
-
-        if ($validator->fails()) {
-            $errors = $validator->errors()->messages();
-            $datas = [];
-            foreach ($errors as $key => $value) {
-                $datas[] = $value[0];
-            }
-            return $this->error_response($datas, '', 400);
-
-        }
-       $feedback=new Testimonial();
-       $feedback->user_id=Auth::user()->id;
-       $feedback->property_id=$request->property_id;
-       $feedback->name=Auth::user()->name;
-       $feedback->feedback=$request->comment;
-       $feedback->rating=$request->star;
-       $feedback->save();
-
-        return $this->success_response('Thank you for your feedback',$feedback);
-     }
-
 }

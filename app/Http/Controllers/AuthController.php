@@ -89,4 +89,8 @@ class AuthController extends Controller
         }
     }
 
+    public function sendOtp(Request $request){
+        dispatch(new SendOtp($request->phone_code,$request->phone_no));
+        return response()->json(['otp sent'],200);
+   }
 }

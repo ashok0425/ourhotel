@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AuthController as APIAuthController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Common\PropertyController;
 use App\Http\Controllers\HomeController;
@@ -67,7 +68,7 @@ Route::group(['middleware'=>'auth','prefix'=>'user'], function () {
     Route::post('/fcm-token', [UserController::class, 'updateToken'])->name('fcmToken');
     Route::get('/checkout', [CheckoutController::class, 'store'])->name('payment.checkout');
     Route::get('/profile', [UserController::class, 'pageProfile'])->name('user_profile');
-    Route::put('/profile', [AuthController::class, 'updateProfile'])->name('user_profile_update');
+    Route::get('/profile/update', [APIAuthController::class, 'updateProfile'])->name('user_profile_update');
     Route::put('/profile/password', [AuthController::class, 'updatePassword'])->name('user_password_update');
     Route::get('/reset-password', [AuthController::class, 'pageResetPassword'])->name('user_reset_password');
     Route::put('/reset-password', [ResetPasswordController::class, 'reset'])->name('user_update_password');

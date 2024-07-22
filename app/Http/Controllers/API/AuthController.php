@@ -205,8 +205,8 @@ class AuthController extends Controller
 
         if (isset($request->email) && $request->email != null) {
             // check if email unique and no user exists with that email
-            $user = User::where('email', $request->email)->first();
-            if ($user) {
+            $existingUser = User::where('email', $request->email)->first();
+            if ($existingUser) {
                 return $this->error_response("Email already exists", '', 400);
             }
             //if otp with email
@@ -232,8 +232,8 @@ class AuthController extends Controller
 
         if (isset($request->phone) && $request->phone != null) {
             // check if email unique and no user exists with that email
-            $user = User::where('phone_number', $request->phone)->first();
-            if ($user) {
+            $existingUser = User::where('phone_number', $request->phone)->first();
+            if ($existingUser) {
                 return $this->error_response("Phone already exists", '', 400);
             }
             if (isset($request->otp)) {

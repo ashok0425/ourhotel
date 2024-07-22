@@ -14,59 +14,6 @@ use Illuminate\Support\Facades\Notification as FacadesNotification;
 
 class AuthController extends Controller
 {
-    public function updateProfile(Request $request)
-    {
-        $data = $this->validate($request, [
-            'name' => 'required',
-            'phone_number' => '',
-        ]);
-        if ($request->hasFile('avatar')) {
-            $icon = $request->file('avatar');
-            $file_name = $this->uploadImage($icon, '');
-        }
-        $user = User::find(Auth::id());
-        $user->profile_photo_path = $file_name;
-        $user->name = $request->name;
-        $user->save();
-
-        $notification = array(
-            'alert-type' => 'success',
-            'messege' => 'Profile updated',
-
-        );
-
-        return redirect()->back()->with($notification);
-    }
-
-    public function sendOtp(Request $request){
-         dispatch(new SendOtp($request->phone_code,$request->phone_no));
-         return response()->json(['otp sent'],200);
-    }
-
-    public function updatePassword(Request $request)
-    {
-        $user = User::find(Auth::id());
-
-        $data = $this->validate($request, [
-            'old_password' => ['required'],
-            'password' => ['required'],
-            'password_confirmation' => ['required'],
-        ]);
-
-        if (!Hash::check($request->old_password, $user->password)) {
-            return back()->with('error', 'Wrong old password!');
-        }
-
-        if ($request->password !== $request->password_confirmation) {
-            return back()->with('error', 'Password confirm do not match!');
-        }
-
-        $user->password = bcrypt($request->password);
-        $user->save();
-
-        return back()->with('success', 'Change password success!');
-    }
-
 
     public function loginPage()
     {

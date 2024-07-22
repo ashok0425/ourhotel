@@ -110,7 +110,7 @@ class UserController extends Controller
 
      public function getRefer(){
         $refers = ReferelMoney::where('user_id',Auth::user()->id)->latest()->get();
-        $refers->map(function($refer){
+       $mapData= $refers->map(function($refer){
             return [
                 'id' => $refer->id,
                 'price' => $refer->price,
@@ -121,7 +121,7 @@ class UserController extends Controller
                 'coupon_code' => 'REFER'.$refer->price.$refer->id.str_pad(rand(1,9),2,0),
             ];
         });
-        return $this->success_response('refer money fetched',$refers);
+        return $this->success_response('refer money fetched',$mapData);
      }
 
 }

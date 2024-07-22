@@ -14,8 +14,12 @@ use Illuminate\Support\Facades\Validator;
 class FeedbackController extends Controller
 {
 
-    public function index(){
-        $feedbacks = Testimonial::with('property')->where('user_id',Auth::user()->id)->latest()->get();
+    public function index($property_id=null){
+        if($property_id){
+            $feedbacks = Testimonial::with('property')->with('user')->latest()->limit(20)->get();
+        }else{
+            $feedbacks = Testimonial::with('property')->with('user')->where('user_id',Auth::user()->id)->latest()->get();
+        }
         $feedbacks->map(function($feedback){
           return  [
             'id'=>$feedback->id,
@@ -59,7 +63,7 @@ class FeedbackController extends Controller
      }
 
 
-     public function Edit(Request $request){
+     public function update(Request $request){
         $validator = Validator::make($request->all(), [
             'rating' => 'required',
             'feedback' => 'nullable',
@@ -76,7 +80,7 @@ class FeedbackController extends Controller
             return $this->error_response($datas, '', 400);
 
         }
-       $feedback=Testimonial::find($request->id);
+       $feedback=Testimonial::findorFail($request->id);
        $feedback->name=Auth::user()->name;
        $feedback->feedback=$request->feedback;
        $feedback->rating=$request->rating;
@@ -86,7 +90,7 @@ class FeedbackController extends Controller
      }
 
 
-     public function Delete(Request $request){
+     public function delete(Request $request){
         $validator = Validator::make($request->all(), [
             'id'=>'required'
         ]);

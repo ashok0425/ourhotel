@@ -5,6 +5,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\PlaceController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\CheckoutController;
+use App\Http\Controllers\API\FeedbackController;
 use App\Http\Controllers\API\UserController;
 
 /*
@@ -37,7 +38,6 @@ $router->group([
     $router->get('/getprice', [CheckoutController::class, 'getRoomPrice']);
     $router->post('/help', [UserController::class, 'help']);
 
-
     $router->post('customer/registers', [AuthController::class, 'register']);
     $router->post('customer/login', [AuthController::class, 'loginCustomer']);
     $router->post('send/otp', [AuthController::class, 'sendOtp']);
@@ -53,6 +53,13 @@ $router->group([
         $router->get('/booking-list', [UserController::class, 'mybooking']);
         $router->get('/cancel-booking', [UserController::class, 'cancelBooking']);
         $router->get('/notifications', [UserController::class, 'notifications']);
+        $router->get('/refers', [UserController::class, 'getRefer']);
+        $router->get('/feedbacks', [FeedbackController::class, 'index']);
+        $router->post('/feedbacks/update', [FeedbackController::class, 'update']);
+        $router->post('/feedbacks/store', [FeedbackController::class, 'store']);
+        $router->get('/feedbacks/delete', [FeedbackController::class, 'delete']);
+
+
         $router->get('/logout', [AuthController::class, 'logout']);
 
     });

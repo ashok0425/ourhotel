@@ -1,5 +1,6 @@
 @extends('frontend.layouts.master')
 @section('main')
+@include('frontend.user.breadcrum', ['title' => 'Profile'])
 
 	<div class="nsnhotelsbookinginformation container my-5 ">
 					<div class="row">

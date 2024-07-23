@@ -20,14 +20,14 @@ class FeedbackController extends Controller
         }else{
             $feedbacks = Testimonial::with('property')->with('user')->where('user_id',Auth::user()->id)->latest()->get();
         }
-        $feedbacks->map(function($feedback){
+        $feedbacks=$feedbacks->map(function($feedback){
           return  [
             'id'=>$feedback->id,
             'name'=>$feedback->name??$feedback->user->name??'Guest',
             'thumbnail'=>$feedback->thumbnail??$feedback->user->profile_photo_path??null,
             'feedback'=>$feedback->feedback,
             'rating'=>$feedback->rating,
-            'hotel_name'=>$feedback->property->name??'',
+            'hotel_name'=>$feedback->property->name??'Property Deleted',
             'hotel_id'=>$feedback->property_id??'',
 
            ];

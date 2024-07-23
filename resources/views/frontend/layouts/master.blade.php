@@ -23,9 +23,9 @@
     <link href="{{ filepath('frontend/css/daterangepicker.css') }}" rel="preload stylesheet" as="style" />
     <link rel="preload stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css"
         as="font" crossorigin>
-    <link href="{{ filepath('frontend/css/index/style.css') }}" rel="preload stylesheet" as="style"
+    <link href="{{ asset('frontend/css/index/style.css') }}" rel="preload stylesheet" as="style"
         type="text/css" />
-    <link href="{{ filepath('frontend/css/index/nsnhotels.css') }}" rel="preload stylesheet" as="style"
+    <link href="{{ asset('frontend/css/index/nsnhotels.css') }}" rel="preload stylesheet" as="style"
         type="text/css" />
 
     <style>
@@ -104,9 +104,11 @@
         .bg-purple{
             background-color: #5f319c!important;
         }
-        :root{
-            --color-secondary:#1d4783;
-        }
+
+        .bg-gradient {
+    background: rgb(92, 196, 235);
+    background: linear-gradient(310deg, rgb(184 69 193) 13%, rgb(104 56 175) 59%)!important;
+}
     </style>
     @stack('style')
     <!-- Google tag (gtag.js) -->

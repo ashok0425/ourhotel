@@ -49,9 +49,9 @@ a:hover{
     --fw-600:600;
     --fw-700:700;
     --fw-800:800;
-    --color-primary:#1d4783;
-    --color-secondary:#54c0c7;
-    --color-dark:rgb(27, 27, 27);
+    --color-primary:rgb(104 56 175) ;
+    --color-secondary:rgb(184 69 193);
+    --color-dark:rgb(104 56 175);
     --color-white:#fff;
     --color-gray:rgb(240, 238, 238);
     --border-primary-1px:1px solid var(--color-primary);
@@ -86,18 +86,18 @@ opacity: 0.2;
 
   .opacity-4{
 opacity: 0.4;
-    
+
   }
 
 
   .opacity-6{
 opacity: 0.6;
-    
+
   }
 
   .opacity-1{
     opacity: 1!important;
-        
+
       }
   input::placeholder{
     color: var(--color-gray-2)!important;
@@ -382,7 +382,7 @@ overflow: hidden;
 }
   :root{
     --fs-14:12px;
-    
+
     --fs-14:14px;
     --fs-16:16px;
     --fs-18:18px;

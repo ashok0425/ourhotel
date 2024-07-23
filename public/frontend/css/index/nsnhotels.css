@@ -317,7 +317,7 @@ a.meanmenu-reveal{display:none}.headerfixed .mean-bar{background:rgba(0,0,0,0);f
 /**    Start Development CSS   **/
 
 .search-result{position:absolute;top:calc(100% + -5px);left:0;right:0;z-index:2;margin-top:5px;box-shadow:0 10px 20px 0 rgb(0,0,0,.3);overflow:hidden; background: #ffffff;}.search-result ul{list-style-type:none;padding:10px 0;max-height:370px;overflow:auto;-ms-overflow-style:none;scrollbar-width:none;width:100%}.search-result ul li{display:block;border-bottom:1px solid #e9e9e9;position: relative;font-weight: 600;}.search-result ul li a:last-child{display:inline-block;position: absolute;top: 0;right: 0;z-index: 2;}.search-result ul li a i{position:relative;top:-2px;margin-right:5px}.search-form__to.date-group .labeltext{margin-left:70px;top:4px}.checkbox label{font-size:.85rem;display:flex}.checkbox label input{margin-right:5px}.nsnhotelsleftproperty{margin-bottom:15px;border-radius:5px;padding:10px 15px}.readonlyforminput, .paybletaxamount span{min-height:calc(2.25rem + 2px);text-align:right}.readonlyforminput span{display:block;color:rgb(0,0,0);position:relative;width:auto}.leftsearchform .readonlyforminput.inrsymbol:before{left:0}.readonlyforminput input{background:rgb(255,255,255);border:none;display:inline-block;width:auto!important;max-width:100%;color:rgb(0,0,0);text-align:right;padding:10px 15px}.readonlyforminput input:focus-visible{outline:none;border:none}.inrsymbol span:before{content:'\F1AF';position:absolute;z-index:1;top:8px}.paybleamount label{margin-top:10px}.paybletaxamount span{display:block;width:auto!important;max-width:144px;color:rgb(255,255,255);text-align:right;padding:10px 15px;background:rgb(206,141,44)}.nsnhotelsinnerabout p{text-align:justify;line-height:1.8}.profileinner .nav-tabs{}.pagination{width:100%;display:block;text-align:center;margin-top:20px}.pagination a{padding:5px 8px;border-radius:2px}.pagination a+a{margin-left:10px}li.afterlogin a:before{content:''!important}.nsnhotelspersonalinformation{border-radius:15px;box-shadow:0px 3px 14px rgb(0,0,0,.4);padding:5px 15px 15px 15px}.messageicon.icons:before{bottom:auto!important;top:17px!important}.icons:before{bottom:18px;left:10px}.firsticon:before{content:'\F013'}.lasticon:before{content:'\F013'}.emailicon:before{content:'\F1F0'}.phoneicon:before{content:'\F3F2'}.messageicon:before{content:'\FA37'}.personalinformationform input[type="radio"], .personalinformationform input[type="checkbox"], .contactform input[type="checkbox"]{-webkit-appearance:auto;width:auto;float:left;position:relative;margin-top:3px;margin-right:10px}.contentinner{display:none}.payrow{background:rgb(247,249,251);border:1px solid rgb(238,238,238);padding:15px;margin-bottom:30px}.payrow label{margin-bottom:0}.payrow .form-group{margin-bottom:0}.payrow{}.personalinformationimage{overflow:hidden;position:relative;border-radius:15px}.personalinformationimage:before{content:'';background:linear-gradient(to right, #34858a, #3d979c, #47a9af, #50bbc2, #5aced5);position:absolute;width:100%;height:100%;z-index:1;opacity:.4}.personalinformationimage img{position:relative}.bookingdetails{position:absolute;left:0;top:0;width:100%;height:100%;padding-top:calc(+15%);padding-bottom:calc(+15%);padding-left:15px;padding-right:15px;z-index:9}.personalinformationimage .nsnhotelsname{text-shadow:2px 2px rgb(8,114,120,.9)}.bookingdetails ul{background:rgba(255,255,255,.8);border-radius:15px;padding:15px;margin-top:30px}.bookingdetails ul li+li{margin-top:10px}.bookingdetails ul li, .bookingpersondetails li{text-align:left;position:relative;display:block;}.bookingdetails ul li span, .bookingpersondetails li span{position:relative;display:-webkit-box;margin-left:110px;top:-18px;padding-left:30px}.bookingdetails ul li span:before, .bookingpersondetails li span:before{content:':';position:absolute;left:0}.inrsymbols span:after{content:'\F1AF';position:absolute;z-index:9;top:0;left:15px}.userprofile{overflow:hidden;border-radius:50%;box-shadow:0px 3px 14px rgba(0,0,0,.4);padding:10px}.userprofile img{}.usercard, .travelbooking{box-shadow:0px 7px 15px rgba(0,0,0,.12);padding:15px 0 0 0;border-radius:10px;overflow:hidden}.usercard .userprofile{max-width:90px;max-height:90px}.usercard p{margin-bottom:0;margin-top:15px}.usercard .nsnhotelsname{margin-bottom:10px}.bottomdata a{display:block;padding:15px 0}.bottomdata li+li{border-left:1px solid rgba(255,255,255,.1)}.travelbooking{padding-left:15px;padding-right:15px;padding-bottom:15px}.travelbooking .httext{margin-top:0}.bookingpersondetails li span{margin-left:150px}.bookingpersondetails{border:1px solid rgb(228,228,228)}.bookingpersondetails li{padding:15px 5px 0px 10px}.bookingpersondetails li+li{border-top:1px solid rgb(228,228,228)}.bookingpersondetails li:nth-child(even){background:rgb(253,253,253)}.bookingcancelbtn{position:absolute;right:15px;top:-10px;z-index:9}.travelbooking li{position:relative}.travelbooking li+li{margin-top:30px}.bookingpersondetails li+li{margin-top:0}.travelbooking .userprofile{width:40px;height:40px}.travelbooking .userprofile{padding:4px}.nsnhotelsamenitiesul li{display:inline-block}.nsnhotelsamenitiesul li{margin-right:16px;margin-bottom:15px}.nsnhotelsamenitiesul li img{max-width:16px;height:auto;filter:invert(1)}#bannerslider .owl-dots{display:none}li.afterlogin span img{max-width:20px;position:relative;margin-top:0px;margin-right:5px}span.profilename{text-transform:capitalize}.partnerform .form-group{margin-bottom:20px;float:left;width:100%}.contactform .nice-select{height:49.5px;padding-top:3px;z-index:1}.loginwithsocial{margin-top:15px}._hj_feedback_container ._hj-1O2Rr__MinimizedWidgetMiddle__container._hj-uSKNz__MinimizedWidgetMiddle__left{display:none!important}
-.search-result ul li a {display: block;color: var(--color-primary); padding: 10px 20px;} 
+.search-result ul li a {display: block;color: var(--color-primary); padding: 10px 20px;}
 
 .partnerleftarea{padding:15px;border-radius:15px}.partnerleftarea .httext{margin-bottom:30px;border-bottom:1px solid rgb(221,221,221);padding-bottom:15px}.partnerleftarea .nice-select, .partnerleftarea input{padding-left:10px;padding-right:10px}.becomepartnercontentarea{position:absolute;text-align:center;top:calc(+30%)}.howitwork{box-shadow:0px 0px 3px rgba(0,0,0,.66);padding-bottom:30px;padding-top:30px;margin-bottom:30px}.howitwork p{color:rgb(136,137,141);margin-bottom:0;line-height:1.7}.howitwork i, .howitwork .httext{margin-bottom:15px}.howworkbox:nth-child(1) .howitwork{border-bottom:4px solid rgb(232,68,125)}.howworkbox:nth-child(2) .howitwork{border-bottom:4px solid rgb(243,167,33)}.howworkbox:nth-child(2) .howitwork > i{color:rgb(243,167,33)}.howworkbox:nth-child(3) .howitwork{border-bottom:4px solid rgb(131,104,254)}.whywearepartner{position:relative}.whywearepartner:before{content:'';position:absolute;left:0;top:0;background:url(../images/howitwork.png) no-repeat;width:199px;height:603px;background-size:contain}.whywearebox{padding-top:110px}.whywearebox img{max-width:100%}.whyweareboximg{padding:20px 10px;box-shadow:0 0 20px 0 rgb(0,0,0,.1);display:inline-block;border-radius:50%;text-align:center;background:rgb(255,255,255);max-width:110px}.whywearebox p{line-height:1.7}
 .partnerform label{}.partnerinnerform .form-control{border-bottom:1px dashed rgb(203,203,203);border-radius:0;border-left:none;border-right:none;border-top:none;color:rgb(0,0,0);padding-left:0}
@@ -438,8 +438,8 @@ pointer-events: auto;
 content: "";
 background-color: rgba(0,0,0,0);
     }
-    
-    
+
+
     .login-inner {
     max-width: 1000px;
     margin: 70px auto;
@@ -522,11 +522,11 @@ background-color: rgba(0,0,0,0);
     min-width: 100%;
     padding: 12px 30px;
   }
-  
-  
-  
-  
-  
+
+
+
+
+
   .nsn-corporate {
     padding: 100px 0;
     background-image: url(/frontend/images/bg/nsn-corporate-bg.jpg);
@@ -534,7 +534,7 @@ background-color: rgba(0,0,0,0);
     background-position: center center;
     background-size: cover;
   }
-  
+
   .nsn-corporate form {
       padding: 40px;
 background: rgba(255, 255, 255, 0.9);
@@ -560,7 +560,7 @@ text-align: center;
  .btn-primary.nsn-btn:hover {
      background-color: #0e4b4f;
  }
- 
+
  .nsn-corporate-info {
      padding: 60px 0;
  }
@@ -579,16 +579,16 @@ text-align: center;
     line-height: 28px;
     color: #777;
  }
- 
+
  .corporate-list ul {
      font-size: 18px;
  }
  .corporate-list ul li {
      font-size: 18px;
  }
-  
-  
-  
+
+
+
   @media screen and (max-width: 767px) {
     .login-inner [class*="col"]:first-child {
       order: 2;
@@ -599,7 +599,7 @@ text-align: center;
   }
   @media screen and (max-width: 479px) {
     .login-inner .login-img {
-      padding: 30px 30px 10px; 
+      padding: 30px 30px 10px;
     }
     p.login-title {
       margin-bottom: 20px;
@@ -620,7 +620,7 @@ text-align: center;
 
 @media (max-width:767px){
     header {
-      display: flex;  
+      display: flex;
     }
 }
 
@@ -699,7 +699,7 @@ section .section-title{font-size:1.7rem}section.why-be-partner .item{display:blo
 }
 
 .dropdown .dropbtn {
-  font-size: 16px;  
+  font-size: 16px;
   border: none;
   outline: none;
   color: white;
@@ -787,7 +787,7 @@ font-weight: 600;
 
 }
 span.labeltext{
-  top:0px!important    
+  top:0px!important
 }
 .whereicon.searchinput{
   border:0px;

@@ -10,7 +10,7 @@
                                 @include('frontend.user.sidebar')
                             </div>
                             <div class="col-12 col-sm-9 col-md-9">
-                               @foreach ($reviews as $item)
+                               @forelse ($reviews as $item)
                                <div class="bg-white row mb-2 p-2">
                                  <div class="col-12">
                                     <div class="py-2">
@@ -53,8 +53,13 @@
                                         </div>
                                  </div>
                                </div>
-
-                               @endforeach
+                               @empty
+                               <div class="bg-white row p-2 my-2">
+                                <div class=" custom-fw-600 ">
+                                                     No Review
+                                                   </div>
+                                   </div>
+                               @endforelse
                             </div>
 
                         </div>

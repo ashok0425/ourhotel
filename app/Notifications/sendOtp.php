@@ -43,7 +43,7 @@ class sendOtp extends Notification
     {
         return (new MailMessage)
                     ->line('We received verification code request at NSNHOTEL')
-                    ->line('Below is your resquested code')
+                    ->line('Use this code to verify your email.')
                     ->line($this->otp)
                     ->subject('Verification Code')
                     ->line('Thank you for using our application!');

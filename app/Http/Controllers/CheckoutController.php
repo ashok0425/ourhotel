@@ -12,10 +12,12 @@ use App\Models\Booking;
 use App\Models\Coupon;
 use App\Models\Property;
 use App\Models\Room;
+use App\Notifications\SendBookingEmail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 class CheckoutController extends Controller
 {
@@ -120,6 +122,10 @@ class CheckoutController extends Controller
 
     dispatch(new BookingNotifyViaWP($booking->id));
     dispatch(new BookingNotifyViaMsg($booking->id));
+    if($booking->email){
+        Notification::route('mail', $booking->email)->notify(new SendBookingEmail($booking->booking_id));
+    }
+
 
                 if ($request->payment_type == 'online'){
                     session()->put('uuid',$booking->uuid);

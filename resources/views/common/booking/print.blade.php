@@ -316,21 +316,28 @@
                                         <table width="400" align="left" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner">
                                             <tbody>
 
+                                                @if ($booking->early_reason)
                                                 <tr>
                                                     <td colspan="2" style="width: 100%; text-align: center; font-style: italic; font-size: 13px; font-weight: 600; color: #666666; padding: 15px 0;">
-                                                        <b style="font-size: 14px;">Note:</b> All Price are including Tax
+                                                        <b style="font-size: 14px;">Note:</b> {{$booking->early_reason}}
                                                     </td>
                                                 </tr>
+                                                @endif
+
                                             </tbody>
                                         </table>
                                     </td>
                                 </tr>
                                 <!-- End payment method Section -->
+
                             </tbody>
                         </table>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <div>
+
+        </div>
     </body>
 </html>

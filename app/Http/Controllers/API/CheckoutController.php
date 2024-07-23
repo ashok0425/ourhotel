@@ -11,9 +11,11 @@ use App\Models\Coupon;
 use App\Models\Property;
 use App\Models\Room;
 use App\Models\Tax;
+use App\Notifications\SendBookingEmail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -104,6 +106,9 @@ class CheckoutController extends Controller
         $booking->save();
         dispatch(new BookingNotifyViaWP($booking->id));
         dispatch(new BookingNotifyViaMsg($booking->id));
+        if($booking->email){
+            Notification::route('mail', $booking->email)->notify(new SendBookingEmail($booking->booking_id));
+        }
         return $this->success_response('Thanks for your hotel booking with NSN Hotels!', $booking);
     }
 

@@ -8,8 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Jobs\BookingCancelNotifyViaWP;
 use App\Jobs\CheckinNotifyViaWP;
 use App\Models\Property;
+use App\Notifications\SendBookingCancelEmail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class BookingController extends Controller
 {
@@ -92,6 +94,9 @@ class BookingController extends Controller
         $booking->save();
         if($request->status==0){
             dispatch(new BookingCancelNotifyViaWP($booking->id));
+            if ($booking->email) {
+                Notification::route('mail', $booking->email)->notify(new SendBookingCancelEmail($booking));
+            }
         }
         if($request->status==1){
             dispatch(new CheckinNotifyViaWP($booking->id));

@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Jobs\BookingCancelNotifyViaWP;
 use App\Jobs\BookingNotifyViaWP;
 use App\Models\Booking;
+use App\Notifications\SendBookingCancelEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class BookingController extends Controller
 {
@@ -33,21 +35,9 @@ class BookingController extends Controller
             'reason'=>'required',
         ]);
          $booking = Booking::where('id',$request->id)->where('user_id',Auth::user()->id)->firstorFail();
-
-        $email = $booking->email;
-        $name = $booking->name;
-        // $message =  "Your hotel booking  Cancel successfully";
-        //              Mail::send('frontend.mail.cancal_booking', [
-        //         'name' => $booking->name,
-        //         'email' =>  $booking->email,
-        //         'booking_id' =>  $booking->booking_id,
-        //         'phone' => $booking->phone_number,
-        //         'booking_at' => $booking->created_at
-        //     ], function ($message) use ($booking) {
-        //           $email = $booking->email;
-        // $name = $booking->name;
-        //         $message->to($email, "{$name}")->subject('Booking from ' . $name);
-        //     });
+         if ($booking->email) {
+            Notification::route('mail', $booking->email)->notify(new SendBookingCancelEmail($booking));
+        }
          $booking->status = 0;
          $booking->cancel_reason = $request->reason;
 

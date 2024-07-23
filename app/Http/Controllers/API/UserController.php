@@ -13,10 +13,12 @@ use App\Models\ReferPrice;
 use App\Models\Testimonial;
 use App\Models\User;
 use App\Models\Wishlist;
+use App\Notifications\SendBookingCancelEmail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -63,6 +65,9 @@ class UserController extends Controller
 
         $booking->save();
         dispatch(new BookingCancelNotifyViaWP($booking->id));
+        if ($booking->email) {
+            Notification::route('mail', $booking->email)->notify(new SendBookingCancelEmail($booking));
+        }
         return $this->success_response('Booking  updated successfully',$booking);
     }
 

@@ -20,6 +20,7 @@ class FeedbackController extends Controller
         }else{
             $feedbacks = Testimonial::with('property')->with('user')->where('user_id',Auth::user()->id)->latest()->get();
         }
+
         $feedbacks=$feedbacks->map(function($feedback){
           return  [
             'id'=>$feedback->id,
@@ -29,11 +30,10 @@ class FeedbackController extends Controller
             'rating'=>$feedback->rating,
             'hotel_name'=>$feedback->property->name??'Property Deleted',
             'hotel_id'=>$feedback->property_id??'',
-            'created_at'=>$feedback->created_at??today(),
-
-
+            'created_at'=>$feedback->created_at??today()
            ];
         });
+
         return $this->success_response('Feedback fetched',$feedbacks);
      }
 

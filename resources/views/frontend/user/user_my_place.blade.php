@@ -247,7 +247,7 @@
         <div class="modal-body">
          <form action="{{route('user_my_reviews_store')}}" method="post" class="mb-2">
             @csrf
-                <input type="hidden" id="property_id" name="property_id" >
+                <input type="hidden" id="property_id1" name="property_id" >
                 <div class="d-flex mb-3">
                 <div class="star-container">
                     <input type="radio" required name="star" value="5" id="5" class="radio main_rating">
@@ -309,7 +309,10 @@
     <script>
     $(document).on('click','#writereviewBtn',function(){
        $property_id=$(this).data('id');
+
        $('#property_id').val($property_id);
+       $('#property_id1').val($property_id);
+
     })
     </script>
 @endpush

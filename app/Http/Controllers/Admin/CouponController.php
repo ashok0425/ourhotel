@@ -85,9 +85,8 @@ class CouponController extends Controller
             'name'=>'required|max:225',
             'coupon_value'=>'required',
         ]);
-        $thumbnail=$this->uploadImage($request->thumbnail);
-        $mobile_thumbnail=$this->uploadImage($request->mobile_thumbnail);
-
+        $thumbnail=$request->thumbnail?$this->uploadImage($request->thumbnail):$coupon->thumbnail;
+        $mobile_thumbnail=$request->mobile_thumbnail?$this->uploadImage($request->mobile_thumbnail):$coupon->mobile_thumbnail;
         $coupon->coupon_name=$request->name;
         $coupon->coupon_percent=$request->coupon_value;
         $coupon->coupon_min=$request->coupon_min;

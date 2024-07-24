@@ -238,7 +238,8 @@ class HomeController extends Controller
         $lon=$request->longitude;
         $data=[
             'latitude'=>$lat,
-            'longitude'=>$lon
+            'longitude'=>$lon,
+            'time'=>now()
         ];
         session()->put('latlon', $data);
     }

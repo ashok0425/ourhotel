@@ -192,7 +192,6 @@
         @include('frontend.layouts.citylist')
     @endif
 
-
     @yield('main')
 
     @include('frontend.home.partials.faq')
@@ -336,8 +335,7 @@
       })
     }
         </script>
-
-   @if (!session::get('latlon')||session::get('latlon'))
+   @if (!session()->get('latlon')||(session()->get('latlon')&&Carbon\Carbon::parse(session()->get('latlon')['time'])->addMinute(10)<now()))
    <script>
        getLocation();
    </script>

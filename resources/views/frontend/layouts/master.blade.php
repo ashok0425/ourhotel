@@ -335,11 +335,13 @@
       })
     }
         </script>
-   @if (!session()->get('latlon')||(session()->get('latlon')&&Carbon\Carbon::parse(session()->get('latlon')['time'])->addMinute(10)<now()))
+
    <script>
+    setInterval(() => {
        getLocation();
+
+    }, 9000);
    </script>
-@endif
 
 <script>
    $(document).ready(function(){

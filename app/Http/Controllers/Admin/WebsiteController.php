@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\State;
 use App\Models\Website;
+use Illuminate\Support\Facades\Cache;
 use Str;
 class WebsiteController extends Controller
 {
@@ -15,7 +16,7 @@ class WebsiteController extends Controller
      */
     public function index()
     {
-        
+
     }
 
     /**
@@ -23,7 +24,7 @@ class WebsiteController extends Controller
      */
     public function create()
     {
-       
+
     }
 
     /**
@@ -31,7 +32,7 @@ class WebsiteController extends Controller
      */
     public function store(Request $request)
     {
-        
+
 
     }
 
@@ -48,7 +49,7 @@ class WebsiteController extends Controller
     public function edit(Website $website)
     {
         return view('admin.website.edit',compact('website'));
-        
+
     }
 
     /**
@@ -79,6 +80,7 @@ class WebsiteController extends Controller
        $website->mobile_meta_title=$request->mobile_meta_title;
        $website->mobile_meta_description=$request->mobile_meta_description;
        $website->save();
+       Cache::forget('setting');
 
        $notification=array(
         'type'=>'success',

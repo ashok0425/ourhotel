@@ -38,8 +38,10 @@
                             <td>
                                 {{ $loop->iteration }}
                             </td>
-                            <td class="text-wrap">
-                                {{ $fcm->body }}
+                            <td>
+                                <div style="max-width: 200px"  class="text-wrap">
+                                    {{ $fcm->body }}
+                                </div>
                             </td>
                             <td class="text-wrap">
                                 {{ $fcm->user_count }}

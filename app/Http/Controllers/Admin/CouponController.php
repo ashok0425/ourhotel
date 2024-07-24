@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use App\Models\State;
+use Illuminate\Support\Facades\Cache;
 use Str;
 class CouponController extends Controller
 {
@@ -49,9 +50,11 @@ class CouponController extends Controller
        $coupon->mobile_thumbnail=$mobile_thumbnail;
        $coupon->save();
 
+       Cache::forget('coupons');
+
        $notification=array(
         'type'=>'success',
-         'message'=>'City Create Sucessfully'
+         'message'=>'Coupon offer Create Sucessfully'
        );
        return redirect()->route('admin.coupons.index')->with($notification);
 
@@ -79,20 +82,21 @@ class CouponController extends Controller
     public function update(Request $request, Coupon $coupon)
     {
         $request->validate([
-            'title'=>'required|max:225',
+            'name'=>'required|max:225',
             'coupon_value'=>'required',
-            'description'=>'required|max:2048',
         ]);
         $thumbnail=$this->uploadImage($request->thumbnail);
         $mobile_thumbnail=$this->uploadImage($request->mobile_thumbnail);
+
         $coupon->coupon_name=$request->name;
         $coupon->coupon_percent=$request->coupon_value;
         $coupon->coupon_min=$request->coupon_min;
         $coupon->status=$request->status;
+        $coupon->thumbnail=$thumbnail??$coupon->thumbnail;
         $coupon->expired_at=$request->expired_at;
-       $coupon->thumbnail=$thumbnail!=null?$thumbnail:$coupon->thumbnail;
-       $coupon->mobile_thumbnail=$mobile_thumbnail!=null?$mobile_thumbnail:$coupon->mobile_thumbnail;
+        $coupon->mobile_thumbnail=$mobile_thumbnail??$coupon->mobile_thumbnail;
        $coupon->save();
+       Cache::forget('coupons');
 
        $notification=array(
         'type'=>'success',

@@ -6,6 +6,7 @@ use App\Models\City;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\State;
+use Illuminate\Support\Facades\Cache;
 use Str;
 class CityController extends Controller
 {
@@ -55,7 +56,7 @@ class CityController extends Controller
        $City->mobile_meta_title=$request->mobile_meta_title;
        $City->mobile_meta_description=$request->mobile_meta_description;
        $City->save();
-
+       Cache::forget('popular_cities');
        $notification=array(
         'type'=>'success',
          'message'=>'City Create Sucessfully'
@@ -104,6 +105,7 @@ class CityController extends Controller
        $city->mobile_meta_title=$request->mobile_meta_title;
        $city->mobile_meta_description=$request->mobile_meta_description;
        $city->save();
+       Cache::forget('popular_cities');
 
        $notification=array(
         'type'=>'success',

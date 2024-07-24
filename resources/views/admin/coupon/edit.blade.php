@@ -2,7 +2,7 @@
 @section('content')
     <div class="card mb-3">
         <div class="card-body">
-                    <h4><strong>Create New Coupon</strong></h4>
+                    <h4><strong>Edit Offer Coupon</strong></h4>
             </div>
         </div>
 

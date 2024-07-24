@@ -6,6 +6,7 @@ use App\Models\State;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Amenity;
+use Illuminate\Support\Facades\Cache;
 use Str;
 class AmenityController extends Controller
 {
@@ -41,6 +42,7 @@ class AmenityController extends Controller
        $amenity->status=$request->status;
        $amenity->thumbnail=$path;
        $amenity->save();
+       Cache::forget('amentities');
 
        $notification=array(
         'type'=>'success',
@@ -79,6 +81,7 @@ class AmenityController extends Controller
         $amenity->thumbnail=$path?$path:$amenity->thumbnail;
        $amenity->name=$request->name;
        $amenity->save();
+       Cache::forget('amentities');
 
        $notification=array(
         'type'=>'success',

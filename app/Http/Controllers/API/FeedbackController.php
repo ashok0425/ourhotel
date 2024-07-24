@@ -28,7 +28,7 @@ class FeedbackController extends Controller
             'thumbnail'=>$feedback->thumbnail??$feedback->user->profile_photo_path??null,
             'feedback'=>$feedback->feedback,
             'rating'=>$feedback->rating,
-            'hotel_name'=>$feedback->property->name??'Property Deleted',
+            'hotel_name'=>$feedback->property->name??'Property Removed',
             'hotel_id'=>$feedback->property_id??'',
             'created_at'=>$feedback->created_at??today()
            ];

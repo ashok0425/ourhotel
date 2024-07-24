@@ -337,11 +337,34 @@
     }
         </script>
 
-   @if (!Cache::get('latlon')||Cache::get('latlon'))
+   @if (!session::get('latlon')||session::get('latlon'))
    <script>
        getLocation();
    </script>
 @endif
+
+<script>
+   $(document).ready(function(){
+    setTimeout(() => {
+        $(function(){
+    $.each(document.images, function(){
+               var this_image = this;
+
+               var src = $(this_image).attr('src') || '' ;
+               if(!src.length > 0){
+                   //this_image.src = options.loading; // show loading
+                   var lsrc = $(this_image).attr('lsrc') || '' ;
+                   if(lsrc.length > 0){
+                    this_image.src = lsrc;
+
+                   }
+               }
+           });
+  });
+    }, 2000);
+   })
+
+</script>
     </body>
 
     </html>

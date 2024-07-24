@@ -8,7 +8,7 @@
         @if ($offer2)
         <div class="offer-wrapper">
            <a href="{{$offer2->link}}">
-            <img src="{{getImageUrl($offer2->thumbnail)}}" alt="NSN offer" class="custom-border-radius-20 w-100" loading="lazy">
+            <img lsrc="{{getImageUrl($offer2->thumbnail)}}" alt="NSN offer" class="custom-border-radius-20 w-100" loading="lazy">
            </a>
         </div>
     @endif
@@ -17,7 +17,7 @@
         @if ($offer3)
         <div class="offer-wrapper">
            <a href="{{$offer3->link}}">
-            <img src="{{getImageUrl($offer3->thumbnail)}}" alt="NSN offer" class="custom-border-radius-20 w-100">
+            <img lsrc="{{getImageUrl($offer3->thumbnail)}}" alt="NSN offer" class="custom-border-radius-20 w-100">
            </a>
         </div>
     @endif

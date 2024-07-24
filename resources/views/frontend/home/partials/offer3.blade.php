@@ -6,7 +6,7 @@
         @if ($offer1)
             <div class="offer-wrapper">
                <a href="{{$offer1->link}}">
-                <img src="{{getImageUrl($offer1->thumbnail)}}" alt="NSN offer" class="custom-border-radius-20 w-100" loading='lazy'>
+                <img lsrc="{{getImageUrl($offer1->thumbnail)}}" alt="NSN offer" class="custom-border-radius-20 w-100" loading='lazy'>
                </a>
             </div>
         @endif

@@ -240,6 +240,6 @@ class HomeController extends Controller
             'latitude'=>$lat,
             'longitude'=>$lon
         ];
-        Cache::put('latlon', $data, 3600);
+        session()->put('latlon', $data);
     }
 }

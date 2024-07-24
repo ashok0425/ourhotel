@@ -92,7 +92,7 @@ class CouponController extends Controller
         $coupon->coupon_min=$request->coupon_min;
         $coupon->status=$request->status;
         $coupon->thumbnail=$thumbnail??$coupon->thumbnail;
-        $coupon->expired_at=$request->expired_at;
+        $coupon->expired_at=$request->expired_at??$coupon->expired_at;
         $coupon->mobile_thumbnail=$mobile_thumbnail??$coupon->mobile_thumbnail;
        $coupon->save();
        Cache::forget('coupons');

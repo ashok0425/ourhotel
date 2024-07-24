@@ -61,9 +61,9 @@ if (!function_exists('coupons')) {
     function coupons()
     {
 
-        // $coupons = Cache::remember("coupons", 6048000000,function ()  {
-            $coupons= \App\Models\Coupon::where('thumbnail','!=',null)->get();
-        // });
+        $coupons = Cache::remember("coupons", 6048000000,function ()  {
+            return \App\Models\Coupon::where('thumbnail','!=',null)->get();
+        });
 
         return $coupons;
     }

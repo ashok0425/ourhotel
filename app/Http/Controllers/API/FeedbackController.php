@@ -16,7 +16,7 @@ class FeedbackController extends Controller
 
     public function index($property_id=null){
         if($property_id){
-            $feedbacks = Testimonial::with('property')->with('user')->latest()->limit(20)->get();
+            $feedbacks = Testimonial::with('property')->where('property_id',$property_id)->with('user')->latest()->limit(20)->get();
         }else{
             $feedbacks = Testimonial::with('property')->with('user')->where('user_id',Auth::user()->id)->latest()->get();
         }

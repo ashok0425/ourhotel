@@ -152,7 +152,7 @@ if (!function_exists('getFinalPrice')) {
             $discount = (int)$discount_percent * (int)$actualprice / 100;
         }
 
-        $price_discount=$room_discount_percent??5;
+        $price_discount=$room_discount_percent??20;
         if ($price_discount) {
            $price_before_discount=(int) number_format($price_discount * (int)$actualprice / 100, 0);
         }

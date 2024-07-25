@@ -14,8 +14,10 @@ use App\Models\City;
 use App\Models\PropertyType;
 use App\Models\State;
 use App\Models\User;
+use App\Notifications\SendBookingEmail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
 class PropertyController extends Controller
@@ -273,7 +275,9 @@ class PropertyController extends Controller
 
         dispatch(new BookingNotifyViaWP($booking->id));
         dispatch(new BookingNotifyViaMsg($booking->id));
-
+        if($booking->email){
+            Notification::route('mail', $booking->email)->notify(new SendBookingEmail($booking->booking_id));
+        }
         $notification = array(
             'type' => 'success',
             'message' => 'Booking create successfully'

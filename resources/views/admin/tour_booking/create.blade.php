@@ -57,12 +57,16 @@
                                     placeholder="Number Of Children" autocomplete="off" required="">
                             </div>
                             <div class="form-group  col-md-6">
-                                <label for="place_name">Price : *</label>
+                                <label for="place_name">Total Amount : *</label>
                                 <input type="number" class="form-control" name="price" value="" placeholder="Price"
                                     autocomplete="off" required="">
                             </div>
 
-
+                            <div class="form-group  col-md-6">
+                                <label for="place_name">Paid Amount : *</label>
+                                <input type="number" class="form-control" name="paid_price" value="" placeholder="Price"
+                                    autocomplete="off" required="">
+                            </div>
 
                             <div class="form-group  col-md-6">
                                 <label for="place_name">Payment Type : *</label>

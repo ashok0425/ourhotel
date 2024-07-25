@@ -91,7 +91,9 @@
                                </td>
                             <td class="text-wrap" style="max-width: 200px;">
                           <div class="text-wrap">
-                                 <a href="">{{$booking->user?$booking->user->name:"User Deleted"}}</a>
+                                 <a href="{{ $booking->user?route('admin.users.show', $booking->user):'' }}">{{$booking->user?$booking->user->name:"User Deleted"}}</a>
+                                 <br>
+                                 {{$booking->phone_number}}
                           </div>
                             </td>
 
@@ -108,7 +110,11 @@
                                Payment Type: {{$booking->payment_type}}
 
                             </td>
-                             <td>{{$booking->amount}}</td>
+                             <td>
+                                <div>Total: {{$booking->amount}}</div>
+                                <div>Paid: {{$booking->paid_amount}}</div>
+
+                             </td>
 
                              <td>
                                 {{Carbon\Carbon::parse($booking->booking_start)->format('d/m/Y')}}
@@ -118,7 +124,7 @@
                                   </td>
                             <td>
                                 @if ($booking->status == 2)
-                                <span class="badge bg-danger text-white">upcoming</span>
+                                <span class="badge bg-info text-white">upcoming</span>
                             @endif
                             @if ($booking->status == 1)
                                 <span class="badge bg-success text-white">Approved</span>
@@ -175,6 +181,8 @@
                 <select name="status" id="" class="form-control form-select" required>
                     <option value="1">Completed</option>
                     <option value="0">Cancel</option>
+                    <option value="2">Upcoming</option>
+
                 </select>
 
         <div class="modal-footer">

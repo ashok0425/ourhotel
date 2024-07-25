@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Booking;
+use App\Models\TourBooking;
 use App\Service\InteraktService;
 use App\Service\InterktService;
 use Illuminate\Bus\Queueable;
@@ -19,13 +20,17 @@ class BookingCancelNotifyViaWP implements ShouldQueue
     /**
      * Create a new job instance.
      */
+
+
     protected $bookingId;
+    protected $type;
 
 
-
-    public function __construct($bookingId)
+    public function __construct($bookingId,$type='property')
     {
         $this->bookingId=$bookingId;
+        $this->type=$type;
+
 
     }
 
@@ -36,7 +41,11 @@ class BookingCancelNotifyViaWP implements ShouldQueue
     {
         $interktService=new InteraktService();
 
-      $booking= Booking::findOrFail($this->bookingId);
+        if ($this->type=='tour') {
+      $booking= TourBooking::findOrFail($this->bookingId);
+        }else{
+            $booking= Booking::findOrFail($this->bookingId);
+        }
     $res= $interktService->sendBookingCanelMsg('91'.$booking->user->phone_number,$booking->user->name??$booking->name??'user',$booking->booking_id);
      $interktService->sendBookingCanelMsg('919958277997',$booking->user->name??$booking->name??'user',$booking->booking_id);
 

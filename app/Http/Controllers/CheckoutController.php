@@ -179,14 +179,14 @@ class CheckoutController extends Controller
     session()->forget('discount');
     $notification=array(
         'type'=>'success',
-        'message'=>"Cpupon Removed" );
+        'message'=>"Coupon Removed" );
 
    return redirect()->back()->with($notification);
    }
 
 
    public function applyoffer (Request $request){
-   $cp=DB::table('coupon')->where('link',$request->url)->first();
+   $cp=DB::table('coupons')->where('link',$request->url)->first();
  session()->put('discount',[
     'name'=>$cp->coupon_name,
     'percent'=>$cp->coupon_percent,

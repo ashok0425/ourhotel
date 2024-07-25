@@ -11,8 +11,11 @@ use App\Jobs\BookingNotifyViaWP;
 use App\Jobs\CheckinNotifyViaWP;
 use App\Models\TourBooking;
 use App\Models\User;
+use App\Notifications\SendBookingEmail;
+use App\Notifications\TourBookingEmail;
 use App\Service\InteraktService;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Notification;
 
 class TourBookingController extends Controller
 {
@@ -70,27 +73,28 @@ class TourBookingController extends Controller
         $booking->name = $request->name;
         $booking->tour_name = $request->tour_name;
         $booking->phone_number = $request->phone;
+        $booking->email = $request->email;
         $booking->user_id = $user->id;
         $booking->start_date = $request['check_in'];
         $booking->booking_id = TourBooking::getBookingId();
         $booking->end_date = $request['check_out'];
         $booking->no_of_adult = $request['adult'];
+        $booking->no_of_child = $request['children'];
         $booking->amount = $request['price'];
-        $booking->paid_amount = $request['price'];
+        $booking->paid_amount = $request['paid_price'];
         $booking->payment_type = $request['payment_type'];
         $booking->remark = $request['remark'];
-
-        $booking->status  = 0;
-
-
+        $booking->status = 2;
         $booking->save();
-        $data="Tour Name:$request->tour_name, Start Date:$request->check_in, End Date :$booking->check_out, Number of Adult:-$request->adult, Number of Children:$request->children, Booking Amount:$booking->price";
+        $data="Tour Name:$request->tour_name, Start Date:$request->check_in, End Date :$booking->check_out, Number of Adult:-$request->adult, Number of Children:$request->children, Booking Amount:$booking->price,Remark: $request->remark";
 
       $wpService=new InteraktService();
       $wpService->sendBookingMsg('91'.$request->phone,$request->name,$booking->booking_id,$data);
-      $wpService->sendBookingMsg('919958277997',$request->name,$booking->booking_id,$data);
+    //   $wpService->sendBookingMsg('919958277997',$request->name,$booking->booking_id,$data);
       $wpService->sendReviewMsg('91'.$request->phone,$request->name,$booking->booking_id,$data);
-
+      if($booking->email){
+        Notification::route('mail', $booking->email)->notify(new TourBookingEmail($booking));
+    }
 
         $notification = array(
             'type' => 'success',
@@ -133,12 +137,12 @@ class TourBookingController extends Controller
         $booking->status=$request->status;
         $booking->save();
 
-        // if($request->status==0){
-        //     dispatch(new BookingCancelNotifyViaWP($booking->id));
-        // }
-        // if($request->status==1){
-        //     dispatch(new CheckinNotifyViaWP($booking->id));
-        // }
+        if($request->status==0){
+            dispatch(new BookingCancelNotifyViaWP($booking->id,true));
+        }
+        if($request->status==1){
+            dispatch(new CheckinNotifyViaWP($booking->id,true));
+        }
         $notification=array(
             'type'=>'success',
              'message'=>'Booking satus updated Sucessfully'

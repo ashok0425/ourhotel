@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container px-0">
     <div class="row">
         @php
             $offer5=DB::table('coupon')->skip(4)->take(1)->first();
@@ -9,7 +9,7 @@
         @if ($offer5)
         <div class="offer-wrapper mb-4">
            <a href="{{$offer5->link}}">
-            <img lsrc="{{getImageUrl($offer5->thumb)}}" alt="NSN offer" class="custom-border-radius-20 w-100">
+            <img lsrc="{{getImageUrl($offer5->thumb)}}" alt="NSN offer" class=" w-100">
            </a>
         </div>
     @endif

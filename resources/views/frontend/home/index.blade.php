@@ -190,7 +190,7 @@
                 <img height="100" width="100" src="{{getImageUrl($item->mobile_thumbnail)}}" alt="offer image" class="img-fluid img_height" loading="lazy"></div>
                 <div class="col-md-7 pb-0">
                 <strong>use promocode </strong>
-                <br>  <span class="badge bg-success text-white custom-border-radius-20">{{$item->coupon_name}}</span>
+                <div style="border:1px dotted black;width:80px;" class="p-1 my-2" onclick='copyPromocode(this.innerHTML)' title="click to copy">{{$item->coupon_name}}</div>
                 <p class="mt-2">{{$item->descr}}</p>
                 <p class="mt-4 text-right pb-1 mb-0"><small>Valid till:{{Carbon\Carbon::parse($item->expired_at)->format('d M Y')}}</small></p>
                 </div>
@@ -400,5 +400,19 @@
             $('#mobile_location_modal').removeClass('d-block')
             $('#mobile_location_modal').addClass('d-none')
         })
+    </script>
+
+    <script>
+
+ function copyPromocode(val) {
+
+
+  // Copy the text inside the text field
+  navigator.clipboard.writeText(val);
+
+  // Alert the copied text
+  toastr.success("Copied the text: " + val);
+}
+
     </script>
 @endpush

@@ -1,4 +1,4 @@
-<div class="container my-5">
+<div class="container px-0 my-5">
     <div class="row">
         @php
             $offer2=coupons()->skip(1)->take(1)->first();
@@ -8,7 +8,7 @@
         @if ($offer2)
         <div class="offer-wrapper">
            <a href="{{$offer2->link}}">
-            <img lsrc="{{getImageUrl($offer2->thumbnail)}}" alt="NSN offer" class="custom-border-radius-20 w-100" loading="lazy">
+            <img lsrc="{{getImageUrl($offer2->thumbnail)}}" alt="NSN offer" class=" w-100" loading="lazy">
            </a>
         </div>
     @endif

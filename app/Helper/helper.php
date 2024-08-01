@@ -153,9 +153,9 @@ if (!function_exists('getFinalPrice')) {
         }
 
         $price_discount=$room_discount_percent??20;
-        if ($price_discount) {
-           $price_before_discount=(int) number_format($price_discount * (int)$actualprice / 100, 0);
-        }
+
+           $price_before_discount=(int) $price_discount * ((int)$actualprice / 100);
+
         $data = [
             'subtotal' => (int) $actualprice,
             'tax' => (int) $tax,
@@ -171,136 +171,35 @@ if (!function_exists('getFinalPrice')) {
 
 
 if (!function_exists('getPrice')) {
-     function getPrice($number_of_adult=1, $number_of_room=1, $room_id,$ishourly=0,$days=1)
-    {
-        $room = Room::find($room_id);
-        $oneprice = $room->onepersonprice;
-        $twoprice = $room->twopersonprice ? $room->twopersonprice : $oneprice;
-        $diffinprice = $room->threepersonprice ? $room->threepersonprice - $twoprice : $twoprice - $oneprice;
-        $threeprice = $room->threepersonprice ? $room->threepersonprice : $twoprice + $diffinprice;
+    function getPrice($number_of_adult = 1, $number_of_room = 1, $room_id, $ishourly = 0, $days = 1)
+{
+    $room = Room::find($room_id);
 
-        if ($ishourly==1) {
-            $final_adult_price=($room->hourlyprice==null||$room->hourlyprice==0||$room->hourlyprice==''?$room->oneprice:$room->hourlyprice) * $number_of_room;
-        }else{
-        switch ($number_of_adult) {
-            case 1:
-                $final_adult_price = $number_of_room * $oneprice;
-                break;
-            case 2:
+    // Define base prices
+    $oneprice = $room->onepersonprice;
+    $twoprice = $room->twopersonprice ?: $oneprice;
+    $threeprice = $room->threepersonprice ?: $twoprice + ($twoprice - $oneprice);
 
-                if ($number_of_room == 1) {
-                    $final_adult_price = $twoprice;
-                } else {
-                    $final_adult_price = 2 * $oneprice;
-                }
-
-                break;
-            case 3:
-
-                if ($number_of_room == 1) {
-                    $final_adult_price = $threeprice;
-                }
-                if ($number_of_room == 2) {
-                    $final_adult_price = 2 * $twoprice;
-                } else {
-                    $final_adult_price = $number_of_room * $oneprice;
-                }
-                break;
-
-            case 4:
-                $final_adult_price = $number_of_room * $twoprice;
-                break;
-
-            case 5:
-                if ($number_of_room == 2) {
-                    $final_adult_price = (2 * $twoprice) + $diffinprice;
-                } else {
-                    $final_adult_price = $number_of_room * $twoprice;
-                }
-                break;
-
-            case 6:
-                $final_adult_price = $number_of_room * $threeprice;
-                break;
-            case 7:
-
-                if ($number_of_room == 3) {
-                    $final_adult_price = (3 * $twoprice) + $diffinprice;
-                } else {
-                    $final_adult_price = $number_of_room * $twoprice;
-                }
-
-                break;
-            case 8:
-
-                if ($number_of_room == 3) {
-                    $final_adult_price = (3 * $twoprice) + $twoprice;
-                } else {
-                    $final_adult_price = $number_of_room * $twoprice;
-                }
-                break;
-            case 9:
-
-                if ($number_of_room == 3) {
-                    $final_adult_price = 3 * $threeprice;
-                } else {
-                    $final_adult_price = $number_of_room * $twoprice;
-                }
-                break;
-            case 10:
-
-                if ($number_of_room == 4) {
-                    $final_adult_price = (2 * $threeprice) + (2 * $twoprice);
-                } else {
-                    $final_adult_price = $number_of_room * $twoprice;
-                }
-
-                break;
-            case 11:
-                $final_adult_price = (2 * $threeprice) + $twoprice;
-
-                if ($number_of_room == 4) {
-                    $final_adult_price = (2 * $threeprice) + (2 * $twoprice) + $diffinprice;
-                } else {
-                    $final_adult_price = $number_of_room * $twoprice;
-                }
-
-                break;
-            case 12:
-                if ($number_of_room == 4) {
-                    $final_adult_price = 4 * $threeprice;
-                } else {
-                    $final_adult_price = (3 * $threeprice) +  $twoprice + $diffinprice;
-                }
-                break;
-            case 13:
-                if ($number_of_room == 4) {
-                    $final_adult_price = (4 * $threeprice) + $diffinprice;
-                } else {
-                    $final_adult_price = (3 * $threeprice) + (2 * $twoprice);
-                }
-                break;
-            case 14:
-                if ($number_of_room == 4) {
-                    $final_adult_price = (3 * $threeprice) + (2 * $twoprice) + $diffinprice;
-                } else {
-                    $final_adult_price = (3 * $threeprice) + (3 * $twoprice);
-                }
-                break;
-            case 15:
-                $final_adult_price = 5 * $threeprice;
-                break;
-
-            default:
-                $final_adult_price = $number_of_room * $oneprice;
-
-                break;
+    // Hourly pricing
+    if ($ishourly) {
+        $final_adult_price = ($room->hourlyprice ?: $oneprice) * $number_of_room;
+    } else {
+        // Calculate base price depending on the number of adults
+        if ($number_of_adult == 1) {
+            $base_price = $oneprice;
+        } elseif ($number_of_adult == 2) {
+            $base_price = $twoprice;
+        } else {
+            $base_price = $threeprice + ($number_of_adult - 3) * $oneprice / 3;
         }
+
+        // Calculate final price based on the number of rooms
+        $final_adult_price = $base_price * $number_of_room;
     }
 
-        return [
-           'actualprice' =>$final_adult_price*$days,
-           'room_discount_percent'=>$room->discount_percent
-        ];
-    }
+    return [
+        'actualprice' => $final_adult_price * $days,
+        'room_discount_percent' => $room->discount_percent
+    ];
+}
 }

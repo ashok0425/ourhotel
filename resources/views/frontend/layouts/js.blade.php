@@ -81,14 +81,21 @@
             if (room <= 5) {
                 for (let index = 0; index <= room; index++) {
                     $(`#room${index}`).removeClass('d-none');
+
                 }
             }
+            $(`#guest`).val(sessionStorage.getItem('guest')??1);
+            $(`#guest1`).val(sessionStorage.getItem('guest1')??1);
+            $(`#guest2`).val(sessionStorage.getItem('guest2')??1);
+            $(`#guest3`).val(sessionStorage.getItem('guest3')??1);
+            $(`#guest4`).val(sessionStorage.getItem('guest4')??1);
+
         }
         budget = sessionStorage.getItem("budget");
         if (budget && budget !== 'undefined') {
             $('#budget').val(budget);
         }
-        guest = sessionStorage.getItem("guest");
+        guest = sessionStorage.getItem("gueststotal");
         if (guest) {
             $('.gueststotal').text(guest);
         }
@@ -149,13 +156,15 @@
         var button = $(this);
         var oldValue = button.parent().find("input").val();
         if (button.hasClass('plus')) {
-
             if(oldValue  < 3){
                  var newVal = parseFloat(oldValue) + 1;
             }
               else{
+                toastr.error('3 Person Allowed In 1 Room');
                 var newVal = parseFloat(oldValue);
             }
+
+
         } else {
           if (oldValue > 0) {
                if(oldValue  > 1){
@@ -169,61 +178,14 @@
           }
         }
         button.parent().find("input").val(newVal);
-       guest_rooms();
-
+        sessionStorage.setItem(button.parent().find("input").attr('id'),newVal)
+        var totalGuest=parseInt($('#guest').val())+parseInt($('#guest1').val())+parseInt($('#guest2').val())+parseInt($('#guest3').val())+parseInt($('#guest4').val())
+        sessionStorage.setItem('gueststotal',totalGuest)
+        $('.gueststotal').html(totalGuest)
       });
 
     function guest_room() {
-        var room = parseFloat($('#room').text());
-        guest
-        var gueststotal = parseFloat($('.gueststotal').text());
-        var gueststotal0 = parseFloat($('#guest').val());
-        if (gueststotal0 >= 3) {
-            $('#guest').val(3);
-            toastr.error('3 Person Allowed In 1 Room');
-        }
-        var gueststotal1 = parseFloat($('#guest1').val());
-        if (gueststotal1 >= 3) {
-            $('#guest1').val(3);
-            toastr.error('3 Person Allowed In One Room');
-        }
-        var gueststotal2 = parseFloat($('#guest2').val());
-        if (gueststotal2 >= 3) {
-            $('#guest2').val(3);
-            toastr.error('3 Person Allowed In One Room');
-        }
-        var gueststotal3 = parseFloat($('#guest3').val());
-        if (gueststotal3 >= 3) {
-            $('#guest3').val(3);
-            toastr.error('3 Person Allowed In One Room');
-        }
-        var gueststotal4 = parseFloat($('#guest4').val());
-        if (gueststotal4 >= 3) {
-            $('#guest4').val(3);
-            toastr.error('3 Person Allowed In One Room');
-        }
-        var total = 0;
-        var max_guest = room * 3;
-        if (gueststotal < max_guest) {
-            var aa = 1;
-        } else {
-            if (gueststotal0 != 'NaN') {
-                total = total + gueststotal;
-            }
-            if (gueststotal1 != 'NaN') {
-                total = total + gueststotal1;
-            }
-            if (gueststotal2 != 'NaN') {
-                total = total + gueststotal2;
-            }
-            if (gueststotal3 != 'NaN') {
-                total = total + gueststotal3;
-            }
-            if (gueststotal4 != 'NaN') {
-                total = total + gueststotal4;
-            }
-            $('.gueststotal').text(total);
-        }
+
     };
 
 

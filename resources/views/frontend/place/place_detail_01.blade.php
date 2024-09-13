@@ -631,7 +631,7 @@
         no_of_room.val(parseInt(sessionStorage.getItem('room')) || 1) //setting default number of room from sessionstorage
 
         var no_of_adult = $('#number_of_adult');
-        no_of_adult.val(parseInt(sessionStorage.getItem('guest')) ||
+        no_of_adult.val(parseInt(sessionStorage.getItem('gueststotal')) ||
             1) //setting default number of adult from sessionstorage
 
         var no_of_child = $('#number_of_child');

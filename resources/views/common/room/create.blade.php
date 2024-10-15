@@ -65,7 +65,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">One Person Price</label>
-                                    <input type="number" class="form-control" id="exampleInputUsername1"
+                                    <input type="number" class="form-control" id="onepersonprice"
                                         placeholder="One Person Price" required name="onepersonprice"
                                         value="{{ old('onepersonprice') }}">
                                 </div>
@@ -74,7 +74,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Two Person Price</label>
-                                    <input type="number" class="form-control" id="exampleInputUsername1"
+                                    <input type="number" class="form-control" id="twopersonprice"
                                         placeholder="Two Person Price" name="twopersonprice"
                                         value="{{ old('twopersonprice') }}">
                                 </div>
@@ -85,7 +85,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Three Person Price</label>
-                                    <input type="number" class="form-control" id="exampleInputUsername1"
+                                    <input type="number" class="form-control" id="threepersonprice"
                                         placeholder="Three Person Price" name="threepersonprice"
                                         value="{{ old('threepersonprice') }}">
                                 </div>
@@ -301,5 +301,19 @@
         $('#has_monthy_price').click(function() {
             $('.has_monthy_price_show').toggleClass('d-none')
         })
+
     </script>
+    <script>
+        $(document).on('keyup','#onepersonprice',function(){
+    let two=300;
+    let three=500;
+    let value=parseInt($(this).val());
+    if (value!=0||value!='') {
+        $('#twopersonprice').val(two+value)
+            $('#threepersonprice').val(three+value)
+    }
+
+
+        })
+     </script>
 @endpush

@@ -76,7 +76,7 @@ class PropertyController extends Controller
         $slug = Str::slug($request->name);
         $property = new Property;
         $property->name = $request->name;
-        $property->hotel_id = 'NSN' . rand(1, 1000000000) . $hotelId;
+        $property->property_id = 'NSN' . rand(1, 1000000000) . $hotelId;
         $property->city_id = $request->city;
         $property->owner_id = $request->partner;
         $property->property_type_id = $request->propertyType;

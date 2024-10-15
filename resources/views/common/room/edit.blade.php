@@ -52,7 +52,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                             <label for="exampleInputUsername1">One Person Price</label>
-                            <input type="number" class="form-control" id="exampleInputUsername1" placeholder="One Person Price" required
+                            <input type="number" class="form-control" id="onepersonprice" placeholder="One Person Price" required
                                 name="onepersonprice" value="{{old('onepersonprice',$room->onepersonprice)}}">
                         </div>
                           </div>
@@ -60,7 +60,7 @@
                           <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputUsername1">Two Person Price</label>
-                                <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Two Person Price"
+                                <input type="number" class="form-control" id="twopersonprice" placeholder="Two Person Price"
                                     name="twopersonprice" value="{{old('twopersonprice',$room->twopersonprice)}}">
                             </div>
                               </div>
@@ -70,7 +70,7 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Three Person Price</label>
-                                    <input type="number" class="form-control" id="exampleInputUsername1" placeholder="Three Person Price"  name="threepersonprice" value="{{old('threepersonprice',$room->threepersonprice)}}">
+                                    <input type="number" class="form-control" id="threepersonprice" placeholder="Three Person Price"  name="threepersonprice" value="{{old('threepersonprice',$room->threepersonprice)}}">
                                 </div>
                                   </div>
 
@@ -287,4 +287,18 @@
   $('.has_monthy_price_show').toggleClass('d-none')
 })
     </script>
+
+<script>
+    $(document).on('keyup','#onepersonprice',function(){
+let two=300;
+let three=500;
+let value=parseInt($(this).val());
+if (value!=0||value!='') {
+    $('#twopersonprice').val(two+value)
+        $('#threepersonprice').val(three+value)
+}
+
+
+    })
+ </script>
 @endpush

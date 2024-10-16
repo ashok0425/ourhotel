@@ -42,12 +42,12 @@
                             </div>
 
                             <div class="form-group  col-md-6">
-                                <label for="place_name">End Date : *</label>
+                                <label for="">End Date : *</label>
                                 <input type="date" class="form-control" name="check_out" value=""
                                     placeholder="Numbers Of Rooms" required="">
                             </div>
                             <div class="form-group  col-md-6">
-                                <label for="place_name">Number of adult : *</label>
+                                <label for="">Number of adult : *</label>
                                 <input type="number" class="form-control" name="adult" value=""
                                     placeholder="Number of adult" autocomplete="off" required="">
                             </div>

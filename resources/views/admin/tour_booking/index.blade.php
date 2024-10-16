@@ -117,9 +117,9 @@
                              </td>
 
                              <td>
-                                {{Carbon\Carbon::parse($booking->booking_start)->format('d/m/Y')}}
+                                {{Carbon\Carbon::parse($booking->start_date)->format('d/m/Y')}}
                                 <br>
-                                {{Carbon\Carbon::parse($booking->booking_end)->format('d/m/Y')}}
+                                {{Carbon\Carbon::parse($booking->end_date)->format('d/m/Y')}}
 
                                   </td>
                             <td>

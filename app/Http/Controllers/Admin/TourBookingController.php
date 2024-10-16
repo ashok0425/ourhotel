@@ -86,8 +86,7 @@ class TourBookingController extends Controller
         $booking->remark = $request['remark'];
         $booking->status = 2;
         $booking->save();
-        $data="Tour Name:$request->tour_name, Start Date:$request->check_in, End Date :$booking->check_out, Number of Adult:-$request->adult, Number of Children:$request->children, Booking Amount:$booking->price,Remark: $request->remark";
-
+        $data="Tour Name:$request->tour_name, Start Date:$booking->start_date, End Date : $booking->end_date, Number of Adult:-$request->adult, Number of Children:$request->children, Booking Amount:$booking->price,Remark: $request->remark";
       $wpService=new InteraktService();
       $wpService->sendBookingMsg('91'.$request->phone,$request->name,$booking->booking_id,$data);
     //   $wpService->sendBookingMsg('919958277997',$request->name,$booking->booking_id,$data);

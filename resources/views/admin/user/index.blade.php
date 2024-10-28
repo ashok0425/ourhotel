@@ -27,6 +27,7 @@
 
         <div>
         <button class="btn btn-info rounded-0 mt-4">Search</button>
+        <a href="{{route('admin.users.create')}}" class="btn btn-info rounded-0 mt-4">Add User</a>
         </div>
 
     </form>

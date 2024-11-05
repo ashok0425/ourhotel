@@ -21,12 +21,15 @@ class InteraktService{
             "fullPhoneNumber": "'.$phone.'",
             "type": "Template",
             "template": {
-                "name": "otp",
-                "languageCode": "en",
+                "name": "verification_code_lp",
+                "languageCode": "en_US",
                 "bodyValues": [
                     "'.$otp.'"
 
-                ]
+                ],
+                "buttonValues":{
+                        "0": ["'.$otp.'"]
+        }
             }
         }',
           CURLOPT_HTTPHEADER => array(

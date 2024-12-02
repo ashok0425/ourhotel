@@ -23,7 +23,7 @@
             <li class="nav-item"> <a class="nav-link" href="{{route('admin.cities.index')}}">City</a></li>
             <li class="nav-item"> <a class="nav-link" href="{{route('admin.categories.index')}}">Category</a></li>
             <li class="nav-item"> <a class="nav-link" href="{{route('admin.locations.index')}}">Location</a></li>
-            <li class="nav-item"> <a class="nav-link" href="{{route('admin.propertyTypes.index')}}">Property Type</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{route('admin.propertyTypes.index')}}">Hotel Type</a></li>
             <li class="nav-item"> <a class="nav-link" href="{{route('admin.amenities.index')}}">Amenity</a></li>
 
           </ul>
@@ -34,12 +34,12 @@
       <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
           <i class="icon-columns menu-icon"></i>
-          <span class="menu-title">Property</span>
+          <span class="menu-title">Hotel</span>
           <i class="menu-arrow"></i>
         </a>
         <div class="collapse" id="form-elements">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"><a class="nav-link" href="{{route('properties.index')}}">All Property</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('properties.index')}}">All Hotel</a></li>
             <li class="nav-item"><a class="nav-link" href="{{route('rooms.index')}}">All Rooms</a></li>
           </ul>
         </div>

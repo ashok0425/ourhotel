@@ -156,7 +156,7 @@
                                                     </td>
                                                     <td style="font-size: 14px; line-height: 18px; color: #757575; text-align: right; padding-bottom: 10px;">
                                                         <b style="color: #666666;">
-                                                            {{Carbon\Carbon::parse($booking->check_in)->format('d/m/Y')}}
+                                                            {{Carbon\Carbon::parse($booking->booking_start)->format('d/m/Y')}}
                                                         </b>
                                                     </td>
                                                 </tr>
@@ -167,7 +167,7 @@
                                                     </td>
                                                     <td style="font-size: 14px; line-height: 18px; color: #757575; text-align: right; padding-bottom: 10px;">
                                                         <b style="color: #666666;">
-                                                            {{Carbon\Carbon::parse($booking->check_out)->format('d/m/Y')}}
+                                                            {{Carbon\Carbon::parse($booking->booking_start)->format('d/m/Y')}}
                                                         </b>
                                                     </td>
                                                 </tr>

@@ -152,7 +152,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td style="font-size: 14px; line-height: 18px; color: #757575; width: 440px;">
-                                                       CheckIn
+                                                       Check In
                                                     </td>
                                                     <td style="font-size: 14px; line-height: 18px; color: #757575; text-align: right; padding-bottom: 10px;">
                                                         <b style="color: #666666;">
@@ -163,11 +163,11 @@
 
                                                 <tr>
                                                     <td style="font-size: 14px; line-height: 18px; color: #757575; width: 440px;">
-                                                       CheckOut
+                                                       Check Out
                                                     </td>
                                                     <td style="font-size: 14px; line-height: 18px; color: #757575; text-align: right; padding-bottom: 10px;">
                                                         <b style="color: #666666;">
-                                                            {{Carbon\Carbon::parse($booking->booking_start)->format('d/m/Y')}}
+                                                            {{Carbon\Carbon::parse($booking->booking_end)->format('d/m/Y')}}
                                                         </b>
                                                     </td>
                                                 </tr>
@@ -288,20 +288,16 @@
                                                         Status
                                                     </td>
                                                     <td style="font-size: 14px; font-weight: bold; line-height: 18px; color: #666666; text-align: right; padding-bottom: 10px;">
-                                                        @if ($booking->status == 0)
-                                                        <span class="badge bg-danger text-white">Pending</span>
+                                                        @if ($booking->status == 2)
+                                                        <span class="badge bg-info text-white">upcoming</span>
                                                     @endif
                                                     @if ($booking->status == 1)
-                                                        <span class="badge bg-success text-white">Approved</span>
+                                                        <span class="badge bg-success text-white">Completed</span>
                                                     @endif
 
-                                                    @if ($booking->status == 2)
-                                                        <span class="badge bg-info text-white">Checkin</span>
-                                                        @endif @if ($booking->status == 3)
-                                                            <span class="badge bg-warning text-white">Checkout</span>
-                                                            @endif @if ($booking->status == 4)
-                                                                <span class="badge bg-danger text-white">Cancelled</span>
-                                                            @endif
+                                                    @if ($booking->status == 0)
+                                                        <span class="badge bg-danger text-white">Cancelled</span>
+                                                    @endif
                                                     </td>
                                                 </tr>
                                             </tbody>

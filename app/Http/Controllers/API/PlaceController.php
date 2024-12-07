@@ -157,7 +157,7 @@ class PlaceController extends Controller
 
     public function detail($id)
     {
-        $place = Property::find($id);
+        $place =Property::where('id',$id)->where('status',1)->firstOrFail();
         if (!$place) abort(404);
         $rooms = Room::where('property_id', $id)->get();
 

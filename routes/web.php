@@ -116,7 +116,9 @@ Route::get('/top-rated-hotels', [HomeController::class, 'toprated']);
 Route::get('/nsn-resorts', [HomeController::class, 'nsnResort']);
 Route::get('/hotels-near-me', [HomeController::class, 'nearbyHotel']);
 
-
+Route::get('/city/{slug}', function ($slug) {
+    return redirect()->to("/hotel/best-hotel-in-$slug", 301);
+});
 
 $router->get('/getprice', [CheckoutController::class, 'getRoomPrice']);
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('book.now');

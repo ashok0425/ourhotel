@@ -50,11 +50,12 @@
                 <div>
                     Booking List
                 </div>
-                <div>
-                    <a href="{{ route('booking.create') }}" class="btn btn-primary btn-rounded btn-fw btn-sm">Book Unlisted
-                        Hotel</a>
-
-                </div>
+             @if (Auth::user()->is_admin||Auth::user()->is_agent)
+             <div>
+                <a href="{{ route('booking.create') }}" class="btn btn-primary btn-rounded btn-fw btn-sm">Book Unlisted
+                    Hotel</a>
+            </div>
+             @endif
 
             </div>
             <table class="table table-bordered w-100">
@@ -173,9 +174,11 @@
                                             role="button" aria-haspopup="true" aria-expanded="false"><i
                                                 class="fas fa-ellipsis-h fa-2x"></i></a>
                                         <div class="dropdown-menu">
+                                            <a href="{{ route('bookings.edit', $booking) }}"
+                                            class="text-dark dropdown-item">Edit</a>
                                             <a href="{{ route('bookings.show', $booking) }}"
                                                 class="text-dark dropdown-item">View</a>
-                                            <a href="{{ route('bookings.edit', $booking) }}"
+                                            <a href="{{ route('bookings.download', ['id'=>$booking->booking_id]) }}"
                                                 class="text-dark dropdown-item">Download Invoice</a>
                                             <a href="" class="text-dark dropdown-item updateSatusBtn"
                                                 data-toggle="modal" data-target="#updatestatus"

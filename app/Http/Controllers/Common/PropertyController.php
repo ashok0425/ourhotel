@@ -223,70 +223,8 @@ class PropertyController extends Controller
         return response()->json($cities);
     }
 
-    public function addBooking($property_id=null)
-    {
-        return  view('common.property.addbooking', compact('property_id'));
-    }
-
-    public function storeBooking(Request $request)
-    {
-        $validate = $request->validate([
-            'name' => 'required|string',
-            'phone' => 'required'
-        ]);
-
-        $user = User::updateOrCreate(
-            ['phone_number' => $request->phone],
-            [
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt('Nsn@' . rand(1, 99999999))
-            ]
-        );
 
 
-
-        $booking = new Booking();
-        $booking->user_id = $user->id;
-        $booking->property_id = $request->property_id ?? 0;
-        $booking->booking_start = $request['check_in'];
-        $booking->booking_id = Booking::getBookingId();
-        $booking->booking_end = $request['check_out'];
-        $booking->no_of_room = $request['rooms'];
-        $booking->no_of_adult = $request['adult'];
-        $booking->final_amount = $request['price'];
-        $booking->total_price = $request['price'];
-        $booking->payment_type = $request['payment_type'];
-        $booking->room_type = $request['room_type'];
-        $booking->booking_type = $request['booking_type'];
-        $booking->uuid = Str::uuid();
-        $booking->is_paid  = $request->is_paid ? 1 : 0;
-        $booking->booked_by  = Auth::user()?->id ?? 1;
-        $booking->status  = 2;
-        $booking->name = $request->name;
-        $booking->phone_number = $request->phone;
-        $booking->hotel_data=[
-            'name'=>$request->hotel_name,
-            'address'=>$request->hotel_address,
-            'phone_number'=>$request->hotel_phone
-        ];
-
-        $booking->save();
-
-        dispatch(new BookingNotifyViaWP($booking->id));
-        dispatch(new BookingNotifyViaMsg($booking->id));
-        if($booking->email){
-            Notification::route('mail', $booking->email)->notify(new SendBookingEmail($booking->booking_id));
-        }
-        $notification = array(
-            'type' => 'success',
-            'message' => 'Booking create successfully'
-        );
-
-
-
-        return redirect()->back()->with($notification);
-    }
 
 
     public function status(Request $request)

@@ -156,4 +156,13 @@ class TourBookingController extends Controller
     {
         //
     }
+
+
+    public function download($booking_id)
+    {
+
+       $pdf = Pdf::loadView('admin.tour_booking.print', ['booking_id'=>$booking_id]);
+        // return $pdf;
+      return $pdf->download("$booking_id|invoice.pdf");
+    }
 }

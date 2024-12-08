@@ -142,7 +142,7 @@
                                         <div class="dropdown-menu">
                                             <a href="" class="text-dark dropdown-item updateSatusBtn"
                                             data-toggle="modal" data-target="#updatestatus" data-booking_id="{{$booking->id}}">Change Status</a>
-
+                                            <a href="{{route('tour_bookings.download',['id'=>$booking->booking_id])}}" class="text-dark dropdown-item">Download Invoice</a>
                                         </div>
                                     </li>
                                     </ul>

@@ -62,10 +62,13 @@ Route::middleware(['ispartner','isactive'])->group(function(){
     Route::resource('rooms', RoomController::class);
     Route::resource('bookings', BookingController::class)->only(['index','show','update','edit']);
     Route::post('bookings/status', [BookingController::class,'update'])->name('bookings.status');
+    Route::get('bookings/{id}/download', [BookingController::class,'download'])->name('bookings.download');
+
  Route::middleware(['isagent'])->group(function(){
-    Route::get('add-booking/{property_id?}', [PropertyController::class,'addBooking'])->name('booking.create');
-    Route::post('add-booking/{property_id?}', [PropertyController::class,'storeBooking'])->name('booking.store');
+    Route::get('booking/create/{property_id?}', [BookingController::class,'create'])->name('booking.create');
+    Route::post('booking/create/{property_id?}', [PropertyController::class,'storeBooking'])->name('booking.store');
     Route::resource('tour_bookings', TourBookingController::class);
+    Route::get('tour_bookings/{id}/download', [TourBookingController::class,'download'])->name('tour_bookings.download');
     Route::post('tour_bookings/status', [TourBookingController::class,'update'])->name('tour_bookings.status');
 });
 

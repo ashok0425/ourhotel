@@ -138,7 +138,6 @@ class BookingController extends Controller
     public function update(Request $request,Booking $booking)
     {
 
-        $booking = new Booking();
         $booking->booking_start = $request['check_in'];
         $booking->booking_end = $request['check_out'];
         $booking->no_of_room = $request['rooms'];

@@ -156,14 +156,14 @@
       </li>
      @endif
 
-     @if (Auth::user()->isisSeoExpert||Auth::user()->is_admin)
+     {{-- @if (Auth::user()->isisSeoExpert||Auth::user()->is_admin)
      <li class="nav-item">
         <a class="nav-link" href="{{route('seos.index')}}">
           <i class="fas fa-envelope menu-icon"></i>
           <span class="menu-title">Seo</span>
         </a>
       </li>
-     @endif
+     @endif --}}
 
     </ul>
 

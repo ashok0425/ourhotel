@@ -35,7 +35,7 @@ class BookingNotifyViaMsg implements ShouldQueue
 
         $phone=$booking->phone_number;
         $partner_name=$booking->property?->name??$booking->hotel_data['name'];
-        $partner_phone=$booking->property?->owner?->phone_number??$booking->hotel_data['phone_number'];
+        $partner_phone=$booking->property?->owner?->phone_number??$booking->hotel_data['phone_number']??null;
 
         $checkin=$booking->booking_start;
         $checkout=$booking->booking_end;
@@ -50,7 +50,9 @@ class BookingNotifyViaMsg implements ShouldQueue
         $number_of_night = $from->diffInDays($to);
         $smsService=new SmsService();
 
+        if($partner_phone){
         $smsService->sendBookingMsg($partner_phone,$partner_name,$checkin,$checkout,$number_of_night,$adult,$child,$price,$payment_type,$no_of_room,$booking_id);
+        }
        $smsService->sendBookingMsg($phone,$partner_name,$checkin,$checkout,$number_of_night,$adult,$child,$price,$payment_type,$no_of_room,$booking_id);
         $smsService->sendBookingMsg('9958277997',$partner_name,$checkin,$checkout,$number_of_night,$adult,$child,$price,$payment_type,$no_of_room,$booking_id);
 

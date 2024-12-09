@@ -6,6 +6,7 @@ use App\Http\Middleware\IsActive;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsAgent;
 use App\Http\Middleware\IsPartner;
+use App\Http\Middleware\IsseoExpert;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -70,9 +71,8 @@ class Kernel extends HttpKernel
         'isadmin' => IsAdmin::class,
         'isagent' => IsAgent::class,
         'ispartner' => IsPartner::class,
+        'isseo' => IsseoExpert::class,
         'isactive' => IsActive::class,
-
-
 
     ];
 }

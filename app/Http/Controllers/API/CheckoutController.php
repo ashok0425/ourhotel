@@ -86,7 +86,7 @@ class CheckoutController extends Controller
         $booking->booking_end = $request['booking_end'];
         $booking->no_of_room = $request['number_of_room'];
         $booking->no_of_adult = $request['numbber_of_adult'];
-        $booking->no_of_child = $request['numbber_of_adult'];
+        $booking->no_of_child = $request['numbber_of_children'];
         $booking->final_amount = $final_price;
         $booking->total_price = $price;
         $booking->discount = $discount;

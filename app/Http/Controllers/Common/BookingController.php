@@ -16,7 +16,7 @@ use App\Notifications\SendBookingEmail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
-
+use Illuminate\Support\Str;
 class BookingController extends Controller
 {
     /**

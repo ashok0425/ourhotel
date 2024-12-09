@@ -10,6 +10,7 @@ use App\Jobs\BookingNotifyViaMsg;
 use App\Jobs\BookingNotifyViaWP;
 use App\Jobs\CheckinNotifyViaWP;
 use App\Models\Property;
+use App\Models\User;
 use App\Notifications\SendBookingCancelEmail;
 use App\Notifications\SendBookingEmail;
 use Barryvdh\DomPDF\Facade\Pdf;

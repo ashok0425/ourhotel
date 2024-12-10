@@ -52,9 +52,7 @@ Route::middleware('isadmin')->prefix('admin')->name('admin.')->group(function(){
     Route::get('refer_moneys', [ReferPriceController::class,'referMoney'])->name('refer_moneys');
 });
 
-Route::middleware('isseo')->prefix('admin')->name('admin.')->group(function(){
 Route::resource('seos', SeoController::class);
-});
 
 
 Route::middleware(['ispartner','isactive'])->group(function(){

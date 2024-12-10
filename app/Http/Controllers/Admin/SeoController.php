@@ -21,7 +21,7 @@ class SeoController extends Controller
     public function index()
     {
 
-        if(!Auth::user()->isSeoExpert&&!Auth::user()->is_admin){
+        if(!Auth::user()->isSeoExpert){
             abort(403);
         }
         $seos=Seo::query()->orderBy('id','desc')->get();
@@ -33,7 +33,7 @@ class SeoController extends Controller
      */
     public function create()
     {
-        if(!Auth::user()->isSeoExpert&&!Auth::user()->is_admin){
+        if(!Auth::user()->isSeoExpert){
             abort(403);
         }
         return view('admin.seo.create');
@@ -44,7 +44,7 @@ class SeoController extends Controller
      */
     public function store(Request $request)
     {
-        if(!Auth::user()->isSeoExpert&&!Auth::user()->is_admin){
+        if(!Auth::user()->isSeoExpert){
             abort(403);
         }
        $seo=new Seo;
@@ -76,7 +76,7 @@ class SeoController extends Controller
      */
     public function edit(Seo $seo)
     {
-        if(!Auth::user()->isSeoExpert&&!Auth::user()->is_admin){
+        if(!Auth::user()->isSeoExpert){
             abort(403);
         }
 
@@ -89,7 +89,7 @@ class SeoController extends Controller
      */
     public function update(Request $request, Seo $seo)
     {
-        if(!Auth::user()->isSeoExpert&&!Auth::user()->is_admin){
+        if(!Auth::user()->isSeoExpert){
             abort(403);
         }
         $seo->title=$request->title;
@@ -111,7 +111,7 @@ class SeoController extends Controller
      */
     public function destroy(Seo $seo)
     {
-        if(!Auth::user()->isSeoExpert&&!Auth::user()->is_admin){
+        if(!Auth::user()->isSeoExpert){
             abort(403);
         }
        $seo->delete();

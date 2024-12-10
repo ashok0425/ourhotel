@@ -34,6 +34,7 @@
       </li>
       @endif
 
+  @if (!Auth::user()->isSeoExpert)
       <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
           <i class="icon-columns menu-icon"></i>
@@ -49,7 +50,6 @@
       </li>
 
 
-      @if (!Auth::user()->isSeoExpert)
       <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#booking-elements" aria-expanded="false" aria-controls="booking-elements">
           <i class="icon-columns menu-icon"></i>
@@ -160,14 +160,14 @@
       </li>
      @endif
 
-     {{-- @if (Auth::user()->isSeoExpert||Auth::user()->is_admin)
+     @if (Auth::user()->isSeoExpert)
      <li class="nav-item">
-        <a class="nav-link" href="{{route('admin.seos.index')}}">
+        <a class="nav-link" href="{{route('seos.index')}}">
           <i class="fas fa-envelope menu-icon"></i>
           <span class="menu-title">Seo</span>
         </a>
       </li>
-     @endif --}}
+     @endif
 
     </ul>
 

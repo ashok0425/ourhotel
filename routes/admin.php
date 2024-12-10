@@ -24,7 +24,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WebsiteController;
 use App\Models\TourBooking;
 
-Route::middleware('guest')->prefix('admin')->name('admin.')->group(function(){
+Route::prefix('admin')->name('admin.')->group(function(){
 Route::view('/login','admin.login');
 Route::post('/login',[AuthController::class,'login']);
 });

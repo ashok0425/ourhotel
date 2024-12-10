@@ -3,12 +3,15 @@
   <!-- partial:partials/_sidebar.html -->
   <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
+  @if (!Auth::user()->isSeoExpert)
+
       <li class="nav-item">
         <a class="nav-link" href="{{route('dashboard')}}">
           <i class="icon-grid menu-icon"></i>
           <span class="menu-title">Dashboard</span>
         </a>
       </li>
+      @endif
 
       @if (Auth::user()->is_admin)
       <li class="nav-item">
@@ -46,7 +49,7 @@
       </li>
 
 
-
+      @if (!Auth::user()->isSeoExpert)
       <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#booking-elements" aria-expanded="false" aria-controls="booking-elements">
           <i class="icon-columns menu-icon"></i>
@@ -61,6 +64,7 @@
           </ul>
         </div>
       </li>
+@endif
 
       @if (Auth::user()->is_admin || Auth::user()->is_agent)
 
@@ -156,9 +160,9 @@
       </li>
      @endif
 
-     {{-- @if (Auth::user()->isisSeoExpert||Auth::user()->is_admin)
+     {{-- @if (Auth::user()->isSeoExpert||Auth::user()->is_admin)
      <li class="nav-item">
-        <a class="nav-link" href="{{route('seos.index')}}">
+        <a class="nav-link" href="{{route('admin.seos.index')}}">
           <i class="fas fa-envelope menu-icon"></i>
           <span class="menu-title">Seo</span>
         </a>

@@ -105,6 +105,8 @@
                                         <div class="dropdown-menu">
                                             <a href="{{ route('properties.edit', $property) }}"
                                             class="text-dark dropdown-item">Edit</a>
+                                            @if (!Auth::user()->isSeoExpert)
+
                                             {{-- <a href="#"
                                                     class="text-dark dropdown-item change_status" data-bs-toggle="modal"
                                                     data-userId="{{$property->id}}"
@@ -120,6 +122,8 @@
 
                                           <a href="" class="text-dark dropdown-item updateSatusBtn"
                                           data-toggle="modal" data-target="#updatestatus" data-property_id="{{$property->id}}">Change Status</a>
+                                          @endif
+
                                         </div>
                                     </li>
                                     </ul>

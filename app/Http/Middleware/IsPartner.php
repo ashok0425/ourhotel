@@ -17,7 +17,7 @@ class IsPartner
     public function handle(Request $request, Closure $next): Response
     {
 
-        if(Auth::check() && (Auth::user()->is_admin||Auth::user()->is_agent||Auth::user()->is_partner)){
+        if(Auth::check() && (Auth::user()->is_admin||Auth::user()->is_agent||Auth::user()->is_partner||Auth::user()->isSeoExpert)){
             return $next($request);
         }
 

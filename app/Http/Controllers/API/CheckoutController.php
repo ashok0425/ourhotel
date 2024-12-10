@@ -106,7 +106,7 @@ class CheckoutController extends Controller
         $booking->phone_number = $request->phone_number;
         $booking->save();
         dispatch(new BookingNotifyViaWP($booking->id));
-        dispatch(new BookingNotifyViaMsg($booking->id));
+        // dispatch(new BookingNotifyViaMsg($booking->id));
         if($booking->email){
             Notification::route('mail', $booking->email)->notify(new SendBookingEmail($booking->booking_id));
         }

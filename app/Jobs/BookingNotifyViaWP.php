@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class BookingNotifyViaWP implements ShouldQueue
 {
@@ -51,10 +52,12 @@ class BookingNotifyViaWP implements ShouldQueue
                 $partner_address=$booking->property?->address??$booking->hotel_data['address'];
                 $remark=$booking->early_reason;
                 $data = "Hotel Name: $hotelName, Check-in Date: $checkin 12pm onwards, Check-out Date: $checkout 11 am, Number of Rooms:$no_of_room, Number of Nights: $number_of_night, Number of Adult:-$adult, Number of Children: $no_of_child, Booking Amount: $amount, Hotel Address: $partner_address,Remark: $remark";
-                $phone='91'.$booking?->property?->owner?->phone_number??$booking->hotel_data['phone'];
-                $interktService->sendBookingMsg($phone,$booking->name,$booking_id,$data);
+                $phone=$booking->property_id!=null&&$booking->property_id!=0?$booking->property->owner->phone_number:$booking->hotel_data['phone_number'];
+                $res=$interktService->sendBookingMsg('91'.$phone,$booking->name,$booking_id,$data);
+
                 $interktService->sendBookingMsg('919958277997',$booking->name,$booking_id,$data);
                $interktService->sendBookingMsg('91'.$booking->user->phone_number,$booking->name,$booking_id,$data);
+               Log::info($res);
                $interktService->sendReviewMsg('91'.$booking->user->phone_number,$booking->name);
 
     }

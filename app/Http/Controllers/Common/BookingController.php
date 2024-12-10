@@ -79,6 +79,7 @@ class BookingController extends Controller
         $booking->booking_id = Booking::getBookingId();
         $booking->booking_end = $request['check_out'];
         $booking->no_of_room = $request['rooms'];
+        $booking->email = $request['email'];
         $booking->no_of_adult = $request['adult'];
         $booking->no_of_child = $request['children'];
         $booking->final_amount = $request['price'];
@@ -152,6 +153,8 @@ class BookingController extends Controller
         $booking->status  = 2;
         $booking->name = $request->name;
         $booking->phone_number = $request->phone;
+        $booking->email = $request->email;
+
         $booking->hotel_data=[
             'name'=>$request->hotel_name,
             'address'=>$request->hotel_address,

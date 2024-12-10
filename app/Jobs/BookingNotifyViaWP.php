@@ -53,11 +53,15 @@ class BookingNotifyViaWP implements ShouldQueue
                 $remark=$booking->early_reason;
                 $data = "Hotel Name: $hotelName, Check-in Date: $checkin 12pm onwards, Check-out Date: $checkout 11 am, Number of Rooms:$no_of_room, Number of Nights: $number_of_night, Number of Adult:-$adult, Number of Children: $no_of_child, Booking Amount: $amount, Hotel Address: $partner_address,Remark: $remark";
                 $phone=$booking->property_id!=null&&$booking->property_id!=0?$booking->property->owner->phone_number:$booking->hotel_data['phone_number'];
-                $res=$interktService->sendBookingMsg('91'.$phone,$booking->name,$booking_id,$data);
+                if ($phone) {
+                    $res=$interktService->sendBookingMsg('91'.$phone,$booking->name,$booking_id,$data);
+               Log::info($res);
+
+                }
+
 
                 $interktService->sendBookingMsg('919958277997',$booking->name,$booking_id,$data);
                $interktService->sendBookingMsg('91'.$booking->user->phone_number,$booking->name,$booking_id,$data);
-               Log::info($res);
                $interktService->sendReviewMsg('91'.$booking->user->phone_number,$booking->name);
 
     }

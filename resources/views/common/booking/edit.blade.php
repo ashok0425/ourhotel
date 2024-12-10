@@ -20,6 +20,12 @@
                                    placeholder="Name of Person" autocomplete="off" required="">
                         </div>
 
+                        <div class="form-group  col-md-6">
+                            <label for="place_name">Email </label>
+                            <input type="text" class="form-control" name="email" value="{{$booking->email}}"
+                                placeholder="Email Address" autocomplete="off">
+                        </div>
+
                         <div class="form-group col-md-6">
                             <label for="phone">Phone: *</label>
                             <input type="number" class="form-control" name="phone"

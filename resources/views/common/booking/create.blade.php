@@ -37,7 +37,12 @@
                             <div class="form-group  col-md-6">
                                 <label for="place_name">Name : *</label>
                                 <input type="text" class="form-control" name="name" value=""
-                                    placeholder=" Name of Person" autocomplete="off" required="">
+                                    placeholder="Name" autocomplete="off" required="">
+                            </div>
+                            <div class="form-group  col-md-6">
+                                <label for="place_name">Email </label>
+                                <input type="text" class="form-control" name="email" value=""
+                                    placeholder="Email Address" autocomplete="off">
                             </div>
                             <div class="form-group  col-md-6">
                                 <label for="place_name">Phone : *</label>

@@ -22,14 +22,13 @@
 <title>{{$title}}</title>
 <meta name="description" content="{{$description}}">
 <meta name="keywords" content="{{$keyword}}">
-<link rel="canonical" href="https://www.nsnhotels.com"/>
+<link rel="canonical" href="{{request()->url()}}"/>
 <meta property="og:title" content="{{$title}}" />
 <meta property="og:description" content="{{$description}}" />
 <meta property="og:type" content="website" />
 <meta property="og:image" content="https://d27s5h82rwvc4v.cloudfront.net/uploads/659be093327411704714387.jpeg" />
 <meta property="og:site_name" content="{{$title}}" />
-<meta property="og:url" content="https://www.nsnhotels.com" />
-
+<meta property="og:url" content="{{request()->url()}}" />
 <meta name="twitter:title" content="{{$title}}" />
 <meta name="twitter:description" content="{{$description}}" />
 <meta name="twitter:site" content="@HotelsNsn" />

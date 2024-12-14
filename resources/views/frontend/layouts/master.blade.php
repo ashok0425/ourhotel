@@ -9,15 +9,12 @@
     <link rel="icon" sizes="16x16" href="{{ getImageUrl(setting('logo')) }}">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     @include('frontend.layouts.seo')
-
-
     <link rel="preload stylesheet" href="{{ filepath('frontend/css/bootstrap.css') }}" as="style" type="text/css"
         onload="this.rel='stylesheet'">
     @if (request()->path() != '/')
         <link rel="preload stylesheet" href="{{ filepath('frontend/build/css/intlTelInput.min.css') }}" as="style">
         <link rel="preload stylesheet" href="{{ asset('splide.css') }}" as="style">
     @endif
-
     <link rel="preload stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
         as="style">
     <link href="{{ filepath('frontend/css/daterangepicker.css') }}" rel="preload stylesheet" as="style" />

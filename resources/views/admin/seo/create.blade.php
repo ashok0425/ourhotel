@@ -38,23 +38,38 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="exampleInputUsername1">Keyword </label>
+                    <label for="exampleInputUsername1">Meta Keyword </label>
                     <input type="text" class="form-control" id="exampleInputUsername1"
                         name="keyword">
                 </div>
 
 
                 <div class="form-group col-md-6">
-                    <label for="exampleInputUsername1">Title </label>
+                    <label for="exampleInputUsername1">Meta Title </label>
                     <input type="text" class="form-control" id="exampleInputUsername1"  required
                         name="title">
                 </div>
 
 
-                <div class="form-group col-md-6">
-                    <label for="exampleInputUsername1">Description </label>
+                <div class="form-group col-md-12">
+                    <label for="exampleInputUsername1">Meta Description </label>
                     <input type="text" class="form-control" id="exampleInputUsername1"  required
                         name="description">
+                </div>
+
+
+                <div class="form-group col-md-12">
+                    <label for="footercontent">Footer Content</label>
+                    <textarea type="text" class="form-control" id="footercontent"  required
+                        name="content">
+                    </textarea>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label for="faq">FAQ</label>
+                    <textarea type="text" class="form-control" id="faq"  required
+                        name="faq">
+                    </textarea>
                 </div>
             </div>
             </div>

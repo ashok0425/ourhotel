@@ -57,6 +57,23 @@
                     <input type="text" class="form-control" id="exampleInputUsername1"  required
                         name="description"  value="{{$seo->description}}">
                 </div>
+
+
+                <div class="form-group col-md-12">
+                    <label for="footercontent">Footer Content</label>
+                    <textarea type="text" class="form-control" id="footercontent"  required
+                        name="content" >
+                        {{$seo->content}}
+                    </textarea>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label for="faq">FAQ</label>
+                    <textarea type="text" class="form-control" id="faq"  required
+                        name="faq">
+                        {{$seo->faq}}
+                    </textarea>
+                </div>
             </div>
             </div>
           </div>

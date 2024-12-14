@@ -8,7 +8,7 @@
 <div class="container mb-3 ">
     <div class="card border-0 shadow-none custom-border-radius-0">
         <div class="card-body px-md-5 px-2 faq accordion-title">
-            {{$page->content}}
+            {!!$page->content!!}
         </div>
     </div>
 </div>
@@ -16,7 +16,7 @@
 <div class="container mb-3 ">
     <div class="card border-0 shadow-none custom-border-radius-0">
         <div class="card-body px-md-5 px-2 faq accordion-title">
-            {{$page->faq}}
+            {!!$page->faq!!}
         </div>
     </div>
 </div>

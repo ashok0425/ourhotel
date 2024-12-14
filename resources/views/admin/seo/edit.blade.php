@@ -52,16 +52,16 @@
                 </div>
 
 
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-12">
                     <label for="exampleInputUsername1">Description </label>
-                    <input type="text" class="form-control" id="exampleInputUsername1"  required
+                    <input type="text" class="form-control" id="summernote"  required
                         name="description"  value="{{$seo->description}}">
                 </div>
 
 
                 <div class="form-group col-md-12">
                     <label for="footercontent">Footer Content</label>
-                    <textarea type="text" class="form-control" id="footercontent"  required
+                    <textarea type="text" class="form-control" id="editor"  required
                         name="content" >
                         {{$seo->content}}
                     </textarea>
@@ -69,7 +69,7 @@
 
                 <div class="form-group col-md-12">
                     <label for="faq">FAQ</label>
-                    <textarea type="text" class="form-control" id="faq"  required
+                    <textarea type="text" class="form-control" id="editor1"  required
                         name="faq">
                         {{$seo->faq}}
                     </textarea>
@@ -83,3 +83,21 @@
 
     </form>
 @endsection
+@push('script')
+<script src="{{ asset('admin/vendors/ckeditor.js') }}"></script>
+
+    <script>
+
+ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+
+            ClassicEditor
+            .create(document.querySelector('#editor1'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+@endpush

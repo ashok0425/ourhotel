@@ -1,3 +1,27 @@
+
+@php
+    $path=request()->path();
+    $page=App\Models\Seo::where('path',$path)->first();
+@endphp
+@if ($page&&$page->content&&$page->faq)
+
+<div class="container mb-3 ">
+    <div class="card border-0 shadow-none custom-border-radius-0">
+        <div class="card-body px-md-5 px-2 faq accordion-title">
+            {{$page->content}}
+        </div>
+    </div>
+</div>
+
+<div class="container mb-3 ">
+    <div class="card border-0 shadow-none custom-border-radius-0">
+        <div class="card-body px-md-5 px-2 faq accordion-title">
+            {{$page->faq}}
+        </div>
+    </div>
+</div>
+@else
+
 <div class="container mb-3 ">
     <div class="card border-0 shadow-none custom-border-radius-0">
         <div class="card-body px-md-5 px-2 faq accordion-title">
@@ -72,3 +96,4 @@
         </div>
     </div>
 </div>
+@endif

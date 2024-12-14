@@ -80,3 +80,21 @@
 
     </form>
 @endsection
+@push('script')
+<script src="{{ asset('admin/vendors/ckeditor.js') }}"></script>
+
+    <script>
+
+ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+
+            ClassicEditor
+            .create(document.querySelector('#editor1'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+@endpush

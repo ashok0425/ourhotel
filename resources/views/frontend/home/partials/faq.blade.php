@@ -3,7 +3,9 @@
     $path=request()->path();
     $page=App\Models\Seo::where('path',$path)->first();
 @endphp
-@if ($page&&$page->content&&$page->faq)
+@if ($page)
+
+@if ($page->content)
 
 <div class="container mb-3 ">
     <div class="card border-0 shadow-none custom-border-radius-0">
@@ -12,6 +14,9 @@
         </div>
     </div>
 </div>
+@endif
+
+@if ($page->faq)
 
 <div class="container mb-3 ">
     <div class="card border-0 shadow-none custom-border-radius-0">
@@ -20,6 +25,7 @@
         </div>
     </div>
 </div>
+@endif
 @else
 
 <div class="container mb-3 ">

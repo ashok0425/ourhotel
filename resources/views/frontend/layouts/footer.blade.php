@@ -100,9 +100,11 @@
                     </div>
                     <div class="col-12 col-sm-5 col-md-5">
                         <ul class=" d-flex justify-content-between">
-                            <li><a href="https://nsnhotels.com/Cancellation-and-Reservation.pdf"
+                            <li><a href="/about-us"
+                                class="custom-text-white custom-fs-16">About us</a></li>
+                            <li><a href="https://www.nsnhotels.com/Cancellation-and-Reservation.pdf"
                                     class="custom-text-white custom-fs-16">Cancellation Policy</a></li>
-                            <li><a href="{{ url('post/privacy-policy-16') }}"
+                            <li><a href="{{ url('/privacy') }}"
                                     class="custom-text-white custom-fs-16">Privacy Policy</a></li>
                             <li><a href="{{ route('page_contact') }}" class="custom-text-white custom-fs-16">Contact
                                     us</a></li>

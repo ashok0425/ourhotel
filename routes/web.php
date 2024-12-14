@@ -44,14 +44,15 @@ Route::get('load-mobile-content/', [HomeController::class, 'mobileLocation']);
 
 Route::get('load-subcity', [HomeController::class, 'subCity']);
 
-Route::get('/blog/all', [PostController::class, 'list'])->name('post_list_all');
+Route::get('/blogs', [PostController::class, 'list'])->name('post_list_all');
 Route::get('/post/{slug}-{id}', [PostController::class, 'detail'])
     ->where('slug', '[a-zA-Z0-9-_]+')
     ->where('id', '[0-9]+')->name('post_detail');
 
 Route::view('privacy','frontend.privacy');
+Route::view('about-us','frontend.page.about');
 Route::get('store-location',[HomeController::class,'storeLocation']);
-Route::get('/page/contact', [EnquiryController::class, 'pageContact'])->name('page_contact');
+Route::get('/contact-us', [EnquiryController::class, 'pageContact'])->name('page_contact');
 Route::get('/refer', [EnquiryController::class, 'refer'])->name('refer');
 Route::get('corporate', [EnquiryController::class, 'corporate'])->name('corporate');
 Route::post('corporate', [EnquiryController::class, 'corporateStore']);

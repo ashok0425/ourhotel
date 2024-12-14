@@ -22,7 +22,8 @@ class UserController extends Controller
             $query->where('is_agent',1)->limit(20);
         })
         ->when($request->is_user,function($query) use ($request){
-          $query->where('is_partner',0)->where('is_agent',0);
+          $query->where('is_partner',0)->where('is_agent',0)
+          ->where('is_admin',0)->where('isSeoExpert',0);
         })
         ->when($request->status,function($query) use ($request){
             $query->where('status',$request->status);

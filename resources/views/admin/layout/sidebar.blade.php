@@ -38,12 +38,12 @@
       <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
           <i class="icon-columns menu-icon"></i>
-          <span class="menu-title">Hotel</span>
+          <span class="menu-title">Hotels</span>
           <i class="menu-arrow"></i>
         </a>
         <div class="collapse" id="form-elements">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"><a class="nav-link" href="{{route('properties.index')}}">All Hotel</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('properties.index')}}">All Hotels</a></li>
             <li class="nav-item"><a class="nav-link" href="{{route('rooms.index')}}">All Rooms</a></li>
           </ul>
         </div>
@@ -71,7 +71,7 @@
       <li class="nav-item">
         <a class="nav-link" href="{{route('tour_bookings.index')}}">
           <i class="fas fa-envelope menu-icon"></i>
-          <span class="menu-title">Tour Booking</span>
+          <span class="menu-title">Tempo/Tour Booking</span>
         </a>
       </li>
       @endif
@@ -87,8 +87,8 @@
         </a>
         <div class="collapse" id="user-elements">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index',['is_user'=>1])}}">Users</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index',['is_partner'=>1])}}">Partners</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index',['is_user'=>1])}}">Customers</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index',['is_partner'=>1])}}">Hotel Owners</a></li>
             <li class="nav-item"><a class="nav-link" href="{{route('admin.users.index',['is_agent'=>1])}}">Agent</a></li>
 
           </ul>

@@ -60,14 +60,14 @@
 
                 <div class="form-group col-md-12">
                     <label for="footercontent">Footer Content</label>
-                    <textarea type="text" class="form-control" id="footercontent"  required
+                    <textarea type="text" class="form-control" id="editor"  required
                         name="content">
                     </textarea>
                 </div>
 
                 <div class="form-group col-md-12">
                     <label for="faq">FAQ</label>
-                    <textarea type="text" class="form-control" id="faq"  required
+                    <textarea type="text" class="form-control" id="editor1"  required
                         name="faq">
                     </textarea>
                 </div>
